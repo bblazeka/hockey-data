@@ -10,6 +10,12 @@ namespace SportPredictor.Handlers
     {
         private List<Team> _teams;
 
+        public List<Team> Teams
+        {
+            get { return _teams; }
+            private set { _teams = value; }
+        }
+
         public TeamHandler()
         {
             _teams = ParseAnswer(ApiHandler.SendRequest(RequestBuilder("2018","2019")));
@@ -28,13 +34,14 @@ namespace SportPredictor.Handlers
             {
                 foreach (var teamRecord in record["teamRecords"])
                 {
-                    teams.Add(new Team(teamRecord["team"]["id"].ToString(), teamRecord["team"]["name"].ToString(), teamRecord["points"].ToObject<int>()));
+                    var teamRecordObject = new TeamRecord(Int32.Parse(teamRecord["gamesPlayed"].ToString()), Int32.Parse(teamRecord["goalsScored"].ToString()), Int32.Parse(teamRecord["goalsAgainst"].ToString()), Int32.Parse(teamRecord["points"].ToString()));
+                    teams.Add(new Team(Int32.Parse(teamRecord["team"]["id"].ToString()), teamRecord["team"]["name"].ToString(), teamRecordObject));
                 }
             }
             return teams;
         }
 
-        public string getTeamNameById(string id)
+        public string getTeamNameById(int id)
         {
             return _teams.Find(x => x.Id == id).Name;
         }

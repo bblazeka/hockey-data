@@ -84,8 +84,8 @@ namespace SportPredictor
             var games = _predictionHandler.GetGames(startDate, endDate);
             foreach (var game in games)
             {
-                var home = _teamHandler.getTeamNameById(game.Home);
-                var away = _teamHandler.getTeamNameById(game.Away);
+                var home = _teamHandler.getTeamNameById(Int32.Parse(game.Home));
+                var away = _teamHandler.getTeamNameById(Int32.Parse(game.Away));
                 RegisterPoints(table, home, away, _trainedModel.CreatePredictionEngine<GameData, GamePrediction>(_mlContext).Predict(game).PredictedLabels);
             }
             return table.OrderByDescending(x => x.Value);
