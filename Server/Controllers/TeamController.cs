@@ -20,13 +20,5 @@ namespace Predictor.Controllers
         {
             return JsonConvert.SerializeObject(new Team(int.Parse(id)));
         }
-
-        // PUT api/team/update
-        [HttpGet("update")]
-        public void Get()
-        {
-            DatabaseHandler handler = new DatabaseHandler();
-            handler.UpdateTeams();
-        }
     }
 }
