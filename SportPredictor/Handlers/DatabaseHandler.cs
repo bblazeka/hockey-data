@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using SportPredictor.Databases;
 
 namespace SportPredictor.Handlers
 {
     public class DatabaseHandler
     {
-        private OracleHandler _handler;
+        private IDatabase _handler;
 
-        public DatabaseHandler()
+        public DatabaseHandler(IDatabase database)
         {
-            _handler = new OracleHandler();
+            _handler = database;
             _handler.Connect();
         }
 
@@ -28,9 +29,20 @@ namespace SportPredictor.Handlers
             return (PlayerStats)playerStats;
         }
 
+         public Player GetPlayer(int id)
+        {
+            return (Player)_handler.Execute(String.Format("SELECT * FROM nhl_player p LEFT JOIN nhl_playerteam pt ON p.id = pt.playerid WHERE p.Id = '{0}'", id), Player.ExtendedParseOracle).First();
+        }
+       
+
         public Player GetPlayer(string name)
         {
             return (Player)_handler.Execute(String.Format("SELECT * FROM nhl_player p LEFT JOIN nhl_playerteam pt ON p.id = pt.playerid WHERE p.Name = '{0}'", name), Player.ExtendedParseOracle).First();
+        }
+
+        public List<Player> GetPlayersByBirthplace(string birthplace)
+        {
+            return _handler.Execute(String.Format("SELECT * FROM nhl_player p WHERE p.birthplace LIKE '%{0}%'", birthplace), Player.ParseOracle).Select(el => (Player)el).ToList();
         }
 
         public List<Team> GetTeams()
@@ -45,10 +57,18 @@ namespace SportPredictor.Handlers
             return team;
         }
 
-        public Team GetTeam(int teamId, string name)
+        public Team GetTeam(int teamId)
         {
-            var players = _handler.Execute(String.Format("SELECT * FROM nhl_player p LEFT JOIN nhl_playerteam pt ON p.id = pt.playerid WHERE pt.teamid = {0}",teamId), Player.ExtendedParseOracle);
+            var players = _handler.Execute(String.Format("SELECT * FROM nhl_player p LEFT JOIN nhl_playerteam pt ON p.id = pt.playerid WHERE pt.teamid = {0}", teamId), Player.ExtendedParseOracle);
             var team = (Team)_handler.Execute(String.Format("SELECT * FROM nhl_team t LEFT JOIN nhl_teamdesign td ON t.id = td.teamid WHERE td.teamid = {0}", teamId), Team.ExtendedParseOracle).FirstOrDefault();
+            team.Players = players.Select(player => (Player)player).ToList();
+            return team;
+        }
+
+        public Team GetTeam(string name)
+        {
+            var team = (Team)_handler.Execute(String.Format("SELECT * FROM nhl_team t LEFT JOIN nhl_teamdesign td ON t.id = td.teamid WHERE t.name = '{0}'", name), Team.ExtendedParseOracle).FirstOrDefault();
+            var players = _handler.Execute(String.Format("SELECT * FROM nhl_player p LEFT JOIN nhl_playerteam pt ON p.id = pt.playerid WHERE pt.teamid = {0}", team.Id), Player.ExtendedParseOracle);
             team.Players = players.Select(player => (Player)player).ToList();
             return team;
         }
@@ -65,13 +85,15 @@ namespace SportPredictor.Handlers
                {
                    try
                    {
-                       var player = new Player(baseValue+value);
-                       _handler.Execute(String.Format("INSERT INTO nhl_player (id,name,position,nation) values ({0},'{1}','{2}','{3}')", player.Id, player.Name, player.Position,player.Nationality));
-                       System.Threading.Thread.Sleep(500);
+                       var playerId = baseValue + value;
+                       Debug.WriteLine(playerId);
+                       var player = new Player(playerId);
+                       _handler.Execute(String.Format("INSERT INTO nhl_player (id,name,position,nation) values ({0},'{1}','{2}','{3}')", player.Id, player.Name, player.Position, player.Nationality));
+                       System.Threading.Thread.Sleep(200);
                    }
-                   catch (System.Net.WebException)
+                   catch (System.Net.WebException WebException)
                    {
-                       ;
+                       Debug.WriteLine(WebException.ToString());
                    }
                    catch (NullReferenceException)
                    {
@@ -96,7 +118,7 @@ namespace SportPredictor.Handlers
                         _handler.Execute(String.Format("UPDATE nhl_player SET nation = '{0}' WHERE id = {1}",
                         api.Nationality, player.Id));
                     }
-                    System.Threading.Thread.Sleep(500);
+                    System.Threading.Thread.Sleep(300);
                 }
                 catch (System.Net.WebException)
                 {
@@ -115,12 +137,12 @@ namespace SportPredictor.Handlers
                 {
                     try
                     {
-                        if(player.Position == "G")
+                        if (player.Position == "G")
                         {
                             Debug.WriteLine("Goalie");
                         }
                         var playerStats = new PlayerStats(player.Id, season);
-                        Debug.WriteLine(player.Id+" "+player.Name);
+                        Debug.WriteLine(player.Id + " " + player.Name);
                         _handler.Execute(String.Format("INSERT INTO nhl_playerstats (playerid,season,goals,assists,pim,shots) values ({0},'{1}',{2},{3},{4},{5})", player.Id, season, playerStats.Goals, playerStats.Assists, playerStats.PIM, playerStats.Shots));
                         System.Threading.Thread.Sleep(100);
                     }
@@ -166,7 +188,7 @@ namespace SportPredictor.Handlers
                     var playerTeam = new PlayerTeam(player.Id);
                     Debug.WriteLine(player.Id);
                     _handler.Execute(String.Format("UPDATE nhl_playerteam SET teamid = {1} WHERE playerid = {0}", player.Id, playerTeam.TeamId));
-                    System.Threading.Thread.Sleep(400);
+                    System.Threading.Thread.Sleep(300);
                 }
                 catch (System.Net.WebException)
                 {
@@ -194,13 +216,13 @@ namespace SportPredictor.Handlers
 
         public void UpdateTeams()
         {
-            var output = _handler.Execute("SELECT * FROM nhl_team",Team.ParseOracle);
-            foreach(Team team in output)
+            var output = _handler.Execute("SELECT * FROM nhl_team", Team.ParseOracle);
+            foreach (Team team in output)
             {
-                if(team.FranchiseId.HasValue)
+                if (team.FranchiseId.HasValue)
                 {
                     Team api = new Team(team.Id);
-                    _handler.Execute(String.Format("UPDATE nhl_team SET name = '{0}', franchiseid = '{1}', active = {3} WHERE id = {2}",api.Name,api.FranchiseId,team.Id,api.Active ? 1 : 0));
+                    _handler.Execute(String.Format("UPDATE nhl_team SET name = '{0}', franchiseid = '{1}', active = {3} WHERE id = {2}", api.Name, api.FranchiseId, team.Id, api.Active ? 1 : 0));
                 }
             }
         }

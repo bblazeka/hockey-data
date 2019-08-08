@@ -2,11 +2,12 @@
 using Oracle.ManagedDataAccess.Types;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Text;
 
-namespace SportPredictor
+namespace SportPredictor.Databases
 {
-    public class OracleHandler
+    public class OracleDatabase : IDatabase
     {
         OracleConnection con;
         public void Connect()
@@ -33,7 +34,7 @@ namespace SportPredictor
             }
         }
 
-        public object[] Execute(string query, Func<OracleDataReader,object> parsingFunction)
+        public object[] Execute(string query, Func<DbDataReader,object> parsingFunction)
         {
             OracleCommand command = con.CreateCommand();
             command.CommandText = query;

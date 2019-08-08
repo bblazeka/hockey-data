@@ -1,6 +1,7 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Text;
 
 namespace SportPredictor.Models
@@ -22,7 +23,7 @@ namespace SportPredictor.Models
             Flag = flag;
         }
 
-        public static Nation ParseOracle(OracleDataReader row)
+        public static Nation ParseOracle(DbDataReader row)
         {
             return new Nation(row["nationid"].ToString(), row["name"].ToString(), (byte[])row["flag"]);
         }

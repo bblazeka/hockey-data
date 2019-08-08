@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SportPredictor;
 
-namespace Predictor.Controllers
+namespace Predictor.Controllers.Api
 {
     [Route("api/[controller]")]
     public class PredictController : Controller

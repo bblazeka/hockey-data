@@ -2,6 +2,7 @@
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Text;
 
 namespace SportPredictor.Models
@@ -47,10 +48,12 @@ namespace SportPredictor.Models
                 PIM = int.Parse(yearlyStats["pim"].ToString());
                 Shots = int.Parse(yearlyStats["shots"].ToString());
                 PlusMinus = int.Parse(yearlyStats["plusMinus"].ToString());
-            } catch(ArgumentOutOfRangeException)
+            }
+            catch (ArgumentOutOfRangeException)
             {
                 Console.WriteLine("no entry");
-            } catch(NullReferenceException)
+            }
+            catch (NullReferenceException)
             {
                 var jsonObject = JObject.Parse(answer);
                 var yearlyStats = jsonObject["stats"][0]["splits"][0]["stat"];
@@ -61,7 +64,7 @@ namespace SportPredictor.Models
             }
         }
 
-        public static PlayerStats ParseOracle(OracleDataReader row)
+        public static PlayerStats ParseOracle(DbDataReader row)
         {
             try
             {

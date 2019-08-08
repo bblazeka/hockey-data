@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SportPredictor.Handlers;
 
-namespace Predictor.Controllers
+namespace Predictor.Controllers.Api
 {
     [Route("api/[controller]")]
     public class PlayerController : Controller
@@ -14,8 +14,7 @@ namespace Predictor.Controllers
         [HttpGet("update")]
         public void Get()
         {
-            DatabaseHandler handler = new DatabaseHandler();
-            handler.UpdatePlayers();
+            
         }
     }
 }

@@ -2,6 +2,7 @@
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Text;
 
 namespace SportPredictor.Models
@@ -29,7 +30,7 @@ namespace SportPredictor.Models
             JerseyNumber = jersey;
         }
 
-        public static PlayerTeam ParseOracle(OracleDataReader row)
+        public static PlayerTeam ParseOracle(DbDataReader row)
         {
             int playerId = Int32.Parse(row["playerid"].ToString());
             int teamId = Int32.Parse(row["teamid"].ToString());

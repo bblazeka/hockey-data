@@ -2,6 +2,7 @@
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace SportPredictor.Models
 {
@@ -50,7 +51,8 @@ namespace SportPredictor.Models
             try
             {
                 FranchiseId = Int32.Parse(team["franchiseId"].ToString());
-            } catch
+            }
+            catch
             {
                 FranchiseId = null;
             }
@@ -71,7 +73,7 @@ namespace SportPredictor.Models
             }
         }
 
-        public static Team ParseOracle(OracleDataReader row)
+        public static Team ParseOracle(DbDataReader row)
         {
             int id = Int32.Parse(row["id"].ToString());
             string name = row["name"].ToString();
@@ -80,13 +82,15 @@ namespace SportPredictor.Models
                 var team = new Team(id, name)
                 {
                     Active = Int32.Parse(row["active"].ToString()) == 1,
-                    FranchiseId = Int32.Parse(row["franchiseid"].ToString()),
-                    Logo = (byte[])row["logo"]
+                    FranchiseId = Int32.Parse(row["franchiseid"].ToString())
                 };
                 return team;
-            } catch (FormatException) {
+            }
+            catch (FormatException)
+            {
                 return new Team(id, name);
-            } catch (InvalidCastException)
+            }
+            catch (InvalidCastException)
             {
                 return new Team(id, name)
                 {
@@ -96,7 +100,7 @@ namespace SportPredictor.Models
             }
         }
 
-        public static Team ExtendedParseOracle(OracleDataReader row)
+        public static Team ExtendedParseOracle(DbDataReader row)
         {
             var team = ParseOracle(row);
             team.Design = TeamDesign.ParseOracle(row);
@@ -122,7 +126,8 @@ namespace SportPredictor.Models
                         int.Parse(rosterElement["jerseyNumber"].ToString())
                         )
                     );
-                } else
+                }
+                else
                 {
                     players.Add(new PlayerTeam(
                         int.Parse(rosterElement["person"]["id"].ToString()),

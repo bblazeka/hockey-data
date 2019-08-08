@@ -1,6 +1,7 @@
 ﻿using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Text;
 
 namespace SportPredictor.Models
@@ -23,7 +24,7 @@ namespace SportPredictor.Models
             throw new NotImplementedException();
         }
 
-        public static TeamDesign ParseOracle(OracleDataReader row)
+        public static TeamDesign ParseOracle(DbDataReader row)
         {
             return new TeamDesign(row["primarycolor"].ToString(), row["secondcolor"].ToString(), row["textcolor"].ToString());
         }

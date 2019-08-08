@@ -2,6 +2,7 @@
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Globalization;
 using System.Text;
 
@@ -72,7 +73,7 @@ namespace SportPredictor.Models
             }
         }
 
-        public static Player ParseOracle(OracleDataReader row)
+        public static Player ParseOracle(DbDataReader row)
         {
             var player = new Player(Int32.Parse(row["id"].ToString()), row["name"].ToString(), row["position"].ToString())
             {
@@ -93,7 +94,7 @@ namespace SportPredictor.Models
             return player;
         }
 
-        public static Player ExtendedParseOracle(OracleDataReader row)
+        public static Player ExtendedParseOracle(DbDataReader row)
         {
             var basicPlayer = ParseOracle(row);
             basicPlayer.Team = PlayerTeam.ParseOracle(row);
