@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Desktop.Converters;
+using SportPredictor.Databases;
 using SportPredictor.Handlers;
 using SportPredictor.Models;
 using System;
@@ -26,13 +27,16 @@ namespace Desktop
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DatabaseHandler _dbHandler;
+        private TeamHandler _dbHandler;
+        private PlayerHandler _playerHandler;
         private IMapper _mapper;
         private Team _team;
         public MainWindow(MapperConfiguration config)
         {
             InitializeComponent();
-            _dbHandler = new DatabaseHandler();
+            var database = new OracleDatabase();
+            _dbHandler = new TeamHandler(database);
+            _playerHandler = new PlayerHandler(database);
             _mapper = config.CreateMapper();
             cmbteams.ItemsSource = _dbHandler.GetTeams().OrderBy(team => team.Name);
             rosterRefresh.Click += rosterRefresh_Click;
@@ -43,7 +47,7 @@ namespace Desktop
         {
             rosterRefresh.Visibility = Visibility.Visible;
             var selectedTeam = (Team)(cmbteams.SelectedItem);
-            _team = _dbHandler.GetTeam(selectedTeam.Id, selectedTeam.Name);
+            _team = _dbHandler.GetTeam(selectedTeam.Id);
             logoimage.Source = ByteImageConverter.ByteToImage(selectedTeam.Logo);
             teamlabel.Content = selectedTeam.Name;
             var players = _team.Players.Select(player => _mapper.Map<Player, ViewModels.Player>(player)).ToList();
@@ -77,7 +81,7 @@ namespace Desktop
 
         private void rosterRefresh_Click(object sender, RoutedEventArgs e)
         {
-            _team.Players.Select(player => player.Stats = _dbHandler.GetPlayerStats(player.Id, "20182019")).ToList();
+            _team.Players.Select(player => player.Stats = _playerHandler.GetPlayerStats(player.Id, "20182019")).ToList();
             var players = _team.Players.Select(player => _mapper.Map<Player, ViewModels.Player>(player)).ToList();
             var viewTeam = _mapper.Map<Team, ViewModels.Team>(_team);
             goalies.Children.Clear();

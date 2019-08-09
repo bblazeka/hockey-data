@@ -12,11 +12,11 @@ namespace Predictor.Controllers.Database
     [Route("db/[controller]")]
     public class TeamController : Controller
     {
-        private DatabaseHandler _handler;
+        private TeamHandler _handler;
 
         public TeamController() {
 
-            _handler = new DatabaseHandler(new PostgreSQLDatabase());
+            _handler = new TeamHandler(new PostgreSQLDatabase());
         }
 
         // db/team

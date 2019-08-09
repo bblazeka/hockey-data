@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Desktop.Converters;
 using Desktop.ViewModels;
+using SportPredictor.Databases;
 using SportPredictor.Handlers;
 using System;
 using System.Collections.Generic;
@@ -24,13 +25,16 @@ namespace Desktop
     public partial class PlayerWindow : Window
     {
         private Player _player;
-        private DatabaseHandler _dbHandler;
+        private PlayerHandler _dbHandler;
+        private TeamHandler _teamHandler;
         private IMapper _mapper;
 
         public PlayerWindow(IMapper mapper, Player player, SportPredictor.Models.Team currentTeam)
         {
             _player = player;
-            _dbHandler = new DatabaseHandler();
+            var database = new OracleDatabase();
+            _teamHandler = new TeamHandler(database);
+            _dbHandler = new PlayerHandler(database);
             InitializeComponent();
             searchButton.Click += searchButton_Click;
             _mapper = mapper;
@@ -49,14 +53,14 @@ namespace Desktop
         {
             playerData.Text = string.Empty;
             dataBlock.Text = string.Empty;
-            var nation = _dbHandler.GetNation(player.Nationality);
+            var nation = _teamHandler.GetNation(player.Nationality);
             playerData.Inlines.Add("#" + player.TeamJerseyNumber + " ");
             playerData.Inlines.Add(player.Name + " (" + player.Position + ")");
             dataBlock.Inlines.Add("Place of Birth: " + player.BirthPlace + "\n");
             dataBlock.Inlines.Add("Date of Birth: " + player.BirthDate.ToString().Split()[0] + "\n");
             dataBlock.Inlines.Add("Nationality: " + nation.Name + "\n");
             flag.Source = ByteImageConverter.ByteToImage(nation.Flag);
-            var teams = _dbHandler.GetTeams().OrderBy(team => team.Name);
+            var teams = _teamHandler.GetTeams().OrderBy(team => team.Name);
             cmbTeams.ItemsSource = teams;
             cmbTeams.SelectedIndex = teams.Select((item, index) => new { Item = item, Index = index }).First(i => i.Item.Name == currentTeam.Name).Index;
         }

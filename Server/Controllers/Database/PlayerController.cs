@@ -12,10 +12,10 @@ namespace Predictor.Controllers.Database
     [Route("db/[controller]")]
     public class PlayerController : Controller
     {
-        private DatabaseHandler _handler;
+        private PlayerHandler _handler;
 
         public PlayerController() {
-            _handler = new DatabaseHandler(new PostgreSQLDatabase());
+            _handler = new PlayerHandler(new PostgreSQLDatabase());
         }
 
         // db/player

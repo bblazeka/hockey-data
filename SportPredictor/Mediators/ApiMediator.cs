@@ -5,9 +5,9 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using SportPredictor.Models;
 
-namespace SportPredictor
+namespace SportPredictor.Mediators
 {
-    public class ApiHandler
+    public class ApiMediator
     {
         public static string SendRequest(string url)
         {

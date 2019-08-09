@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Oracle.ManagedDataAccess.Client;
+using SportPredictor.Mediators;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -19,7 +20,7 @@ namespace SportPredictor.Models
 
         public Team(int id)
         {
-            string answer = ApiHandler.SendRequest(RequestBuilder(id));
+            string answer = ApiMediator.SendRequest(RequestBuilder(id));
             ParseAnswer(answer);
         }
 
@@ -82,7 +83,8 @@ namespace SportPredictor.Models
                 var team = new Team(id, name)
                 {
                     Active = Int32.Parse(row["active"].ToString()) == 1,
-                    FranchiseId = Int32.Parse(row["franchiseid"].ToString())
+                    FranchiseId = Int32.Parse(row["franchiseid"].ToString()),
+                    Logo = (byte[])row["logo"]
                 };
                 return team;
             }
@@ -115,7 +117,7 @@ namespace SportPredictor.Models
         public static List<PlayerTeam> TeamPlayers(int id)
         {
             List<PlayerTeam> players = new List<PlayerTeam>();
-            var jsonObject = JObject.Parse(ApiHandler.SendRequest(RequestBuilder(id)));
+            var jsonObject = JObject.Parse(ApiMediator.SendRequest(RequestBuilder(id)));
             foreach (var rosterElement in jsonObject["teams"][0]["roster"]["roster"])
             {
                 if (rosterElement["jerseyNumber"] != null)

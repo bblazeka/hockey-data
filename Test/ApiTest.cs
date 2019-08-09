@@ -25,5 +25,11 @@ namespace Test
             watch.Stop();
             Assert.IsTrue(watch.ElapsedMilliseconds < TimeLimit);
         }
+
+        [TestMethod]
+        public void TestFetchingGames()
+        {
+
+        }
     }
 }

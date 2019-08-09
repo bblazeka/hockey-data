@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SportPredictor.Mediators;
 using System.Collections.Generic;
 
 namespace SportPredictor.Handlers
@@ -14,7 +15,7 @@ namespace SportPredictor.Handlers
 
         public IEnumerable<GameData> GetGames(string start, string end)
         {
-            string answer = ApiHandler.SendRequest(RequestBuilder(start, end));
+            string answer = ApiMediator.SendRequest(RequestBuilder(start, end));
             return ParseAnswer(answer, _predictionType);
         }
 

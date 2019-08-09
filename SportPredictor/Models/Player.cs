@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Oracle.ManagedDataAccess.Client;
+using SportPredictor.Mediators;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -29,7 +30,7 @@ namespace SportPredictor.Models
         /// <param name="id">Player ID</param>
         public Player(int id)
         {
-            string answer = ApiHandler.SendRequest(RequestBuilder(id));
+            string answer = ApiMediator.SendRequest(RequestBuilder(id));
             ParseAnswer(answer);
             Id = id;
         }

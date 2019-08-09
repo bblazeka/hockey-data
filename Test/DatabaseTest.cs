@@ -21,8 +21,8 @@ namespace Test
         public void DatabaseStatsTest()
         {
             PostgreSQLDatabase database = new PostgreSQLDatabase();
-            DatabaseHandler handler = new DatabaseHandler(database);
-            handler.PopulatePlayers();
+            TeamHandler handler = new TeamHandler(database);
+            handler.UpdateTeams();
         }
     }
 }

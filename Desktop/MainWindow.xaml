@@ -10,7 +10,7 @@
         <StackPanel>
             <Menu>
                 <MenuItem Header="_Options">
-                    <MenuItem Header="_Refresh" />
+                    <MenuItem Header="_Schedule" Click="schedule_Click" />
                     <Separator />
                     <MenuItem Header="_Exit" Click="exit_Click" />
                 </MenuItem>
