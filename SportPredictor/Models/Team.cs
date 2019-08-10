@@ -15,7 +15,6 @@ namespace SportPredictor.Models
         public bool Active { get; set; }
         public byte[] Logo { get; set; }
         public TeamRecord Record { get; set; }
-        public TeamDesign Design { get; set; }
         public List<Player> Players { get; set; }
 
         public Team(int id)
@@ -74,72 +73,9 @@ namespace SportPredictor.Models
             }
         }
 
-        public static Team ParseOracle(DbDataReader row)
-        {
-            int id = Int32.Parse(row["id"].ToString());
-            string name = row["name"].ToString();
-            try
-            {
-                var team = new Team(id, name)
-                {
-                    Active = Int32.Parse(row["active"].ToString()) == 1,
-                    FranchiseId = Int32.Parse(row["franchiseid"].ToString()),
-                    Logo = (byte[])row["logo"]
-                };
-                return team;
-            }
-            catch (FormatException)
-            {
-                return new Team(id, name);
-            }
-            catch (InvalidCastException)
-            {
-                return new Team(id, name)
-                {
-                    Active = Int32.Parse(row["active"].ToString()) == 1,
-                    FranchiseId = Int32.Parse(row["franchiseid"].ToString())
-                };
-            }
-        }
-
-        public static Team ExtendedParseOracle(DbDataReader row)
-        {
-            var team = ParseOracle(row);
-            team.Design = TeamDesign.ParseOracle(row);
-            return team;
-        }
-
         public static string RequestBuilder(int id)
         {
             return string.Format("https://statsapi.web.nhl.com/api/v1/teams/{0}?expand=team.roster", id);
-        }
-
-        public static List<PlayerTeam> TeamPlayers(int id)
-        {
-            List<PlayerTeam> players = new List<PlayerTeam>();
-            var jsonObject = JObject.Parse(ApiMediator.SendRequest(RequestBuilder(id)));
-            foreach (var rosterElement in jsonObject["teams"][0]["roster"]["roster"])
-            {
-                if (rosterElement["jerseyNumber"] != null)
-                {
-                    players.Add(new PlayerTeam(
-                        int.Parse(rosterElement["person"]["id"].ToString()),
-                        int.Parse(jsonObject["teams"][0]["id"].ToString()),
-                        int.Parse(rosterElement["jerseyNumber"].ToString())
-                        )
-                    );
-                }
-                else
-                {
-                    players.Add(new PlayerTeam(
-                        int.Parse(rosterElement["person"]["id"].ToString()),
-                        int.Parse(jsonObject["teams"][0]["id"].ToString())
-                        )
-                    );
-                }
-
-            }
-            return players;
         }
 
         public override string ToString()

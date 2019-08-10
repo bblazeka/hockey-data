@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SportPredictor;
 
-namespace Predictor.Controllers.Api
+namespace Predictor.Controllers
 {
     [Route("api/[controller]")]
     public class PredictController : Controller
@@ -25,13 +25,15 @@ namespace Predictor.Controllers.Api
         }
 
         // GET api/predict/table
-        [HttpGet]
-        public object Table(string startDate, string endDate)
+        [HttpGet("table")]
+        public object Table()
         {
+            var startDate = "2018-09-15";
+            var endDate = "2019-05-15";
             return _classifier.PredictSeason(startDate,endDate);
         }
 
-        // GET api/predict/2019-03-15
+        // GET api/predict/{date}
         [HttpGet("{date}")]
         public string Get(string date)
         {

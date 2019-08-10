@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using SportPredictor.Handlers;
 using SportPredictor.Models;
 
-namespace Predictor.Controllers.Api
+namespace Predictor.Controllers
 {
     [Route("api/[controller]")]
     public class TeamController : Controller

@@ -19,10 +19,8 @@ namespace SportPredictor.Models
         public string Nationality { get; set; }
         public int Height { get; set; }
         public int Weight { get; set; }
-        public string Position { get; set; }
         public string ShotCatch { get; set; }
-        public PlayerTeam Team { get; set; }
-        public PlayerStats Stats { get; set; }
+        public string Position { get; set; }
 
         /// <summary>
         /// Player constructor that gets player data from API
@@ -72,35 +70,6 @@ namespace SportPredictor.Models
             {
                 Nationality = person["nationality"].ToString();
             }
-        }
-
-        public static Player ParseOracle(DbDataReader row)
-        {
-            var player = new Player(Int32.Parse(row["id"].ToString()), row["name"].ToString(), row["position"].ToString())
-            {
-                Active = (!row["active"].Equals(DBNull.Value)) ? Int32.Parse(row["active"].ToString()) == 1 : false,
-                BirthPlace = row["birthplace"].ToString(),
-                ShotCatch = row["shotcatch"].ToString(),
-                Nationality = row["nation"].ToString()
-            };
-            try
-            {
-                player.Height = Int32.Parse(row["height"].ToString());
-                player.Weight = Int32.Parse(row["weight"].ToString());
-                player.BirthDate = DateTime.ParseExact(row["birthdate"].ToString(), "d.M.yyyy. h:mm:ss", CultureInfo.InvariantCulture);
-            } catch (FormatException)
-            {
-                ;
-            }
-            return player;
-        }
-
-        public static Player ExtendedParseOracle(DbDataReader row)
-        {
-            var basicPlayer = ParseOracle(row);
-            basicPlayer.Team = PlayerTeam.ParseOracle(row);
-            basicPlayer.Stats = PlayerStats.ParseOracle(row);
-            return basicPlayer;
         }
 
         public static string RequestBuilder(long id)

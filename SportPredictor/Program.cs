@@ -1,5 +1,4 @@
 ﻿using System;
-using SportPredictor.Databases;
 
 namespace SportPredictor
 {
@@ -8,9 +7,6 @@ namespace SportPredictor
 
         static void Main(string[] args)
         {
-            OracleDatabase ot = new OracleDatabase();
-            ot.Connect();
-            ot.Close();
         }
     }
 }

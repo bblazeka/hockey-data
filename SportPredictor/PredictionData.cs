@@ -1,4 +1,6 @@
 ﻿using Microsoft.ML.Data;
+using SportPredictor.Models;
+using System;
 
 namespace SportPredictor
 {
@@ -8,6 +10,7 @@ namespace SportPredictor
     // - Label is what you are predicting, and is only set when training
     public class GameData
     {
+        public DateTime StartDate { get; set; }
         public string Home { get; set; }
         public float HomeWins { get; set; }
         public float HomeLosses { get; set; }
@@ -17,6 +20,16 @@ namespace SportPredictor
         public float AwayLosses { get; set; }
         public float AwayOT { get; set; }
         public string Label { get; set; }
+
+        public void ParseTeamRecords(TeamRecord homeRecord, TeamRecord awayRecord)
+        {
+            HomeWins = homeRecord.Wins;
+            HomeLosses = homeRecord.Losses;
+            HomeOT = homeRecord.OT;
+            AwayWins = awayRecord.Wins;
+            AwayLosses = awayRecord.Losses;
+            AwayOT = awayRecord.OT;
+        }
     }
 
     // GamePrediction is the result returned from prediction operations

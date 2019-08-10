@@ -82,11 +82,21 @@ namespace SportPredictor
             Dictionary<string, int> table = new Dictionary<string, int>();
             
             var games = _predictionHandler.GetGames(startDate, endDate);
-            foreach (var game in games)
+            var schedule = _predictionHandler.GetSchedule(startDate, endDate);
+            var teamRecords = new List<TeamRecord>();
+            foreach (var team in _teamHandler.Teams)
             {
+                teamRecords.Add(new TeamRecord(team.Id));
+            }
+            foreach (var game in schedule)
+            {
+                game.ParseTeamRecords(teamRecords.Where(t => t.TeamId == Int32.Parse(game.Home)).First(), teamRecords.Where(t => t.TeamId == Int32.Parse(game.Away)).First());
                 var home = _teamHandler.getTeamNameById(Int32.Parse(game.Home));
                 var away = _teamHandler.getTeamNameById(Int32.Parse(game.Away));
-                RegisterPoints(table, home, away, _trainedModel.CreatePredictionEngine<GameData, GamePrediction>(_mlContext).Predict(game).PredictedLabels);
+                var result = _trainedModel.CreatePredictionEngine<GameData, GamePrediction>(_mlContext).Predict(game).PredictedLabels;
+                var points = RegisterPoints(table, home, away, result);
+                teamRecords.Where(t => t.TeamId == Int32.Parse(game.Home)).First().RegisterResult(points.Item1);
+                teamRecords.Where(t => t.TeamId == Int32.Parse(game.Away)).First().RegisterResult(points.Item2);
             }
             return table.OrderByDescending(x => x.Value);
         }
@@ -108,7 +118,7 @@ namespace SportPredictor
             };
         }
 
-        public void RegisterPoints(Dictionary<string,int> table,string home,string away,string result)
+        public Tuple<int,int> RegisterPoints(Dictionary<string,int> table,string home,string away,string result)
         {
             int homePoints = 0;
             int awayPoints = 0;
@@ -151,6 +161,7 @@ namespace SportPredictor
             {
                 table[away] = awayPoints;
             }
+            return new Tuple<int, int>(homePoints, awayPoints);
         }
     }
 }

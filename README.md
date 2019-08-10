@@ -23,8 +23,7 @@ No real formal methods of validation implemented yet, but (on a superficial leve
 - binary prediction (only W or L) had accuracy (micro and macro) around 0,63
 - multi class prediction (W, OTW, OTL and L) had Micro accuracy around 0,49 and Macro accuracy around 0,37
 #### Precision of seasonal prediction
-- out of top 10 teams in predicted standings, 9 actually finished in top 10
-- big difference between 1st and 2nd ranked team and the team name also correctly predicted
+- top team won the title in the real league
 
 ## Architecture
 Currently consists of projects: Server, Prediction library and Test.
@@ -35,7 +34,6 @@ Fetching data from publicly available NHL API with help of documentation: https:
 ## Future improvements
 
 - [ ] Use Yahoo Sports API
-- [ ] Add React Frontend
 - [ ] Add support for other sports
 
 ## Previously

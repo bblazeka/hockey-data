@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SportPredictor.Mediators;
+using System;
 using System.Collections.Generic;
 
 namespace SportPredictor.Handlers
@@ -19,6 +20,12 @@ namespace SportPredictor.Handlers
             return ParseAnswer(answer, _predictionType);
         }
 
+        public IEnumerable<GameData> GetSchedule(string start, string end)
+        {
+            string answer = ApiMediator.SendRequest(RequestBuilder(start, end));
+            return BasicParseAnswer(answer);
+        }
+
         public static string RequestBuilder(string start, string end)
         {
             return string.Format("https://statsapi.web.nhl.com/api/v1/schedule?expand=schedule.linescore&startDate={0}&endDate={1}", start, end);
@@ -27,6 +34,29 @@ namespace SportPredictor.Handlers
         public static string RequestBuilder(string team, string start, string end)
         {
             return string.Format("https://statsapi.web.nhl.com/api/v1/schedule?expand=schedule.linescore&teamId={0}&startDate={1}&endDate={2}", team, start, end);
+        }
+
+        public static List<GameData> BasicParseAnswer(string answer)
+        {
+            List<GameData> games = new List<GameData>();
+            var jsonObject = JObject.Parse(answer);
+            foreach (var date in jsonObject["dates"])
+            {
+                foreach (var game in date["games"])
+                {
+
+                    if (game["gameType"].ToObject<string>() == "R")
+                    {
+                        games.Add(new GameData
+                        {
+                            StartDate = DateTime.ParseExact(date["date"].ToString(), "yyyy-MM-dd", null),
+                            Home = game["teams"]["home"]["team"]["id"].ToObject<string>(),
+                            Away = game["teams"]["away"]["team"]["id"].ToObject<string>()
+                        });
+                    }
+                }
+            }
+            return games;
         }
 
         public static List<GameData> ParseAnswer(string answer, PredictionTypes type)
