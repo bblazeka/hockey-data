@@ -16,6 +16,7 @@ namespace SportPredictor.Models
         public byte[] Logo { get; set; }
         public TeamRecord Record { get; set; }
         public List<Player> Players { get; set; }
+        public List<GameData> Games { get; set; }
 
         public Team(int id)
         {

@@ -50,8 +50,8 @@ namespace SportPredictor.Handlers
                         games.Add(new GameData
                         {
                             StartDate = DateTime.ParseExact(date["date"].ToString(), "yyyy-MM-dd", null),
-                            Home = game["teams"]["home"]["team"]["id"].ToObject<string>(),
-                            Away = game["teams"]["away"]["team"]["id"].ToObject<string>()
+                            Home = int.Parse(game["teams"]["home"]["team"]["id"].ToString()),
+                            Away = int.Parse(game["teams"]["away"]["team"]["id"].ToString())
                         });
                     }
                 }
@@ -87,8 +87,8 @@ namespace SportPredictor.Handlers
                     {
                         games.Add(new GameData
                         {
-                            Home = game["teams"]["home"]["team"]["id"].ToObject<string>(),
-                            Away = game["teams"]["away"]["team"]["id"].ToObject<string>(),
+                            Home = int.Parse(game["teams"]["home"]["team"]["id"].ToString()),
+                            Away = int.Parse(game["teams"]["away"]["team"]["id"].ToString()),
                             Label = resultLabel,
                             HomeWins = game["teams"]["home"]["leagueRecord"]["wins"].ToObject<int>(),
                             HomeLosses = game["teams"]["home"]["leagueRecord"]["losses"].ToObject<int>(),

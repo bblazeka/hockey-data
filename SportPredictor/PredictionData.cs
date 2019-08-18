@@ -11,11 +11,11 @@ namespace SportPredictor
     public class GameData
     {
         public DateTime StartDate { get; set; }
-        public string Home { get; set; }
+        public int Home { get; set; }
         public float HomeWins { get; set; }
         public float HomeLosses { get; set; }
         public float HomeOT { get; set; }
-        public string Away { get; set; }
+        public int Away { get; set; }
         public float AwayWins { get; set; }
         public float AwayLosses { get; set; }
         public float AwayOT { get; set; }

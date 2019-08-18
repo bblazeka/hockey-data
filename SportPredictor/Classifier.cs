@@ -53,8 +53,8 @@ namespace SportPredictor
             var prediction = _trainedModel.CreatePredictionEngine<GameData, GamePrediction>(_mlContext).Predict(
                 new GameData()
                 {
-                    Home = "20",
-                    Away = "25",
+                    Home = 20,
+                    Away = 25,
                     HomeWins = 1,
                     HomeLosses = 1,
                     HomeOT = 1,
@@ -90,13 +90,13 @@ namespace SportPredictor
             }
             foreach (var game in schedule)
             {
-                game.ParseTeamRecords(teamRecords.Where(t => t.TeamId == Int32.Parse(game.Home)).First(), teamRecords.Where(t => t.TeamId == Int32.Parse(game.Away)).First());
-                var home = _teamHandler.getTeamNameById(Int32.Parse(game.Home));
-                var away = _teamHandler.getTeamNameById(Int32.Parse(game.Away));
+                game.ParseTeamRecords(teamRecords.Where(t => t.TeamId == game.Home).First(), teamRecords.Where(t => t.TeamId == game.Away).First());
+                var home = _teamHandler.getTeamNameById(game.Home);
+                var away = _teamHandler.getTeamNameById(game.Away);
                 var result = _trainedModel.CreatePredictionEngine<GameData, GamePrediction>(_mlContext).Predict(game).PredictedLabels;
                 var points = RegisterPoints(table, home, away, result);
-                teamRecords.Where(t => t.TeamId == Int32.Parse(game.Home)).First().RegisterResult(points.Item1);
-                teamRecords.Where(t => t.TeamId == Int32.Parse(game.Away)).First().RegisterResult(points.Item2);
+                teamRecords.Where(t => t.TeamId == game.Home).First().RegisterResult(points.Item1);
+                teamRecords.Where(t => t.TeamId == game.Away).First().RegisterResult(points.Item2);
             }
             return table.OrderByDescending(x => x.Value);
         }
