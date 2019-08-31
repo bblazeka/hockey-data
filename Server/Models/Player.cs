@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
-using SportPredictor.Mediators;
+using Server.Mediators;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Globalization;
 using System.Text;
 
-namespace SportPredictor.Models
+namespace Server.Models
 {
     public class Player : IEntity
     {

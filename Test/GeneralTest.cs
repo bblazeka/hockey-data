@@ -1,7 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SportPredictor;
-using SportPredictor.Handlers;
-using SportPredictor.Models;
+using Server.Handlers;
+using Server.Models;
 
 namespace Test
 {

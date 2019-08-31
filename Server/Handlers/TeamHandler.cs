@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SportPredictor.Mediators;
-using SportPredictor.Models;
+using Server.Mediators;
+using Server.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace SportPredictor.Handlers
+namespace Server.Handlers
 {
     public class TeamHandler
     {
@@ -15,12 +15,7 @@ namespace SportPredictor.Handlers
 
         public TeamHandler()
         {
-            using (StreamReader r = new StreamReader("Resources/teams.json"))
-            {
-                string json = r.ReadToEnd();
-                List<dynamic> items = JsonConvert.DeserializeObject<List<dynamic>>(json);
-            }
-            _teams = ParseAnswer(ApiMediator.SendRequest(RequestBuilder("2018", "2019")));
+            _teams = ParseAnswer(ApiMediator.SendRequest(RequestBuilder("2018", "2019"))).OrderBy(team => team.Name).ToList();
         }
 
         public List<Team> Teams

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SportPredictor.Handlers;
-using SportPredictor.Models;
+using Server.Models;
 
 namespace Predictor.Controllers
 {

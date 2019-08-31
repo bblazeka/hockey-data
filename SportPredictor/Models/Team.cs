@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using Oracle.ManagedDataAccess.Client;
 using SportPredictor.Mediators;
 using System;
 using System.Collections.Generic;
