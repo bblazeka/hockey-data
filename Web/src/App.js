@@ -1,9 +1,11 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './App.css';
-import Schedule from './components/Schedule';
 
-function App() {
+class App extends Component {
+
+render() {
   return (
     <div className="App">
       <header className="App-header">
@@ -19,9 +21,17 @@ function App() {
           Learn React
         </a>
       </header>
-      <Schedule></Schedule>
+      {this.props.children}
     </div>
   );
 }
+}
 
-export default App;
+const mapState = (state) => ({
+});
+
+const mapDispatch = (dispatch) => ({
+  hide: () => dispatch(),
+});
+
+export default withRouter(connect(mapState,mapDispatch)(App));

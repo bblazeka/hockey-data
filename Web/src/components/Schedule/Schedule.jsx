@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import * as appActions from '../actions/appActions';
+import * as appActions from '../../actions/appActions';
 import './Schedule.css';
-import Loader from './Loader';
-import { covertDateTimeToString, getDatesArray } from '../util/converter';
+import Loader from '../Loader/Loader';
+import { covertDateTimeToString, getDatesArray } from '../../util/converter';
 
 class Schedule extends Component {
     constructor(props) {
