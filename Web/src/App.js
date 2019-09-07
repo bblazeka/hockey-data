@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.css';
+import routes from './routes';
 
 class App extends Component {
 
@@ -9,17 +10,8 @@ render() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <NavLink className="App-link" to={routes.teams}> Teams </NavLink>
+        <NavLink className="App-link" to={routes.schedule}> Schedule </NavLink>
       </header>
       {this.props.children}
     </div>

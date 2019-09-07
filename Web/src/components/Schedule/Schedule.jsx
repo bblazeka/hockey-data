@@ -32,7 +32,7 @@ class Schedule extends Component {
         if (!schedule) {
             return (<div><Loader></Loader></div>)
         }
-        return (<table>
+        return (<table><tbody>
             <tr>
                 <td>
                     Team
@@ -47,7 +47,7 @@ class Schedule extends Component {
                 return (
                     <tr>
                         <td>
-                            <img className="logo" src={element.logo}></img>
+                            <img className="logo" src={element.logo} alt={"img"+element.id}></img>
                         </td>
                         {dates.map((date) => {
                             var game = (element.games.filter(game => game.startDate && game.startDate.split("T")[0] === covertDateTimeToString(date)))[0]
@@ -55,7 +55,7 @@ class Schedule extends Component {
                                 const logo = element.id === game.home.id ? game.away.logo : game.home.logo
                                 return (
                                     <td>
-                                        <img className="logo" src={logo}></img>
+                                        <img className="logo" src={logo} alt={"img"+game.startDate+element.id}></img>
                                     </td>
                                 )
                             } catch (err) {
@@ -67,7 +67,7 @@ class Schedule extends Component {
                         })}
                     </tr>)
             })}
-        </table>);
+        </tbody></table>);
     }
 }
 
