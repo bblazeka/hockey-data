@@ -11,7 +11,8 @@ import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers/rootReducer';
 import * as serviceWorker from './serviceWorker';
 import {
-    Schedule
+    Schedule,
+    Standings,
 } from './components';
 import routes from './routes';
 
@@ -30,6 +31,7 @@ ReactDOM.render(
       <App>
         <Switch>
           <Route exact path={routes.schedule} component={Schedule} />
+          <Route exact path={routes.standings} component={Standings} />
         </Switch>
       </App>
     </Router>

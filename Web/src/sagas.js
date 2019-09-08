@@ -1,11 +1,14 @@
-import { takeEvery, call, put } from "redux-saga/effects";
+import { takeEvery, call, put, all } from "redux-saga/effects";
 import * as actions from './actions/appActions';
 import axios from "axios";
 
 // watcher saga: watches for actions dispatched to the store, starts worker saga
 
 export function* watcherSaga() {
-    yield takeEvery(actions.GET_SCHEDULE, workerSaga);
+    yield all([
+      takeEvery(actions.GET_SCHEDULE, workerSaga),
+      takeEvery(actions.GET_STANDINGS, handleStandings),
+    ]);
   }
   
   // function that makes the api request and returns a Promise for response
@@ -13,7 +16,7 @@ export function* watcherSaga() {
     console.log(params)
     return axios({
       method: "get",
-      url: "http://localhost:50540/api/league/schedule/"+params.start+"?enddate="+params.end,
+      url: params.path,
       headers: {"Content-Type": "application/json"}
     });
   }
@@ -27,6 +30,22 @@ export function* watcherSaga() {
       // dispatch a success action to the store with the payload
       if (response) {
         yield put({ type: actions.SCHEDULE_LOADED, payload: response.data });
+      }
+    } catch (error) {
+      alert(error)
+      // dispatch a failure action to the store with the error
+      // yield put({ type: actions.SUBMIT_EGG_FAILURE, error });
+    }
+  }
+
+  export function* handleStandings(params) {
+    try {
+      const response = yield call(sendRequest,params.payload);
+      console.log(response)
+  
+      // dispatch a success action to the store with the payload
+      if (response) {
+        yield put({ type: actions.STANDINGS_LOADED, payload: response.data });
       }
     } catch (error) {
       alert(error)

@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Server.Models
+namespace Predictor.Models
 {
-    public class GameData
+    public class Game
     {
-        public DateTime StartDate { get; set; }
-        public Team Home { get; set; }
+        public string HomeTeam { get; set; }
         public float HomeWins { get; set; }
         public float HomeLosses { get; set; }
         public float HomeOT { get; set; }
-        public Team Away { get; set; }
+        public string AwayTeam { get; set; }
         public float AwayWins { get; set; }
         public float AwayLosses { get; set; }
         public float AwayOT { get; set; }

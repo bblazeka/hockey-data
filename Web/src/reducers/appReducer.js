@@ -9,6 +9,11 @@ export default (state = defaultAppState, action) => {
                 ...state,
                 schedule: action.payload
             }
+        case 'STANDINGS_LOADED':
+            return {
+                ...state,
+                standings: action.payload
+            }
         default:
             return state
     }

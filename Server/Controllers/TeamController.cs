@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Server.Models;
 
@@ -7,10 +8,11 @@ namespace Predictor.Controllers
     [Route("api/[controller]")]
     public class TeamController : Controller
     {
+        private readonly IMapper _mapper;
 
-        public TeamController()
+        public TeamController(IMapper mapper)
         {
-            // empty for now
+            _mapper = mapper;
         }
 
         // GET api/team/{id}

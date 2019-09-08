@@ -11,6 +11,7 @@ render() {
     <div className="App">
       <header className="App-header">
         <NavLink className="App-link" to={routes.teams}> Teams </NavLink>
+        <NavLink className="App-link" to={routes.standings}> Standings </NavLink>
         <NavLink className="App-link" to={routes.schedule}> Schedule </NavLink>
       </header>
       {this.props.children}
