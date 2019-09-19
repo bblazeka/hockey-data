@@ -1,0 +1,7 @@
+.roster {
+    display: flex;
+}
+
+.roster-part {
+    padding: 5px;
+}

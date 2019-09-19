@@ -11,6 +11,7 @@ namespace Test
     public class GeneralTest : Test
     {
         private LeagueController m_leagueController;
+        private TeamController m_teamController;
 
         public GeneralTest()
         {
@@ -21,6 +22,7 @@ namespace Test
 
             IMapper mapper = mappingConfig.CreateMapper();
             m_leagueController = new LeagueController(mapper);
+            m_teamController = new TeamController(mapper);
         }
 
         [TestMethod]
@@ -33,6 +35,12 @@ namespace Test
         public void TestStandings()
         {
             var standings = m_leagueController.GetStandings();
+        }
+
+        [TestMethod]
+        public void TestTeams()
+        {
+            var standings = m_teamController.Get("10");
         }
     }
 }

@@ -16,9 +16,15 @@ namespace Server.ViewModels
         public int GoalsScored { get; set; }
         public int GoalsAgainst { get; set; }
         public int Points { get; set; }
+        public int DivisionRank { get; set; }
+        public int ConferenceRank { get; set; }
+        public int LeagueRank { get; set; }
+        public int GamesPlayed { get; set; }
         public string Division { get; set; }
         public string Conference { get; set; }
         public List<GameViewData> Games { get; set; }
+        public List<GoalieViewData> Goalies { get; set; }
+        public List<SkaterViewData> Skaters { get; set; }
 
         public TeamViewData(int id, string name)
         {

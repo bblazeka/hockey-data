@@ -6,8 +6,10 @@ import axios from "axios";
 
 export function* watcherSaga() {
     yield all([
-      takeEvery(actions.GET_SCHEDULE, workerSaga),
-      takeEvery(actions.GET_STANDINGS, handleStandings),
+      takeEvery(actions.GET_SCHEDULE, workerSagaSchedule),
+      takeEvery(actions.GET_STANDINGS, workerSagaStandings),
+      takeEvery(actions.GET_TEAM, workerSagaTeam),
+      takeEvery(actions.GET_TEAMS, workerSagaTeams),
     ]);
   }
   
@@ -22,9 +24,11 @@ export function* watcherSaga() {
   }
   
   // worker saga: makes the api call when watcher saga sees the action
-  export function* workerSaga(params) {
+  export function* workerSagaSchedule(params) {
     try {
-      const response = yield call(sendRequest,params.payload);
+      const response = yield call(sendRequest,{
+        path: "http://localhost:50540/api/league/schedule/"+params.payload.start+"?enddate="+params.payload.end,
+      });
       console.log(response)
   
       // dispatch a success action to the store with the payload
@@ -38,14 +42,52 @@ export function* watcherSaga() {
     }
   }
 
-  export function* handleStandings(params) {
+  export function* workerSagaStandings() {
     try {
-      const response = yield call(sendRequest,params.payload);
+      const response = yield call(sendRequest,{
+        path: "http://localhost:50540/api/league/standings",
+      });
       console.log(response)
   
       // dispatch a success action to the store with the payload
       if (response) {
         yield put({ type: actions.STANDINGS_LOADED, payload: response.data });
+      }
+    } catch (error) {
+      alert(error)
+      // dispatch a failure action to the store with the error
+      // yield put({ type: actions.SUBMIT_EGG_FAILURE, error });
+    }
+  }
+
+  export function* workerSagaTeam(params) {
+    try {
+      const response = yield call(sendRequest,{
+        path: "http://localhost:50540/api/team/"+params.payload.id,
+      });
+      console.log(response)
+  
+      // dispatch a success action to the store with the payload
+      if (response) {
+        yield put({ type: actions.TEAM_LOADED, payload: response.data });
+      }
+    } catch (error) {
+      alert(error)
+      // dispatch a failure action to the store with the error
+      // yield put({ type: actions.SUBMIT_EGG_FAILURE, error });
+    }
+  }
+
+  export function* workerSagaTeams() {
+    try {
+      const response = yield call(sendRequest,{
+        path: "http://localhost:50540/api/league/teams",
+      });
+      console.log(response)
+  
+      // dispatch a success action to the store with the payload
+      if (response) {
+        yield put({ type: actions.TEAMS_LOADED, payload: response.data });
       }
     } catch (error) {
       alert(error)

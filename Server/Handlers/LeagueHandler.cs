@@ -126,6 +126,10 @@ namespace Server.Handlers
                         Points = Int32.Parse(teamRecord["points"].ToString()),
                         Conference = conference,
                         Division = division,
+                        DivisionRank = Int32.Parse(teamRecord["divisionRank"].ToString()),
+                        ConferenceRank = Int32.Parse(teamRecord["conferenceRank"].ToString()),
+                        LeagueRank = Int32.Parse(teamRecord["leagueRank"].ToString()),
+                        GamesPlayed = Int32.Parse(teamRecord["gamesPlayed"].ToString()),
                     };
                     teams.Add(teamViewData);
                 }

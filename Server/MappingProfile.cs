@@ -23,6 +23,38 @@ namespace Server
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dto => dto.Logo, opt => opt.MapFrom(src => src.Logo));
+            CreateMap<Player, PlayerViewData>()
+                .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dto => dto.BirthPlace, opt => opt.MapFrom(src => src.BirthPlace))
+                .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position));
+            CreateMap<PlayerViewData, Player>()
+                .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dto => dto.BirthPlace, opt => opt.MapFrom(src => src.BirthPlace))
+                .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position));
+            CreateMap<Skater, SkaterViewData>()
+                .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position))
+                .ForMember(dto => dto.Goals, opt => opt.MapFrom(src => src.Goals))
+                .ForMember(dto => dto.Pim, opt => opt.MapFrom(src => src.Pim))
+                .ForMember(dto => dto.Shots, opt => opt.MapFrom(src => src.Shots))
+                .ForMember(dto => dto.Games, opt => opt.MapFrom(src => src.Games))
+                .ForMember(dto => dto.Points, opt => opt.MapFrom(src => src.Points))
+                .ForMember(dto => dto.PlusMinus, opt => opt.MapFrom(src => src.PlusMinus))
+                .ForMember(dto => dto.Assists, opt => opt.MapFrom(src => src.Assists));
+            CreateMap<SkaterViewData, Skater>();
+            CreateMap<Goalie, GoalieViewData>()
+                .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position))
+                .ForMember(dto => dto.Games, opt => opt.MapFrom(src => src.Games))
+                .ForMember(dto => dto.Ot, opt => opt.MapFrom(src => src.Ot))
+                .ForMember(dto => dto.Shutouts, opt => opt.MapFrom(src => src.Shutouts))
+                .ForMember(dto => dto.Losses, opt => opt.MapFrom(src => src.Losses))
+                .ForMember(dto => dto.Saves, opt => opt.MapFrom(src => src.Saves))
+                .ForMember(dto => dto.Toi, opt => opt.MapFrom(src => src.Toi))
+                .ForMember(dto => dto.SavePerc, opt => opt.MapFrom(src => src.SavePerc))
+                .ForMember(dto => dto.GlsAgainstAverage, opt => opt.MapFrom(src => src.GlsAgainstAverage))
+                .ForMember(dto => dto.Wins, opt => opt.MapFrom(src => src.Wins));
+            CreateMap<GoalieViewData, Goalie>();
         }
     }
 }

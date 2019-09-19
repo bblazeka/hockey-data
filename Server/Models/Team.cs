@@ -51,12 +51,12 @@ namespace Server.Models
                 List<Player> roster = new List<Player>();
                 foreach (var rosterElement in team["roster"]["roster"])
                 {
-                    roster.Add(new Player(
-                        int.Parse(rosterElement["person"]["id"].ToString()),
-                        rosterElement["person"]["fullName"].ToString(),
-                        rosterElement["position"]["code"].ToString()
-                        )
-                    );
+                    var position = rosterElement["position"]["code"].ToString();
+                    if (position == "G") {
+                        roster.Add(new Goalie(int.Parse(rosterElement["person"]["id"].ToString())));
+                    } else {
+                        roster.Add(new Skater(int.Parse(rosterElement["person"]["id"].ToString())));
+                    }
                 }
                 Players = roster;
             }

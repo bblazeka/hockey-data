@@ -37,11 +37,24 @@ namespace Predictor.Controllers
             return teams;
         }
 
+        // GET api/league/teams
+        [HttpGet("teams")]
+        public object GetTeams()
+        {
+            List<TeamViewData> teams = _leagueHandler.Teams.Select(x => _mapper.Map<TeamViewData>(x)).ToList();
+            foreach (TeamViewData team in teams)
+            {
+                team.RefreshData();
+            }
+            return teams.ToList();
+        }
+
         // GET api/league/standings
         [HttpGet("standings")]
         public object GetStandings()
         {
-            return LeagueHandler.ParseStandings(ApiMediator.SendRequest(StandingsRequestBuilder("2018", "2019"))).OrderBy(team => team.Name).ToList();
+            var teams = LeagueHandler.ParseStandings(ApiMediator.SendRequest(StandingsRequestBuilder("2018", "2019")));
+            return teams;
         }
 
         public static string StandingsRequestBuilder(string start, string end)

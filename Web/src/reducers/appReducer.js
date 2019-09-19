@@ -14,6 +14,16 @@ export default (state = defaultAppState, action) => {
                 ...state,
                 standings: action.payload
             }
+        case 'TEAM_LOADED':
+            return {
+                ...state,
+                team: action.payload
+            }
+        case 'TEAMS_LOADED':
+            return {
+                ...state,
+                teams: action.payload
+            }
         default:
             return state
     }

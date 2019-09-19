@@ -21,6 +21,8 @@ namespace Server.Models
         public string ShotCatch { get; set; }
         public string Position { get; set; }
 
+        public Player() {}
+        
         /// <summary>
         /// Player constructor that gets player data from API
         /// </summary>
