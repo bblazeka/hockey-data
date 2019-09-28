@@ -13,8 +13,10 @@ import * as serviceWorker from './serviceWorker';
 import {
     Schedule,
     Standings,
+    Settings,
     Team,
     NoMatch,
+    Player,
 } from './components';
 import routes from './routes';
 
@@ -34,7 +36,9 @@ ReactDOM.render(
         <Switch>
           <Route exact path={routes.schedule} component={Schedule} />
           <Route exact path={routes.standings} component={Standings} />
+          <Route exact path={routes.settings} component={Settings} />
           <Route exact path={routes.teams+"/:id"} component={Team} />
+          <Route exact path={routes.players} component={Player} />
           <Route component={NoMatch} />
         </Switch>
       </App>

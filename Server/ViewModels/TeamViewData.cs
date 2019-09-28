@@ -63,7 +63,7 @@ namespace Server.ViewModels
                 case 20: return "https://upload.wikimedia.org/wikipedia/en/6/60/Calgary_Flames_Logo.svg";
                 case 21: return "https://upload.wikimedia.org/wikipedia/en/4/45/Colorado_Avalanche_logo.svg";
                 case 22: return "https://upload.wikimedia.org/wikipedia/en/4/4d/Logo_Edmonton_Oilers.svg";
-                case 23: return "https://upload.wikimedia.org/wikipedia/en/3/3a/Vancouver_Canucks_logo.svg";
+                case 23: return "https://upload.wikimedia.org/wikipedia/en/8/81/Vancouver_Canucks_Logo_%282019%29.png";
                 case 24: return "https://upload.wikimedia.org/wikipedia/en/7/72/Anaheim_Ducks.svg";
                 case 25: return "https://upload.wikimedia.org/wikipedia/en/c/ce/Dallas_Stars_logo_%282013%29.svg";
                 case 26: return "https://upload.wikimedia.org/wikipedia/en/c/cb/Los_Angeles_Kings_Logo_%282011%29.svg";

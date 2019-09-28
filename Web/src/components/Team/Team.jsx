@@ -47,11 +47,21 @@ class Team extends Component {
                     </div>
                     <div className="roster-part">
                         <table><tbody>
-                            <tr key={"skater-header"}><td>Name</td><td>POS</td><td>GP</td><td>G</td><td>A</td><td>PTS</td><td>PIM</td><td>+/-</td><td>SOG</td></tr>
+                            <tr key={"def-header"}><td>Name</td><td>POS</td><td>GP</td><td>G</td><td>A</td><td>PTS</td><td>PIM</td><td>+/-</td><td>SOG</td></tr>
                             {team.Skaters.filter(function (player) {
-                                return filterActive || player.Games > 0
+                                return (filterActive || player.Games > 0) && player.Position === "D"
                             }).map((skater) => {
-                                return (<tr key={"s" + skater.Name}><td>{skater.Name}</td><td>{skater.Position}</td><td>{skater.Games}</td><td>{skater.Goals}</td><td>{skater.Assists}</td><td>{skater.Points}</td><td>{skater.Pim}</td><td>{skater.PlusMinus}</td><td>{skater.Shots}</td></tr>)
+                                return (<tr key={"d" + skater.Name}><td>{skater.Name}</td><td>{skater.Position}</td><td>{skater.Games}</td><td>{skater.Goals}</td><td>{skater.Assists}</td><td>{skater.Points}</td><td>{skater.Pim}</td><td>{skater.PlusMinus}</td><td>{skater.Shots}</td></tr>)
+                            })}
+                        </tbody></table>
+                    </div>
+                    <div className="roster-part">
+                        <table><tbody>
+                            <tr key={"fwd-header"}><td>Name</td><td>POS</td><td>GP</td><td>G</td><td>A</td><td>PTS</td><td>PIM</td><td>+/-</td><td>SOG</td></tr>
+                            {team.Skaters.filter(function (player) {
+                                return (filterActive || player.Games > 0) && player.Position !== "D"
+                            }).map((skater) => {
+                                return (<tr key={"f" + skater.Name}><td>{skater.Name}</td><td>{skater.Position}</td><td>{skater.Games}</td><td>{skater.Goals}</td><td>{skater.Assists}</td><td>{skater.Points}</td><td>{skater.Pim}</td><td>{skater.PlusMinus}</td><td>{skater.Shots}</td></tr>)
                             })}
                         </tbody></table>
                     </div>

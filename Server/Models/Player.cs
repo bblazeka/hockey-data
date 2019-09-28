@@ -10,7 +10,7 @@ namespace Server.Models
 {
     public class Player : IEntity
     {
-        public int Id { get; }
+        public int Id { get; set; }
         public bool Active { get; set; }
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
@@ -20,6 +20,7 @@ namespace Server.Models
         public int Weight { get; set; }
         public string ShotCatch { get; set; }
         public string Position { get; set; }
+        public Team Team { get; set; }
 
         public Player() {}
         
@@ -32,6 +33,13 @@ namespace Server.Models
             string answer = ApiMediator.SendRequest(RequestBuilder(id));
             ParseAnswer(answer);
             Id = id;
+        }
+
+        public Player(int id, string name, Team team)
+        {
+            Id = id;
+            Name = name;
+            Team = team;
         }
 
         public Player(int id, string name, string position)

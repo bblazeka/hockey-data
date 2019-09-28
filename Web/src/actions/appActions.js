@@ -8,6 +8,10 @@ export const GET_TEAM = 'GET_TEAM'
 export const TEAM_LOADED = 'TEAM_LOADED'
 export const GET_TEAMS = 'GET_TEAMS'
 export const TEAMS_LOADED = 'TEAMS_LOADED'
+export const POPULATE_DATABASE = 'POPULATE_DATABASE'
+export const UPDATE_DATABASE = 'UPDATE_DATABASE'
+export const GET_PLAYER = 'GET_PLAYER'
+export const PLAYER_LOADED = 'PLAYER_LOADED'
 
 export const getSchedule = (start,end) => ({
   type: GET_SCHEDULE,
@@ -30,4 +34,19 @@ export const getTeam = (id) => ({
 
 export const getTeams = () => ({
   type: GET_TEAMS,
-}) 
+})
+
+export const populateDatabase = () => ({
+  type: POPULATE_DATABASE,
+})
+
+export const updateDatabase = () => ({
+  type: UPDATE_DATABASE,
+})
+
+export const searchPlayer = (name) => ({
+  type: GET_PLAYER,
+  payload: {
+    name,
+  }
+})

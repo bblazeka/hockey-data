@@ -15,6 +15,8 @@ namespace Server.Models
         public List<Player> Players { get; set; }
         public List<GameData> Games { get; set; }
 
+        public Team() { }
+
         public Team(int id)
         {
             string answer = ApiMediator.SendRequest(RequestBuilder(id));

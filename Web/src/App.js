@@ -10,22 +10,29 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.props.getTeams()
-}
+  }
 
   render() {
     const { teams } = this.props;
     return (
       <div className="App">
         <header className="App-header">
-          {teams && <div>
-            {teams.map(team => {
-            return(<NavLink className="App-link" to={routes.teams+"/"+team.id} key={"link" + team.id}><img className="small-logo" src={team.logo} alt={"img" + team.id}></img></NavLink>);
+            <NavLink className="App-link" to={routes.standings}>
+              standings
+            </NavLink>
+            <NavLink className="App-link" to={routes.schedule}>
+              schedule
+            </NavLink>
+            <NavLink className="App-link" to={routes.players}>
+              players
+            </NavLink>
+            {teams && teams.map(team => {
+              return (<NavLink className="App-link" to={routes.teams + "/" + team.id} key={"link" + team.id}><img className="small-logo" src={team.logo} alt={"img" + team.id}></img></NavLink>);
             })}
-          </div>}
-          
-          <NavLink className="App-link" to={routes.standings}> Standings </NavLink>
-          <NavLink className="App-link" to={routes.schedule}> Schedule </NavLink>
-        </header>
+            <NavLink to={routes.settings}>
+              settings
+            </NavLink>
+            </header>
         {this.props.children}
       </div>
     );
