@@ -17,22 +17,29 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+          <div className="App-menu">
+          <NavLink className="App-link" to={routes.prediction}>
+              Prediction
+            </NavLink>
             <NavLink className="App-link" to={routes.standings}>
-              standings
+              Standings
             </NavLink>
             <NavLink className="App-link" to={routes.schedule}>
-              schedule
+              Schedule
             </NavLink>
             <NavLink className="App-link" to={routes.players}>
-              players
+              Players
             </NavLink>
+            <NavLink className="App-link" to={routes.settings}>
+              Settings
+            </NavLink>
+          </div>
+          <div className="App-menu">
             {teams && teams.map(team => {
               return (<NavLink className="App-link" to={routes.teams + "/" + team.id} key={"link" + team.id}><img className="small-logo" src={team.logo} alt={"img" + team.id}></img></NavLink>);
             })}
-            <NavLink to={routes.settings}>
-              settings
-            </NavLink>
-            </header>
+          </div>
+        </header>
         {this.props.children}
       </div>
     );

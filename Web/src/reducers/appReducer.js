@@ -4,6 +4,11 @@ const defaultAppState = {
 
 export default (state = defaultAppState, action) => {
     switch (action.type) {
+        case 'GET_SCHEDULE':
+            return {
+                ...state,
+                schedule: null
+            }
         case 'SCHEDULE_LOADED':
             return {
                 ...state,
@@ -38,6 +43,11 @@ export default (state = defaultAppState, action) => {
             return {
                 ...state,
                 player: action.payload
+            }
+        case 'PREDICTION_LOADED':
+            return {
+                ...state,
+                prediction: action.payload
             }
         default:
             return state

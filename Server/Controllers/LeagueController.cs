@@ -53,7 +53,7 @@ namespace Predictor.Controllers
         [HttpGet("standings")]
         public object GetStandings()
         {
-            var teams = LeagueHandler.ParseStandings(ApiMediator.SendRequest(StandingsRequestBuilder("2018", "2019")));
+            var teams = LeagueHandler.ParseStandings(ApiMediator.SendRequest(StandingsRequestBuilder("2019", "2020")));
             return teams;
         }
 

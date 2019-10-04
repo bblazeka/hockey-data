@@ -50,3 +50,7 @@ export const searchPlayer = (name) => ({
     name,
   }
 })
+
+export const getPrediction = () => ({
+  type: GET_PREDICTION,
+})

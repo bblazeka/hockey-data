@@ -16,7 +16,7 @@ namespace Server.Handlers
 
         public LeagueHandler(IMapper mapper)
         {
-            Teams = ParseTeams(ApiMediator.SendRequest(StandingsRequestBuilder("2018", "2019"))).ToList();
+            Teams = ParseTeams(ApiMediator.SendRequest(StandingsRequestBuilder("2019", "2020"))).ToList();
             _mapper = mapper;
         }
 

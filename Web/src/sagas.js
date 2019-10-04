@@ -11,6 +11,7 @@ export function* watcherSaga() {
       takeEvery(actions.GET_TEAM, workerSagaTeam),
       takeEvery(actions.GET_TEAMS, workerSagaTeams),
       takeEvery(actions.GET_PLAYER, workerSagaPlayer),
+      takeEvery(actions.GET_PREDICTION, workerSagaPrediction),
     ]);
   }
   
@@ -111,6 +112,23 @@ export function* watcherSaga() {
         if (player) {
           yield put({ type: actions.PLAYER_LOADED, payload: player.data });
         }
+      }
+    } catch (error) {
+      alert(error)
+      // dispatch a failure action to the store with the error
+      // yield put({ type: actions.SUBMIT_EGG_FAILURE, error });
+    }
+  }
+
+  export function* workerSagaPrediction() {
+    try {
+      const response = yield call(sendRequest,{
+        path: "http://localhost:5000/predict",
+      });
+      console.log(response)
+      // dispatch a success action to the store with the payload
+      if (response) {
+        yield put({ type: actions.PREDICTION_LOADED, payload: response.data });
       }
     } catch (error) {
       alert(error)

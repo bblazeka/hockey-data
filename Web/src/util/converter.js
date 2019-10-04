@@ -1,5 +1,7 @@
 export function covertDateTimeToString(date) {
-    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+    var day = (date.getDate() + 1)
+    var month = (date.getMonth() + 1)
+    return date.getFullYear() + "-" + (month <= 9 ? "0"+month : month) + "-" + (day <= 9 ? "0"+day : day)
 }
 
 export function getDatesArray(startDate, stopDate) {

@@ -21,7 +21,7 @@ namespace Server.Models
         public float GlsAgainstAverage { get; set; }
 
         public Goalie(int id) : base(id) {
-            string answer = ApiMediator.SendRequest(RequestBuilder(id, "20182019"));
+            string answer = ApiMediator.SendRequest(RequestBuilder(id, "20192020"));
             ParseAnswer(answer);
         }
 
