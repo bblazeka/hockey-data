@@ -69,11 +69,14 @@ class Schedule extends Component {
                                 {covertDateTimeToString(date)}
                             </td>)
                         })}
+                        <td>
+                            Games
+                        </td>
                     </tr>
                     {schedule.map((element) => {
                         return (
-                            <tr>
-                                <td>
+                            <tr key={"games "+element.id}>
+                                <td key={"logo " + element.id}>
                                     <img className="logo" src={element.logo} alt={"img" + element.id}></img>
                                 </td>
                                 {dates.map((date) => {
@@ -81,17 +84,23 @@ class Schedule extends Component {
                                     try {
                                         const logo = element.id === game.home.id ? game.away.logo : game.home.logo
                                         return (
-                                            <td>
+                                            <td
+                                                key={"opp " + element.id + game.startDate}
+                                                className={element.id === game.home.id ? 'home-game' : 'away-game'}
+                                            >
                                                 <img className="logo" src={logo} alt={"img" + game.startDate + element.id}></img>
                                             </td>
                                         )
                                     } catch (err) {
                                         return (
-                                            <td></td>
+                                            <td key={"empty " + element.id + date.toString()} ></td>
                                         )
                                     }
 
                                 })}
+                                <td>
+                                    {element.games.length}
+                                </td>
                             </tr>)
                     })}
                 </tbody></table></div>);

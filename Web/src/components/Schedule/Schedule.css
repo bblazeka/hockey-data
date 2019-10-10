@@ -14,3 +14,11 @@
 table, th, td {
     border: 1px solid black;
   }
+
+.home-game {
+    background-color: lightblue;
+}
+
+.away-game {
+    background-color: azure;
+}

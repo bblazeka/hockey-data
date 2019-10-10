@@ -13,7 +13,7 @@ class Standings extends Component {
 
     renderTeams(name, teams) {
         return (
-            <div id={name}>
+            <div className="standings" id={name}>
                 <label>{name}</label><table><tbody>
                     <tr>
                         <td>
@@ -105,10 +105,14 @@ class Standings extends Component {
         });
         return (
             <div>
-                {this.renderTeams("Metro", metroTeams)}
-                {this.renderTeams("Atlantic", atlanticTeams)}
-                {this.renderTeams("Central", centralTeams)}
-                {this.renderTeams("Pacific", pacificTeams)}
+                <div className="conference-display">
+                    {this.renderTeams("Metro", metroTeams)}
+                    {this.renderTeams("Atlantic", atlanticTeams)}
+                </div>
+                <div className="conference-display">
+                    {this.renderTeams("Central", centralTeams)}
+                    {this.renderTeams("Pacific", pacificTeams)}
+                </div>
             </div>);
     }
 }

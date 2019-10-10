@@ -32,6 +32,6 @@ namespace Server.Controllers
                 var player = new Goalie(int.Parse(id));
                 return JsonConvert.SerializeObject(player);
             }
-        }
+        }      
     }
 }

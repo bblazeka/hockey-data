@@ -1,5 +1,6 @@
 const defaultAppState = {
-    loaded: false
+    loaded: false,
+    players: [],
 }
 
 export default (state = defaultAppState, action) => {
@@ -37,12 +38,11 @@ export default (state = defaultAppState, action) => {
         case 'GET_PLAYER':
             return {
                 ...state,
-                player: null
             }
         case 'PLAYER_LOADED':
             return {
                 ...state,
-                player: action.payload
+                players: state.players.concat(action.payload),
             }
         case 'PREDICTION_LOADED':
             return {

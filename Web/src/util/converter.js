@@ -1,5 +1,7 @@
 export function covertDateTimeToString(date) {
-    var day = (date.getDate() + 1)
+    // Get the day as a number (1-31)
+    var day = (date.getDate() + 0)
+    // Get the month as a number (0-11)
     var month = (date.getMonth() + 1)
     return date.getFullYear() + "-" + (month <= 9 ? "0"+month : month) + "-" + (day <= 9 ? "0"+day : day)
 }
@@ -7,7 +9,9 @@ export function covertDateTimeToString(date) {
 export function getDatesArray(startDate, stopDate) {
     var dateArray = [];
     var currentDate = new Date(startDate.getTime());
-    while (currentDate <= stopDate) {
+    var modifiedStopDate = new Date(stopDate.getTime());
+    modifiedStopDate.setSeconds(modifiedStopDate.getSeconds() + 50);
+    while (currentDate <= modifiedStopDate) {
         dateArray.push(new Date (currentDate));
         currentDate.setDate(currentDate.getDate() + 1);
     }

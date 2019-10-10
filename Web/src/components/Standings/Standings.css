@@ -1,0 +1,8 @@
+.conference-display {
+    display: flex;
+    flex-direction: row;
+}
+
+.standings {
+    padding: 5px;
+}

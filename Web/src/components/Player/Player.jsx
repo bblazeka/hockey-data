@@ -16,20 +16,32 @@ class Player extends Component {
     }
 
     render() {
-        const { player } = this.props;
+        const { players } = this.props;
+        console.log(players)
         return (
             <div>
                 <input ref={(c) => this.query = c}></input>
                 <button onClick={this.onSubmit}>Search</button>
-                {player && <div>
-                    {player.Name}-{player.Goals}-{player.Assists}
-                </div>}
+                <table>
+                    <tbody>
+                        <tr><td>Player</td><td>Pos</td><td>GP</td><td>G</td><td>A</td><td>SOG</td></tr>
+                        {players &&
+                            players.map((player) => {
+                                return (
+                                    <tr>
+                                        <td>{player.Name}</td><td>{player.Position}</td><td>{player.Games}</td><td>{player.Goals}</td><td>{player.Assists}</td><td>{player.Shots}</td>
+                            </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
             </div>);
     }
 }
 
 const mapStateToProps = state => ({
-    player: state.app.player,
+    players: state.app.players,
 })
 
 const mapDispatchToProps = dispatch => ({
