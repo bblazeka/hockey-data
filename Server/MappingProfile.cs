@@ -40,7 +40,18 @@ namespace Server
                 .ForMember(dto => dto.Games, opt => opt.MapFrom(src => src.Games))
                 .ForMember(dto => dto.Points, opt => opt.MapFrom(src => src.Points))
                 .ForMember(dto => dto.PlusMinus, opt => opt.MapFrom(src => src.PlusMinus))
-                .ForMember(dto => dto.Assists, opt => opt.MapFrom(src => src.Assists));
+                .ForMember(dto => dto.Assists, opt => opt.MapFrom(src => src.Assists))
+                .ForMember(dto => dto.TimeOnIce, opt => opt.MapFrom(src => src.TimeOnIce))
+                .ForMember(dto => dto.Hits, opt => opt.MapFrom(src => src.Hits))
+                .ForMember(dto => dto.Blocked, opt => opt.MapFrom(src => src.Blocked))
+                .ForMember(dto => dto.GameWinningGoals, opt => opt.MapFrom(src => src.GameWinningGoals))
+                .ForMember(dto => dto.OverTimeGoals, opt => opt.MapFrom(src => src.OverTimeGoals))
+                .ForMember(dto => dto.PowerPlayGoals, opt => opt.MapFrom(src => src.PowerPlayGoals))
+                .ForMember(dto => dto.PowerPlayPoints, opt => opt.MapFrom(src => src.PowerPlayPoints))
+                .ForMember(dto => dto.PowerPlayTimeOnIce, opt => opt.MapFrom(src => src.PowerPlayTimeOnIce))
+                .ForMember(dto => dto.ShortHandedGoals, opt => opt.MapFrom(src => src.ShortHandedGoals))
+                .ForMember(dto => dto.ShortHandedPoints, opt => opt.MapFrom(src => src.ShortHandedPoints))
+                .ForMember(dto => dto.ShortHandedTimeOnIce, opt => opt.MapFrom(src => src.ShortHandedTimeOnIce));
             CreateMap<SkaterViewData, Skater>();
             CreateMap<Goalie, GoalieViewData>()
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))

@@ -24,12 +24,12 @@ class Player extends Component {
                 <button onClick={this.onSubmit}>Search</button>
                 <table>
                     <tbody>
-                        <tr><td>Player</td><td>Pos</td><td>GP</td><td>G</td><td>A</td><td>SOG</td></tr>
+                        <tr><td>Player</td><td>Pos</td><td>GP</td><td>G</td><td>A</td><td>+/-</td><td>SOG</td><td>HIT</td><td>BLK</td><td></td><td>TOI</td><td>PP-TOI</td><td>PK-TOI</td></tr>
                         {players &&
                             players.map((player) => {
                                 return (
                                     <tr>
-                                        <td>{player.Name}</td><td>{player.Position}</td><td>{player.Games}</td><td>{player.Goals}</td><td>{player.Assists}</td><td>{player.Shots}</td>
+                                        <td>{player.Name}</td><td>{player.Position}</td><td>{player.Games}</td><td>{player.Goals}</td><td>{player.Assists}</td><td>{player.PlusMinus}</td><td>{player.Shots}</td><td>{player.Hits}</td><td>{player.Blocked}</td><td></td><td>{player.TimeOnIce}</td><td>{player.PowerPlayTimeOnIce}</td><td>{player.ShortHandedTimeOnIce}</td>
                             </tr>
                                 )
                             })
