@@ -11,7 +11,11 @@ export function* watcherSaga() {
       takeEvery(actions.GET_TEAM, workerSagaTeam),
       takeEvery(actions.GET_TEAMS, workerSagaTeams),
       takeEvery(actions.GET_PLAYER, workerSagaPlayer),
+      takeEvery(actions.SEARCH_PLAYER, workerSagaSearchPlayer),
       takeEvery(actions.GET_PREDICTION, workerSagaPrediction),
+      takeEvery(actions.BASIC_SEARCH_PLAYER, workerSagaBasicSearchPlayer),
+      takeEvery(actions.GET_NEWS, workerSagaNews),
+
     ]);
   }
   
@@ -101,6 +105,40 @@ export function* watcherSaga() {
   export function* workerSagaPlayer(params) {
     try {
       const response = yield call(sendRequest,{
+        path: "http://localhost:50540/api/player/"+params.payload.id,
+      });
+      console.log(response)
+      // dispatch a success action to the store with the payload
+      if (response) {
+        yield put({ type: actions.PLAYER_LOADED, payload: response.data });
+      }
+    } catch (error) {
+      alert(error)
+      // dispatch a failure action to the store with the error
+      // yield put({ type: actions.SUBMIT_EGG_FAILURE, error });
+    }
+  }
+
+  export function* workerSagaBasicSearchPlayer(params) {
+    try {
+      const response = yield call(sendRequest,{
+        path: "http://localhost:50540/api/data/player/"+params.payload.name,
+      });
+      console.log(response)
+      // dispatch a success action to the store with the payload
+      if (response) {
+        yield put({ type: actions.BASIC_PLAYER_LOADED, payload: response.data });
+      }
+    } catch (error) {
+      alert(error)
+      // dispatch a failure action to the store with the error
+      // yield put({ type: actions.SUBMIT_EGG_FAILURE, error });
+    }
+  }
+
+  export function* workerSagaSearchPlayer(params) {
+    try {
+      const response = yield call(sendRequest,{
         path: "http://localhost:50540/api/data/player/"+params.payload.name,
       });
       console.log(response)
@@ -109,8 +147,15 @@ export function* watcherSaga() {
         const player = yield call(sendRequest,{
           path: "http://localhost:50540/api/player/"+response.data[0].id,
         });
+        console.log(params.payload)
         if (player) {
-          yield put({ type: actions.PLAYER_LOADED, payload: player.data });
+          if (params.payload.individual) {
+            yield put({ type: actions.PLAYER_LOADED, payload: player.data });
+          }
+          else {
+            yield put({ type: actions.ADD_PLAYER, payload: player.data });
+          }
+          
         }
       }
     } catch (error) {
@@ -133,6 +178,23 @@ export function* watcherSaga() {
     } catch (error) {
       alert(error)
       // dispatch a failure action to the store with the error
-      // yield put({ type: actions.SUBMIT_EGG_FAILURE, error });
+      // yield put({ type: actions.SUBMIT_PREDICTION_FAILURE, error });
+    }
+  }
+
+  export function* workerSagaNews() {
+    try {
+      const response = yield call(sendRequest,{
+        path: "http://localhost:5000/news",
+      });
+      console.log(response)
+      // dispatch a success action to the store with the payload
+      if (response) {
+        yield put({ type: actions.NEWS_LOADED, payload: response.data });
+      }
+    } catch (error) {
+      alert(error)
+      // dispatch a failure action to the store with the error
+      // yield put({ type: actions.SUBMIT_NEWS_FAILURE, error });
     }
   }

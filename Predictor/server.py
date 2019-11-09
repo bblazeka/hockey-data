@@ -5,6 +5,8 @@ import requests
 
 from datetime import date
 
+from .twitter import get_news
+
 app = Flask(__name__)
 CORS(app)
 
@@ -55,6 +57,10 @@ def predict():
 @app.route('/evaluate')
 def evaluate():
     return jsonify("not implemented yet")
+
+@app.route('/news')
+def news():
+    return jsonify(get_news())
 
 # team's overall stats
 def get_team_coeff(team):

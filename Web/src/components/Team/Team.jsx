@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import * as appActions from '../../actions/appActions';
 import './Team.css';
 import Loader from '../Loader/Loader';
+import routes from '../../routes';
 
 class Team extends Component {
     constructor(props) {
@@ -41,27 +43,27 @@ class Team extends Component {
                             {team.Goalies.filter(function (goalie) {
                                 return filterActive || goalie.Games > 0
                             }).map((goalie) => {
-                                return (<tr key={"g" + goalie.Name}><td>{goalie.Name}</td><td>{goalie.Games}</td><td>{goalie.GlsAgainstAverage}</td><td>{goalie.SavePerc}</td><td>{goalie.Saves}</td><td>{goalie.Toi}</td><td>{goalie.Wins}</td><td>{goalie.Losses}</td><td>{goalie.Ot}</td></tr>)
+                                return (<tr key={"g" + goalie.Name}><td><Link to={routes.player + "/" + goalie.Id}>{goalie.Name}</Link></td><td>{goalie.Games}</td><td>{goalie.GlsAgainstAverage}</td><td>{goalie.SavePerc}</td><td>{goalie.Saves}</td><td>{goalie.Toi}</td><td>{goalie.Wins}</td><td>{goalie.Losses}</td><td>{goalie.Ot}</td></tr>)
                             })}
                         </tbody></table>
                     </div>
                     <div className="roster-part">
                         <table><tbody>
-                            <tr key={"def-header"}><td>Name</td><td>POS</td><td>GP</td><td>G</td><td>A</td><td>PTS</td><td>PIM</td><td>+/-</td><td>SOG</td></tr>
+                            <tr key={"def-header"}><td>Name</td><td>POS</td><td>GP</td><td>G</td><td>A</td><td>PTS</td><td>PIM</td><td>+/-</td><td>SOG</td><td>HIT</td><td>BLK</td></tr>
                             {team.Skaters.filter(function (player) {
                                 return (filterActive || player.Games > 0) && player.Position === "D"
                             }).map((skater) => {
-                                return (<tr key={"d" + skater.Name}><td>{skater.Name}</td><td>{skater.Position}</td><td>{skater.Games}</td><td>{skater.Goals}</td><td>{skater.Assists}</td><td>{skater.Points}</td><td>{skater.Pim}</td><td>{skater.PlusMinus}</td><td>{skater.Shots}</td></tr>)
+                                return (<tr key={"d" + skater.Name}><td><Link to={routes.player + "/" + skater.Id}>{skater.Name}</Link></td><td>{skater.Position}</td><td>{skater.Games}</td><td>{skater.Goals}</td><td>{skater.Assists}</td><td>{skater.Points}</td><td>{skater.Pim}</td><td>{skater.PlusMinus}</td><td>{skater.Shots}</td><td>{skater.Hits}</td><td>{skater.Blocked}</td></tr>)
                             })}
                         </tbody></table>
                     </div>
                     <div className="roster-part">
                         <table><tbody>
-                            <tr key={"fwd-header"}><td>Name</td><td>POS</td><td>GP</td><td>G</td><td>A</td><td>PTS</td><td>PIM</td><td>+/-</td><td>SOG</td></tr>
+                            <tr key={"fwd-header"}><td>Name</td><td>POS</td><td>GP</td><td>G</td><td>A</td><td>PTS</td><td>PIM</td><td>+/-</td><td>SOG</td><td>HIT</td><td>BLK</td></tr>
                             {team.Skaters.filter(function (player) {
                                 return (filterActive || player.Games > 0) && player.Position !== "D"
                             }).map((skater) => {
-                                return (<tr key={"f" + skater.Name}><td>{skater.Name}</td><td>{skater.Position}</td><td>{skater.Games}</td><td>{skater.Goals}</td><td>{skater.Assists}</td><td>{skater.Points}</td><td>{skater.Pim}</td><td>{skater.PlusMinus}</td><td>{skater.Shots}</td></tr>)
+                                return (<tr key={"f" + skater.Name}><td><Link to={routes.player + "/" + skater.Id}>{skater.Name}</Link></td><td>{skater.Position}</td><td>{skater.Games}</td><td>{skater.Goals}</td><td>{skater.Assists}</td><td>{skater.Points}</td><td>{skater.Pim}</td><td>{skater.PlusMinus}</td><td>{skater.Shots}</td><td>{skater.Hits}</td><td>{skater.Blocked}</td></tr>)
                             })}
                         </tbody></table>
                     </div>

@@ -7,6 +7,7 @@ namespace Server.ViewModels
 {
     public class SkaterViewData
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Position { get; set; }
         public int Goals { get; set; }

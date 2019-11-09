@@ -1,0 +1,48 @@
+{
+    "sources": [
+        {
+            "id": "NHLFlyers",
+            "team": 4
+        },
+        {
+            "id": "BroadStBull",
+            "team": 4
+        },
+        {
+            "id": "BuffaloSabres",
+            "team": 7
+        },
+        {
+            "id": "Senators",
+            "team": 9
+        },
+        {
+            "id": "SunGarrioch",
+            "team": 9
+        },
+        {
+            "id": "JamesonCoop",
+            "team": 13
+        },
+        {
+            "id": "JoeSmithTB",
+            "team": 14
+        },
+        {
+            "id": "SamanthaJPell",
+            "team": 15
+        },
+        {
+            "id": "KKurzNHL",
+            "team": 28
+        },
+        {
+            "id": "RussoHockey",
+            "team": 30
+        },
+        {
+            "id": "JesseGranger_",
+            "team": 54
+        }
+    ]
+}

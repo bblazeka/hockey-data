@@ -1,6 +1,7 @@
 const defaultAppState = {
     loaded: false,
     players: [],
+    roster: [],
 }
 
 export default (state = defaultAppState, action) => {
@@ -39,15 +40,36 @@ export default (state = defaultAppState, action) => {
             return {
                 ...state,
             }
-        case 'PLAYER_LOADED':
+        case 'ADD_PLAYER':
             return {
                 ...state,
                 players: state.players.concat(action.payload),
+            }
+        case 'REMOVE_PLAYER':
+            const newPlayers = state.players.filter(p => p.Id !== parseInt(action.payload.id))
+            return {
+                ...state,
+                players: newPlayers
+            }
+        case 'PLAYER_LOADED':
+            return {
+                ...state,
+                player: action.payload,
+            }
+        case 'BASIC_PLAYER_LOADED':
+            return {
+                ...state,
+                roster: state.roster.concat(action.payload[0]),
             }
         case 'PREDICTION_LOADED':
             return {
                 ...state,
                 prediction: action.payload
+            }
+        case 'NEWS_LOADED':
+            return {
+                ...state,
+                news: action.payload
             }
         default:
             return state

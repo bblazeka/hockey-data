@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import * as appActions from '../../actions/appActions';
 import './Standings.css';
 import Loader from '../Loader/Loader';
+import routes from '../../routes';
 
 class Standings extends Component {
     constructor(props) {
@@ -54,10 +56,10 @@ class Standings extends Component {
                                     {team.divisionRank}
                                 </td>
                                 <td>
-                                    <img className="logo" src={team.logo} alt={"img" + team.id}></img>
+                                    <Link to={routes.teams + "/" + team.id}><img className="logo" src={team.logo} alt={"img" + team.id}></img></Link>
                                 </td>
                                 <td>
-                                    {team.name}
+                                <Link to={routes.teams + "/" + team.id}>{team.name}</Link>
                                 </td>
                                 <td>
                                     {team.gamesPlayed}

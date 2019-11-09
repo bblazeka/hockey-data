@@ -32,6 +32,7 @@ namespace Server
                 .ForMember(dto => dto.BirthPlace, opt => opt.MapFrom(src => src.BirthPlace))
                 .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position));
             CreateMap<Skater, SkaterViewData>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position))
                 .ForMember(dto => dto.Goals, opt => opt.MapFrom(src => src.Goals))
@@ -54,6 +55,7 @@ namespace Server
                 .ForMember(dto => dto.ShortHandedTimeOnIce, opt => opt.MapFrom(src => src.ShortHandedTimeOnIce));
             CreateMap<SkaterViewData, Skater>();
             CreateMap<Goalie, GoalieViewData>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position))
                 .ForMember(dto => dto.Games, opt => opt.MapFrom(src => src.Games))

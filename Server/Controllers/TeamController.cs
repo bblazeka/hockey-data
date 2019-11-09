@@ -28,7 +28,7 @@ namespace Predictor.Controllers
 
         private TeamViewData Convert(Team team) {
             var teamViewData = _mapper.Map<TeamViewData>(team);
-            teamViewData.Skaters = team.Players.Where(player => player.Position != "G").Select(x => _mapper.Map<SkaterViewData>(x)).ToList();
+            teamViewData.Skaters = team.Players.Where(player => player.Position != "G").OrderByDescending(p => ((Skater)p).Points).Select(x => _mapper.Map<SkaterViewData>(x)).ToList();
             teamViewData.Goalies = team.Players.Where(player => player.Position == "G").Select(x => _mapper.Map<GoalieViewData>(x)).ToList();
             return teamViewData;
         }

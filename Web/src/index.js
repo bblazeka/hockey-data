@@ -16,8 +16,11 @@ import {
     Settings,
     Team,
     NoMatch,
+    News,
     Player,
+    PlayerList,
     Prediction,
+    Lineup,
 } from './components';
 import routes from './routes';
 
@@ -35,12 +38,15 @@ ReactDOM.render(
     <Router>
       <App>
         <Switch>
+          <Route exact path={routes.news} component={News} />
           <Route exact path={routes.schedule} component={Schedule} />
           <Route exact path={routes.standings} component={Standings} />
           <Route exact path={routes.settings} component={Settings} />
+          <Route exact path={routes.lineup} component={Lineup} />
           <Route exact path={routes.prediction} component={Prediction} />
           <Route exact path={routes.teams+"/:id"} component={Team} />
-          <Route exact path={routes.players} component={Player} />
+          <Route exact path={routes.players} component={PlayerList} />
+          <Route exact path={routes.player+"/:id"} component={Player} />
           <Route component={NoMatch} />
         </Switch>
       </App>
