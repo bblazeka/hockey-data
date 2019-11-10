@@ -1,12 +1,32 @@
 {
     "sources": [
         {
+            "id": "NJDevils",
+            "team": 1
+        },
+        {
+            "id": "NYIslanders",
+            "team": 2
+        },
+        {
+            "id": "NYRangers",
+            "team": 3
+        },
+        {
             "id": "NHLFlyers",
             "team": 4
         },
         {
             "id": "BroadStBull",
             "team": 4
+        },
+        {
+            "id": "penguins",
+            "team": 5
+        },
+        {
+            "id": "NHLBruins",
+            "team": 6
         },
         {
             "id": "BuffaloSabres",

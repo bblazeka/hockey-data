@@ -12,5 +12,6 @@ namespace Server.ViewModels
         public string BirthPlace { get; set; }
         public string Nationality { get; set; }
         public string Position { get; set; }
+        public TeamViewData Team { get; set; }
     }
 }

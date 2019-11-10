@@ -51,6 +51,11 @@ export default (state = defaultAppState, action) => {
                 ...state,
                 players: newPlayers
             }
+        case 'ADD_TO_LINEUP':
+            return {
+                ...state,
+                roster: state.roster.concat(action.payload.player),
+            }
         case 'PLAYER_LOADED':
             return {
                 ...state,
@@ -59,7 +64,14 @@ export default (state = defaultAppState, action) => {
         case 'BASIC_PLAYER_LOADED':
             return {
                 ...state,
-                roster: state.roster.concat(action.payload[0]),
+                suggestions: action.payload.map((result)=>{
+                    return {
+                        "title": result.name,
+                        "description": result.team.name,
+                        "image": result.team.logo,
+                        "id": result.id,
+                    }
+                }),
             }
         case 'PREDICTION_LOADED':
             return {

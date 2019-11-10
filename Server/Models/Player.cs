@@ -79,6 +79,12 @@ namespace Server.Models
             {
                 Nationality = person["nationality"].ToString();
             }
+
+            if (person["currentTeam"] != null)
+            {
+                Team = new Team(int.Parse(person["currentTeam"]["id"].ToString()),person["currentTeam"]["name"].ToString());
+            }
+            
         }
 
         public static string RequestBuilder(long id)

@@ -7,6 +7,8 @@ import './Standings.css';
 import Loader from '../Loader/Loader';
 import routes from '../../routes';
 
+import { Table } from 'semantic-ui-react';
+
 class Standings extends Component {
     constructor(props) {
         super(props)
@@ -16,76 +18,81 @@ class Standings extends Component {
     renderTeams(name, teams) {
         return (
             <div className="standings" id={name}>
-                <label>{name}</label><table><tbody>
-                    <tr>
-                        <td>
+                <label>{name}</label>
+                <Table celled>
+                    <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell>
                             Rank
-                        </td>
-                        <td>
+                        </Table.HeaderCell>
+                        <Table.HeaderCell>
                             Logo
-                        </td>
-                        <td>
+                        </Table.HeaderCell>
+                        <Table.HeaderCell>
                             Team
-                        </td>
-                        <td>
+                        </Table.HeaderCell>
+                        <Table.HeaderCell>
                             GP
-                        </td>
-                        <td>
+                        </Table.HeaderCell>
+                        <Table.HeaderCell>
                             W
-                        </td>
-                        <td>
+                        </Table.HeaderCell>
+                        <Table.HeaderCell>
                             L
-                        </td>
-                        <td>
+                        </Table.HeaderCell>
+                        <Table.HeaderCell>
                             OT
-                        </td>
-                        <td>
+                        </Table.HeaderCell>
+                        <Table.HeaderCell>
                             GS
-                        </td>
-                        <td>
+                        </Table.HeaderCell>
+                        <Table.HeaderCell>
                             GA
-                        </td>
-                        <td>
+                        </Table.HeaderCell>
+                        <Table.HeaderCell>
                             PTS
-                        </td>
-                    </tr>
+                        </Table.HeaderCell>
+                    </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
                     {teams.map((team) => {
                         return (
-                            <tr>
-                                <td>
+                            <Table.Row>
+                                <Table.Cell>
                                     {team.divisionRank}
-                                </td>
-                                <td>
+                                </Table.Cell>
+                                <Table.Cell>
                                     <Link to={routes.teams + "/" + team.id}><img className="logo" src={team.logo} alt={"img" + team.id}></img></Link>
-                                </td>
-                                <td>
-                                <Link to={routes.teams + "/" + team.id}>{team.name}</Link>
-                                </td>
-                                <td>
+                                </Table.Cell>
+                                <Table.Cell>
+                                    <Link to={routes.teams + "/" + team.id}>{team.name}</Link>
+                                </Table.Cell>
+                                <Table.Cell>
                                     {team.gamesPlayed}
-                                </td>
-                                <td>
+                                </Table.Cell>
+                                <Table.Cell>
                                     {team.wins}
-                                </td>
-                                <td>
+                                </Table.Cell>
+                                <Table.Cell>
                                     {team.losses}
-                                </td>
-                                <td>
+                                </Table.Cell>
+                                <Table.Cell>
                                     {team.ot}
-                                </td>
-                                <td>
+                                </Table.Cell>
+                                <Table.Cell>
                                     {team.goalsScored}
-                                </td>
-                                <td>
+                                </Table.Cell>
+                                <Table.Cell>
                                     {team.goalsAgainst}
-                                </td>
-                                <td>
+                                </Table.Cell>
+                                <Table.Cell>
                                     {team.points}
-                                </td>
-                            </tr>
+                                </Table.Cell>
+                            </Table.Row>
                         )
                     })}
-                </tbody></table></div>)
+                    </Table.Body>
+                </Table></div>)
     }
 
     render() {

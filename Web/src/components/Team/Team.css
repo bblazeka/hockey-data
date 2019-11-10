@@ -1,5 +1,5 @@
 .roster {
-    display: flex;
+    display: block;
 }
 
 .roster-part {

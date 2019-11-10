@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Image, List } from 'semantic-ui-react';
 
 import * as appActions from '../../actions/appActions';
 import './News.css';
 import Loader from '../Loader/Loader';
-import routes from '../../routes';
 
 class News extends Component {
 
@@ -20,31 +19,30 @@ class News extends Component {
         if (!news) {
             return (<div><Loader></Loader></div>)
         }
+        const { sources } = news;
         return (
-            <div>
-                <div className="roster">
-                    <div className="news-part">
-                        News
-                    </div>
-                    <div className="news-part">
+            <div className="news-container">
+                        <List>
                         {news.starts.map((start)=>{
                             var team = teams.filter((team)=>{
                                 return team.id === start.source.team
                             })[0];
-                            return (<div>
-                                <img className="small-logo" src={team.logo} alt={"newsimg" + team.id}></img>
-                                {start.created_at} : {start.text}
-                            </div>)
+                            var source = sources.filter((source)=>{
+                                return source.id === start.source.id
+                            })[0];
+                            return (<List.Item>
+                                <Image avatar src={team.logo} />
+                                <List.Content>
+                                    <List.Header>
+                                        {source.name} (@{source.id})
+                                    </List.Header>
+                                    <List.Description>
+                                    {start.created_at} : {start.text}
+                                    </List.Description>
+                                </List.Content>
+                            </List.Item>);
                         })}
-                    </div>
-                    <div className="news-part">
-                        {news.sources.map((source)=>{
-                            return (<div>
-                                {source.name} @{source.id}
-                            </div>)
-                        })}
-                    </div>
-                </div>
+                        </List>
             </div>);
     }
 }

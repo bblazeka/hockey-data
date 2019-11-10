@@ -19,6 +19,7 @@ export const REMOVE_PLAYER = 'REMOVE_PLAYER'
 export const PLAYER_LOADED = 'PLAYER_LOADED'
 export const GET_NEWS = 'GET_NEWS'
 export const NEWS_LOADED = 'NEWS_LOADED'
+export const ADD_TO_LINEUP = 'ADD_TO_LINEUP'
 
 export const getNews = () => ({
   type: GET_NEWS,
@@ -86,4 +87,11 @@ export const removePlayer = (id) => ({
 
 export const getPrediction = () => ({
   type: GET_PREDICTION,
+})
+
+export const addToLineup = (player) => ({
+  type: ADD_TO_LINEUP,
+  payload: {
+    player,
+  }
 })

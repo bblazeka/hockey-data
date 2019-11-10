@@ -48,7 +48,9 @@ def predict():
             games.append({
                 "home": home["team"],
                 "away": away["team"],
-                "prediction":  prediction,
+                "prediction": prediction,
+                "home_probability": home_points,
+                "away_probability": away_points
             })
     
     # printing the output 

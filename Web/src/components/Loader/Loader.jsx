@@ -5,7 +5,7 @@ import './Loader.css';
 
 function Loader() {
     return (
-        <div>
+        <div className="loader">
             <img src={logo} className="App-logo" alt="logo" />
         </div>
     );

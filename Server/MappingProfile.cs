@@ -18,13 +18,17 @@ namespace Server
                 .ForMember(dto => dto.Away, opt => opt.MapFrom(src => src.Away))
                 .ForMember(dto => dto.StartDate, opt => opt.MapFrom(src => src.StartDate));
             CreateMap<GameViewData, GameData>();
-            CreateMap<Team, TeamViewData>();
+            CreateMap<Team, TeamViewData>()
+                .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dto => dto.Logo, opt => opt.MapFrom(src => src.Logo));
             CreateMap<TeamViewData, Team>()
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dto => dto.Logo, opt => opt.MapFrom(src => src.Logo));
             CreateMap<Player, PlayerViewData>()
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dto => dto.Team, opt => opt.MapFrom(src => src.Team))
                 .ForMember(dto => dto.BirthPlace, opt => opt.MapFrom(src => src.BirthPlace))
                 .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position));
             CreateMap<PlayerViewData, Player>()

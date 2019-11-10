@@ -10,6 +10,8 @@ import './Schedule.css';
 import Loader from '../Loader/Loader';
 import { covertDateTimeToString, getDatesArray } from '../../util/converter';
 
+import { Table, Button } from 'semantic-ui-react';
+
 class Schedule extends Component {
     constructor(props) {
         super(props)
@@ -58,42 +60,44 @@ class Schedule extends Component {
                     selected={end}
                     onChange={date => this.handleEndChange(date)}
                 />
-                <button onClick={() => this.getScheduleForTimePeriod()}>Refresh</button>
-                <table><tbody>
-                    <tr>
-                        <td>
+                <Button onClick={() => this.getScheduleForTimePeriod()}>Refresh</Button>
+                <Table><Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell>
                             Team
-                </td>
+                </Table.HeaderCell>
                         {dates.map((date) => {
-                            return (<td key={"date" + date}>
+                            return (<Table.HeaderCell key={"date" + date}>
                                 {covertDateTimeToString(date)}
-                            </td>)
+                            </Table.HeaderCell>)
                         })}
-                        <td>
+                        <Table.HeaderCell>
                             Games
-                        </td>
-                    </tr>
+                        </Table.HeaderCell>
+                    </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
                     {schedule.map((element) => {
                         return (
-                            <tr key={"games "+element.id}>
-                                <td key={"logo " + element.id}>
+                            <Table.Row key={"games " + element.id}>
+                                <Table.Cell key={"logo " + element.id}>
                                     <img className="logo" src={element.logo} alt={"img" + element.id}></img>
-                                </td>
+                                </Table.Cell>
                                 {dates.map((date) => {
                                     var game = (element.games.filter(game => game.startDate && game.startDate.split("T")[0] === covertDateTimeToString(date)))[0]
                                     try {
                                         const logo = element.id === game.home.id ? game.away.logo : game.home.logo
                                         return (
-                                            <td
+                                            <Table.Cell
                                                 key={"opp " + element.id + game.startDate}
                                                 className={element.id === game.home.id ? 'home-game' : 'away-game'}
                                             >
                                                 <img className="logo" src={logo} alt={"img" + game.startDate + element.id}></img>
-                                            </td>
+                                            </Table.Cell>
                                         )
                                     } catch (err) {
                                         return (
-                                            <td key={"empty " + element.id + date.toString()} ></td>
+                                            <Table.Cell key={"empty " + element.id + date.toString()} ></Table.Cell>
                                         )
                                     }
 
@@ -101,9 +105,9 @@ class Schedule extends Component {
                                 <td>
                                     {element.games.length}
                                 </td>
-                            </tr>)
+                            </Table.Row>)
                     })}
-                </tbody></table></div>);
+                </Table.Body></Table></div>);
     }
 }
 

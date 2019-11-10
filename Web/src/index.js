@@ -23,6 +23,7 @@ import {
     Lineup,
 } from './components';
 import routes from './routes';
+import 'semantic-ui-css/semantic.min.css';
 
 const sagaMiddleware = createSagaMiddleware();
 
