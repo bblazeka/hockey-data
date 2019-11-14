@@ -50,7 +50,9 @@ def predict():
                 "away": away["team"],
                 "prediction": prediction,
                 "home_probability": home_points,
-                "away_probability": away_points
+                "home_record": home_record,
+                "away_probability": away_points,
+                "away_record": away_record
             })
     
     # printing the output 

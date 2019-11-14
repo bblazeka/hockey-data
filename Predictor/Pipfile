@@ -7,6 +7,7 @@ name = "pypi"
 flask-cors = "*"
 requests = "*"
 tweepy = "*"
+nltk = "*"
 
 [dev-packages]
 

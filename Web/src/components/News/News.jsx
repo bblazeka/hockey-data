@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Image, List } from 'semantic-ui-react';
+import { Image, Feed, Label } from 'semantic-ui-react';
 
 import * as appActions from '../../actions/appActions';
 import './News.css';
@@ -22,27 +22,39 @@ class News extends Component {
         const { sources } = news;
         return (
             <div className="news-container">
-                        <List>
-                        {news.starts.map((start)=>{
+                        <Feed>
+                        {news.news.map((start)=>{
                             var team = teams.filter((team)=>{
                                 return team.id === start.source.team
                             })[0];
                             var source = sources.filter((source)=>{
                                 return source.id === start.source.id
                             })[0];
-                            return (<List.Item>
-                                <Image avatar src={team.logo} />
-                                <List.Content>
-                                    <List.Header>
-                                        {source.name} (@{source.id})
-                                    </List.Header>
-                                    <List.Description>
-                                    {start.created_at} : {start.text}
-                                    </List.Description>
-                                </List.Content>
-                            </List.Item>);
+                            return (<Feed.Event>
+                                <Feed.Label>
+                                    <Image avatar src={team.logo} />
+                                </Feed.Label>
+                                <Feed.Content>
+                                    <Feed.Summary>
+                                        <Feed.User>{source.name} (@{source.id})</Feed.User>
+                                        <Feed.Date>{start.created_at}</Feed.Date>
+                                    </Feed.Summary>
+                                    <Feed.Extra>
+                                        {start.text}
+                                    </Feed.Extra>
+                                    <Feed.Meta>
+                                        {start.names.map((name)=>{
+                                            return (
+                                                <Label>
+                                                    {name}
+                                                </Label>
+                                            )
+                                        })}
+                                    </Feed.Meta>
+                                </Feed.Content>
+                            </Feed.Event>);
                         })}
-                        </List>
+                        </Feed>
             </div>);
     }
 }
