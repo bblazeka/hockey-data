@@ -31,19 +31,59 @@ namespace Server.Models
         public int ShortHandedPoints { get; set; }
         public string ShortHandedTimeOnIce { get; set; }
 
+        public Skater() : base()
+        {
+        }
+
         public Skater(int id) : base(id) {
-            string answer = ApiMediator.SendRequest(RequestBuilder(id, "20192020"));
-            ParseAnswer(answer);
+            if (id != 0)
+            {
+                string answer = ApiMediator.SendRequest(RequestBuilder(id, "20192020"));
+                ParseAnswer(answer);
+
+            }
+        }
+
+        public new void ApiLoad(JToken jsonObject)
+        {
+            var stats = jsonObject;
+            try
+            {
+                Goals = int.Parse(stats["goals"].ToString());
+                Assists = int.Parse(stats["assists"].ToString());
+                Pim = int.Parse(stats["penaltyMinutes"].ToString());
+                Shots = int.Parse(stats["shots"].ToString());
+                PlusMinus = int.Parse(stats["plusMinus"].ToString());
+                TimeOnIce = stats["timeOnIce"].ToString();
+                Hits = int.Parse(stats["hits"].ToString());
+                Blocked = int.Parse(stats["blocked"].ToString());
+                /*FaceoffPct = float.Parse(stats["faceOffPct"].ToString());
+                ShortHandedGoals = int.Parse(stats["shortHandedGoals"].ToString());
+                ShortHandedPoints = int.Parse(stats["shortHandedPoints"].ToString());
+                ShortHandedTimeOnIce = stats["shortHandedTimeOnIce"].ToString();
+                PowerPlayGoals = int.Parse(stats["powerPlayGoals"].ToString());
+                PowerPlayPoints = int.Parse(stats["powerPlayPoints"].ToString());
+                PowerPlayTimeOnIce = stats["powerPlayTimeOnIce"].ToString();*/
+            }
+            catch (Exception e)
+            {
+                Pim = 0;
+                Goals = 0;
+                Assists = 0;
+                Points = 0;
+                Games = 0;
+            }
         }
 
         public new void ParseAnswer(string answer) {
             var jsonObject = JObject.Parse(answer);
-            try {
+            try
+            {
                 var stats = jsonObject["stats"][0]["splits"][0]["stat"];
                 Goals = int.Parse(stats["goals"].ToString());
                 Assists = int.Parse(stats["assists"].ToString());
                 Pim = int.Parse(stats["pim"].ToString());
-                Shots =  int.Parse(stats["shots"].ToString());
+                Shots = int.Parse(stats["shots"].ToString());
                 Games = int.Parse(stats["games"].ToString());
                 PlusMinus = int.Parse(stats["plusMinus"].ToString());
                 Points = int.Parse(stats["points"].ToString());
@@ -60,7 +100,9 @@ namespace Server.Models
                 PowerPlayGoals = int.Parse(stats["powerPlayGoals"].ToString());
                 PowerPlayPoints = int.Parse(stats["powerPlayPoints"].ToString());
                 PowerPlayTimeOnIce = stats["powerPlayTimeOnIce"].ToString();
-            } catch(Exception) {
+            }
+            catch (Exception)
+            {
                 Pim = 0;
                 Goals = 0;
                 Assists = 0;

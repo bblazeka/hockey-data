@@ -6,6 +6,6 @@ namespace Server.Models
 {
     public interface IEntity
     {
-        void ParseAnswer(string answer);
+        void ParseJsonAnswer(string answer);
     }
 }

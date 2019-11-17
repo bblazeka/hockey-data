@@ -20,9 +20,18 @@ namespace Server.Models
         public float SavePerc { get; set; }
         public float GlsAgainstAverage { get; set; }
 
+        public Goalie() : base()
+        {
+
+        }
+
         public Goalie(int id) : base(id) {
-            string answer = ApiMediator.SendRequest(RequestBuilder(id, "20192020"));
-            ParseAnswer(answer);
+            if (id != 0)
+            {
+                string answer = ApiMediator.SendRequest(RequestBuilder(id, "20192020"));
+                ParseAnswer(answer);
+
+            }
         }
 
         public new void ParseAnswer(string answer) {
