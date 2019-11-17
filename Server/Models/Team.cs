@@ -15,12 +15,14 @@ namespace Server.Models
         public List<Player> Players { get; set; }
         public List<GameData> Games { get; set; }
 
-        public Team() { }
+        public Team() {
+            Players = new List<Player>();
+        }
 
         public Team(int id)
         {
             string answer = ApiMediator.SendRequest(RequestBuilder(id));
-            ParseAnswer(answer);
+            ParseJsonAnswer(answer);
         }
 
         public Team(int id, string name)
@@ -34,7 +36,7 @@ namespace Server.Models
             FranchiseId = franchiseId;
         }
 
-        public void ParseAnswer(string answer)
+        public void ParseJsonAnswer(string answer)
         {
             var jsonObject = JObject.Parse(answer);
             var team = jsonObject["teams"][0];

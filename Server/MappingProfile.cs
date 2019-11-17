@@ -72,6 +72,14 @@ namespace Server
                 .ForMember(dto => dto.GlsAgainstAverage, opt => opt.MapFrom(src => src.GlsAgainstAverage))
                 .ForMember(dto => dto.Wins, opt => opt.MapFrom(src => src.Wins));
             CreateMap<GoalieViewData, Goalie>();
+            CreateMap<Player, Goalie>();
+            CreateMap<Player, Goalie>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name));
+            CreateMap<Player, Skater>();
+            CreateMap<Player, Skater>()
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name));
         }
     }
 }

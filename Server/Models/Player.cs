@@ -30,9 +30,12 @@ namespace Server.Models
         /// <param name="id">Player ID</param>
         public Player(int id)
         {
-            string answer = ApiMediator.SendRequest(RequestBuilder(id));
-            ParseAnswer(answer);
-            Id = id;
+            if (id != 0)
+            {
+                string answer = ApiMediator.SendRequest(RequestBuilder(id));
+                ParseJsonAnswer(answer);
+                Id = id;
+            }
         }
 
         public Player(int id, string name, Team team)
@@ -54,10 +57,14 @@ namespace Server.Models
             Active = active;
         }
 
-        public void ParseAnswer(string answer)
+        public void ApiLoad()
         {
-            var jsonObject = JObject.Parse(answer);
-            var person = jsonObject["people"][0];
+            ParseJsonAnswer(ApiMediator.SendRequest(RequestBuilder(Id)));
+        }
+
+        public void ApiLoad(JToken jsonObject)
+        {
+            var person = jsonObject;
             Name = person["fullName"].ToString();
             Active = bool.Parse(person["active"].ToString());
             BirthDate = DateTime.ParseExact(person["birthDate"].ToString(), "yyyy-MM-dd", null);
@@ -72,7 +79,7 @@ namespace Server.Models
             BirthPlace = birthPlace.ToString();
 
 
-            var heightFormatting = person["height"].ToString().Substring(0,person["height"].ToString().Length - 1).Split('\'');
+            var heightFormatting = person["height"].ToString().Substring(0, person["height"].ToString().Length - 1).Split('\'');
             Height = (int)Math.Ceiling(int.Parse(heightFormatting[0]) * 30.48 + int.Parse(heightFormatting[1]) * 2.54);
             Weight = (int)Math.Ceiling(int.Parse(person["weight"].ToString()) * 0.453592);
             if (person["nationality"] != null)
@@ -82,9 +89,15 @@ namespace Server.Models
 
             if (person["currentTeam"] != null)
             {
-                Team = new Team(int.Parse(person["currentTeam"]["id"].ToString()),person["currentTeam"]["name"].ToString());
+                Team = new Team(int.Parse(person["currentTeam"]["id"].ToString()), person["currentTeam"]["name"].ToString());
             }
-            
+        }
+
+        public void ParseJsonAnswer(string answer)
+        {
+            var jsonObject = JObject.Parse(answer);
+
+            ApiLoad(jsonObject);
         }
 
         public static string RequestBuilder(long id)
