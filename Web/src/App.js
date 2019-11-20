@@ -24,6 +24,9 @@ class App extends Component {
             <NavLink className="App-link" to={routes.news}>
               News
             </NavLink>
+            <NavLink className="App-link" to={routes.game}>
+              Game
+            </NavLink>
             <NavLink className="App-link" to={routes.lineup}>
               Lineup
             </NavLink>
@@ -35,9 +38,6 @@ class App extends Component {
             </NavLink>
             <NavLink className="App-link" to={routes.players}>
               Players
-            </NavLink>
-            <NavLink className="App-link" to={routes.settings}>
-              Settings
             </NavLink>
           </div>
           <div className="App-menu">

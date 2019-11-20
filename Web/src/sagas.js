@@ -15,7 +15,7 @@ export function* watcherSaga() {
       takeEvery(actions.GET_PREDICTION, workerSagaPrediction),
       takeEvery(actions.BASIC_SEARCH_PLAYER, workerSagaBasicSearchPlayer),
       takeEvery(actions.GET_NEWS, workerSagaNews),
-
+      takeEvery(actions.GET_GAME, workerGame),
     ]);
   }
   
@@ -196,5 +196,22 @@ export function* watcherSaga() {
       alert(error)
       // dispatch a failure action to the store with the error
       // yield put({ type: actions.SUBMIT_NEWS_FAILURE, error });
+    }
+  }
+
+  export function* workerGame(params) {
+    try {
+      const response = yield call(sendRequest,{
+        path: "http://localhost:50540/api/game/"+params.payload.id,
+      });
+      console.log(response)
+      // dispatch a success action to the store with the payload
+      if (response) {
+        yield put({ type: actions.GAME_LOADED, payload: response.data });
+      }
+    } catch (error) {
+      alert(error)
+      // dispatch a failure action to the store with the error
+      // yield put({ type: actions.GAME_LOAD_FAILURE, error });
     }
   }

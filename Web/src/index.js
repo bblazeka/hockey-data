@@ -13,7 +13,6 @@ import * as serviceWorker from './serviceWorker';
 import {
     Schedule,
     Standings,
-    Settings,
     Team,
     NoMatch,
     News,
@@ -21,6 +20,7 @@ import {
     PlayerList,
     Prediction,
     Lineup,
+    Game,
 } from './components';
 import routes from './routes';
 import 'semantic-ui-css/semantic.min.css';
@@ -41,8 +41,8 @@ ReactDOM.render(
         <Switch>
           <Route exact path={routes.news} component={News} />
           <Route exact path={routes.schedule} component={Schedule} />
+          <Route exact path={routes.game+"/:id"} component={Game} />
           <Route exact path={routes.standings} component={Standings} />
-          <Route exact path={routes.settings} component={Settings} />
           <Route exact path={routes.lineup} component={Lineup} />
           <Route exact path={routes.prediction} component={Prediction} />
           <Route exact path={routes.teams+"/:id"} component={Team} />

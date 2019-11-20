@@ -64,7 +64,7 @@ export default (state = defaultAppState, action) => {
         case 'BASIC_PLAYER_LOADED':
             return {
                 ...state,
-                suggestions: action.payload.map((result)=>{
+                suggestions: action.payload.map((result) => {
                     return {
                         "title": result.name,
                         "description": result.team.name,
@@ -82,6 +82,11 @@ export default (state = defaultAppState, action) => {
             return {
                 ...state,
                 news: action.payload
+            }
+        case 'GAME_LOADED':
+            return {
+                ...state,
+                game: action.payload
             }
         default:
             return state

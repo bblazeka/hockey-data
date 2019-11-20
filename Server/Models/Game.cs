@@ -40,8 +40,9 @@ namespace Server.Models
                     var stats = homePlayer.First()["stats"];
                     if (player.Position == "G")
                     {
-                        //var goalie = mapper.Map<Goalie>(player);
-                        //goalie.ApiLoad(stats);
+                        var goalie = mapper.Map<Goalie>(player);
+                        goalie.ApiLoad(stats["goalieStats"]);
+                        Home.Players.Add(goalie);
                     }
                     else
                     {
@@ -52,9 +53,35 @@ namespace Server.Models
                     
                 }
 
-                //var awayTeam = jsonObject["teams"]["away"];
+                var awayTeam = jsonObject["teams"]["away"];
+                Away = new Team
+                {
+                    Id = int.Parse(awayTeam["team"]["id"].ToString()),
+                    Name = awayTeam["team"]["name"].ToString()
+                };
+
+                var awayPlayers = awayTeam["players"];
+                foreach (var awayPlayer in awayPlayers)
+                {
+                    var player = new Player();
+                    player.ApiLoad(awayPlayer.First()["person"]);
+                    var stats = awayPlayer.First()["stats"];
+                    if (player.Position == "G")
+                    {
+                        var goalie = mapper.Map<Goalie>(player);
+                        goalie.ApiLoad(stats["goalieStats"]);
+                        Away.Players.Add(goalie);
+                    }
+                    else
+                    {
+                        var skater = mapper.Map<Skater>(player);
+                        skater.ApiLoad(stats["skaterStats"]);
+                        Away.Players.Add(skater);
+                    }
+                    
+                }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Home = new Team();
                 Away = new Team();
@@ -64,7 +91,7 @@ namespace Server.Models
         public static string RequestBuilder(string id)
         {
             // https://statsapi.web.nhl.com/api/v1/game/2019020056/boxscore
-            id = "2019020056";
+            id = string.Format("20190200{0}", id);
             return string.Format("https://statsapi.web.nhl.com/api/v1/game/{0}/boxscore", id);
         }
     }

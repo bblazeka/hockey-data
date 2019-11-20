@@ -9,6 +9,7 @@ const routes = {
     standings: '/standings',
     teams: '/teams',
     player: '/player',
+    game: '/game',
   }
   
   export default routes;

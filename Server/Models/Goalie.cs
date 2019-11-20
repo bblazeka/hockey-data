@@ -53,6 +53,22 @@ namespace Server.Models
             }
         }
 
+        public new void ApiLoad(JToken jsonObject)
+        {
+            var stats = jsonObject;
+            try
+            {
+                Saves = int.Parse(stats["saves"].ToString());
+                Toi = stats["timeOnIce"].ToString();
+                SavePerc = float.Parse(stats["savePercentage"].ToString());
+                GlsAgainstAverage = float.Parse(stats["goalAgainstAverage"].ToString());
+            }
+            catch (Exception)
+            {
+                Saves = 0;
+            }
+        }
+
 
         public static string RequestBuilder(long id, string season)
         {

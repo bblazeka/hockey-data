@@ -20,6 +20,8 @@ export const PLAYER_LOADED = 'PLAYER_LOADED'
 export const GET_NEWS = 'GET_NEWS'
 export const NEWS_LOADED = 'NEWS_LOADED'
 export const ADD_TO_LINEUP = 'ADD_TO_LINEUP'
+export const GET_GAME = 'GET_GAME'
+export const GAME_LOADED = 'GAME_LOADED'
 
 export const getNews = () => ({
   type: GET_NEWS,
@@ -93,5 +95,12 @@ export const addToLineup = (player) => ({
   type: ADD_TO_LINEUP,
   payload: {
     player,
+  }
+})
+
+export const getGame = (id) => ({
+  type: GET_GAME,
+  payload: {
+    id,
   }
 })
