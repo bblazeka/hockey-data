@@ -65,6 +65,12 @@ namespace Server.Models
         public void ApiLoad(JToken jsonObject)
         {
             var person = jsonObject;
+            try {
+                Console.WriteLine("Fetching... "+person["fullName"].ToString());
+            } catch(NullReferenceException) {
+                person = jsonObject["people"][0];
+                Console.WriteLine("Fetching... "+person["fullName"].ToString());
+            }
             Name = person["fullName"].ToString();
             Active = bool.Parse(person["active"].ToString());
             BirthDate = DateTime.ParseExact(person["birthDate"].ToString(), "yyyy-MM-dd", null);

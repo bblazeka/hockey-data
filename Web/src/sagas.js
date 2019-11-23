@@ -122,7 +122,7 @@ export function* watcherSaga() {
   export function* workerSagaBasicSearchPlayer(params) {
     try {
       const response = yield call(sendRequest,{
-        path: "http://localhost:50540/api/data/player/"+params.payload.name,
+        path: "http://localhost:50540/api/data/player/search/"+params.payload.name,
       });
       console.log(response)
       // dispatch a success action to the store with the payload
@@ -139,7 +139,7 @@ export function* watcherSaga() {
   export function* workerSagaSearchPlayer(params) {
     try {
       const response = yield call(sendRequest,{
-        path: "http://localhost:50540/api/data/player/"+params.payload.name,
+        path: "http://localhost:50540/api/data/player/search/"+params.payload.name,
       });
       console.log(response)
       // dispatch a success action to the store with the payload

@@ -37,3 +37,26 @@ type TeamResponse struct {
 	Teams			[]Team 		`json:"teams"`
 }
 
+// PLAYERS
+
+type Person struct {
+	Id				int			`json:"id"`
+	Name			string		`json:"fullName"`
+}
+
+type Player struct {
+	Person			Person		`json:"person"`
+}
+
+type FullPerson struct {
+	Id				    int		`json:"id"`
+    Name			    string	`json:"fullName"`
+    BirthCity           string      `json:"birthCity"`
+    BirthStateProvince  string          `json:"birthStateProvince"`
+    BirthCountry        string          `json:"birthCountry"`
+    Nationality         string          `json:"nationality"`
+}
+
+type PlayerResponse struct {
+    Players              []FullPerson    `json:"people"`
+}

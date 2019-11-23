@@ -18,7 +18,7 @@ namespace Server.Controllers
     {
         private SqlConnectionStringBuilder builder;
 
-        public DataController(IMapper mapper)
+        public DataController()
         {
             builder = new SqlConnectionStringBuilder();
             builder.DataSource = DatabaseKeys.DATASOURCE; 
@@ -27,8 +27,8 @@ namespace Server.Controllers
             builder.InitialCatalog = DatabaseKeys.INITIALCATALOG;
         }
 
-        // GET api/data/player/{name}
-        [HttpGet("player/{name}")]
+        // GET api/data/player/search/{name}
+        [HttpGet("player/search/{name}")]
         public object Player(string name)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -41,7 +41,7 @@ namespace Server.Controllers
 
         // GET api/data/teams
         [HttpGet("teams")]
-        public object Teams(string name)
+        public object Teams()
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
@@ -65,14 +65,25 @@ namespace Server.Controllers
             }
         }
 
-        // GET api/data/team/{name}
-        [HttpGet("team/{name}")]
+        // GET api/data/team/search/{name}
+        [HttpGet("team/search/{name}")]
         public object Team(string name)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 var res = connection.Query<TeamViewData>(
                     string.Format("select * from Teams where name like '%{0}%'", name)).ToList();
+                return res;
+            }
+        }
+
+        [HttpGet("team/{id}")]
+        public object Team(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                var res = connection.Query<TeamViewData>(
+                    string.Format("select * from Teams where Id = {0}", id));
                 return res;
             }
         }

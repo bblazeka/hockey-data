@@ -9,6 +9,7 @@ requests = "*"
 tweepy = "*"
 nltk = "*"
 pyodbc = "*"
+numpy = "*"
 
 [dev-packages]
 

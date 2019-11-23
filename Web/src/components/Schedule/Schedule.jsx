@@ -78,6 +78,7 @@ class Schedule extends Component {
                     </Table.Header>
                     <Table.Body>
                     {schedule.map((element) => {
+                        console.log(element)
                         return (
                             <Table.Row key={"games " + element.id}>
                                 <Table.Cell key={"logo " + element.id}>

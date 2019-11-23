@@ -46,7 +46,7 @@ class News extends Component {
                                         {start.names.map((name)=>{
                                             return (
                                                 <Label>
-                                                    {name}
+                                                    {name.text}
                                                 </Label>
                                             )
                                         })}

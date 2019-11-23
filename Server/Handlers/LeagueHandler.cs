@@ -40,29 +40,6 @@ namespace Server.Handlers
             return string.Format("https://statsapi.web.nhl.com/api/v1/standings?season={0}{1}", start, end);
         }
 
-        public static List<GameViewData> ParseViewModelGames(string answer)
-        {
-            List<GameViewData> games = new List<GameViewData>();
-            var jsonObject = JObject.Parse(answer);
-            foreach (var date in jsonObject["dates"])
-            {
-                foreach (var game in date["games"])
-                {
-
-                    if (game["gameType"].ToObject<string>() == "R")
-                    {
-                        games.Add(new GameViewData
-                        {
-                            StartDate = DateTime.ParseExact(date["date"].ToString(), "yyyy-MM-dd", null),
-                            Home = new TeamViewData(int.Parse(game["teams"]["home"]["team"]["id"].ToString()), "Team"),
-                            Away = new TeamViewData(int.Parse(game["teams"]["away"]["team"]["id"].ToString()), "Team")
-                        });
-                    }
-                }
-            }
-            return games;
-        }
-
         public static List<GameData> ParseAnswer(string answer)
         {
             List<GameData> games = new List<GameData>();
@@ -104,37 +81,6 @@ namespace Server.Handlers
                 }
             }
             return teams.OrderBy(team => team.Name).ToList();
-        }
-
-        public static List<TeamViewData> ParseStandings(string answer)
-        {
-            List<TeamViewData> teams = new List<TeamViewData>();
-            var jsonObject = JObject.Parse(answer);
-            foreach (var record in jsonObject["records"])
-            {
-                var division = record["division"]["nameShort"].ToString();
-                var conference = record["conference"]["name"].ToString();
-                foreach (var teamRecord in record["teamRecords"])
-                {
-                    var teamViewData = new TeamViewData(Int32.Parse(teamRecord["team"]["id"].ToString()), teamRecord["team"]["name"].ToString())
-                    {
-                        Wins = Int32.Parse(teamRecord["leagueRecord"]["wins"].ToString()),
-                        Losses = Int32.Parse(teamRecord["leagueRecord"]["losses"].ToString()),
-                        Ot = Int32.Parse(teamRecord["leagueRecord"]["ot"].ToString()),
-                        GoalsScored = Int32.Parse(teamRecord["goalsScored"].ToString()),
-                        GoalsAgainst = Int32.Parse(teamRecord["goalsAgainst"].ToString()),
-                        Points = Int32.Parse(teamRecord["points"].ToString()),
-                        Conference = conference,
-                        Division = division,
-                        DivisionRank = Int32.Parse(teamRecord["divisionRank"].ToString()),
-                        ConferenceRank = Int32.Parse(teamRecord["conferenceRank"].ToString()),
-                        LeagueRank = Int32.Parse(teamRecord["leagueRank"].ToString()),
-                        GamesPlayed = Int32.Parse(teamRecord["gamesPlayed"].ToString()),
-                    };
-                    teams.Add(teamViewData);
-                }
-            }
-            return teams;
         }
 
         public string GetTeamNameById(int id)

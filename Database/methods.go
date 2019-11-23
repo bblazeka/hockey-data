@@ -103,7 +103,9 @@ func PopulateTeams() (int, error) {
             if err != nil {
                 fmt.Printf("Error fetching a player")
             }
-            UpdatePlayer(p)
+            //UpdatePlayer(p)
+            InsertPlayer(p.Id, p.Name)
+            UpdatePlayerTeams(p.Id, id)
 		}
 	}
 	return count, nil
@@ -139,29 +141,7 @@ func InsertTeam(id int, name string) (int64, error) {
     return 1, nil
 }
 
-// PLAYERS
-
-type Person struct {
-	Id				int			`json:"id"`
-	Name			string		`json:"fullName"`
-}
-
-type Player struct {
-	Person			Person		`json:"person"`
-}
-
-type FullPerson struct {
-	Id				    int		`json:"id"`
-    Name			    string	`json:"fullName"`
-    BirthCity           string      `json:"birthCity"`
-    BirthStateProvince  string          `json:"birthStateProvince"`
-    BirthCountry        string          `json:"birthCountry"`
-    Nationality         string          `json:"nationality"`
-}
-
-type PlayerResponse struct {
-    Players              []FullPerson    `json:"people"`
-}
+// PLAYERS ----------------------------------------------------------------------------------------
 
 func InsertPlayer(id int, name string) (int64, error) {
 	ctx := context.Background()
@@ -188,7 +168,9 @@ func InsertPlayer(id int, name string) (int64, error) {
     stmt.QueryRowContext(
         ctx,
         sql.Named("Id", id),
-		sql.Named("Name", name))
+        sql.Named("Name", name))
+        
+    fmt.Printf("Player %s is in the database.\n", name)
 
     return 1, nil
 }
@@ -221,7 +203,6 @@ func UpdatePlayers() (int, error) {
             return -1, err
         }
 
-        fmt.Printf("Updating... ID: %d, Name: %s\n", id, name)
         UpdatePlayer(player)
 
 		count++
@@ -303,5 +284,6 @@ func UpdatePlayerTeams(id int, teamId int) (int64, error) {
     if err != nil {
         fmt.Printf("Update failed")
     }
+    fmt.Printf("Updated team %d for player %d\n", teamId, id)
     return cnt, nil
 }

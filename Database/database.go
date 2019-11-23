@@ -1,4 +1,3 @@
-//usr/bin/env go run "$0" "$@"; exit
 
 package main
 import (
@@ -76,8 +75,6 @@ func main() {
 		log.Fatal(err.Error())
 	}
 	fmt.Printf("Connected!\n")
-
-	//PopulateTeams()
 
 	UpdatePlayers()
 

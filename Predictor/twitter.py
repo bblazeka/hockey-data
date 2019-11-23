@@ -3,14 +3,11 @@ from tweepy import API
 from tweepy import Cursor
 from datetime import datetime, date, time, timedelta
 
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.tag import pos_tag
-
 from collections import Counter
 import sys, json
 
 from .database import sources
+from .language import process_text
 
 with open('keys.json') as json_file:
     data = json.load(json_file)
@@ -38,11 +35,6 @@ def detect_hashtags(status):
                             hashtags.append(hashtag)
     return hashtags
 
-def recognize_words(text):
-    text = nltk.word_tokenize(text)
-    text = nltk.pos_tag(text)
-    return text
-
 def containing_keywords(text):
     return text.find("in net") > -1 or text.find("starting") > -1 or text.find("starts") > -1
 
@@ -67,13 +59,9 @@ def get_news():
                 if status.created_at < end_date:
                     print(tweet_count)
                     break
-                words = recognize_words(text)
-                names = []
-                for word in words:
-                    if word[1] == 'NNP':
-                        names.append(word[0])
+                words, names = process_text(text)
                 all_news.append({
-                    "source": target,
+                    "source": { "id": item.screen_name, "name": item.name, "team": target["team"]},
                     "created_at" : status.created_at,
                     "text": text,
                     "names": names,
