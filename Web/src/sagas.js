@@ -87,7 +87,7 @@ export function* watcherSaga() {
   export function* workerSagaTeams() {
     try {
       const response = yield call(sendRequest,{
-        path: "http://localhost:50540/api/league/teams",
+        path: "http://localhost:50540/api/data/teams",
       });
       console.log(response)
   

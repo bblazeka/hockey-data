@@ -10,6 +10,8 @@ from nltk.tag import pos_tag
 from collections import Counter
 import sys, json
 
+from .database import sources
+
 with open('keys.json') as json_file:
     data = json.load(json_file)
     consumer_key=data["consumer_key"]
@@ -17,11 +19,7 @@ with open('keys.json') as json_file:
     access_token=data["access_token"]
     access_token_secret=data["access_token_secret"]
 
-account_list = []
-with open('sources.json') as json_file:
-    data = json.load(json_file)
-    for source in data["sources"]:
-        account_list.append(source)
+account_list = sources()
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)

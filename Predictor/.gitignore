@@ -124,5 +124,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Keys
+# Keys & passwords
 keys.json
+database.json

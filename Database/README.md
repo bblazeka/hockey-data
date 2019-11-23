@@ -1,1 +1,1 @@
-go run main.go database.go
+go run main.go methods.go structs.go game.go player.go team.go

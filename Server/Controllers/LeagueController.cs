@@ -31,7 +31,6 @@ namespace Predictor.Controllers
 
             foreach (TeamViewData team in teams)
             {
-                team.RefreshData();
                 team.Games = games.Where(g => g.Home.Id == team.Id || g.Away.Id == team.Id).ToList();
             }
             return teams;
@@ -42,10 +41,6 @@ namespace Predictor.Controllers
         public object GetTeams()
         {
             List<TeamViewData> teams = _leagueHandler.Teams.Select(x => _mapper.Map<TeamViewData>(x)).ToList();
-            foreach (TeamViewData team in teams)
-            {
-                team.RefreshData();
-            }
             return teams.ToList();
         }
 

@@ -8,6 +8,7 @@ flask-cors = "*"
 requests = "*"
 tweepy = "*"
 nltk = "*"
+pyodbc = "*"
 
 [dev-packages]
 

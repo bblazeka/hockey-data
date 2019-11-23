@@ -1,5 +1,8 @@
 # Prediction of results using ML .NET #
 
+used tools:
+https://github.com/StackExchange/Dapper
+
 ## WARNING: Currently updated !!!
 
 Applying [ML.NET](https://dotnet.microsoft.com/apps/machinelearning-ai/ml-dotnet), a machine learning library by .NET Foundation, in prediction of sport results. Currently implemented to predict results of games in National Hockey League.
