@@ -4,23 +4,33 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 )
 
+type BasicTeam struct {
+	Id			int			`json:"id"`
+	Name		string		`json:"name"`
+}
+
 type GameTeam struct {
-    BasicTeam   BasicTeam   `json:"team"`
-    Goals       int   `json:"goals"`
+	TeamGoals	int		`json:"score"`
+	BasicTeam	BasicTeam	`json:"team"`
 }
 
 type GameTeams struct {
-    Home       GameTeam   `json:"home"`
-    Away       GameTeam   `json:"away"`
+	AwayTeam	GameTeam 	`json:"away"`
+	HomeTeam	GameTeam 	`json:"home"`
+}
+
+type Game struct  {
+	Id			int		`json:"gamePk"`
+	GameTeams	GameTeams	`json:"teams"`
+}
+
+type Date struct {
+	Date			string	`json:"date"`
+	Games			[]Game 		`json:"games"`
 }
 
 type GameResponse struct {
-    GameTeams       GameTeams   `json:"teams"`
-}
-
-type BasicTeam struct {
-	Id				int			`json:"id"`
-	Name			string		`json:"name"`
+	Dates			[]Date	`json:"dates"`
 }
 
 type RosterResponse struct {
@@ -50,7 +60,8 @@ type Player struct {
 
 type FullPerson struct {
 	Id				    int		`json:"id"`
-    Name			    string	`json:"fullName"`
+	Name			    string	`json:"fullName"`
+	BirthDate			string		`json:"birthDate"`	
     BirthCity           string      `json:"birthCity"`
     BirthStateProvince  string          `json:"birthStateProvince"`
     BirthCountry        string          `json:"birthCountry"`

@@ -1,3 +1,4 @@
 # Server
 
-.NET + LiteDB (NoSQL)
+used tools:
+https://github.com/StackExchange/Dapper

@@ -3,10 +3,11 @@ from nltk.tree import Tree
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
 
-def recognize_words(text):
-    text = nltk.word_tokenize(text)
-    text = nltk.pos_tag(text)
-    return text
+def classify(text):
+    text_type = "OTHER"
+    if "in net" in text or "is starting" in text:
+        text_type = "START"
+    return text_type
 
 def extract_entities(text):
     entities = []
@@ -15,18 +16,19 @@ def extract_entities(text):
             if type(chunk) == Tree:
                 print(chunk.label())
                 print(' '.join(c[0] for c in chunk.leaves()))
-                entities.append({
-                    "type":chunk.label(), 
-                    "text": ' '.join(c[0] for c in chunk.leaves())
-                })
+                if chunk.label() == "PERSON":
+                    entities.append({
+                        "type": chunk.label(), 
+                        "text": ' '.join(c[0] for c in chunk.leaves())
+                    })
     # can be person, organization or gpe = Geopolitical entity
     return entities
 
 def process_text(text):
     names = []
-    words = recognize_words(text)
-    #for word in words:
-    #    if word[1] == 'NNP':
-    #        names.append(word[0])
+    words = classify(text)
+    print(words)
+    if words == "START":
+        print(text)
     names = extract_entities(text)
     return words, names

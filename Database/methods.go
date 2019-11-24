@@ -11,9 +11,9 @@ import (
     "net/http"
 )
 
-// GAME
+// GAMES -------------------------------------------------------------------------------------------
 
-func InsertGame(id int, game GameResponse) (int64, error) {
+func InsertGame(game Game) (int64, error) {
     ctx := context.Background()
     var err error
 
@@ -37,106 +37,88 @@ func InsertGame(id int, game GameResponse) (int64, error) {
 
     stmt.QueryRowContext(
         ctx,
-        sql.Named("Id", id),
-        sql.Named("HomeId", game.GameTeams.Home.BasicTeam.Id),
-        sql.Named("AwayId", game.GameTeams.Away.BasicTeam.Id),
-        sql.Named("HomeGoals", game.GameTeams.Home.Goals),
-        sql.Named("AwayGoals", game.GameTeams.Away.Goals))
+        sql.Named("Id", game.Id),
+        sql.Named("HomeId", game.GameTeams.HomeTeam.BasicTeam.Id),
+        sql.Named("AwayId", game.GameTeams.AwayTeam.BasicTeam.Id),
+        sql.Named("HomeGoals", game.GameTeams.HomeTeam.TeamGoals),
+        sql.Named("AwayGoals", game.GameTeams.AwayTeam.TeamGoals))
+
+    fmt.Printf("Game between %s and %s is in the database.\n", 
+        game.GameTeams.HomeTeam.BasicTeam.Name, 
+        game.GameTeams.AwayTeam.BasicTeam.Name)
+
+    return 1, nil
+}
+
+func UpdateGame(game Game, date string) (int, error) {
+    t, _ := dateParse(date)
+    ExecuteNonQuery(`UPDATE dbo.Games 
+    SET HomeId = @HomeId, 
+    AwayId = @AwayId, 
+    HomeGoals = @HomeGoals, 
+    AwayGoals = @AwayGoals, 
+    DatePlayed = @DatePlayed 
+    WHERE Id = @Id;`,
+sql.Named("Id", game.Id),
+sql.Named("HomeId", game.GameTeams.HomeTeam.BasicTeam.Id),
+sql.Named("AwayId", game.GameTeams.AwayTeam.BasicTeam.Id),
+sql.Named("HomeGoals", game.GameTeams.HomeTeam.TeamGoals),
+sql.Named("AwayGoals", game.GameTeams.AwayTeam.TeamGoals),
+sql.Named("DatePlayed", t))
 
     return 1, nil
 }
 
 func PopulateGames() (int, error) {
-
-    for id := 2019020001; id < 2019020400; id++ {
-		resp, err := http.Get(fmt.Sprintf("https://statsapi.web.nhl.com/api/v1/game/%d/linescore", id))
-		if err != nil {
-            fmt.Printf("Error getting a team from an api!\n")
-			log.Fatal(err)
-        }
-        body, readErr := ioutil.ReadAll(resp.Body)
-		if readErr != nil {
-			log.Fatal(readErr)
-			continue
-		}
-		bytes := []byte(string(body))
-			// Fill the record with the data from the JSON
-		var record GameResponse
-
-		// Use json.Decode for reading streams of JSON data
-        json.Unmarshal(bytes, &record)
+    query := "https://statsapi.web.nhl.com/api/v1/schedule?expand=schedule.linescore&startDate=2019-10-01&endDate=2020-04-01"
+    resp, err := http.Get(fmt.Sprintf(query))
+    if err != nil {
+        fmt.Printf("Error getting season games!\n")
+        log.Fatal(err)
+    }
+    body, readErr := ioutil.ReadAll(resp.Body)
+	if readErr != nil {
+		log.Fatal(readErr)
+	}
+	bytes := []byte(string(body))
+	// Fill the record with the data from the JSON
+    var record GameResponse
+    
+    // Use json.Decode for reading streams of JSON data
+    json.Unmarshal(bytes, &record)
         
-        InsertGame(id, record)
+    for _, date := range record.Dates {
+        for _, game := range date.Games {
+            InsertGame(game)
+        }
     }
     
 	return 1, nil
 }
 
-// TEAMS
-
-func PopulateTeams() (int, error) {
-
-	count := 0
-
-	for id := 1; id < 55; id++ {
-		resp, err := http.Get(fmt.Sprintf("https://statsapi.web.nhl.com/api/v1/teams/%d?expand=team.roster", id))
-		if err != nil {
-            fmt.Printf("Error getting a team from an api!\n")
-			log.Fatal(err)
-		}
-		body, readErr := ioutil.ReadAll(resp.Body)
-		if readErr != nil {
-			log.Fatal(readErr)
-			continue
-		}
-		bytes := []byte(string(body))
-			// Fill the record with the data from the JSON
-		var record TeamResponse
-
-		// Use json.Decode for reading streams of JSON data
-		json.Unmarshal(bytes, &record)
-
-        //InsertTeam(record.Teams[0].Id,record.Teams[0].Name)
-		
-		for _, element := range record.Teams[0].RosterResponse.Players {
-            p, err := GetPlayer(element.Person.Id)
-            if err != nil {
-                fmt.Printf("Error fetching a player")
-            }
-            //UpdatePlayer(p)
-            InsertPlayer(p.Id, p.Name)
-            UpdatePlayerTeams(p.Id, id)
-		}
+func UpdateGames() (int, error) {
+    query := "https://statsapi.web.nhl.com/api/v1/schedule?expand=schedule.linescore&startDate=2019-10-01&endDate=2020-04-01"
+    resp, err := http.Get(fmt.Sprintf(query))
+    if err != nil {
+        fmt.Printf("Error getting season games!\n")
+        log.Fatal(err)
+    }
+    body, readErr := ioutil.ReadAll(resp.Body)
+	if readErr != nil {
+		log.Fatal(readErr)
 	}
-	return count, nil
-}
-
-func InsertTeam(id int, name string) (int64, error) {
-	ctx := context.Background()
-    var err error
-
-    if db == nil {
-        return -1, nil
+	bytes := []byte(string(body))
+	// Fill the record with the data from the JSON
+    var record GameResponse
+    
+    // Use json.Decode for reading streams of JSON data
+    json.Unmarshal(bytes, &record)
+        
+    for _, date := range record.Dates {
+        for _, game := range date.Games {
+            UpdateGame(game, date.Date)
+        }
     }
-
-    // Check if database is alive.
-    err = db.PingContext(ctx)
-    if err != nil {
-        return -1, err
-    }
-
-    tsql := "INSERT INTO dbo.Teams (Id, Name) VALUES (@Id, @Name);"
-
-    stmt, err := db.Prepare(tsql)
-    if err != nil {
-       return -1, err
-    }
-    defer stmt.Close()
-
-    stmt.QueryRowContext(
-        ctx,
-        sql.Named("Id", id),
-		sql.Named("Name", name))
 
     return 1, nil
 }
@@ -267,11 +249,13 @@ func UpdatePlayer(player FullPerson) (int64, error) {
     ExecuteNonQuery(`UPDATE dbo.Players 
                         SET Name = @Name,
                             BirthPlace = @BirthPlace,
+                            DateOfBirth = @BirthDate,
                             Nationality = @Nationality
                         WHERE Id = @Id;`,
                     sql.Named("Id", player.Id),
                     sql.Named("Name", player.Name),
                     sql.Named("BirthPlace", birthPlace),
+                    sql.Named("BirthDate", player.BirthDate),
                     sql.Named("Nationality", player.Nationality))
 
     return 1, nil
@@ -286,4 +270,73 @@ func UpdatePlayerTeams(id int, teamId int) (int64, error) {
     }
     fmt.Printf("Updated team %d for player %d\n", teamId, id)
     return cnt, nil
+}
+
+// TEAMS ----------------------------------------------------------------------------------------
+
+func PopulateTeams() (int, error) {
+
+	count := 0
+
+	for id := 1; id < 55; id++ {
+		resp, err := http.Get(fmt.Sprintf("https://statsapi.web.nhl.com/api/v1/teams/%d?expand=team.roster", id))
+		if err != nil {
+            fmt.Printf("Error getting a team from an api!\n")
+			log.Fatal(err)
+		}
+		body, readErr := ioutil.ReadAll(resp.Body)
+		if readErr != nil {
+			log.Fatal(readErr)
+			continue
+		}
+		bytes := []byte(string(body))
+			// Fill the record with the data from the JSON
+		var record TeamResponse
+
+		// Use json.Decode for reading streams of JSON data
+		json.Unmarshal(bytes, &record)
+
+        //InsertTeam(record.Teams[0].Id,record.Teams[0].Name)
+		
+		for _, element := range record.Teams[0].RosterResponse.Players {
+            p, err := GetPlayer(element.Person.Id)
+            if err != nil {
+                fmt.Printf("Error fetching a player")
+            }
+            //UpdatePlayer(p)
+            InsertPlayer(p.Id, p.Name)
+            UpdatePlayerTeams(p.Id, id)
+		}
+	}
+	return count, nil
+}
+
+func InsertTeam(id int, name string) (int64, error) {
+	ctx := context.Background()
+    var err error
+
+    if db == nil {
+        return -1, nil
+    }
+
+    // Check if database is alive.
+    err = db.PingContext(ctx)
+    if err != nil {
+        return -1, err
+    }
+
+    tsql := "INSERT INTO dbo.Teams (Id, Name) VALUES (@Id, @Name);"
+
+    stmt, err := db.Prepare(tsql)
+    if err != nil {
+       return -1, err
+    }
+    defer stmt.Close()
+
+    stmt.QueryRowContext(
+        ctx,
+        sql.Named("Id", id),
+		sql.Named("Name", name))
+
+    return 1, nil
 }

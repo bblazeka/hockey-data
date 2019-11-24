@@ -7,6 +7,7 @@ import (
 	"log"
 	"fmt"
     "io/ioutil"
+    "time"
 )
 
 var db *sql.DB
@@ -84,4 +85,12 @@ func main() {
         log.Fatal("Error reading Players: ", err.Error())
     }
     fmt.Printf("Read %d row(s) successfully.\n", count)*/
+}
+
+func dateParse(date string) (time.Time, error) {
+    // layout format explanation: 
+    // https://yourbasic.org/golang/format-parse-string-time-date-example/
+    layout := "2006-01-02"
+    t, err := time.Parse(layout, date)
+    return t, err
 }
