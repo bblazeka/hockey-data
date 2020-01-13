@@ -77,7 +77,7 @@ func main() {
 	}
 	fmt.Printf("Connected!\n")
 
-	UpdatePlayers()
+	UpdateGames()
 
 	/*count, err := ReadPlayers()
 

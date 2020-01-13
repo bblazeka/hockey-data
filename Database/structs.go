@@ -66,6 +66,7 @@ type FullPerson struct {
     BirthStateProvince  string          `json:"birthStateProvince"`
     BirthCountry        string          `json:"birthCountry"`
     Nationality         string          `json:"nationality"`
+    Team      	   		BasicTeam          `json:"currentTeam"`
 }
 
 type PlayerResponse struct {

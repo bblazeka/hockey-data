@@ -29,23 +29,22 @@ func InsertGame(game Game) (int64, error) {
 
     tsql := "INSERT INTO dbo.Games (Id, HomeId, AwayId, HomeGoals, AwayGoals) VALUES (@Id, @HomeId, @AwayId, @HomeGoals, @AwayGoals);"
 
-    stmt, err := db.Prepare(tsql)
-    if err != nil {
-       return -1, err
-    }
-    defer stmt.Close()
-
-    stmt.QueryRowContext(
+    _, err = db.ExecContext(
         ctx,
+        tsql,
         sql.Named("Id", game.Id),
         sql.Named("HomeId", game.GameTeams.HomeTeam.BasicTeam.Id),
         sql.Named("AwayId", game.GameTeams.AwayTeam.BasicTeam.Id),
         sql.Named("HomeGoals", game.GameTeams.HomeTeam.TeamGoals),
         sql.Named("AwayGoals", game.GameTeams.AwayTeam.TeamGoals))
 
-    fmt.Printf("Game between %s and %s is in the database.\n", 
+	if err != nil {
+		fmt.Printf("Game %d already inserted.\n", game.Id)
+    } else {
+		fmt.Printf("Game between %s and %s is in the database.\n", 
         game.GameTeams.HomeTeam.BasicTeam.Name, 
         game.GameTeams.AwayTeam.BasicTeam.Name)
+	}
 
     return 1, nil
 }
@@ -141,18 +140,17 @@ func InsertPlayer(id int, name string) (int64, error) {
 
     tsql := "INSERT INTO dbo.Players (Id, Name) VALUES (@Id, @Name);"
 
-    stmt, err := db.Prepare(tsql)
-    if err != nil {
-       return -1, err
-    }
-    defer stmt.Close()
-
-    stmt.QueryRowContext(
+    _, err = db.ExecContext(
         ctx,
+        tsql,
         sql.Named("Id", id),
         sql.Named("Name", name))
-        
-    fmt.Printf("Player %s is in the database.\n", name)
+
+	if err != nil {
+		fmt.Printf("SKIP: Player %s is already in the database.\n", name)
+    } else {
+		fmt.Printf("NEW: Player %s is added to the database.\n", name)
+	}
 
     return 1, nil
 }
@@ -186,6 +184,10 @@ func UpdatePlayers() (int, error) {
         }
 
         UpdatePlayer(player)
+        if teamId != player.Team.Id {
+            fmt.Printf("Player %s team will be updated.\n", player.Name)
+            UpdatePlayerTeams(player.Id, teamId)
+        }
 
 		count++
     }
@@ -305,7 +307,6 @@ func PopulateTeams() (int, error) {
             }
             //UpdatePlayer(p)
             InsertPlayer(p.Id, p.Name)
-            UpdatePlayerTeams(p.Id, id)
 		}
 	}
 	return count, nil
