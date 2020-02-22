@@ -3,11 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
-import { watcherSaga } from './sagas';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createStore, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga';
+import thunk from 'redux-thunk';
 import rootReducer from './reducers/rootReducer';
 import * as serviceWorker from './serviceWorker';
 import {
@@ -25,15 +24,10 @@ import {
 import routes from './routes';
 import 'semantic-ui-css/semantic.min.css';
 
-const sagaMiddleware = createSagaMiddleware();
-
 const store = createStore(
-    rootReducer,
-    composeWithDevTools(applyMiddleware(sagaMiddleware))
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
 )
-
-sagaMiddleware.run(watcherSaga)
-
 ReactDOM.render(
     <Provider store={store}>
     <Router>
@@ -41,7 +35,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path={routes.news} component={News} />
           <Route exact path={routes.schedule} component={Schedule} />
-          <Route exact path={routes.game+"/:id"} component={Game} />
+          <Route exact path={routes.game} component={Game} />
           <Route exact path={routes.standings} component={Standings} />
           <Route exact path={routes.lineup} component={Lineup} />
           <Route exact path={routes.prediction} component={Prediction} />

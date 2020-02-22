@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Dapper;
 using AutoMapper;
 using DataServer.Models;
 using DataServer.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using DataServer.Mediators;
 
 namespace DataServer.Controllers
 {
@@ -16,18 +17,21 @@ namespace DataServer.Controllers
     public class TeamController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private DbMediator _mediator;
 
         public TeamController(IMapper mapper)
         {
             _mapper = mapper;
+            _mediator = new DbMediator();
         }
 
         // GET api/team/{id}
         [HttpGet("{id}")]
         public object Get(string id)
         {
-            var team = new Team(int.Parse(id));
-            return JsonConvert.SerializeObject(Convert(team));
+            //var team = new Team(int.Parse(id));
+            var team = Convert(_mediator.GetFromDb(int.Parse(id)));
+            return JsonConvert.SerializeObject(team);
         }
 
         private TeamViewModel Convert(Team team)

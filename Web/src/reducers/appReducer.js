@@ -88,6 +88,11 @@ export default (state = defaultAppState, action) => {
                 ...state,
                 game: action.payload
             }
+        case 'DROPDOWN_TEAMS_LOADED':
+            return {
+                ...state,
+                dropdownTeams: action.payload
+            }
         default:
             return state
     }

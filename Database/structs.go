@@ -5,70 +5,79 @@ import (
 )
 
 type BasicTeam struct {
-	Id			int			`json:"id"`
-	Name		string		`json:"name"`
+	Id   int    `json:"id"`
+	Name string `json:"name"`
 }
 
 type GameTeam struct {
-	TeamGoals	int		`json:"score"`
-	BasicTeam	BasicTeam	`json:"team"`
+	TeamGoals int       `json:"score"`
+	BasicTeam BasicTeam `json:"team"`
 }
 
 type GameTeams struct {
-	AwayTeam	GameTeam 	`json:"away"`
-	HomeTeam	GameTeam 	`json:"home"`
+	AwayTeam GameTeam `json:"away"`
+	HomeTeam GameTeam `json:"home"`
 }
 
-type Game struct  {
-	Id			int		`json:"gamePk"`
-	GameTeams	GameTeams	`json:"teams"`
+type Game struct {
+	Id        int       `json:"gamePk"`
+	GameTeams GameTeams `json:"teams"`
 }
 
 type Date struct {
-	Date			string	`json:"date"`
-	Games			[]Game 		`json:"games"`
+	Date  string `json:"date"`
+	Games []Game `json:"games"`
 }
 
 type GameResponse struct {
-	Dates			[]Date	`json:"dates"`
+	Dates []Date `json:"dates"`
 }
 
 type RosterResponse struct {
-	Players			[]Player	`json:"roster"`
+	Players []Player `json:"roster"`
 }
 
 type Team struct {
-	Id				int		`json:"id"`
-	Name			string	`json:"name"`
-	RosterResponse	RosterResponse	`json:"roster"`
+	Id             int            `json:"id"`
+	Name           string         `json:"name"`
+	RosterResponse RosterResponse `json:"roster"`
 }
 
 type TeamResponse struct {
-	Teams			[]Team 		`json:"teams"`
+	Teams []Team `json:"teams"`
 }
 
 // PLAYERS
 
 type Person struct {
-	Id				int			`json:"id"`
-	Name			string		`json:"fullName"`
+	Id   int    `json:"id"`
+	Name string `json:"fullName"`
 }
 
 type Player struct {
-	Person			Person		`json:"person"`
+	Person Person `json:"person"`
+}
+
+type Position struct {
+	Code string `json:"abbreviation"`
 }
 
 type FullPerson struct {
-	Id				    int		`json:"id"`
-	Name			    string	`json:"fullName"`
-	BirthDate			string		`json:"birthDate"`	
-    BirthCity           string      `json:"birthCity"`
-    BirthStateProvince  string          `json:"birthStateProvince"`
-    BirthCountry        string          `json:"birthCountry"`
-    Nationality         string          `json:"nationality"`
-    Team      	   		BasicTeam          `json:"currentTeam"`
+	Id                 int    `json:"id"`
+	Name               string `json:"fullName"`
+	BirthDate          string `json:"birthDate"`
+	BirthCity          string `json:"birthCity"`
+	BirthStateProvince string `json:"birthStateProvince"`
+	BirthCountry       string `json:"birthCountry"`
+	Nationality        string `json:"nationality"`
+	FeetHeight         string `json:"height"`
+	Height             float64
+	Weight             float64   `json:"weight"`
+	Active             bool      `json:"active"`
+	Position           Position  `json:"primaryPosition"`
+	Team               BasicTeam `json:"currentTeam"`
 }
 
 type PlayerResponse struct {
-    Players              []FullPerson    `json:"people"`
+	Players []FullPerson `json:"people"`
 }

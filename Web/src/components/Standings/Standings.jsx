@@ -59,34 +59,34 @@ class Standings extends Component {
                         return (
                             <Table.Row>
                                 <Table.Cell>
-                                    {team.divisionRank}
+                                    {team.DivisionRank}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    <Link to={routes.teams + "/" + team.id}><img className="logo" src={team.logo} alt={"img" + team.id}></img></Link>
+                                    <Link to={routes.teams + "/" + team.Id}><img className="logo" src={team.Logo} alt={"img" + team.Id}></img></Link>
                                 </Table.Cell>
                                 <Table.Cell>
-                                    <Link to={routes.teams + "/" + team.id}>{team.name}</Link>
+                                    <Link to={routes.teams + "/" + team.Id}>{team.Name}</Link>
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {team.gamesPlayed}
+                                    {team.GamesPlayed}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {team.wins}
+                                    {team.Wins}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {team.losses}
+                                    {team.Losses}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {team.ot}
+                                    {team.Ot}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {team.goalsScored}
+                                    {team.GoalsScored}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {team.goalsAgainst}
+                                    {team.GoalsAgainst}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {team.points}
+                                    {team.Points}
                                 </Table.Cell>
                             </Table.Row>
                         )
@@ -101,16 +101,16 @@ class Standings extends Component {
             return (<div><Loader></Loader></div>)
         }
         var metroTeams = standings.filter(function (team) {
-            return team.division === "Metro"
+            return team.Division === "Metro"
         });
         var atlanticTeams = standings.filter(function (team) {
-            return team.division === "ATL"
+            return team.Division === "ATL"
         });
         var centralTeams = standings.filter(function (team) {
-            return team.division === "CEN"
+            return team.Division === "CEN"
         });
         var pacificTeams = standings.filter(function (team) {
-            return team.division === "PAC"
+            return team.Division === "PAC"
         });
         return (
             <div>

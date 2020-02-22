@@ -50,6 +50,7 @@ class Schedule extends Component {
         if (!schedule) {
             return (<div><Loader></Loader></div>)
         }
+        console.log(schedule)
         return (
             <div>
                 <DatePicker
@@ -78,33 +79,32 @@ class Schedule extends Component {
                     </Table.Header>
                     <Table.Body>
                     {schedule.map((element) => {
-                        console.log(element)
                         return (
-                            <Table.Row key={"games " + element.id}>
-                                <Table.Cell key={"logo " + element.id}>
-                                    <img className="logo" src={element.logo} alt={"img" + element.id}></img>
+                            <Table.Row key={"games " + element.Id}>
+                                <Table.Cell key={"logo " + element.Id}>
+                                    <img className="logo" src={element.Logo} alt={"img" + element.Id}></img>
                                 </Table.Cell>
                                 {dates.map((date) => {
-                                    var game = (element.games.filter(game => game.startDate && game.startDate.split("T")[0] === covertDateTimeToString(date)))[0]
+                                    var game = (element.Games.filter(game => game.StartDate && game.StartDate.split("T")[0] === covertDateTimeToString(date)))[0]
                                     try {
-                                        const logo = element.id === game.home.id ? game.away.logo : game.home.logo
+                                        const logo = element.Id === game.Home.Id ? game.Away.Logo : game.Home.Logo
                                         return (
                                             <Table.Cell
-                                                key={"opp " + element.id + game.startDate}
-                                                className={element.id === game.home.id ? 'home-game' : 'away-game'}
+                                                key={"opp " + element.Id + game.StartDate}
+                                                className={element.Id === game.Home.Id ? 'home-game' : 'away-game'}
                                             >
-                                                <img className="logo" src={logo} alt={"img" + game.startDate + element.id}></img>
+                                                <img className="logo" src={logo} alt={"img" + game.StartDate + element.Id}></img>
                                             </Table.Cell>
                                         )
                                     } catch (err) {
                                         return (
-                                            <Table.Cell key={"empty " + element.id + date.toString()} ></Table.Cell>
+                                            <Table.Cell key={"empty " + element.Id + date.toString()} ></Table.Cell>
                                         )
                                     }
 
                                 })}
                                 <td>
-                                    {element.games.length}
+                                    {element.Games.length}  / {element.ScheduleStatus.HomeGames} / {element.ScheduleStatus.HigherPlacedOpponent}
                                 </td>
                             </Table.Row>)
                     })}

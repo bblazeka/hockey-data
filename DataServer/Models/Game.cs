@@ -10,7 +10,7 @@ namespace DataServer.Models
 {
     public class Game
     {
-
+        public string Id { get; set; }
         public Team Home { get; set; }
         public Team Away { get; set; }
 
@@ -91,7 +91,6 @@ namespace DataServer.Models
         public static string RequestBuilder(string id)
         {
             // https://statsapi.web.nhl.com/api/v1/game/2019020056/boxscore
-            id = string.Format("20190200{0}", id);
             return string.Format("https://statsapi.web.nhl.com/api/v1/game/{0}/boxscore", id);
         }
     }

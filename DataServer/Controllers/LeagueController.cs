@@ -6,6 +6,7 @@ using AutoMapper;
 using DataServer.Mediators;
 using DataServer.Util;
 using DataServer.ViewModels;
+using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
@@ -18,10 +19,12 @@ namespace DataServer.Controllers
     {
         private LeagueHandler _leagueHandler;
         private readonly IMapper _mapper;
+        private DbMediator _mediator;
 
         public LeagueController(IMapper mapper)
         {
             _mapper = mapper;
+            _mediator = new DbMediator();
             _leagueHandler = new LeagueHandler(mapper);
         }
 
@@ -29,14 +32,28 @@ namespace DataServer.Controllers
         [HttpGet("schedule/{startDate}")]
         public object GetSchedule(string startDate, string endDate)
         {
-            List<TeamViewModel> teams = (List<TeamViewModel>)(new DataController()).Teams();
+            List<TeamViewModel> teams = _mediator.GetTeams().Select(x => _mapper.Map<TeamViewModel>(x)).ToList();
             List<GameViewModel> games = ParseViewModelGames(ApiMediator.SendRequest(ScheduleRequestBuilder(startDate, endDate)));
 
             foreach (TeamViewModel team in teams)
             {
                 team.Games = games.Where(g => g.Home.Id == team.Id || g.Away.Id == team.Id).ToList();
+                team.ScheduleStatus = new ScheduleStatusViewModel();
+                team.Games.ForEach(el => {
+                    team.ScheduleStatus.HomeGames += (el.Home.Id == team.Id) ? 1 : 0;
+                    var newTeam = (el.Home.Id == team.Id) ? 
+                        teams.Where(t => t.Id == el.Away.Id).First()
+                         : 
+                        teams.Where(t => t.Id == el.Home.Id).First();
+                    team.ScheduleStatus.HigherPlacedOpponent += (newTeam.LeagueRank < team.LeagueRank) ? 1 : 0;
+                    team.ScheduleStatus.Opponents.Add((el.Home.Id == team.Id) ? 
+                        el.Away
+                         : 
+                        el.Home);
+                });
+                
             }
-            return teams;
+            return JsonConvert.SerializeObject(teams.OrderBy(t => t.Name));
         }
 
         // GET api/league/teams
@@ -44,7 +61,7 @@ namespace DataServer.Controllers
         public object GetTeams()
         {
             List<TeamViewModel> teams = _leagueHandler.Teams.Select(x => _mapper.Map<TeamViewModel>(x)).ToList();
-            return teams.ToList();
+            return JsonConvert.SerializeObject(teams);
         }
 
         // GET api/league/standings
@@ -52,7 +69,7 @@ namespace DataServer.Controllers
         public object GetStandings()
         {
             var teams = ParseStandings(ApiMediator.SendRequest(StandingsRequestBuilder("2019", "2020")));
-            return teams;
+            return JsonConvert.SerializeObject(teams);
         }
 
         public static string StandingsRequestBuilder(string start, string end)
@@ -70,7 +87,7 @@ namespace DataServer.Controllers
             return string.Format("https://statsapi.web.nhl.com/api/v1/schedule?expand=schedule.linescore&teamId={0}&startDate={1}&endDate={2}", team, start, end);
         }
 
-        public static List<GameViewModel> ParseViewModelGames(string answer)
+        public List<GameViewModel> ParseViewModelGames(string answer)
         {
             List<GameViewModel> games = new List<GameViewModel>();
             var jsonObject = JObject.Parse(answer);
@@ -84,8 +101,8 @@ namespace DataServer.Controllers
                         games.Add(new GameViewModel
                         {
                             StartDate = DateTime.ParseExact(date["date"].ToString(), "yyyy-MM-dd", null),
-                            Home = ((List<TeamViewModel>)((new DataController()).Team(int.Parse(game["teams"]["home"]["team"]["id"].ToString())))).FirstOrDefault(),
-                            Away = ((List<TeamViewModel>)((new DataController()).Team(int.Parse(game["teams"]["away"]["team"]["id"].ToString())))).FirstOrDefault()
+                            Home = _mapper.Map<TeamViewModel>(_mediator.GetTeamById(int.Parse(game["teams"]["home"]["team"]["id"].ToString()))),
+                            Away = _mapper.Map<TeamViewModel>(_mediator.GetTeamById(int.Parse(game["teams"]["away"]["team"]["id"].ToString())))
                         });
                     }
                 }
@@ -93,7 +110,7 @@ namespace DataServer.Controllers
             return games;
         }
 
-        public static List<TeamViewModel> ParseStandings(string answer)
+        public List<TeamViewModel> ParseStandings(string answer)
         {
             List<TeamViewModel> teams = new List<TeamViewModel>();
             var jsonObject = JObject.Parse(answer);
@@ -103,7 +120,7 @@ namespace DataServer.Controllers
                 var conference = record["conference"]["name"].ToString();
                 foreach (var teamRecord in record["teamRecords"])
                 {
-                    var teamViewModel = ((List<TeamViewModel>)((new DataController()).Team(Int32.Parse(teamRecord["team"]["id"].ToString())))).FirstOrDefault();
+                    var teamViewModel = _mapper.Map<TeamViewModel>(_mediator.GetTeamById(Int32.Parse(teamRecord["team"]["id"].ToString())));
 
                     teamViewModel.Wins = Int32.Parse(teamRecord["leagueRecord"]["wins"].ToString());
                     teamViewModel.Losses = Int32.Parse(teamRecord["leagueRecord"]["losses"].ToString());

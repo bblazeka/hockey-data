@@ -9,7 +9,8 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    this.props.getTeams()
+    this.props.getTeams();
+    this.props.getDropdownTeams();
   }
 
   render() {
@@ -42,7 +43,7 @@ class App extends Component {
           </div>
           <div className="App-menu">
             {teams && teams.map(team => {
-              return (<NavLink className="App-link" to={routes.teams + "/" + team.id} key={"link" + team.id}><img className="small-logo" src={team.logo} alt={"img" + team.id}></img></NavLink>);
+              return (<NavLink className="App-link" to={routes.teams + "/" + team.Id} key={"link" + team.Id}><img className="small-logo" src={team.Logo} alt={"img" + team.Id}></img></NavLink>);
             })}
           </div>
         </header>
@@ -53,11 +54,12 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  teams: state.app.teams,
+  teams: state.app.teams
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getTeams: () => dispatch(appActions.getTeams()),
+  getDropdownTeams: () => dispatch(appActions.getDropdownTeams())
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

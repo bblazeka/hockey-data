@@ -1,3 +1,5 @@
+import * as common from '../util/common';
+
 export const GET_PREDICTION = 'GET_PREDICTION'
 export const PREDICTION_LOADED = 'PREDICTION_LOADED'
 export const GET_SCHEDULE = 'GET_SCHEDULE'
@@ -22,40 +24,112 @@ export const NEWS_LOADED = 'NEWS_LOADED'
 export const ADD_TO_LINEUP = 'ADD_TO_LINEUP'
 export const GET_GAME = 'GET_GAME'
 export const GAME_LOADED = 'GAME_LOADED'
+export const GET_DROPDOWN_TEAMS = 'GET_DROPDOWN_TEAMS'
+export const DROPDOWN_TEAMS_LOADED = 'DROPDOWN_TEAMS_LOADED'
 
-export const getNews = () => ({
-  type: GET_NEWS,
-})
+export const getNews = () => (dispatch, getState) => {
+  dispatch({
+    type: 'GET_NEWS',
+  });
 
-export const getSchedule = (start,end) => ({
-  type: GET_SCHEDULE,
-  payload: {
-    start,
-    end,
-  }
-})
+  common.customFetch(`${common.pyServiceEndpoint}/news`, getState, {
+    method: 'GET',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: 'NEWS_LOADED',
+      payload: data
+    })
+  }));
+}
 
-export const getPlayer = (id) => ({
-  type: GET_PLAYER,
-  payload: {
-    id,
-  }
-})
+export const getPrediction = () => (dispatch, getState) => {
+  dispatch({
+    type: 'GET_PREDICTION',
+  });
 
-export const getStandings = () => ({
-  type: GET_STANDINGS,
-})
+  common.customFetch(`${common.pyServiceEndpoint}/predict`, getState, {
+    method: 'GET',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: 'PREDICTION_LOADED',
+      payload: data
+    })
+  }));
+}
 
-export const getTeam = (id) => ({
-  type: GET_TEAM,
-  payload: {
-    id,
-  }
-})
+export const getSchedule = (start, end) => (dispatch, getState) => {
+  dispatch({
+    type: 'GET_SCHEDULE',
+  });
 
-export const getTeams = () => ({
-  type: GET_TEAMS,
-})
+  common.customFetch(`${common.apiServiceEndpoint}/api/league/schedule/${start}?enddate=${end}`, getState, {
+    method: 'GET',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: 'SCHEDULE_LOADED',
+      payload: data
+    })
+  }));
+}
+
+export const getPlayer = (id) => (dispatch, getState) => {
+  dispatch({
+    type: 'GET_PLAYER',
+  });
+
+  common.customFetch(`${common.apiServiceEndpoint}/api/player/${id}`, getState, {
+    method: 'GET',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: 'PLAYER_LOADED',
+      payload: data
+    })
+  }));
+}
+
+export const getStandings = () => (dispatch, getState) => {
+  dispatch({
+    type: 'GET_STANDINGS',
+  });
+
+  common.customFetch(`${common.apiServiceEndpoint}/api/league/standings`, getState, {
+    method: 'GET',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: 'STANDINGS_LOADED',
+      payload: data
+    })
+  }));
+}
+
+export const getTeam = (id) => (dispatch, getState) => {
+  dispatch({
+    type: 'GET_TEAMS',
+  });
+
+  common.customFetch(`${common.apiServiceEndpoint}/api/team/${id}`, getState, {
+    method: 'GET',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: 'TEAM_LOADED',
+      payload: data
+    })
+  }));
+}
+
+export const getTeams = () => (dispatch, getState) => {
+  dispatch({
+    type: 'GET_TEAMS',
+  });
+  common.customFetch(`${common.apiServiceEndpoint}/api/data/teams`, getState, {
+    method: 'GET',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: 'TEAMS_LOADED',
+      payload: data
+    })
+  }));
+}
 
 export const populateDatabase = () => ({
   type: POPULATE_DATABASE,
@@ -65,30 +139,54 @@ export const updateDatabase = () => ({
   type: UPDATE_DATABASE,
 })
 
-export const searchBasicPlayer = (name) => ({
-  type: BASIC_SEARCH_PLAYER,
-  payload: {
-    name,
-  }
-})
+export const searchBasicPlayer = (name) => (dispatch, getState) => {
+  dispatch({
+    type: 'BASIC_SEARCH_PLAYER',
+  });
 
-export const searchPlayer = (name, individual) => ({
-  type: SEARCH_PLAYER,
-  payload: {
-    name,
-    individual,
-  }
-})
+  common.customFetch(`${common.apiServiceEndpoint}/api/data/player/search/${name}`, getState, {
+    method: 'GET',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: 'BASIC_PLAYER_LOADED',
+      payload: data
+    })
+  }));
+}
+
+export const searchPlayer = (name, individual)  => (dispatch, getState) => {
+  dispatch({
+    type: 'SEARCH_PLAYER',
+  });
+
+  common.customFetch(`${common.apiServiceEndpoint}/api/data/player/search/${name}`, getState, {
+    method: 'GET',
+  }).then(response => response.json().then(data => {
+    common.customFetch(`${common.apiServiceEndpoint}/api/player/${data[0].id}`, getState, {
+      method: 'GET',
+    }).then(response => response.json().then(data2 => {
+      if (individual) {
+        dispatch({
+          type: 'PLAYER_LOADED',
+          payload: data2
+        })
+      }
+      else
+      {
+        dispatch({
+          type: 'ADD_PLAYER',
+          payload: data2
+        })
+      }
+    }));
+  }));
+}
 
 export const removePlayer = (id) => ({
   type: REMOVE_PLAYER,
   payload: {
     id,
   }
-})
-
-export const getPrediction = () => ({
-  type: GET_PREDICTION,
 })
 
 export const addToLineup = (player) => ({
@@ -98,9 +196,32 @@ export const addToLineup = (player) => ({
   }
 })
 
-export const getGame = (id) => ({
-  type: GET_GAME,
-  payload: {
-    id,
-  }
-})
+export const getGame = (home, away) => (dispatch, getState) => {
+  dispatch({
+    type: 'GET_GAME',
+  });
+  console.log(home,away)
+  common.customFetch(`${common.apiServiceEndpoint}/api/game/2019-10-16?homeId=${home}&awayId=${away}`, getState, {
+    method: 'GET',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: 'GAME_LOADED',
+      payload: data
+    })
+  }));
+}
+
+export const getDropdownTeams = () => (dispatch, getState) => {
+  dispatch({
+    type: 'GET_DROPDOWN_TEAMS',
+  });
+
+  common.customFetch(`${common.apiServiceEndpoint}/api/data/teams/dropdown`, getState, {
+    method: 'GET',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: 'DROPDOWN_TEAMS_LOADED',
+      payload: data
+    })
+  }));
+}

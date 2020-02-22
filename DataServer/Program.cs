@@ -20,7 +20,7 @@ namespace DataServer
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>().UseUrls(new[] { "http://0.0.0.0:50540" });
+                    webBuilder.UseStartup<Startup>().UseUrls(new[] { "http://0.0.0.0:52700" });
                 });
     }
 }
