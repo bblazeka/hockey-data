@@ -64,6 +64,22 @@ namespace DataServer.Controllers
             return JsonConvert.SerializeObject(teams);
         }
 
+        // GET api/league/news
+        [HttpGet("news")]
+        public object GetNews()
+        {
+            List<ArticleViewModel> articles = _leagueHandler.GetArticles().Select(a => _mapper.Map<ArticleViewModel>(a)).ToList();
+            return JsonConvert.SerializeObject(articles);
+        }
+
+        // GET api/league/scoreboard
+        [HttpGet("scoreboard")]
+        public object GetScoreboard()
+        {
+            List<ScoreViewModel> articles = _leagueHandler.GetScoreboard().Select(a => _mapper.Map<ScoreViewModel>(a)).ToList();
+            return JsonConvert.SerializeObject(articles);
+        }
+
         // GET api/league/standings
         [HttpGet("standings")]
         public object GetStandings()

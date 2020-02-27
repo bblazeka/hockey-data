@@ -80,7 +80,7 @@ namespace DataServer.Mediators
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 var res = connection.Query<Team>(
-                    string.Format("select * from Teams where name like '%{0}%'", name)).ToList();
+                    string.Format("select * from Teams where name like '%{0}%' and active = 1", name)).ToList();
                 return res;
             }
         }

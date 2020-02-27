@@ -67,6 +67,7 @@ namespace DataServer.Models
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 Pim = 0;
                 Goals = 0;
                 Assists = 0;
@@ -75,7 +76,7 @@ namespace DataServer.Models
             }
         }
 
-        public new void ParseAnswer(string answer)
+        public void ParseAnswer(string answer)
         {
             var jsonObject = JObject.Parse(answer);
             try

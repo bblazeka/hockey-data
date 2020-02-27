@@ -80,6 +80,9 @@ namespace DataServer
             CreateMap<Player, Skater>()
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name));
+            CreateMap<Article, ArticleViewModel>()
+                .ForMember(dto => dto.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dto => dto.Headline, opt => opt.MapFrom(src => src.Headline));
             CreateMap<Team, DropdownViewModel>()
                 .ForMember(dto => dto.Value, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dto => dto.Key, opt => opt.MapFrom(src => src.Id))

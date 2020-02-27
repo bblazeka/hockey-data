@@ -13,8 +13,8 @@ import {
     Schedule,
     Standings,
     Team,
-    NoMatch,
-    News,
+    Home,
+    SocialFeed,
     Player,
     PlayerList,
     Prediction,
@@ -33,7 +33,7 @@ ReactDOM.render(
     <Router>
       <App>
         <Switch>
-          <Route exact path={routes.news} component={News} />
+          <Route exact path={routes.socialFeed} component={SocialFeed} />
           <Route exact path={routes.schedule} component={Schedule} />
           <Route exact path={routes.game} component={Game} />
           <Route exact path={routes.standings} component={Standings} />
@@ -42,7 +42,7 @@ ReactDOM.render(
           <Route exact path={routes.teams+"/:id"} component={Team} />
           <Route exact path={routes.players} component={PlayerList} />
           <Route exact path={routes.player+"/:id"} component={Player} />
-          <Route component={NoMatch} />
+          <Route component={Home} />
         </Switch>
       </App>
     </Router>

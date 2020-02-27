@@ -34,7 +34,7 @@ namespace DataServer.Models
             }
         }
 
-        public new void ParseAnswer(string answer)
+        public void ParseAnswer(string answer)
         {
             var jsonObject = JObject.Parse(answer);
             try

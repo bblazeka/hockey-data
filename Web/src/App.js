@@ -19,11 +19,14 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <div className="App-menu">
-          <NavLink className="App-link" to={routes.prediction}>
+            <NavLink className="App-link" to={routes.home}>
+              Home
+            </NavLink>
+            <NavLink className="App-link" to={routes.prediction}>
               Prediction
             </NavLink>
-            <NavLink className="App-link" to={routes.news}>
-              News
+            <NavLink className="App-link" to={routes.feed}>
+              Social Feed
             </NavLink>
             <NavLink className="App-link" to={routes.game}>
               Game

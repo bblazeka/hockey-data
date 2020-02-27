@@ -1,7 +1,7 @@
 const routes = {
     landing: '/',
     lineup: '/lineup',
-    news: '/news',
+    socialFeed: '/social',
     players: '/players',
     prediction: '/prediction',
     schedule: '/schedule',
@@ -10,6 +10,7 @@ const routes = {
     teams: '/teams',
     player: '/player',
     game: '/game',
+    home: '/',
   }
   
   export default routes;

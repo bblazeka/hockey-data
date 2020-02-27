@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace DataServer.ViewModels
 {
-    public class SkaterViewModel
+    public class SkaterStatsViewModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Position { get; set; }
+        public string Season { get; set; }
         public int Goals { get; set; }
         public int Assists { get; set; }
         public int Pim { get; set; }
@@ -30,6 +23,5 @@ namespace DataServer.ViewModels
         public int ShortHandedGoals { get; set; }
         public int ShortHandedPoints { get; set; }
         public string ShortHandedTimeOnIce { get; set; }
-        public List<SkaterStatsViewModel> YearlyStats { get; set; }
     }
 }

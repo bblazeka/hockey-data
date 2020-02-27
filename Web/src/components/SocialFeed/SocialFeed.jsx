@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { Image, Feed, Label } from 'semantic-ui-react';
 
 import * as appActions from '../../actions/appActions';
-import './News.css';
+import './SocialFeed.css';
 import Loader from '../Loader/Loader';
 
-class News extends Component {
+class SocialFeed extends Component {
 
     constructor(props) {
         super(props)
@@ -68,4 +68,4 @@ const mapDispatchToProps = dispatch => ({
     getNews: () => dispatch(appActions.getNews())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(News);
+export default connect(mapStateToProps, mapDispatchToProps)(SocialFeed);

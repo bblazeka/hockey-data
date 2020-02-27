@@ -13,16 +13,28 @@ namespace DataServer.Util
     {
         public List<Team> Teams { get; private set; }
         private readonly IMapper _mapper;
+        private DbMediator _db;
 
         public LeagueHandler(IMapper mapper)
         {
             Teams = ParseTeams(ApiMediator.SendRequest(StandingsRequestBuilder("2019", "2020"))).ToList();
+            _db = new DbMediator();
             _mapper = mapper;
         }
 
         public List<GameData> GetGamesForPrediction(string start, string end)
         {
             return ParseAnswer(ApiMediator.SendRequest(RequestBuilder(start, end)));
+        }
+
+        public List<Article> GetArticles() 
+        {
+            return ParseNews(ApiMediator.SendRequest("http://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news"));
+        }
+
+        public List<Score> GetScoreboard()
+        {
+            return ParseScoreboard(ApiMediator.SendRequest("http://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard"));
         }
 
         public static string RequestBuilder(string start, string end)
@@ -67,6 +79,52 @@ namespace DataServer.Util
                 }
             }
             return games;
+        }
+
+        public List<Article> ParseNews(string answer)
+        {
+            List<Article> articles = new List<Article>();
+            var jsonObject = JObject.Parse(answer);
+            foreach (var article in jsonObject["articles"])
+            {
+                Team team = new Team();
+                List<Player> player = new List<Player>();
+                foreach(var category in article["categories"])
+                {
+                    if (category["type"].ToString().Equals("team"))
+                    {
+                        team = _db.GetTeamsByName(category["description"].ToString()).FirstOrDefault();
+                    }
+                    else if (category["type"].ToString().Equals("athlete"))
+                    {
+                        player.Add(_db.GetPlayersByName(category["description"].ToString()).FirstOrDefault());
+                    }
+                }
+                articles.Add(new Article(){
+                    Source = "ESPN",
+                    Headline = article["headline"].ToString(),
+                    Description = article["description"].ToString(),
+                    Players = player,
+                    Team = team
+                });
+            }
+            return articles;
+        }
+
+        public List<Score> ParseScoreboard(string answer)
+        {
+            List<Score> scores = new List<Score>();
+            var jsonObject = JObject.Parse(answer);
+            foreach (var e in jsonObject["events"])
+            {
+                scores.Add(new Score(){
+                    Name = e["name"].ToString(),
+                    ShortName = e["shortName"].ToString(),
+                    Clock = Convert.ToInt32(e["status"]["clock"]),
+                    DisplayClock = e["status"]["displayClock"].ToString()
+                });
+            }
+            return scores;
         }
 
         public static List<Team> ParseTeams(string answer)

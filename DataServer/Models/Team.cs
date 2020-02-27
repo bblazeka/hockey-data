@@ -75,6 +75,7 @@ namespace DataServer.Models
 
         public static string RequestBuilder(int id)
         {
+            // http://site.api.espn.com/apis/site/v2/sports/hockey/nhl/teams/1
             return string.Format("https://statsapi.web.nhl.com/api/v1/teams/{0}?expand=team.roster", id);
         }
 
