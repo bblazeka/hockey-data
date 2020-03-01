@@ -18,6 +18,12 @@ namespace DataServer
                 .ForMember(dto => dto.Away, opt => opt.MapFrom(src => src.Away))
                 .ForMember(dto => dto.StartDate, opt => opt.MapFrom(src => src.StartDate));
             CreateMap<GameViewModel, GameData>();
+            CreateMap<Game, GameViewModel>()
+                .ForMember(dto => dto.Home, opt => opt.MapFrom(src => src.Home))
+                .ForMember(dto => dto.Away, opt => opt.MapFrom(src => src.Away))
+                .ForMember(dto => dto.HomeGoals, opt => opt.MapFrom(src => src.HomeGoals))
+                .ForMember(dto => dto.AwayGoals, opt => opt.MapFrom(src => src.AwayGoals))
+                .ForMember(dto => dto.StartDate, opt => opt.MapFrom(src => src.DatePlayed));
             CreateMap<Team, TeamViewModel>()
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))

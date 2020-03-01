@@ -19,17 +19,6 @@ class Game extends Component {
     this.fetch = this.fetch.bind(this);
   }
 
-  /*static getDerivedStateFromProps(props, state) {
-      const { id } = props.match.params;
-      if (state.id !== id) {
-          props.getGame(id);
-          return {
-              id,
-          }
-      }
-      return null
-  }*/
-
   changeHome(event,data) {
     this.setState({
       home: data.value

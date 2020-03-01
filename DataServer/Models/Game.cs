@@ -13,6 +13,9 @@ namespace DataServer.Models
         public string Id { get; set; }
         public Team Home { get; set; }
         public Team Away { get; set; }
+        public int HomeGoals { get; set; }
+        public int AwayGoals { get; set; }
+        public DateTime DatePlayed { get; set; }
 
         public Game()
         {

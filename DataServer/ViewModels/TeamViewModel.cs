@@ -22,14 +22,14 @@ namespace DataServer.ViewModels
         public int GamesPlayed { get; set; }
         public string Division { get; set; }
         public string Conference { get; set; }
-        public ScheduleStatusViewModel ScheduleStatus { get; set; }
+        public ScheduleViewModel Schedule { get; set; }
         public List<GameViewModel> Games { get; set; }
         public List<GoalieViewModel> Goalies { get; set; }
         public List<SkaterViewModel> Skaters { get; set; }
 
         public TeamViewModel()
         {
-            ScheduleStatus = new ScheduleStatusViewModel();
+            Schedule = new ScheduleViewModel();
         }
 
         public TeamViewModel(int id, string name) : base()

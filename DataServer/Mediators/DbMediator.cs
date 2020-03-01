@@ -3,6 +3,7 @@ using Dapper;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace DataServer.Mediators
 {
@@ -115,6 +116,32 @@ namespace DataServer.Mediators
                     param: parameters );
                 // filter by date
                 return res.FirstOrDefault();
+            }
+        }
+
+        public List<Game> GetGames(string startDate, string endDate)
+        {
+            var games = new List<Game>();
+            var dictionary = new Dictionary<string, object>
+            {
+                { "@Start", DateTime.ParseExact(startDate, "yyyy-MM-dd", null)},
+                { "@End", (endDate != null) ? 
+                DateTime.ParseExact(endDate, "yyyy-MM-dd", null)
+                : 
+                DateTime.ParseExact(startDate, "yyyy-MM-dd", null)}
+            };
+            var parameters = new DynamicParameters(dictionary);
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                var query = @"select * from Games 
+                    inner join Teams h on h.Id = Games.HomeID
+                    inner join Teams a on a.Id = Games.AwayID 
+                 where DatePlayed >= @Start and DatePlayed <= @End";
+                var res = connection.Query<Game, Team, Team, Game>(query,
+                    map: (game, home, away) => { game.Home = home; game.Away = away; return game; },
+                    splitOn: "GameId,Id,Id",
+                    param: parameters ).ToList();
+                return res;
             }
         }
     }

@@ -50,7 +50,6 @@ class Schedule extends Component {
         if (!schedule) {
             return (<div><Loader></Loader></div>)
         }
-        console.log(schedule)
         return (
             <div>
                 <DatePicker
@@ -104,7 +103,7 @@ class Schedule extends Component {
 
                                 })}
                                 <td>
-                                    {element.Games.length}  / {element.ScheduleStatus.HomeGames} / {element.ScheduleStatus.HigherPlacedOpponent}
+                                    {element.Games.length}  / {element.Schedule.HomeGames} / {element.Schedule.HigherPlacedOpponent}
                                 </td>
                             </Table.Row>)
                     })}

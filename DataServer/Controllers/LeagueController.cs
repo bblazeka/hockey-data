@@ -33,23 +33,26 @@ namespace DataServer.Controllers
         public object GetSchedule(string startDate, string endDate)
         {
             List<TeamViewModel> teams = _mediator.GetTeams().Select(x => _mapper.Map<TeamViewModel>(x)).ToList();
-            List<GameViewModel> games = ParseViewModelGames(ApiMediator.SendRequest(ScheduleRequestBuilder(startDate, endDate)));
+            List<GameViewModel> games = _mediator.GetGames(startDate, endDate).Select(x => _mapper.Map<GameViewModel>(x)).ToList();
+            //ParseViewModelGames(ApiMediator.SendRequest(ScheduleRequestBuilder(startDate, endDate)));
 
             foreach (TeamViewModel team in teams)
             {
                 team.Games = games.Where(g => g.Home.Id == team.Id || g.Away.Id == team.Id).ToList();
-                team.ScheduleStatus = new ScheduleStatusViewModel();
+                team.Schedule = new ScheduleViewModel();
                 team.Games.ForEach(el => {
-                    team.ScheduleStatus.HomeGames += (el.Home.Id == team.Id) ? 1 : 0;
+                    team.Schedule.HomeGames += (el.Home.Id == team.Id) ? 1 : 0;
                     var newTeam = (el.Home.Id == team.Id) ? 
                         teams.Where(t => t.Id == el.Away.Id).First()
                          : 
                         teams.Where(t => t.Id == el.Home.Id).First();
-                    team.ScheduleStatus.HigherPlacedOpponent += (newTeam.LeagueRank < team.LeagueRank) ? 1 : 0;
-                    team.ScheduleStatus.Opponents.Add((el.Home.Id == team.Id) ? 
-                        el.Away
-                         : 
-                        el.Home);
+                    team.Schedule.HigherPlacedOpponent += (newTeam.LeagueRank < team.LeagueRank) ? 1 : 0;
+                    var opponent = new OpponentViewModel(){
+                        Opponent = (el.Home.Id == team.Id) ? el.Away : el.Home,
+                        HomeGame = (el.Home.Id == team.Id),
+                        DatePlayed = el.StartDate
+                    };
+                    team.Schedule.Opponents.Add(opponent);
                 });
                 
             }
