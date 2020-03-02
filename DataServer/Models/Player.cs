@@ -22,6 +22,13 @@ namespace DataServer.Models
         public string ShotCatch { get; set; }
         public string Position { get; set; }
         public Team Team { get; set; }
+        public string Rostered { get; set; }
+        public bool RosteredStatus
+        {
+            get { return Rostered == "T"; }
+            set { Rostered = value ? "T" : "F"; }
+        }
+        public bool Rookie { get; set; }
 
         public Player() { }
 

@@ -264,7 +264,10 @@ func UpdatePlayer(player FullPerson) (int64, error) {
 							Position = @Position,
 							Weight = @Weight,
 							Height = @Height,
-							Active = @Active
+							Active = @Active,
+							Rostered = @Rostered,
+							Rookie = @Rookie,
+							ShootsCatches = @ShootsCatches
                         WHERE Id = @Id;`,
 		sql.Named("Id", player.Id),
 		sql.Named("Name", player.Name),
@@ -274,6 +277,9 @@ func UpdatePlayer(player FullPerson) (int64, error) {
 		sql.Named("Height", player.Height),
 		sql.Named("Weight", player.Weight),
 		sql.Named("Active", player.Active),
+		sql.Named("Rostered", player.Rostered),
+		sql.Named("Rookie", player.Rookie),
+		sql.Named("ShootsCatches", player.ShootsCatches),
 		sql.Named("Nationality", player.Nationality))
 
 	return 1, nil

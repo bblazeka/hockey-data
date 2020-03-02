@@ -13,6 +13,8 @@ namespace DataServer.ViewModels
         public string BirthPlace { get; set; }
         public string Nationality { get; set; }
         public string Position { get; set; }
+        public bool Rostered { get; set; }
+        public bool Rookie { get; set; }
         public TeamViewModel Team { get; set; }
     }
 }

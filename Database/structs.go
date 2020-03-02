@@ -76,6 +76,9 @@ type FullPerson struct {
 	Active             bool      `json:"active"`
 	Position           Position  `json:"primaryPosition"`
 	Team               BasicTeam `json:"currentTeam"`
+	Rostered           string    `json:"rosterStatus"`
+	Rookie             bool      `json:"rookie"`
+	ShootsCatches      string    `json:"shootsCatches"`
 }
 
 type PlayerResponse struct {

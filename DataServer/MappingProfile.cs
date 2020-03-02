@@ -36,10 +36,14 @@ namespace DataServer
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dto => dto.Team, opt => opt.MapFrom(src => src.Team))
                 .ForMember(dto => dto.BirthPlace, opt => opt.MapFrom(src => src.BirthPlace))
+                .ForMember(dto => dto.Rookie, opt => opt.MapFrom(src => src.Rookie))
+                .ForMember(dto => dto.Rostered, opt => opt.MapFrom(src => src.RosteredStatus))
                 .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position));
             CreateMap<PlayerViewModel, Player>()
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dto => dto.BirthPlace, opt => opt.MapFrom(src => src.BirthPlace))
+                .ForMember(dto => dto.Rookie, opt => opt.MapFrom(src => src.Rookie))
+                .ForMember(dto => dto.RosteredStatus, opt => opt.MapFrom(src => src.Rostered))
                 .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position));
             CreateMap<Skater, SkaterViewModel>()
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
