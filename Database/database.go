@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"regexp"
 	"strconv"
 	"time"
@@ -14,10 +16,6 @@ import (
 )
 
 var db *sql.DB
-var server = "bayessportanalyis.database.windows.net"
-var port = 1433
-var user = "bruno"
-var database = "bayessportanalysis"
 var err error
 
 func ExecuteQueryReader(query string) (*sql.Rows, error) {
@@ -64,10 +62,20 @@ func ExecuteNonQuery(query string, args ...interface{}) (int64, error) {
 }
 
 func main() {
-	dat, err := ioutil.ReadFile(".pass")
+	jsonFile, err := os.Open("db.json")
+	// if we os.Open returns an error then handle it
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Successfully Opened config file db.json")
+	// defer the closing of our jsonFile so that we can parse it later on
+	defer jsonFile.Close()
+	dat, err := ioutil.ReadAll(jsonFile)
+	var dbData DbData
+	json.Unmarshal(dat, &dbData)
 	// Build connection string
 	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s;",
-		server, user, string(dat), port, database)
+		dbData.Server, dbData.User, dbData.Password, dbData.Port, dbData.Database)
 	// Create connection pool
 	db, err = sql.Open("sqlserver", connString)
 	if err != nil {
@@ -84,7 +92,7 @@ func main() {
 	PopulateTeams()
 
 	// update player data and player teams
-	UpdatePlayers()
+	//UpdatePlayers()
 }
 
 func dateParse(date string) (time.Time, error) {

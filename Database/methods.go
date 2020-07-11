@@ -28,7 +28,7 @@ func InsertGame(game Game) (int64, error) {
 		return -1, err
 	}
 
-	tsql := "INSERT INTO dbo.Games (Id, HomeId, AwayId, HomeGoals, AwayGoals) VALUES (@Id, @HomeId, @AwayId, @HomeGoals, @AwayGoals);"
+	tsql := "INSERT INTO dbo.Games (GameId, HomeId, AwayId, HomeGoals, AwayGoals) VALUES (@Id, @HomeId, @AwayId, @HomeGoals, @AwayGoals);"
 
 	_, err = db.ExecContext(
 		ctx,
@@ -58,7 +58,7 @@ func UpdateGame(game Game, date string) (int, error) {
     HomeGoals = @HomeGoals, 
     AwayGoals = @AwayGoals, 
     DatePlayed = @DatePlayed 
-    WHERE Id = @Id;`,
+    WHERE GameId = @Id;`,
 		sql.Named("Id", game.Id),
 		sql.Named("HomeId", game.GameTeams.HomeTeam.BasicTeam.Id),
 		sql.Named("AwayId", game.GameTeams.AwayTeam.BasicTeam.Id),
@@ -139,13 +139,13 @@ func InsertPlayer(id int, name string) (int64, error) {
 		return -1, err
 	}
 
-	tsql := "INSERT INTO dbo.Players (Id, Name) VALUES (@Id, @Name);"
+	tsql := "INSERT INTO dbo.Players (PlayerId, FullName) VALUES (@PlayerId, @FullName);"
 
 	_, err = db.ExecContext(
 		ctx,
 		tsql,
-		sql.Named("Id", id),
-		sql.Named("Name", name))
+		sql.Named("PlayerId", id),
+		sql.Named("FullName", name))
 
 	if err != nil {
 		fmt.Printf("SKIP: Player %s is already in the database.\n", name)
@@ -157,7 +157,7 @@ func InsertPlayer(id int, name string) (int64, error) {
 }
 
 func UpdatePlayers() (int, error) {
-	rows, err := ExecuteQueryReader("SELECT Id, Name, TeamId FROM dbo.Players p;")
+	rows, err := ExecuteQueryReader("SELECT PlayerId, FullName, TeamId FROM dbo.Players p;")
 	if err != nil {
 		return -1, err
 	}
@@ -257,7 +257,7 @@ func UpdatePlayer(player FullPerson) (int64, error) {
 	}
 	fmt.Printf("Updating %s %s\n", player.Name, player.Position.Code)
 	ExecuteNonQuery(`UPDATE dbo.Players 
-                        SET Name = @Name,
+                        SET FullName = @Name,
                             BirthPlace = @BirthPlace,
                             DateOfBirth = @BirthDate,
 							Nationality = @Nationality,
@@ -268,7 +268,7 @@ func UpdatePlayer(player FullPerson) (int64, error) {
 							Rostered = @Rostered,
 							Rookie = @Rookie,
 							ShootsCatches = @ShootsCatches
-                        WHERE Id = @Id;`,
+                        WHERE PlayerId = @Id;`,
 		sql.Named("Id", player.Id),
 		sql.Named("Name", player.Name),
 		sql.Named("BirthPlace", birthPlace),
@@ -286,7 +286,7 @@ func UpdatePlayer(player FullPerson) (int64, error) {
 }
 
 func UpdatePlayerTeams(id int, teamId int) (int64, error) {
-	cnt, err := ExecuteNonQuery("UPDATE dbo.Players SET TeamId = @TeamId WHERE Id = @Id;",
+	cnt, err := ExecuteNonQuery("UPDATE dbo.Players SET TeamId = @TeamId WHERE PlayerId = @Id;",
 		sql.Named("Id", id),
 		sql.Named("TeamId", teamId))
 	if err != nil {
@@ -320,8 +320,7 @@ func PopulateTeams() (int, error) {
 		// Use json.Decode for reading streams of JSON data
 		json.Unmarshal(bytes, &record)
 
-		//InsertTeam(record.Teams[0].Id,record.Teams[0].Name)
-
+		//InsertTeam(record.Teams[0].Id, record.Teams[0].Name)
 		for _, element := range record.Teams[0].RosterResponse.Players {
 			p, err := GetPlayer(element.Person.Id)
 			if err != nil {
@@ -348,7 +347,7 @@ func InsertTeam(id int, name string) (int64, error) {
 		return -1, err
 	}
 
-	tsql := "INSERT INTO dbo.Teams (Id, Name) VALUES (@Id, @Name);"
+	tsql := "INSERT INTO dbo.Teams (TeamId, FullName) VALUES (@Id, @Name);"
 
 	stmt, err := db.Prepare(tsql)
 	if err != nil {

@@ -84,3 +84,13 @@ type FullPerson struct {
 type PlayerResponse struct {
 	Players []FullPerson `json:"people"`
 }
+
+// utility structs
+
+type DbData struct {
+	Server   string `json:"server"`
+	Port     int    `json:"port"`
+	User     string `json:"user"`
+	Database string `json:"database"`
+	Password string `json:"password"`
+}

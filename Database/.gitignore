@@ -15,4 +15,4 @@
 # vendor/
 
 # password and hidden data
-.pass
+db.json
