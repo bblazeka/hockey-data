@@ -18,17 +18,21 @@ namespace HockeyDb.Views
     /// <summary>
     /// Interaction logic for HomePage.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class HomePage : BasePage
     {
         private DatabaseService m_dbService;
         public HomePage()
         {
             InitializeComponent();
             m_dbService = new DatabaseService();
+            Refresh();
+        }
+
+        public override void Refresh()
+        {
             TeamCb.ItemsSource = m_dbService.GetTeams();
             PlayerCb_Copy.ItemsSource = m_dbService.GetPlayers();
         }
-
 
         private void InsertPlayerTeamTb_Click(object sender, RoutedEventArgs e)
         {
@@ -41,12 +45,6 @@ namespace HockeyDb.Views
         private void Status(string message, int res)
         {
             StatusLbl.Content = (res > 0) ? string.Format("{1}: {0} rows updated.", res, message) : string.Format("{0}: Update failed.", message);
-        }
-
-        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
-        {
-            TeamCb.ItemsSource = m_dbService.GetTeams();
-            PlayerCb_Copy.ItemsSource = m_dbService.GetPlayers();
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)

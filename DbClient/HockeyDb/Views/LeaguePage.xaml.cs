@@ -17,13 +17,18 @@ namespace HockeyDb.Views
     /// <summary>
     /// Interaction logic for LeaguePage.xaml
     /// </summary>
-    public partial class LeaguePage : Page
+    public partial class LeaguePage : BasePage
     {
         private LeagueService m_dbService;
         public LeaguePage()
         {
             InitializeComponent();
             m_dbService = new LeagueService();
+            LeagueCb.ItemsSource = m_dbService.GetLeagues();
+        }
+
+        public override void Refresh()
+        {
             LeagueCb.ItemsSource = m_dbService.GetLeagues();
         }
 

@@ -12,20 +12,26 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace HockeyDb.Views
 {
     /// <summary>
-    /// Interaction logic for TeamWindow.xaml
+    /// Interaction logic for TeamPage.xaml
     /// </summary>
-    public partial class TeamWindow : Window
+    public partial class TeamPage : BasePage
     {
         private TeamService m_dbService;
-        public TeamWindow()
+        public TeamPage()
         {
             InitializeComponent();
             m_dbService = new TeamService();
+            Refresh();
+        }
+
+        public override void Refresh()
+        {
             TeamCb.ItemsSource = m_dbService.GetTeams();
             TeamsCb.ItemsSource = m_dbService.GetTeams();
             LeagueCb.ItemsSource = m_dbService.GetLeagues();
@@ -41,7 +47,7 @@ namespace HockeyDb.Views
         private void UpdateLeagueBtn_Click(object sender, RoutedEventArgs e)
         {
             var res = m_dbService.UpdateLeague(Convert.ToInt32(TeamIdTb.Text), TeamNameTb.Text, LeagueCb.SelectedItem as LeagueViewModel, Convert.ToInt32(SeasonCb.Text));
-            DetermineStatus(string.Format("{0} {1}", TeamNameTb.Text, LeagueCb.Text),res);
+            DetermineStatus(string.Format("{0} {1}", TeamNameTb.Text, LeagueCb.Text), res);
         }
 
         private void DetermineStatus(string key, int res)
@@ -73,7 +79,7 @@ namespace HockeyDb.Views
                 var res = m_dbService.UpdateTeamLogo(openFileDialog.FileName, TeamIdTb.Text, TeamNameTb.Text);
                 DetermineStatus(string.Format("{0} image update", TeamNameTb.Text), res);
             }
-                
+
         }
 
         private static BitmapImage LoadImage(byte[] imageData)

@@ -1,9 +1,7 @@
 ﻿using HockeyDb.Services;
 using HockeyDb.ViewModels;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,20 +10,26 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace HockeyDb.Views
 {
     /// <summary>
-    /// Interaction logic for PlayerWindow.xaml
+    /// Interaction logic for PlayerPage.xaml
     /// </summary>
-    public partial class PlayerWindow : Window
+    public partial class PlayerPage : BasePage
     {
         private PlayerService m_dbService;
-        public PlayerWindow()
+        public PlayerPage()
         {
             InitializeComponent();
             m_dbService = new PlayerService();
+            Refresh();
+        }
+
+        public override void Refresh()
+        {
             PlayerCb.ItemsSource = m_dbService.GetPlayers();
             TeamCb.ItemsSource = m_dbService.GetTeams();
             PlayerCb_Copy.ItemsSource = m_dbService.GetPlayers();
@@ -72,7 +76,7 @@ namespace HockeyDb.Views
                 Console.WriteLine(ex);
             }
 
-            m_dbService.UpdatePlayer(NatCb.Text, PositionTb.Text, (PlayerCb.SelectedItem as PlayerViewModel).PlayerId, 
+            m_dbService.UpdatePlayer(NatCb.Text, PositionTb.Text, (PlayerCb.SelectedItem as PlayerViewModel).PlayerId,
                 Nat2Cb.Text, BirthplaceTb.Text, BirthdateDP.SelectedDate.GetValueOrDefault());
         }
 

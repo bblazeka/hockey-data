@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HockeyDb"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="900">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
@@ -14,20 +14,13 @@
             <ColumnDefinition Width="477*"/>
             <ColumnDefinition Width="323*"/>
         </Grid.ColumnDefinitions>
-        <Menu Grid.ColumnSpan="4" Margin="0,0,0,382">
-            <MenuItem x:Name="ShowMenuItem" Header="Players" Click="ShowMenuItem_Click"/>
-            <MenuItem x:Name="TeamWindow" Header="Teams" Click="MenuItem_Click"/>
-            <MenuItem x:Name="LeagueMenuItem" Header="League" Click="LeagueMenuItem_Click"/>
-            <MenuItem x:Name="StaffMenuItem" Header="Staff"/>
-            <MenuItem x:Name="SettingsMenuItem" Header="Settings" Click="SettingsMenuItem_Click"/>
-        </Menu>
-        <ComboBox x:Name="SeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="85,188,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" Grid.ColumnSpan="3"/>
-        <Button x:Name="InsertPlayerTeamTb" Content="Insert player team" HorizontalAlignment="Left" Margin="95,234,0,0" VerticalAlignment="Top" Click="InsertPlayerTeamTb_Click" Grid.ColumnSpan="3"/>
-        <ComboBox x:Name="TeamCb" HorizontalAlignment="Left" Margin="85,145,0,0" VerticalAlignment="Top" Width="237" RenderTransformOrigin="1.608,-0.727" Grid.ColumnSpan="3"/>
-        <ComboBox x:Name="PlayerCb_Copy" HorizontalAlignment="Left" Margin="85,105,0,0" VerticalAlignment="Top" Width="237" Grid.ColumnSpan="3"/>
-        <Label x:Name="StatusLbl" Content="No changes made." Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="91,274,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="RefreshBtn" Content="Refresh" Grid.Column="2" HorizontalAlignment="Left" Margin="391,107,0,0" VerticalAlignment="Top" Click="RefreshBtn_Click" Width="86"/>
-        <Button x:Name="DeleteBtn" Content="Delete player team" HorizontalAlignment="Left" Margin="229,234,0,0" VerticalAlignment="Top" Click="DeleteBtn_Click" Grid.ColumnSpan="3"/>
+        <Frame x:Name="frame" Content="Frame" Grid.Column="2" Margin="74,0,0,31" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnHome" Content="Home" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="btnHome_Click"/>
+        <Button x:Name="btnLeague" Content="League" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="14,121,0,0" VerticalAlignment="Top" Click="btnLeague_Click"/>
+        <Button x:Name="btnPlayers" Content="Players" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" Click="btnPlayers_Click"/>
+        <Button x:Name="btnTeams" Content="Teams" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="14,80,0,0" VerticalAlignment="Top" Click="btnTeams_Click"/>
+        <Label x:Name="lblStatus" Content="Label" Grid.ColumnSpan="4" HorizontalAlignment="Left" Margin="8,458,0,0" VerticalAlignment="Top" Width="529"/>
+        <Button x:Name="btnRefresh" Content="Refresh" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="14,167,0,0" VerticalAlignment="Top" Click="btnRefresh_Click"/>
 
     </Grid>
 </Window>

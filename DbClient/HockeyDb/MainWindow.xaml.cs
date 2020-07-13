@@ -28,59 +28,40 @@ namespace HockeyDb
         {
             InitializeComponent();
             m_dbService = new DatabaseService();
-            TeamCb.ItemsSource = m_dbService.GetTeams();
-            PlayerCb_Copy.ItemsSource = m_dbService.GetPlayers();
+
+            frame.Content = new HomePage();
+
+            Application.Current.MainWindow = this;
         }
 
-        private void ShowMenuItem_Click(object sender, RoutedEventArgs e)
+        public void setLabel(string text)
         {
-            PlayerWindow w = new PlayerWindow();
-            w.Show();
+            this.lblStatus.Content = text;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void btnPlayers_Click(object sender, RoutedEventArgs e)
         {
-            TeamWindow w = new TeamWindow();
-            w.Show();
+            frame.Content = new PlayerPage();
         }
 
-        private void LeagueMenuItem_Click(object sender, RoutedEventArgs e)
+        private void btnLeague_Click(object sender, RoutedEventArgs e)
         {
-            LeagueWindow w = new LeagueWindow();
-            w.Show();
+            frame.Content = new LeaguePage();
         }
 
-        private void InsertPlayerTeamTb_Click(object sender, RoutedEventArgs e)
+        private void btnTeams_Click(object sender, RoutedEventArgs e)
         {
-            PlayerViewModel player = PlayerCb_Copy.SelectedItem as PlayerViewModel;
-            StatusLbl.Content = "";
-            var res = m_dbService.AddPlayerTeam(player.PlayerId, player.FullName,TeamCb.SelectedItem, Convert.ToInt32(SeasonCb.SelectedItem));
-            Status(string.Format("{0} {1}",player.FullName, TeamCb.Text), res);
+            frame.Content = new TeamPage();
         }
 
-        private void Status(string message, int res)
+        private void btnHome_Click(object sender, RoutedEventArgs e)
         {
-            StatusLbl.Content = (res > 0) ? string.Format("{1}: {0} rows updated.", res, message) : string.Format("{0}: Update failed.", message);
+            frame.Content = new HomePage();
         }
 
-        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            TeamCb.ItemsSource = m_dbService.GetTeams();
-            PlayerCb_Copy.ItemsSource = m_dbService.GetPlayers();
-        }
-
-        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
-        {
-            StatusLbl.Content = "";
-            var res = m_dbService.DeletePlayerTeam(((PlayerViewModel)PlayerCb_Copy.SelectedItem).PlayerId,
-                PlayerCb_Copy.Text, TeamCb.SelectedItem, Convert.ToInt32(SeasonCb.SelectedItem));
-            Status(PlayerCb_Copy.Text, res);
-        }
-
-        private void SettingsMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            SettingsWindow w = new SettingsWindow();
-            w.Show();
+            ((BasePage)frame.Content).Refresh();
         }
     }
 }

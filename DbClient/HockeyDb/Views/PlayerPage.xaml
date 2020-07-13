@@ -1,12 +1,12 @@
-﻿<Window x:Class="HockeyDb.Views.PlayerWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HockeyDb.Views"
-        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
-        mc:Ignorable="d"
-        Title="PlayerWindow" Height="450" Width="880">
+﻿<local:BasePage x:Class="HockeyDb.Views.PlayerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HockeyDb.Views"
+      mc:Ignorable="d" 
+      Title="PlayerPage">
+
     <Grid>
         <TabControl>
             <TabItem Header="Database">
@@ -83,4 +83,4 @@
         </TabControl>
 
     </Grid>
-</Window>
+</local:BasePage>
