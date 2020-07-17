@@ -37,22 +37,15 @@ namespace HockeyDb.Views
         private void InsertPlayerTeamTb_Click(object sender, RoutedEventArgs e)
         {
             PlayerViewModel player = PlayerCb_Copy.SelectedItem as PlayerViewModel;
-            StatusLbl.Content = "";
             var res = m_dbService.AddPlayerTeam(player.PlayerId, player.FullName, TeamCb.SelectedItem, Convert.ToInt32(SeasonCb.SelectedItem));
-            Status(string.Format("{0} {1}", player.FullName, TeamCb.Text), res);
-        }
-
-        private void Status(string message, int res)
-        {
-            StatusLbl.Content = (res > 0) ? string.Format("{1}: {0} rows updated.", res, message) : string.Format("{0}: Update failed.", message);
+            RaiseStatusChange(string.Format("Added {0} {1} {2}", player.FullName, TeamCb.Text, SeasonCb.SelectedItem), res);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            StatusLbl.Content = "";
             var res = m_dbService.DeletePlayerTeam(((PlayerViewModel)PlayerCb_Copy.SelectedItem).PlayerId,
                 PlayerCb_Copy.Text, TeamCb.SelectedItem, Convert.ToInt32(SeasonCb.SelectedItem));
-            Status(PlayerCb_Copy.Text, res);
+            RaiseStatusChange(string.Format("Deleted {0} {1} {2}", PlayerCb_Copy.SelectedItem, TeamCb.Text, SeasonCb.SelectedItem), res);
         }
     }
 }

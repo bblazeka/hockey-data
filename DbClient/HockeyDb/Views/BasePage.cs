@@ -11,5 +11,18 @@ namespace HockeyDb.Views
         {
             throw new NotImplementedException();
         }
+
+        public delegate void ChangeStatus(string sampleParam, int result);
+
+        public event ChangeStatus statusChange;
+
+        public void RaiseStatusChange(string textToWrite, int result)
+        {
+            // Your logic
+            if (statusChange != null)
+            {
+                statusChange(textToWrite, result);
+            }
+        }
     }
 }

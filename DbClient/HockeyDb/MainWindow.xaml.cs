@@ -41,27 +41,40 @@ namespace HockeyDb
 
         private void btnPlayers_Click(object sender, RoutedEventArgs e)
         {
-            frame.Content = new PlayerPage();
+            PlayerPage page = new PlayerPage();
+            page.statusChange += MainWindow_statusChange;
+            frame.Content = page;
         }
 
         private void btnLeague_Click(object sender, RoutedEventArgs e)
         {
-            frame.Content = new LeaguePage();
+            LeaguePage page = new LeaguePage();
+            page.statusChange += MainWindow_statusChange;
+            frame.Content = page;
         }
 
         private void btnTeams_Click(object sender, RoutedEventArgs e)
         {
-            frame.Content = new TeamPage();
+            TeamPage page = new TeamPage();
+            page.statusChange += MainWindow_statusChange;
+            frame.Content = page;
         }
 
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
-            frame.Content = new HomePage();
+            HomePage page = new HomePage();
+            page.statusChange += MainWindow_statusChange;
+            frame.Content = page;
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
             ((BasePage)frame.Content).Refresh();
+        }
+
+        private void MainWindow_statusChange(string sampleParam, int value)
+        {
+            lblStatus.Content = (value > 0) ? string.Format("Success: {0}", sampleParam) : string.Format("Failure: {0}", sampleParam);
         }
     }
 }

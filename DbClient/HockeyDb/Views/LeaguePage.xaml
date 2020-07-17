@@ -7,16 +7,16 @@
       mc:Ignorable="d" 
       Title="LeaguePage">
 
-    <Grid>
+    <Grid Height="464">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="99*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <TabControl Margin="0,10,0,16">
             <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5">
-                    <ComboBox x:Name="LeagueCb" HorizontalAlignment="Left" Margin="47,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="LeagueCb_SelectionChanged"/>
-                    <DataGrid x:Name="TeamDataGrid" Margin="47,50,435,10" AutoGenerateColumns="False">
+                <Grid Background="#FFE5E5E5" Height="390">
+                    <ComboBox x:Name="LeagueCb" HorizontalAlignment="Left" Margin="59,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="LeagueCb_SelectionChanged"/>
+                    <DataGrid x:Name="TeamDataGrid" Margin="47,50,43,10" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>

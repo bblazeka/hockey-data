@@ -2,6 +2,7 @@
 using HockeyDb.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,6 +39,7 @@ namespace HockeyDb.Views
             NatCb.ItemsSource = nations;
             NatCb_Copy.ItemsSource = nations;
             Nat2Cb.ItemsSource = nations;
+            NatFilterCb.ItemsSource = nations;
         }
 
         private void PlayerCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -76,8 +78,9 @@ namespace HockeyDb.Views
                 Console.WriteLine(ex);
             }
 
-            m_dbService.UpdatePlayer(NatCb.Text, PositionTb.Text, (PlayerCb.SelectedItem as PlayerViewModel).PlayerId,
+            var res = m_dbService.UpdatePlayer(NatCb.Text, PositionTb.Text, (PlayerCb.SelectedItem as PlayerViewModel).PlayerId,
                 Nat2Cb.Text, BirthplaceTb.Text, BirthdateDP.SelectedDate.GetValueOrDefault());
+            RaiseStatusChange(string.Format("Update for player {0}.",(PlayerCb.SelectedItem as PlayerViewModel).FullName), res);
         }
 
         private void PlayerCb_Copy_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -91,34 +94,27 @@ namespace HockeyDb.Views
         {
             IdTb.Text = "";
             NameTb.Text = "";
-        }
-
-        private void Status(string key, int res)
-        {
-            StatusLbl.Content = (res > 0) ? string.Format("{1}: {0} rows affected.", res, key) : string.Format("{0}: Query failed.", key);
+            PosTb.Text = "";
         }
 
         private void Insert_Click(object sender, RoutedEventArgs e)
         {
-            StatusLbl.Content = "";
             var res = m_dbService.InsertPlayer(IdTb.Text, NameTb.Text, PosTb.Text, NatCb_Copy.Text);
-            Status(NameTb.Text, res);
+            RaiseStatusChange(string.Format("Inserted {0} from {1}", NameTb.Text, NatCb_Copy.Text), res);
         }
 
         private void InsertPlayerTeamTb_Click(object sender, RoutedEventArgs e)
         {
-            StatusLbl.Content = "";
             var res = m_dbService.AddPlayerTeam(IdTb.Text.Length == 0 ? 0 : Convert.ToInt32(IdTb.Text),
                 NameTb.Text, TeamCb.SelectedItem, Convert.ToInt32(SeasonCb.SelectedItem));
-            Status(NameTb.Text, res);
+            RaiseStatusChange(string.Format("Inserted {0} - {1} {2}", NameTb.Text, TeamCb.SelectedItem, SeasonCb.SelectedItem), res);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            StatusLbl.Content = "";
             var res = m_dbService.DeletePlayerTeam(IdTb.Text.Length == 0 ? 0 : Convert.ToInt32(IdTb.Text),
                 NameTb.Text, TeamCb.SelectedItem, Convert.ToInt32(SeasonCb.SelectedItem));
-            Status(NameTb.Text, res);
+            RaiseStatusChange(string.Format("Deleted {0} - {1} {2}", NameTb.Text, TeamCb.SelectedItem, SeasonCb.SelectedItem), res);
         }
 
         private void UpdatePlayersBtn_Click(object sender, RoutedEventArgs e)
@@ -134,6 +130,16 @@ namespace HockeyDb.Views
             {
                 // caused by last element being an empty row
                 Console.WriteLine(ex);
+            }
+        }
+
+        private void NatFilterCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (NatFilterCb.SelectedItem != null)
+            {
+                string selectedNation = (NatFilterCb.SelectedItem as NationViewModel).NationId;
+                PlayerCb.ItemsSource = m_dbService.GetPlayers().Where(p => p.Nation.Equals(selectedNation) ||
+                (p.Nation2 != null && p.Nation2.Equals(selectedNation))).ToList();
             }
         }
     }

@@ -8,11 +8,11 @@
       Title="TeamPage">
 
     <Grid>
-        <TabControl>
+        <TabControl Height="504">
             <TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5">
                     <GridSplitter HorizontalAlignment="Center" Height="0" VerticalAlignment="Top" Width="794" Margin="0,59,0,0"/>
-                    <DataGrid x:Name="RosterDataGrid" Margin="0,54,290,31" AutoGenerateColumns="False" GridLinesVisibility="None">
+                    <DataGrid x:Name="RosterDataGrid" Margin="0,54,250,31" AutoGenerateColumns="False" GridLinesVisibility="None">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Path=Nr}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Path=FullName}"/>
@@ -35,7 +35,7 @@
                     <ComboBox x:Name="TeamCb" HorizontalAlignment="Left" Margin="108,15,0,0" VerticalAlignment="Top" Width="194" SelectionChanged="TeamCb_SelectionChanged"/>
                     <ComboBox x:Name="TeamSeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="319,15,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="TeamSeasonCb_SelectionChanged"/>
                     <Image x:Name="TeamLogoImg" HorizontalAlignment="Left" Height="37" Margin="45,10,0,0" VerticalAlignment="Top" Width="53"/>
-                    <DataGrid x:Name="GoaliesDataGrid" Margin="0,280,504,0" AutoGenerateColumns="False" GridLinesVisibility="None">
+                    <DataGrid x:Name="GoaliesDataGrid" Margin="0,329,250,0" AutoGenerateColumns="False" GridLinesVisibility="None">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Path=Nr}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Path=FullName}"/>

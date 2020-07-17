@@ -9,7 +9,7 @@
 
     <Grid>
         <TabControl>
-            <TabItem Header="Database">
+            <TabItem Header="Database" Margin="1,0,-1,0" Height="20">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0*"/>
@@ -17,7 +17,7 @@
                         <ColumnDefinition Width="781*"/>
                     </Grid.ColumnDefinitions>
                     <ComboBox x:Name="PlayerCb" HorizontalAlignment="Left" Margin="64,16,0,0" VerticalAlignment="Top" Width="229" SelectionChanged="PlayerCb_SelectionChanged" Grid.Column="1" Height="22" Grid.ColumnSpan="2"/>
-                    <DataGrid x:Name="SeasonsDataGrid" Margin="220,102,93,101" AutoGenerateColumns="False" Grid.Column="2">
+                    <DataGrid x:Name="SeasonsDataGrid" Margin="255,96,57,106" AutoGenerateColumns="False" Grid.Column="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Season" Binding="{Binding SeasonId}"/>
                             <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
@@ -48,12 +48,13 @@
                     <DatePicker x:Name="BirthdateDP" Grid.Column="1" HorizontalAlignment="Left" Margin="64,85,0,0" VerticalAlignment="Top" Height="24" Width="129" Grid.ColumnSpan="2"/>
                     <Label x:Name="BirthdateLbl" Content="Birthdate" HorizontalAlignment="Left" Margin="2,85,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="58"/>
                     <ComboBox x:Name="NatCb" HorizontalAlignment="Left" Margin="64,172,0,0" VerticalAlignment="Top" Width="57" Grid.Column="1" Height="22" Grid.ColumnSpan="2"/>
-                    <ComboBox x:Name="Nat2Cb" HorizontalAlignment="Left" Margin="33,172,0,0" VerticalAlignment="Top" Width="58" Grid.Column="2" Height="22"/>
-                    <Grid Grid.ColumnSpan="3"/>
-                    <Grid Grid.ColumnSpan="3"/>
+                    <ComboBox x:Name="Nat2Cb" HorizontalAlignment="Left" Margin="61,172,0,0" VerticalAlignment="Top" Width="58" Grid.Column="2" Height="22"/>
+                    
+                    
+                    <ComboBox x:Name="NatFilterCb" HorizontalAlignment="Left" Margin="2,15,0,0" VerticalAlignment="Top" Width="57" Grid.Column="1" Height="22" SelectionChanged="NatFilterCb_SelectionChanged"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Advanced" Margin="1,0,-1,0">
+            <TabItem Header="Advanced" Margin="1,0,-1,0" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
                     <TextBox x:Name="IdTb" HorizontalAlignment="Left" Margin="24,113,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,2.285"/>
                     <TextBox x:Name="NameTb" HorizontalAlignment="Left" Margin="24,160,0,0" Text="FullName" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
@@ -63,8 +64,7 @@
                     <ComboBox x:Name="TeamCb" HorizontalAlignment="Left" Margin="167,156,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.608,-0.727"/>
                     <ComboBox x:Name="PlayerCb_Copy" HorizontalAlignment="Left" Margin="167,113,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="PlayerCb_Copy_SelectionChanged"/>
                     <Button x:Name="ResetBtn" Content="Reset" HorizontalAlignment="Left" Margin="24,238,0,0" VerticalAlignment="Top" Click="ResetBtn_Click"/>
-                    <Label x:Name="StatusLbl" Content="Label" HorizontalAlignment="Left" Margin="24,321,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="DeleteBtn" Content="Delete" HorizontalAlignment="Left" Margin="227,284,0,0" VerticalAlignment="Top" Click="DeleteBtn_Click"/>
+                    <Button x:Name="DeleteBtn" Content="Delete player team" HorizontalAlignment="Left" Margin="177,284,0,0" VerticalAlignment="Top" Click="DeleteBtn_Click"/>
                     <DataGrid x:Name="PlayersGrid" Margin="308,10,24,97" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding FullName}"/>
@@ -72,10 +72,10 @@
                             <DataGridTextColumn Header="Nat" Binding="{Binding Nation}"/>
                             <DataGridTextColumn Header="Nat2" Binding="{Binding Nation2}"/>
                             <DataGridTextColumn Header="Birthplace" Binding="{Binding BirthPlace}"/>
-                            <DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate}"/>
+                            <DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate, StringFormat=\{0:dd.MM.yyyy.\}}"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="UpdatePlayersBtn" Content="Update Edited Players" HorizontalAlignment="Left" Margin="479,329,0,0" VerticalAlignment="Top" Click="UpdatePlayersBtn_Click"/>
+                    <Button x:Name="UpdatePlayersBtn" Content="Update Edited Players" HorizontalAlignment="Left" Margin="428,319,0,0" VerticalAlignment="Bottom" Click="UpdatePlayersBtn_Click"/>
                     <ComboBox x:Name="NatCb_Copy" HorizontalAlignment="Left" Margin="88,198,0,0" VerticalAlignment="Top" Width="56" Height="22"/>
                     <TextBox x:Name="PosTb" HorizontalAlignment="Left" Margin="24,200,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="49"/>
                 </Grid>
