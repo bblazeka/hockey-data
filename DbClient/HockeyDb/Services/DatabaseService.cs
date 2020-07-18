@@ -29,6 +29,17 @@ namespace HockeyDb.Services
                 return players;
             }
         }
+        public List<PlayerViewModel> GetPlayersWithFlags()
+        {
+            using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+            {
+                var players = connection.Query<PlayerViewModel>(@"Select PlayerId, FullName, Position, n1.Flag Flag, n2.Flag Flag2, BirthPlace, Birthdate 
+                                                                  from fan.Players
+                                                                  inner join fan.Nations n1 on n1.NationId = Nation left join fan.Nations n2 on n2.NationId = Nation2
+                                                                  order by FullName").AsList();
+                return players;
+            }
+        }
         public List<TeamViewModel> GetTeams()
         {
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))

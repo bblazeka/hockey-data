@@ -55,6 +55,32 @@ namespace HockeyDb.Services
                 return -1;
             }
         }
+        public int DeleteLeague(int teamId, string teamName, object league, int season)
+        {
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+                {
+                    var teams = connection.Query<Team>("Select TeamId, TeamName from fan.Teams").AsList();
+
+                    if (teamId == 0)
+                    {
+                        teamId = teams.Find(el => el.TeamName == teamName).TeamId;
+                    }
+
+                    var affectedRows = connection.Execute("delete from fan.TeamsSeason where " +
+            "TeamId = @TeamId and LeagueId = @LeagueId and SeasonId = @SeasonId", new { TeamId = teamId, ((LeagueViewModel)league).LeagueId, SeasonId = season });
+                    return affectedRows;
+                }
+
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.ToString());
+                return -1;
+            }
+        }
         public List<PlayerViewModel> GetPlayers(object teamObj, string season)
         {
             var team = (teamObj as TeamViewModel);

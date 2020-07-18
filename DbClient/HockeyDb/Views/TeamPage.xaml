@@ -8,11 +8,11 @@
       Title="TeamPage">
 
     <Grid>
-        <TabControl Height="504">
+        <TabControl>
             <TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5">
                     <GridSplitter HorizontalAlignment="Center" Height="0" VerticalAlignment="Top" Width="794" Margin="0,59,0,0"/>
-                    <DataGrid x:Name="RosterDataGrid" Margin="0,54,250,31" AutoGenerateColumns="False" GridLinesVisibility="None">
+                    <DataGrid x:Name="RosterDataGrid" Margin="0,54,300,31" AutoGenerateColumns="False" GridLinesVisibility="None">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Path=Nr}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Path=FullName}"/>
@@ -35,7 +35,7 @@
                     <ComboBox x:Name="TeamCb" HorizontalAlignment="Left" Margin="108,15,0,0" VerticalAlignment="Top" Width="194" SelectionChanged="TeamCb_SelectionChanged"/>
                     <ComboBox x:Name="TeamSeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="319,15,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="TeamSeasonCb_SelectionChanged"/>
                     <Image x:Name="TeamLogoImg" HorizontalAlignment="Left" Height="37" Margin="45,10,0,0" VerticalAlignment="Top" Width="53"/>
-                    <DataGrid x:Name="GoaliesDataGrid" Margin="0,329,250,0" AutoGenerateColumns="False" GridLinesVisibility="None">
+                    <DataGrid x:Name="GoaliesDataGrid" Margin="0,329,300,0" AutoGenerateColumns="False" GridLinesVisibility="None">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Path=Nr}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Path=FullName}"/>
@@ -53,9 +53,10 @@
 
                         </DataGrid.Columns>
                     </DataGrid>
+                    <TextBlock x:Name="lineupTextBlock" HorizontalAlignment="Right" Margin="0,64,45,0" Text="Projected lineup:" TextWrapping="Wrap" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="EditTab" Header="Advanced" Height="20" VerticalAlignment="Top">
+            <TabItem x:Name="EditTab" Header="Advanced">
                 <Grid Background="#FFE5E5E5">
                     <ComboBox x:Name="LeagueCb" HorizontalAlignment="Left" Margin="268,49,0,0" VerticalAlignment="Top" Width="120"/>
                     <TextBox x:Name="TeamIdTb" HorizontalAlignment="Left" Margin="56,49,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
@@ -63,16 +64,17 @@
                     <Button x:Name="InsertBtn" Content="Insert" HorizontalAlignment="Left" Margin="96,183,0,0" VerticalAlignment="Top" Click="InsertBtn_Click"/>
                     <ComboBox x:Name="SeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="249,102,0,0" VerticalAlignment="Top" SelectedIndex="0" Width="158"/>
                     <Button x:Name="UpdateLeagueBtn" Content="Insert League" HorizontalAlignment="Left" Margin="297,169,0,0" VerticalAlignment="Top" Click="UpdateLeagueBtn_Click"/>
-                    <Label x:Name="ResultLbl" Content="No Changes" HorizontalAlignment="Left" Margin="268,252,0,0" VerticalAlignment="Top"/>
                     <Button x:Name="UpdateBtn" Content="Update Image" HorizontalAlignment="Left" Margin="484,113,0,0" VerticalAlignment="Top" Click="UpdateBtn_Click"/>
                     <ComboBox x:Name="TeamsCb" HorizontalAlignment="Left" Margin="249,10,0,0" VerticalAlignment="Top" Width="158" SelectionChanged="TeamsCb_SelectionChanged"/>
                     <Label x:Name="TeamIdLbl" Content="Team Id" HorizontalAlignment="Left" Margin="5,45,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.83,0.772"/>
                     <Label x:Name="NameLbl" Content="Name" HorizontalAlignment="Left" Margin="5,89,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="NationLbl" Content="Nation" HorizontalAlignment="Left" Margin="5,136,0,0" VerticalAlignment="Top"/>
                     <ComboBox x:Name="TeamNationCb" HorizontalAlignment="Left" Margin="56,138,0,0" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="DeleteLeagueBtn" Content="Delete League" HorizontalAlignment="Left" Margin="399,169,0,0" VerticalAlignment="Top" Click="DeleteLeagueBtn_Click"/>
                 </Grid>
             </TabItem>
             <Grid/>
+            <Button Content="Button"/>
         </TabControl>
 
     </Grid>

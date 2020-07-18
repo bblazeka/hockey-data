@@ -45,5 +45,11 @@ namespace HockeyDb.Views
                 TeamDataGrid.ItemsSource = m_dbService.GetLeagueTeams(LeagueCb.SelectedItem, (((ComboBox)sender).SelectedItem).ToString());
             }
         }
+
+        private void BtnAddLeague_Click(object sender, RoutedEventArgs e)
+        {
+            var res = m_dbService.InsertLeague(TbLeagueId.Text, TbLeagueName.Text);
+            RaiseStatusChange(string.Format("INSERT {0}", TbLeagueName.Text), res);
+        }
     }
 }

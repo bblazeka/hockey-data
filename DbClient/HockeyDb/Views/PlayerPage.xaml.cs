@@ -31,10 +31,11 @@ namespace HockeyDb.Views
 
         public override void Refresh()
         {
-            PlayerCb.ItemsSource = m_dbService.GetPlayers();
+            var players = m_dbService.GetPlayers();
+            PlayerCb.ItemsSource = players;
             TeamCb.ItemsSource = m_dbService.GetTeams();
-            PlayerCb_Copy.ItemsSource = m_dbService.GetPlayers();
-            PlayersGrid.ItemsSource = m_dbService.GetPlayers();
+            PlayerCb_Copy.ItemsSource = players;
+            PlayersGrid.ItemsSource = m_dbService.GetPlayersWithFlags();
             var nations = m_dbService.GetNations();
             NatCb.ItemsSource = nations;
             NatCb_Copy.ItemsSource = nations;
@@ -46,6 +47,10 @@ namespace HockeyDb.Views
         {
             SeasonsDataGrid.ItemsSource = m_dbService.GetPlayerSeasons(((ComboBox)sender).SelectedItem);
             var player = (((ComboBox)sender).SelectedItem as PlayerViewModel);
+            if (player == null)
+            {
+                return;
+            }
             if (player.Position != null)
             {
                 GoalsCol.Visibility = player.Position.Equals("G") ? Visibility.Collapsed : Visibility.Visible;
@@ -141,6 +146,13 @@ namespace HockeyDb.Views
                 PlayerCb.ItemsSource = m_dbService.GetPlayers().Where(p => p.Nation.Equals(selectedNation) ||
                 (p.Nation2 != null && p.Nation2.Equals(selectedNation))).ToList();
             }
+        }
+
+        private void copySelectedBtn_Click(object sender, RoutedEventArgs e)
+        {
+            PlayerViewModel player = ((PlayerViewModel)PlayersGrid.SelectedItem);
+            NameTb.Text = player.FullName;
+            IdTb.Text = player.PlayerId.ToString();
         }
     }
 }

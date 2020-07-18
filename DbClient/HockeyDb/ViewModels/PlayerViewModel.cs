@@ -22,9 +22,31 @@ namespace HockeyDb.ViewModels
         public decimal GoalsAgainstAvg { get; set; }
         public decimal SavesPercent { get; set; }
         public string Nation2 { get; set; }
+        public byte[] Flag2 { get; set; }
+        public PositionalCompatibility positionalCompatibility { get; set; }
+
         public override string ToString()
         {
             return FullName;
         }
+
+        public void DeterminePositionalCompatibility()
+        {
+            positionalCompatibility = new PositionalCompatibility();
+            positionalCompatibility.G = Position.Contains("G");
+            positionalCompatibility.D = Position.Contains("D");
+            positionalCompatibility.LW = Position.Contains("LW") || Position.Equals("F");
+            positionalCompatibility.C = Position.Contains("C") || Position.Equals("F");
+            positionalCompatibility.RW = Position.Contains("RW") || Position.Equals("F");
+        }
+    }
+
+    public class PositionalCompatibility
+    {
+        public bool G = false;
+        public bool D = false;
+        public bool LW = false;
+        public bool C = false;
+        public bool RW = false;
     }
 }

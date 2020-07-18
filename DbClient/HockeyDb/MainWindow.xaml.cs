@@ -76,5 +76,11 @@ namespace HockeyDb
         {
             lblStatus.Content = (value > 0) ? string.Format("Success: {0}", sampleParam) : string.Format("Failure: {0}", sampleParam);
         }
+
+        private void BtnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsWindow sw = new SettingsWindow();
+            sw.Show();
+        }
     }
 }

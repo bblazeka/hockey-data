@@ -13,7 +13,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <TabControl Margin="0,10,0,16">
-            <TabItem Header="TabItem">
+            <TabItem Header="Overview">
                 <Grid Background="#FFE5E5E5" Height="390">
                     <ComboBox x:Name="LeagueCb" HorizontalAlignment="Left" Margin="59,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="LeagueCb_SelectionChanged"/>
                     <DataGrid x:Name="TeamDataGrid" Margin="47,50,43,10" AutoGenerateColumns="False">
@@ -40,8 +40,12 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5" Margin="0,0,-3,0"/>
+            <TabItem Header="Advanced">
+                <Grid Background="#FFE5E5E5" Margin="0,0,-3,0">
+                    <TextBox x:Name="TbLeagueId" HorizontalAlignment="Left" Margin="33,121,0,0" Text="Id" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <TextBox x:Name="TbLeagueName" HorizontalAlignment="Left" Margin="33,187,0,0" Text="Name" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="BtnAddLeague" Content="Add League" HorizontalAlignment="Left" Margin="86,263,0,0" VerticalAlignment="Top" Click="BtnAddLeague_Click"/>
+                </Grid>
             </TabItem>
         </TabControl>
 

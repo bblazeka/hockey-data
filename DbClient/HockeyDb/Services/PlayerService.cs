@@ -1,8 +1,11 @@
 ﻿using Dapper;
+using HockeyDb.Models;
 using HockeyDb.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace HockeyDb.Services
 {
@@ -12,12 +15,17 @@ namespace HockeyDb.Services
         public List<PlayerSeasonViewModel> GetPlayerSeasons(object playerObj)
         {
             var player = (playerObj as PlayerViewModel);
-            var sql = @"SELECT a.PlayerId, a.FullName, a.Position, b.SeasonId, b.Nr, b.Games GP, b.Goals, b.Assists, b.Goals + b.Assists Points, b.PIM, b.PlusMinus, b.GoalsAgainstAvg, b.SavesPercent, c.TeamId, c.TeamName, c.TeamLogo, e.LeagueId, e.LeagueName 
+            if (player == null)
+            {
+                return new List<PlayerSeasonViewModel>();
+            }
+            var sql = @"SELECT a.PlayerId, a.FullName, a.Position, b.SeasonId, b.Nr, b.Games GP, b.Goals, b.Assists, b.Goals + b.Assists Points, b.PIM, b.PlusMinus, b.GoalsAgainstAvg, b.SavesPercent, c.TeamId, c.TeamName, c.TeamLogo, f.Flag, e.LeagueId, e.LeagueName 
                         FROM fan.Players a
                         INNER JOIN fan.PlayersTeams b on a.PlayerId = b.PlayerId
                         INNER JOIN fan.Teams c ON c.TeamId = b.TeamId
                         INNER JOIN fan.TeamsSeason d ON c.TeamId = d.TeamId and b.SeasonId = d.SeasonId
                         INNER JOIN fan.Leagues e ON e.LeagueId = d.LeagueId
+                        INNER JOIN fan.Nations f ON f.NationId = c.Country
                         WHERE a.PlayerId = @PlayerId
                         ORDER BY b.seasonId";
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
@@ -62,6 +70,73 @@ namespace HockeyDb.Services
                 Console.WriteLine(e.Message);
                 return -1;
             }
+        }
+
+        public static List<PlayerViewModel> GetLineup(List<PlayerViewModel> players)
+        {
+            // divide by defenders and forwards
+            var defenders = players.Where(el => el.Position.Equals("D")).OrderByDescending(e => (float)e.Points/e.Games).ToList();
+            List<PlayerViewModel> forwards = players.Where(el => !el.Position.Equals("D") && !el.Position.Equals("G"))
+                .OrderByDescending(e => (float)e.Points / e.Games).ToList();
+
+            // determine positional compatibility for forwards
+            forwards.ForEach(el => el.DeterminePositionalCompatibility());
+
+            // fill output list
+            List<PlayerViewModel> ps = new List<PlayerViewModel>();
+            if (defenders.Count >= 4 && forwards.Count >= 6)
+            {
+                // generate only two lines
+                for (int line = 0; line < 2; line++)
+                {
+                    PlayerViewModel ld = defenders.First();
+                    defenders.Remove(ld);
+                    ps.Add(ld);
+                    PlayerViewModel rd = defenders.First();
+                    defenders.Remove(rd);
+                    ps.Add(rd);
+
+                    PlayerViewModel c = new PlayerViewModel();
+                    try
+                    {
+                        c = forwards.First(el => el.positionalCompatibility.C == true);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        c = forwards.First();
+                    }
+                    forwards.Remove(c);
+
+                    PlayerViewModel lw = new PlayerViewModel();
+                    try
+                    {
+                        lw = forwards.First(el => el.positionalCompatibility.LW == true);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        lw = forwards.First();
+                    }
+                    forwards.Remove(lw);
+
+                    PlayerViewModel rw = new PlayerViewModel();
+                    try
+                    {
+                        rw = forwards.First(el => el.positionalCompatibility.RW == true);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        rw = forwards.First();
+                    }
+                    forwards.Remove(rw);
+
+
+                    ps.Add(lw);
+                    ps.Add(c);
+                    ps.Add(rw);
+                }
+            }
+
+            return ps;
         }
     }
 }

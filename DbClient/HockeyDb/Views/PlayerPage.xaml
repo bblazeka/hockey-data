@@ -28,6 +28,13 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Team" Binding="{Binding Team.TeamName}"/>
+                            <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Height="10" Source="{Binding Team.Flag}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Header="League" Binding="{Binding League.LeagueName}"/>
                             <DataGridTextColumn Header="#" Binding="{Binding Nr}"/>
                             <DataGridTextColumn Header="GP" Binding="{Binding GP}"/>
@@ -49,8 +56,8 @@
                     <Label x:Name="BirthdateLbl" Content="Birthdate" HorizontalAlignment="Left" Margin="2,85,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="58"/>
                     <ComboBox x:Name="NatCb" HorizontalAlignment="Left" Margin="64,172,0,0" VerticalAlignment="Top" Width="57" Grid.Column="1" Height="22" Grid.ColumnSpan="2"/>
                     <ComboBox x:Name="Nat2Cb" HorizontalAlignment="Left" Margin="61,172,0,0" VerticalAlignment="Top" Width="58" Grid.Column="2" Height="22"/>
-                    
-                    
+
+
                     <ComboBox x:Name="NatFilterCb" HorizontalAlignment="Left" Margin="2,15,0,0" VerticalAlignment="Top" Width="57" Grid.Column="1" Height="22" SelectionChanged="NatFilterCb_SelectionChanged"/>
                 </Grid>
             </TabItem>
@@ -69,8 +76,20 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding FullName}"/>
                             <DataGridTextColumn Header="Position" Binding="{Binding Position}"/>
-                            <DataGridTextColumn Header="Nat" Binding="{Binding Nation}"/>
-                            <DataGridTextColumn Header="Nat2" Binding="{Binding Nation2}"/>
+                            <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Height="10" Source="{Binding Flag}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Height="10" Source="{Binding Flag2}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Birthplace" Binding="{Binding BirthPlace}"/>
                             <DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate, StringFormat=\{0:dd.MM.yyyy.\}}"/>
                         </DataGrid.Columns>
@@ -78,6 +97,7 @@
                     <Button x:Name="UpdatePlayersBtn" Content="Update Edited Players" HorizontalAlignment="Left" Margin="428,319,0,0" VerticalAlignment="Bottom" Click="UpdatePlayersBtn_Click"/>
                     <ComboBox x:Name="NatCb_Copy" HorizontalAlignment="Left" Margin="88,198,0,0" VerticalAlignment="Top" Width="56" Height="22"/>
                     <TextBox x:Name="PosTb" HorizontalAlignment="Left" Margin="24,200,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="49"/>
+                    <Button x:Name="copySelectedBtn" Content="Copy selected" HorizontalAlignment="Left" Margin="330,0,0,25" VerticalAlignment="Bottom" Click="copySelectedBtn_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

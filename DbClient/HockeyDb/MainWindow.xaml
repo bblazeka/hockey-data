@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HockeyDb"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900">
+        Title="MainWindow" Height="600" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
@@ -21,6 +21,7 @@
         <Button x:Name="btnTeams" Content="Teams" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="14,80,0,0" VerticalAlignment="Top" Click="btnTeams_Click"/>
         <Label x:Name="lblStatus" Content="Label" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="10,429,0,0" VerticalAlignment="Bottom" Width="422" Height="26"/>
         <Button x:Name="btnRefresh" Content="Refresh" Grid.ColumnSpan="3" HorizontalAlignment="Left" Margin="14,167,0,0" VerticalAlignment="Top" Click="btnRefresh_Click"/>
+        <Button x:Name="BtnSettings" Content="Settings" Grid.Column="2" HorizontalAlignment="Left" Margin="18,207,0,0" VerticalAlignment="Top" Click="BtnSettings_Click"/>
 
     </Grid>
 </Window>

@@ -26,5 +26,23 @@ namespace HockeyDb.Services
             }
         }
 
+        public int InsertLeague(string a, string b)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+                {
+                    var affectedRows = connection.Execute("Insert into fan.Leagues (LeagueId, LeagueName) " +
+                                "values (@Id, @Name)", new { Id = a, Name = b });
+                    return affectedRows;
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.ToString());
+                return -1;
+            }
+        }
+
     }
 }

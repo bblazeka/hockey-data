@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,18 +42,19 @@ namespace HockeyDb.Views
         private void InsertBtn_Click(object sender, RoutedEventArgs e)
         {
             var res = m_dbService.InsertTeam(TeamIdTb.Text, TeamNameTb.Text, TeamNationCb.Text);
-            DetermineStatus(string.Format("{0} {1}", TeamNameTb.Text, TeamNationCb.Text), res);
+            RaiseStatusChange(string.Format("{0} {1}", TeamNameTb.Text, TeamNationCb.Text), res);
         }
 
         private void UpdateLeagueBtn_Click(object sender, RoutedEventArgs e)
         {
             var res = m_dbService.UpdateLeague(Convert.ToInt32(TeamIdTb.Text), TeamNameTb.Text, LeagueCb.SelectedItem as LeagueViewModel, Convert.ToInt32(SeasonCb.Text));
-            DetermineStatus(string.Format("{0} {1}", TeamNameTb.Text, LeagueCb.Text), res);
+            RaiseStatusChange(string.Format("{0} {1} {2}", TeamNameTb.Text, LeagueCb.Text, SeasonCb.Text), res);
         }
 
-        private void DetermineStatus(string key, int res)
+        private void DeleteLeagueBtn_Click(object sender, RoutedEventArgs e)
         {
-            ResultLbl.Content = (res > 0) ? string.Format("{1}: {0} rows affected.", res, key) : string.Format("{0}: Query failed.", key);
+            var res = m_dbService.DeleteLeague(Convert.ToInt32(TeamIdTb.Text), TeamNameTb.Text, LeagueCb.SelectedItem as LeagueViewModel, Convert.ToInt32(SeasonCb.Text));
+            RaiseStatusChange(string.Format("{0} {1} {2}", TeamNameTb.Text, LeagueCb.Text, SeasonCb.Text), res);
         }
 
         private void TeamCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -66,8 +68,23 @@ namespace HockeyDb.Views
         {
             if (TeamCb.SelectedItem != null)
             {
-                RosterDataGrid.ItemsSource = m_dbService.GetPlayers(TeamCb.SelectedItem, ((ComboBox)sender).SelectedItem.ToString()).FindAll(p => p.Position != "G");
-                GoaliesDataGrid.ItemsSource = m_dbService.GetPlayers(TeamCb.SelectedItem, ((ComboBox)sender).SelectedItem.ToString()).FindAll(p => p.Position == "G");
+                List<PlayerViewModel> players = m_dbService.GetPlayers(TeamCb.SelectedItem, ((ComboBox)sender).SelectedItem.ToString());
+                
+                RosterDataGrid.ItemsSource = players.FindAll(p => p.Position != "G");
+                GoaliesDataGrid.ItemsSource = players.FindAll(p => p.Position == "G");
+
+                lineupTextBlock.Text = "Projected lineup:\n";
+                int lineCounter = 0;
+                foreach(PlayerViewModel pvm in PlayerService.GetLineup(players))
+                {
+                    if (lineCounter == 5)
+                    {
+                        lineCounter = 0;
+                        lineupTextBlock.Text += "\n";
+                    }
+                    lineupTextBlock.Text += string.Format("#{0} {1}\n", pvm.Nr.ToString(), pvm.FullName.ToString());
+                    lineCounter++;
+                }
             }
         }
 
@@ -77,7 +94,7 @@ namespace HockeyDb.Views
             if (openFileDialog.ShowDialog() == true)
             {
                 var res = m_dbService.UpdateTeamLogo(openFileDialog.FileName, TeamIdTb.Text, TeamNameTb.Text);
-                DetermineStatus(string.Format("{0} image update", TeamNameTb.Text), res);
+                RaiseStatusChange(string.Format("{0} image update", TeamNameTb.Text), res);
             }
 
         }
