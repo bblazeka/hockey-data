@@ -35,7 +35,7 @@
                     <ComboBox x:Name="TeamCb" HorizontalAlignment="Left" Margin="108,15,0,0" VerticalAlignment="Top" Width="194" SelectionChanged="TeamCb_SelectionChanged"/>
                     <ComboBox x:Name="TeamSeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="319,15,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="TeamSeasonCb_SelectionChanged"/>
                     <Image x:Name="TeamLogoImg" HorizontalAlignment="Left" Height="37" Margin="45,10,0,0" VerticalAlignment="Top" Width="53"/>
-                    <DataGrid x:Name="GoaliesDataGrid" Margin="0,329,300,0" AutoGenerateColumns="False" GridLinesVisibility="None">
+                    <DataGrid x:Name="GoaliesDataGrid" VerticalAlignment="Bottom" Margin="0,329,300,0" AutoGenerateColumns="False" GridLinesVisibility="None">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Path=Nr}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Path=FullName}"/>
@@ -54,6 +54,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <TextBlock x:Name="lineupTextBlock" HorizontalAlignment="Right" Margin="0,64,45,0" Text="Projected lineup:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                    <Label x:Name="FgnLbl" Content="Foreign player count:" HorizontalAlignment="Left" Margin="467,13,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="EditTab" Header="Advanced">

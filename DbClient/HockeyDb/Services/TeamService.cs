@@ -84,7 +84,11 @@ namespace HockeyDb.Services
         public List<PlayerViewModel> GetPlayers(object teamObj, string season)
         {
             var team = (teamObj as TeamViewModel);
-            var sql = @"SELECT a.PlayerId, b.Nr, a.FullName, a.Nation, d.Flag, a.Position, b.Games, b.Goals, b.Assists, b.Goals + b.Assists Points, b.PlusMinus, b.PIM, b.GoalsAgainstAvg, b.SavesPercent, b.SeasonId, b.Nr, c.TeamId, c.TeamName 
+            if (team == null)
+            {
+                return new List<PlayerViewModel>();
+            }
+            var sql = @"SELECT a.PlayerId, b.Nr, a.FullName, a.Nation, a.Nation2, d.Flag, a.Position, b.Games, b.Goals, b.Assists, b.Goals + b.Assists Points, b.PlusMinus, b.PIM, b.GoalsAgainstAvg, b.SavesPercent, b.SeasonId, b.Nr, c.TeamId, c.TeamName 
                         FROM fan.Players a
                         INNER JOIN fan.PlayersTeams b on a.PlayerId = b.PlayerId
                         INNER JOIN fan.Teams c ON c.TeamId = b.TeamId

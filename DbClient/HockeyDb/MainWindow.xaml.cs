@@ -24,10 +24,12 @@ namespace HockeyDb
     public partial class MainWindow : Window
     {
         private DatabaseService m_dbService;
+        private PlayerService m_dbServicePlayer;
         public MainWindow()
         {
             InitializeComponent();
             m_dbService = new DatabaseService();
+            m_dbServicePlayer = new PlayerService(m_dbService);
 
             frame.Content = new HomePage();
 
@@ -41,7 +43,7 @@ namespace HockeyDb
 
         private void btnPlayers_Click(object sender, RoutedEventArgs e)
         {
-            PlayerPage page = new PlayerPage();
+            PlayerPage page = new PlayerPage(m_dbServicePlayer);
             page.statusChange += MainWindow_statusChange;
             frame.Content = page;
         }

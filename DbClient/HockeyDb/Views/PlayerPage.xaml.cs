@@ -25,17 +25,22 @@ namespace HockeyDb.Views
         public PlayerPage()
         {
             InitializeComponent();
-            m_dbService = new PlayerService();
+        }
+
+        public PlayerPage(PlayerService ps)
+        {
+            InitializeComponent();
+            m_dbService = ps;
             Refresh();
         }
 
         public override void Refresh()
         {
-            var players = m_dbService.GetPlayers();
+            var players = m_dbService.GetPlayersWithFlags();
             PlayerCb.ItemsSource = players;
             TeamCb.ItemsSource = m_dbService.GetTeams();
             PlayerCb_Copy.ItemsSource = players;
-            PlayersGrid.ItemsSource = m_dbService.GetPlayersWithFlags();
+            PlayersGrid.ItemsSource = players;
             var nations = m_dbService.GetNations();
             NatCb.ItemsSource = nations;
             NatCb_Copy.ItemsSource = nations;
@@ -91,8 +96,11 @@ namespace HockeyDb.Views
         private void PlayerCb_Copy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var player = (PlayerViewModel)((ComboBox)sender).SelectedItem;
-            NameTb.Text = player.FullName;
-            IdTb.Text = player.PlayerId.ToString();
+            if (player != null)
+            {
+                NameTb.Text = player.FullName;
+                IdTb.Text = player.PlayerId.ToString();
+            }
         }
 
         private void ResetBtn_Click(object sender, RoutedEventArgs e)

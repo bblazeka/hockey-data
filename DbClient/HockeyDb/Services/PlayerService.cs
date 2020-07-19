@@ -12,6 +12,10 @@ namespace HockeyDb.Services
     public class PlayerService : DatabaseService
     {
         public PlayerService() : base() { }
+        public PlayerService(DatabaseService databaseService)
+        {
+            
+        }
         public List<PlayerSeasonViewModel> GetPlayerSeasons(object playerObj)
         {
             var player = (playerObj as PlayerViewModel);
@@ -74,7 +78,8 @@ namespace HockeyDb.Services
 
         public static List<PlayerViewModel> GetLineup(List<PlayerViewModel> players)
         {
-            // divide by defenders and forwards
+            // divide by positions
+            var goalies = players.Where(el => el.Position.Equals("G")).OrderByDescending(e => e.Games).ToList();
             var defenders = players.Where(el => el.Position.Equals("D")).OrderByDescending(e => (float)e.Points/e.Games).ToList();
             List<PlayerViewModel> forwards = players.Where(el => !el.Position.Equals("D") && !el.Position.Equals("G"))
                 .OrderByDescending(e => (float)e.Points / e.Games).ToList();
@@ -84,8 +89,14 @@ namespace HockeyDb.Services
 
             // fill output list
             List<PlayerViewModel> ps = new List<PlayerViewModel>();
-            if (defenders.Count >= 4 && forwards.Count >= 6)
+            if (goalies.Count > 0 && defenders.Count >= 4 && forwards.Count >= 6)
             {
+                PlayerViewModel g = goalies.First();
+                goalies.Remove(g);
+                ps.Add(g);
+
+                ps.Add(new PlayerViewModel());
+                
                 // generate only two lines
                 for (int line = 0; line < 2; line++)
                 {
@@ -96,47 +107,88 @@ namespace HockeyDb.Services
                     defenders.Remove(rd);
                     ps.Add(rd);
 
-                    PlayerViewModel c = new PlayerViewModel();
-                    try
-                    {
-                        c = forwards.First(el => el.positionalCompatibility.C == true);
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        c = forwards.First();
-                    }
-                    forwards.Remove(c);
+                    // count occurances to determine the order of assignment
+                    int lwCount = forwards.Where(el => el.positionalCompatibility.LW == true).ToList().Count;
+                    int cCount = forwards.Where(el => el.positionalCompatibility.C == true).ToList().Count;
+                    int rwCount = forwards.Where(el => el.positionalCompatibility.RW == true).ToList().Count;
 
-                    PlayerViewModel lw = new PlayerViewModel();
-                    try
+                    if (rwCount < lwCount)
                     {
-                        lw = forwards.First(el => el.positionalCompatibility.LW == true);
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        lw = forwards.First();
-                    }
-                    forwards.Remove(lw);
+                        PlayerViewModel rw = GetNextRightWing(forwards);
+                        PlayerViewModel c = GetNextCenter(forwards);
+                        PlayerViewModel lw = GetNextLeftWing(forwards);
 
-                    PlayerViewModel rw = new PlayerViewModel();
-                    try
-                    {
-                        rw = forwards.First(el => el.positionalCompatibility.RW == true);
+                        ps.Add(lw);
+                        ps.Add(c);
+                        ps.Add(rw);
                     }
-                    catch (InvalidOperationException)
+                    else
                     {
-                        rw = forwards.First();
+                        PlayerViewModel lw = GetNextLeftWing(forwards);
+                        PlayerViewModel c = GetNextCenter(forwards);
+                        PlayerViewModel rw = GetNextRightWing(forwards);
+
+                        ps.Add(lw);
+                        ps.Add(c);
+                        ps.Add(rw);
                     }
-                    forwards.Remove(rw);
 
-
-                    ps.Add(lw);
-                    ps.Add(c);
-                    ps.Add(rw);
+                    ps.Add(new PlayerViewModel());
                 }
             }
 
             return ps;
+        }
+
+        public static PlayerViewModel GetNextCenter(List<PlayerViewModel> players)
+        {
+            PlayerViewModel c = new PlayerViewModel();
+
+            try
+            {
+                c = players.First(el => el.positionalCompatibility.C == true);
+            }
+            catch (InvalidOperationException)
+            {
+                c = players.First();
+            }
+            players.Remove(c);
+
+            return c;
+        }
+
+        public static PlayerViewModel GetNextLeftWing(List<PlayerViewModel> players)
+        {
+            PlayerViewModel p = new PlayerViewModel();
+
+            try
+            {
+                p = players.First(el => el.positionalCompatibility.LW == true);
+            }
+            catch (InvalidOperationException)
+            {
+                p = players.First();
+            }
+            players.Remove(p);
+
+            return p;
+        }
+
+        public static PlayerViewModel GetNextRightWing(List<PlayerViewModel> players)
+        {
+            PlayerViewModel p = new PlayerViewModel();
+
+            try
+            {
+                p = players.First(el => el.positionalCompatibility.RW == true);
+            }
+            catch (InvalidOperationException)
+            {
+                p = players.First();
+            }
+            players.Remove(p);
+
+            return p;
         }
     }
 }

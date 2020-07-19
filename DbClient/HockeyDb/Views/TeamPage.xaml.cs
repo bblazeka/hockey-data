@@ -69,22 +69,26 @@ namespace HockeyDb.Views
             if (TeamCb.SelectedItem != null)
             {
                 List<PlayerViewModel> players = m_dbService.GetPlayers(TeamCb.SelectedItem, ((ComboBox)sender).SelectedItem.ToString());
-                
+
                 RosterDataGrid.ItemsSource = players.FindAll(p => p.Position != "G");
                 GoaliesDataGrid.ItemsSource = players.FindAll(p => p.Position == "G");
 
                 lineupTextBlock.Text = "Projected lineup:\n";
-                int lineCounter = 0;
-                foreach(PlayerViewModel pvm in PlayerService.GetLineup(players))
+                foreach (PlayerViewModel pvm in PlayerService.GetLineup(players))
                 {
-                    if (lineCounter == 5)
+                    if (pvm.FullName == null)
                     {
-                        lineCounter = 0;
                         lineupTextBlock.Text += "\n";
                     }
-                    lineupTextBlock.Text += string.Format("#{0} {1}\n", pvm.Nr.ToString(), pvm.FullName.ToString());
-                    lineCounter++;
+                    else
+                    {
+                        lineupTextBlock.Text += string.Format("#{0} {1}\n", pvm.Nr.ToString(), pvm.FullName.ToString());
+                    }
                 }
+
+                int foreignPlayers = players.Where(p => p.Nation != ((TeamViewModel)TeamCb.SelectedItem).Country &&
+                (p.Nation2 == null || p.Nation2 != ((TeamViewModel)TeamCb.SelectedItem).Country)).ToList().Count;
+                FgnLbl.Content = string.Format("Foreign player count: {0}", foreignPlayers);
             }
         }
 
