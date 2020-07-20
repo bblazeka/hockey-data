@@ -12,10 +12,6 @@ namespace HockeyDb.Services
     public class PlayerService : DatabaseService
     {
         public PlayerService() : base() { }
-        public PlayerService(DatabaseService databaseService)
-        {
-            
-        }
         public List<PlayerSeasonViewModel> GetPlayerSeasons(object playerObj)
         {
             var player = (playerObj as PlayerViewModel);
@@ -80,43 +76,56 @@ namespace HockeyDb.Services
         {
             // divide by positions
             var goalies = players.Where(el => el.Position.Equals("G")).OrderByDescending(e => e.Games).ToList();
-            var defenders = players.Where(el => el.Position.Equals("D")).OrderByDescending(e => (float)e.Points/e.Games).ToList();
-            List<PlayerViewModel> forwards = players.Where(el => !el.Position.Equals("D") && !el.Position.Equals("G"))
-                .OrderByDescending(e => (float)e.Points / e.Games).ToList();
+            List<PlayerViewModel> skaters = players.Where(el => !el.Position.Equals("G"))
+                .OrderByDescending(e => (float)e.Points/e.Games).ToList();
 
-            // determine positional compatibility for forwards
-            forwards.ForEach(el => el.DeterminePositionalCompatibility());
+            // determine positional compatibility
+            skaters.ForEach(el => el.DeterminePositionalCompatibility());
+
+            int defCount = skaters.Where(s => s.positionalCompatibility.D).Count();
+            int fwdCount = skaters.Where(s => !s.positionalCompatibility.D).Count();
+
+            int linesCount = (defCount / 2 < fwdCount / 3) ? defCount / 2 : fwdCount / 3;
 
             // fill output list
             List<PlayerViewModel> ps = new List<PlayerViewModel>();
-            if (goalies.Count > 0 && defenders.Count >= 4 && forwards.Count >= 6)
+            if (goalies.Count > 0)
             {
                 PlayerViewModel g = goalies.First();
                 goalies.Remove(g);
                 ps.Add(g);
 
-                ps.Add(new PlayerViewModel());
-                
-                // generate only two lines
-                for (int line = 0; line < 2; line++)
+                if (goalies.Count >= 1)
                 {
-                    PlayerViewModel ld = defenders.First();
-                    defenders.Remove(ld);
+                    g = goalies.First();
+                    goalies.Remove(g);
+                    ps.Add(g);
+
+                    ps.Add(new PlayerViewModel());
+                }
+
+                ps.Add(new PlayerViewModel());
+
+                // generate only two lines
+                for (int line = 0; line < linesCount; line++)
+                {
+                    PlayerViewModel ld = GetNextDefender(skaters);
+                    skaters.Remove(ld);
                     ps.Add(ld);
-                    PlayerViewModel rd = defenders.First();
-                    defenders.Remove(rd);
+                    PlayerViewModel rd = GetNextDefender(skaters);
+                    skaters.Remove(rd);
                     ps.Add(rd);
 
                     // count occurances to determine the order of assignment
-                    int lwCount = forwards.Where(el => el.positionalCompatibility.LW == true).ToList().Count;
-                    int cCount = forwards.Where(el => el.positionalCompatibility.C == true).ToList().Count;
-                    int rwCount = forwards.Where(el => el.positionalCompatibility.RW == true).ToList().Count;
+                    int lwCount = skaters.Where(el => el.positionalCompatibility.LW == true).ToList().Count;
+                    int cCount = skaters.Where(el => el.positionalCompatibility.C == true).ToList().Count;
+                    int rwCount = skaters.Where(el => el.positionalCompatibility.RW == true).ToList().Count;
 
                     if (rwCount < lwCount)
                     {
-                        PlayerViewModel rw = GetNextRightWing(forwards);
-                        PlayerViewModel c = GetNextCenter(forwards);
-                        PlayerViewModel lw = GetNextLeftWing(forwards);
+                        PlayerViewModel rw = GetNextRightWing(skaters);
+                        PlayerViewModel c = GetNextCenter(skaters);
+                        PlayerViewModel lw = GetNextLeftWing(skaters);
 
                         ps.Add(lw);
                         ps.Add(c);
@@ -124,9 +133,9 @@ namespace HockeyDb.Services
                     }
                     else
                     {
-                        PlayerViewModel lw = GetNextLeftWing(forwards);
-                        PlayerViewModel c = GetNextCenter(forwards);
-                        PlayerViewModel rw = GetNextRightWing(forwards);
+                        PlayerViewModel lw = GetNextLeftWing(skaters);
+                        PlayerViewModel c = GetNextCenter(skaters);
+                        PlayerViewModel rw = GetNextRightWing(skaters);
 
                         ps.Add(lw);
                         ps.Add(c);
@@ -138,6 +147,23 @@ namespace HockeyDb.Services
             }
 
             return ps;
+        }
+
+        public static PlayerViewModel GetNextDefender(List<PlayerViewModel> players)
+        {
+            PlayerViewModel d = new PlayerViewModel();
+
+            try
+            {
+                d = players.First(el => el.positionalCompatibility.D == true);
+            }
+            catch (InvalidOperationException)
+            {
+                d = players.First();
+            }
+            players.Remove(d);
+
+            return d;
         }
 
         public static PlayerViewModel GetNextCenter(List<PlayerViewModel> players)

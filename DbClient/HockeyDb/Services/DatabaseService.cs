@@ -12,6 +12,7 @@ namespace HockeyDb.Services
     public class DatabaseService
     {
         protected SqlConnectionStringBuilder m_builder;
+        protected List<NationViewModel> m_nations;
         public DatabaseService()
         {
             m_builder = new SqlConnectionStringBuilder();
@@ -35,8 +36,7 @@ namespace HockeyDb.Services
             {
                 var players = connection.Query<PlayerViewModel>(@"Select PlayerId, FullName, Position, Nation, n1.Flag Flag, Nation2, n2.Flag Flag2, BirthPlace, Birthdate 
                                                                   from fan.Players
-                                                                  inner join fan.Nations n1 on n1.NationId = Nation left join fan.Nations n2 on n2.NationId = Nation2
-                                                                  order by FullName").AsList();
+                                                                  inner join fan.Nations n1 on n1.NationId = Nation left join fan.Nations n2 on n2.NationId = Nation2").AsList();
                 return players;
             }
         }
@@ -59,9 +59,14 @@ namespace HockeyDb.Services
 
         public List<NationViewModel> GetNations()
         {
+            if (m_nations != null)
+            {
+                return m_nations;
+            }
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
                 var nations = connection.Query<NationViewModel>("Select NationId, NationName from fan.Nations order by NationId").AsList();
+                m_nations = nations;
                 return nations;
             }
         }

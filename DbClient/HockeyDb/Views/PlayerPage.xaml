@@ -59,6 +59,7 @@
 
 
                     <ComboBox x:Name="NatFilterCb" HorizontalAlignment="Left" Margin="2,15,0,0" VerticalAlignment="Top" Width="57" Grid.Column="1" Height="22" SelectionChanged="NatFilterCb_SelectionChanged"/>
+                    <Button x:Name="BtnNext" Content="Next" Grid.Column="2" HorizontalAlignment="Left" Margin="245,18,0,0" VerticalAlignment="Top" Click="BtnNext_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Advanced" Margin="1,0,-1,0" Height="20" VerticalAlignment="Top">

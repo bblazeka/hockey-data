@@ -48,6 +48,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="GP" Binding="{Binding Path=Games}"/>
                             <DataGridTextColumn Header="GAA" Binding="{Binding Path=GoalsAgainstAvg}"/>
                             <DataGridTextColumn Header="SVS%" Binding="{Binding Path=SavesPercent}"/>
 

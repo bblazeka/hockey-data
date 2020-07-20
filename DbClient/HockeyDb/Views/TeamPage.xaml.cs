@@ -27,7 +27,12 @@ namespace HockeyDb.Views
         public TeamPage()
         {
             InitializeComponent();
-            m_dbService = new TeamService();
+        }
+
+        public TeamPage(TeamService ts)
+        {
+            InitializeComponent();
+            m_dbService = ts;
             Refresh();
         }
 

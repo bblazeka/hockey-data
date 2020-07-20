@@ -25,11 +25,13 @@ namespace HockeyDb
     {
         private DatabaseService m_dbService;
         private PlayerService m_dbServicePlayer;
+        private TeamService m_dbServiceTeam;
         public MainWindow()
         {
             InitializeComponent();
             m_dbService = new DatabaseService();
-            m_dbServicePlayer = new PlayerService(m_dbService);
+            m_dbServicePlayer = new PlayerService();
+            m_dbServiceTeam = new TeamService();
 
             frame.Content = new HomePage();
 
@@ -57,7 +59,7 @@ namespace HockeyDb
 
         private void btnTeams_Click(object sender, RoutedEventArgs e)
         {
-            TeamPage page = new TeamPage();
+            TeamPage page = new TeamPage(m_dbServiceTeam);
             page.statusChange += MainWindow_statusChange;
             frame.Content = page;
         }

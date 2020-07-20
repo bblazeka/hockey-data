@@ -37,10 +37,10 @@ namespace HockeyDb.Views
         public override void Refresh()
         {
             var players = m_dbService.GetPlayersWithFlags();
-            PlayerCb.ItemsSource = players;
+            PlayerCb.ItemsSource = players.OrderBy(player => player.FullName);
             TeamCb.ItemsSource = m_dbService.GetTeams();
-            PlayerCb_Copy.ItemsSource = players;
-            PlayersGrid.ItemsSource = players;
+            PlayerCb_Copy.ItemsSource = players.OrderBy(player => player.FullName);
+            PlayersGrid.ItemsSource = players.OrderBy(player => player.FullName);
             var nations = m_dbService.GetNations();
             NatCb.ItemsSource = nations;
             NatCb_Copy.ItemsSource = nations;
@@ -161,6 +161,11 @@ namespace HockeyDb.Views
             PlayerViewModel player = ((PlayerViewModel)PlayersGrid.SelectedItem);
             NameTb.Text = player.FullName;
             IdTb.Text = player.PlayerId.ToString();
+        }
+
+        private void BtnNext_Click(object sender, RoutedEventArgs e)
+        {
+            PlayerCb.SelectedIndex++;
         }
     }
 }
