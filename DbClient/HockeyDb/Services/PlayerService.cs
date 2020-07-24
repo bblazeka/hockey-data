@@ -100,8 +100,6 @@ namespace HockeyDb.Services
                     g = goalies.First();
                     goalies.Remove(g);
                     ps.Add(g);
-
-                    ps.Add(new PlayerViewModel());
                 }
 
                 ps.Add(new PlayerViewModel());

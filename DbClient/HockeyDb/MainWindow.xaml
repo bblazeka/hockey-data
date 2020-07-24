@@ -20,6 +20,7 @@
             <Button x:Name="btnPlayers" Content="Players" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="btnPlayers_Click"/>
             <Button x:Name="btnTeams" Content="Teams" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="btnTeams_Click"/>
             <Button x:Name="btnLeague" Content="League" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="btnLeague_Click"/>
+            <Button x:Name="btnStaff" Content="Staff" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="btnStaff_Click"/>
             <Button x:Name="btnRefresh" Content="Refresh" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="btnRefresh_Click"/>
             <Button x:Name="BtnSettings" Content="Settings"  HorizontalAlignment="Left" Margin="10,207,0,0" VerticalAlignment="Top" Click="BtnSettings_Click"/>
         </StackPanel>

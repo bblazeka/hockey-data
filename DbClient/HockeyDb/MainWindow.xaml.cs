@@ -57,6 +57,13 @@ namespace HockeyDb
             frame.Content = page;
         }
 
+        private void btnStaff_Click(object sender, RoutedEventArgs e)
+        {
+            /*LeaguePage page = new LeaguePage();
+            page.statusChange += MainWindow_statusChange;
+            frame.Content = page;*/
+        }
+
         private void btnTeams_Click(object sender, RoutedEventArgs e)
         {
             TeamPage page = new TeamPage(m_dbServiceTeam);
