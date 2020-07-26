@@ -4,12 +4,24 @@ using System.Data.SqlClient;
 using Client.Models;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Client.Services
 {
     public class TeamService : DatabaseService
     {
         public TeamService() : base() { }
+        public Team GetTeam(int teamId)
+        {
+            var sql = @"SELECT * FROM fan.Teams a
+                        WHERE a.TeamId = @teamId";
+            using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+            {
+                var res = connection.Query<Team>(sql, new { teamId }).ToList().First();
+                return res;
+            }
+        }
+
         public int InsertTeam(string a, string b, string c)
         {
             try

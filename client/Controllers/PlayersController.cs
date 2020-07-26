@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Client.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class PlayersController : ControllerBase
     {
         private PlayerService service;
@@ -28,10 +28,13 @@ namespace Client.Controllers
             return service.GetPlayers();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public Player Get(int id)
         {
-            return service.GetPlayers().Where(p => p.PlayerId == id).First();
+            Player player = service.GetPlayer(id);
+            player.PlayerSeasons = service.GetPlayerSeasons(player);
+            player.PlayerSeasons.ForEach(ps => ps.Team.GenerateWebLogo());
+            return player;
         }
     }
 }

@@ -4,7 +4,7 @@
 
 <p *ngIf="!team"><em>Loading...</em></p>
 
-<p *ngIf="team"><em>{{team.teamName}}</em></p>
+<p *ngIf="team"><img class="images" src={{team.teamLogo}} /><em>{{team.teamName}}</em></p>
 
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="team">
   <thead>
@@ -17,10 +17,10 @@
   </thead>
   <tbody>
     <tr *ngFor="let player of team.players">
-      <td>{{ player.fullName }}</td>
+      <td><a class="nav-link text-dark" routerLink="/player/{{player.playerId}}">{{ player.fullName }}</a></td>
       <td>{{ player.position }}</td>
-      <td>{{ player.name }}</td>
-      <td>{{ player.name }}</td>
+      <td>{{ player.nation }}</td>
+      <td>{{ player.fullName }}</td>
     </tr>
   </tbody>
 </table>

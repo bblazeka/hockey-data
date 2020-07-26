@@ -1,16 +1,18 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-team',
   templateUrl: './team.component.html'
 })
-export class TeamPageComponent {
+export class TeamComponent {
   public team: Team;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Team>(baseUrl + 'teams').subscribe(result => {
-      console.log(result);
+  constructor(http: HttpClient, route: ActivatedRoute, @Inject('BASE_URL') baseUrl: string) {
+    var paramId = route.snapshot.paramMap.get('id');
+    var paramSeason = route.snapshot.paramMap.get('season');
+    http.get<Team>(baseUrl + 'api/teams/' + paramId + '/' + paramSeason).subscribe(result => {
       this.team = result;
     }, error => console.error(error));
   }
@@ -18,10 +20,12 @@ export class TeamPageComponent {
 
 interface Team {
   teamName: string;
+  teamLogoBase64: string;
   players: Player[];
 }
 
 interface Player {
   fullName: string;
   position: string;
+  nation: string;
 }

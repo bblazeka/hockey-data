@@ -11,6 +11,17 @@ namespace Client.Services
     public class PlayerService : DatabaseService
     {
         public PlayerService() : base() { }
+
+        public Player GetPlayer(int playerId)
+        {
+            var sql = @"SELECT * FROM fan.Players a
+                        WHERE a.PlayerId = @playerId";
+            using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+            {
+                var res = connection.Query<Player>(sql, new { playerId }).ToList().First();
+                return res;
+            }
+        }
         public List<PlayerSeason> GetPlayerSeasons(object playerObj)
         {
             var player = (playerObj as Player);

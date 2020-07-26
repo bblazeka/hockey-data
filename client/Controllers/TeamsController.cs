@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Client.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TeamsController : ControllerBase
     {
         private TeamService ts;
@@ -22,17 +22,20 @@ namespace Client.Controllers
             _logger = logger;
         }
 
-        /*[HttpGet]
+        [HttpGet]
         public List<Team> Get()
         {
-            return ts.GetTeams();
-        }*/
+            var teams = ts.GetTeams();
+            teams.Where(t => t.TeamLogo != null).ToList().ForEach(t => t.GenerateWebLogo());
+            return teams;
+        }
 
-        [HttpGet]
-        public Team Get(int id)
+        [HttpGet("{id}/{seasonId}")]
+        public Team Get(int id, int seasonId)
         {
-            Team t = ts.GetTeams().Where(t => t.TeamId == 1895).First();
-            t.Players = ts.GetPlayers(t, "20202021");
+            Team t = ts.GetTeam(id);
+            t.GenerateWebLogo();
+            t.Players = ts.GetPlayers(t, seasonId.ToString());
             return t;
         }
     }

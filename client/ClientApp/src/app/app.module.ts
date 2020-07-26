@@ -8,8 +8,10 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { TeamPageComponent } from './team/team.component';
+import { TeamsComponent } from './teams/teams.component';
+import { TeamComponent } from './team/team.component';
+import { PlayerComponent } from './player/player.component';
+import { PlayersComponent } from './players/players.component';
 
 @NgModule({
   declarations: [
@@ -17,8 +19,10 @@ import { TeamPageComponent } from './team/team.component';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent,
-    TeamPageComponent
+    TeamsComponent,
+    TeamComponent,
+    PlayerComponent,
+    PlayersComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -27,8 +31,10 @@ import { TeamPageComponent } from './team/team.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'team', component: TeamPageComponent },
+      { path: 'players', component: PlayersComponent },
+      { path: 'player/:id', component: PlayerComponent },
+      { path: 'teams', component: TeamsComponent },
+      { path: 'team/:id/:season', component: TeamComponent },
     ])
   ],
   providers: [],
