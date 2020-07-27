@@ -12,6 +12,7 @@ import { TeamsComponent } from './teams/teams.component';
 import { TeamComponent } from './team/team.component';
 import { PlayerComponent } from './player/player.component';
 import { PlayersComponent } from './players/players.component';
+import { EditPlayerComponent } from './edit-player/edit-player.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PlayersComponent } from './players/players.component';
     TeamsComponent,
     TeamComponent,
     PlayerComponent,
-    PlayersComponent
+    PlayersComponent,
+    EditPlayerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -31,6 +33,8 @@ import { PlayersComponent } from './players/players.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
+      { path: 'player', component: EditPlayerComponent },
+      { path: 'player/:id', component: PlayerComponent },
       { path: 'players', component: PlayersComponent },
       { path: 'player/:id', component: PlayerComponent },
       { path: 'teams', component: TeamsComponent },

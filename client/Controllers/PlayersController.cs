@@ -2,7 +2,6 @@
 using Client.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,6 +33,26 @@ namespace Client.Controllers
             Player player = service.GetPlayer(id);
             player.PlayerSeasons = service.GetPlayerSeasons(player);
             player.PlayerSeasons.ForEach(ps => ps.Team.GenerateWebLogo());
+            return player;
+        }
+
+        [HttpPost]
+        public object Post([FromBody] Player player)
+        {
+            //service.InsertPlayer();
+            /*Player player = service.GetPlayer(0);
+            player.PlayerSeasons = service.GetPlayerSeasons(player);
+            player.PlayerSeasons.ForEach(ps => ps.Team.GenerateWebLogo());*/
+            return player;
+        }
+
+        [HttpPut("{id}")]
+        public object Put(int id, [FromBody] Player player)
+        {
+            //service.InsertPlayer();
+            /*Player player = service.GetPlayer(0);
+            player.PlayerSeasons = service.GetPlayerSeasons(player);
+            player.PlayerSeasons.ForEach(ps => ps.Team.GenerateWebLogo());*/
             return player;
         }
     }
