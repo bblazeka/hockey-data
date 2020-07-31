@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
+import { LeaguesComponent } from './leagues/leagues.component';
 import { TeamsComponent } from './teams/teams.component';
 import { TeamComponent } from './team/team.component';
 import { PlayerComponent } from './player/player.component';
@@ -20,6 +21,7 @@ import { EditPlayerComponent } from './edit-player/edit-player.component';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
+    LeaguesComponent,
     TeamsComponent,
     TeamComponent,
     PlayerComponent,
@@ -39,6 +41,7 @@ import { EditPlayerComponent } from './edit-player/edit-player.component';
       { path: 'player/:id', component: PlayerComponent },
       { path: 'teams', component: TeamsComponent },
       { path: 'team/:id/:season', component: TeamComponent },
+      { path: 'leagues', component: LeaguesComponent },
     ])
   ],
   providers: [],

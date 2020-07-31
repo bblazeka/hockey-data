@@ -36,24 +36,18 @@ namespace Client.Controllers
             return player;
         }
 
-        [HttpPost]
-        public object Post([FromBody] Player player)
+        [HttpPut("{id}")]
+        public Task<IActionResult> Put(int id, [FromBody] Player player)
         {
-            //service.InsertPlayer();
-            /*Player player = service.GetPlayer(0);
-            player.PlayerSeasons = service.GetPlayerSeasons(player);
-            player.PlayerSeasons.ForEach(ps => ps.Team.GenerateWebLogo());*/
-            return player;
+            service.UpdatePlayer(player.Nation, player.Position, id, player.Nation2, player.BirthPlace, player.Birthdate);
+            return null;
         }
 
-        [HttpPut("{id}")]
-        public object Put(int id, [FromBody] Player player)
+        [HttpPut("/playerseason/{id}")]
+        public Task<IActionResult> Put(int id, [FromBody] PlayerSeason playerSeason)
         {
-            //service.InsertPlayer();
-            /*Player player = service.GetPlayer(0);
-            player.PlayerSeasons = service.GetPlayerSeasons(player);
-            player.PlayerSeasons.ForEach(ps => ps.Team.GenerateWebLogo());*/
-            return player;
+            service.AddPlayerTeam(id, playerSeason.Player.FullName, playerSeason.Team, playerSeason.SeasonId);
+            return null;
         }
     }
 }
