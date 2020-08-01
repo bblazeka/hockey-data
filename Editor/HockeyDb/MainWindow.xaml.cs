@@ -1,5 +1,5 @@
-﻿using HockeyDb.Services;
-using HockeyDb.ViewModels;
+﻿using DbServices.Services;
+using DbServices.Models;
 using HockeyDb.Views;
 using System;
 using System.Collections.Generic;

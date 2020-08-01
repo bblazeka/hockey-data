@@ -1,5 +1,5 @@
-﻿using HockeyDb.Services;
-using HockeyDb.ViewModels;
+﻿using DbServices.Services;
+using DbServices.Models;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -39,7 +39,7 @@ namespace HockeyDb
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
-                var res = m_dbService.UpdateNatFlag(openFileDialog.FileName, ((NationViewModel)CbNat.SelectedItem).NationId);
+                var res = m_dbService.UpdateNatFlag(openFileDialog.FileName, ((Nation)CbNat.SelectedItem).NationId);
                 //RaiseStatusChange(string.Format("{0} image update", TeamNameTb.Text), res);
             }
         }

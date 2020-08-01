@@ -1,5 +1,5 @@
-﻿using HockeyDb.Services;
-using HockeyDb.ViewModels;
+﻿using DbServices.Services;
+using DbServices.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,14 +36,14 @@ namespace HockeyDb.Views
 
         private void InsertPlayerTeamTb_Click(object sender, RoutedEventArgs e)
         {
-            PlayerViewModel player = PlayerCb_Copy.SelectedItem as PlayerViewModel;
+            Player player = PlayerCb_Copy.SelectedItem as Player;
             var res = m_dbService.AddPlayerTeam(player.PlayerId, player.FullName, TeamCb.SelectedItem, Convert.ToInt32(SeasonCb.SelectedItem));
             RaiseStatusChange(string.Format("Added {0} {1} {2}", player.FullName, TeamCb.Text, SeasonCb.SelectedItem), res);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            var res = m_dbService.DeletePlayerTeam(((PlayerViewModel)PlayerCb_Copy.SelectedItem).PlayerId,
+            var res = m_dbService.DeletePlayerTeam(((Player)PlayerCb_Copy.SelectedItem).PlayerId,
                 PlayerCb_Copy.Text, TeamCb.SelectedItem, Convert.ToInt32(SeasonCb.SelectedItem));
             RaiseStatusChange(string.Format("Deleted {0} {1} {2}", PlayerCb_Copy.SelectedItem, TeamCb.Text, SeasonCb.SelectedItem), res);
         }

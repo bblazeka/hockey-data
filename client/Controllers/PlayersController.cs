@@ -36,6 +36,14 @@ namespace Client.Controllers
             return player;
         }
 
+        [HttpGet("search/{name}")]
+        public Player SearchPlayer(string name)
+        {
+            List<Player> players = service.GetPlayers();
+            
+            return players.Where(p => p.FullName.Contains(name)).First();
+        }
+
         [HttpPut("{id}")]
         public Task<IActionResult> Put(int id, [FromBody] Player player)
         {
@@ -43,10 +51,10 @@ namespace Client.Controllers
             return null;
         }
 
-        [HttpPut("/playerseason/{id}")]
-        public Task<IActionResult> Put(int id, [FromBody] PlayerSeason playerSeason)
+        [HttpPut("season/{id}")]//?name={name}&teamId={teamId}&seasonId={seasonId}")]
+        public Task<IActionResult> Put(int id, string name, int teamId, int seasonId)
         {
-            service.AddPlayerTeam(id, playerSeason.Player.FullName, playerSeason.Team, playerSeason.SeasonId);
+            service.AddPlayerTeam(id, name, teamId, seasonId);
             return null;
         }
     }

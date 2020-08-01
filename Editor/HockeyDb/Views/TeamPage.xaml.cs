@@ -1,5 +1,5 @@
-﻿using HockeyDb.Services;
-using HockeyDb.ViewModels;
+﻿using DbServices.Services;
+using DbServices.Models;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -52,13 +52,13 @@ namespace HockeyDb.Views
 
         private void UpdateLeagueBtn_Click(object sender, RoutedEventArgs e)
         {
-            var res = m_dbService.UpdateLeague(Convert.ToInt32(TeamIdTb.Text), TeamNameTb.Text, LeagueCb.SelectedItem as LeagueViewModel, Convert.ToInt32(SeasonCb.Text));
+            var res = m_dbService.UpdateLeague(Convert.ToInt32(TeamIdTb.Text), TeamNameTb.Text, LeagueCb.SelectedItem as League, Convert.ToInt32(SeasonCb.Text));
             RaiseStatusChange(string.Format("{0} {1} {2}", TeamNameTb.Text, LeagueCb.Text, SeasonCb.Text), res);
         }
 
         private void DeleteLeagueBtn_Click(object sender, RoutedEventArgs e)
         {
-            var res = m_dbService.DeleteLeague(Convert.ToInt32(TeamIdTb.Text), TeamNameTb.Text, LeagueCb.SelectedItem as LeagueViewModel, Convert.ToInt32(SeasonCb.Text));
+            var res = m_dbService.DeleteLeague(Convert.ToInt32(TeamIdTb.Text), TeamNameTb.Text, LeagueCb.SelectedItem as League, Convert.ToInt32(SeasonCb.Text));
             RaiseStatusChange(string.Format("{0} {1} {2}", TeamNameTb.Text, LeagueCb.Text, SeasonCb.Text), res);
         }
 
@@ -66,20 +66,20 @@ namespace HockeyDb.Views
         {
             RosterDataGrid.ItemsSource = m_dbService.GetPlayers(((ComboBox)sender).SelectedItem, TeamSeasonCb.SelectedItem.ToString()).FindAll(p => p.Position != "G");
             GoaliesDataGrid.ItemsSource = m_dbService.GetPlayers(((ComboBox)sender).SelectedItem, TeamSeasonCb.SelectedItem.ToString()).FindAll(p => p.Position == "G");
-            TeamLogoImg.Source = LoadImage((((ComboBox)sender).SelectedItem as TeamViewModel).TeamLogo);
+            TeamLogoImg.Source = LoadImage((((ComboBox)sender).SelectedItem as Team).TeamLogo);
         }
 
         private void TeamSeasonCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (TeamCb.SelectedItem != null)
             {
-                List<PlayerViewModel> players = m_dbService.GetPlayers(TeamCb.SelectedItem, ((ComboBox)sender).SelectedItem.ToString());
+                List<Player> players = m_dbService.GetPlayers(TeamCb.SelectedItem, ((ComboBox)sender).SelectedItem.ToString());
 
                 RosterDataGrid.ItemsSource = players.FindAll(p => p.Position != "G");
                 GoaliesDataGrid.ItemsSource = players.FindAll(p => p.Position == "G");
 
                 lineupTextBlock.Text = "Projected lineup:\n";
-                foreach (PlayerViewModel pvm in PlayerService.GetLineup(players))
+                foreach (Player pvm in PlayerService.GetLineup(players))
                 {
                     if (pvm.FullName == null)
                     {
@@ -91,8 +91,8 @@ namespace HockeyDb.Views
                     }
                 }
 
-                int foreignPlayers = players.Where(p => p.Nation != ((TeamViewModel)TeamCb.SelectedItem).Country &&
-                (p.Nation2 == null || p.Nation2 != ((TeamViewModel)TeamCb.SelectedItem).Country)).ToList().Count;
+                int foreignPlayers = players.Where(p => p.Nation != ((Team)TeamCb.SelectedItem).Country &&
+                (p.Nation2 == null || p.Nation2 != ((Team)TeamCb.SelectedItem).Country)).ToList().Count;
                 FgnLbl.Content = string.Format("Foreign player count: {0}", foreignPlayers);
             }
         }
@@ -128,7 +128,7 @@ namespace HockeyDb.Views
 
         private void TeamsCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var team = (((ComboBox)sender).SelectedItem as TeamViewModel);
+            var team = (((ComboBox)sender).SelectedItem as Team);
             TeamIdTb.Text = team.TeamId.ToString();
             TeamNameTb.Text = team.TeamName;
             TeamNationCb.Text = team.Country;
