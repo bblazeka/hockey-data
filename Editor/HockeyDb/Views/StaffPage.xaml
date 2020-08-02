@@ -1,0 +1,100 @@
+﻿<local:BasePage x:Class="HockeyDb.Views.StaffPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HockeyDb.Views"
+      mc:Ignorable="d" 
+      Title="StaffPage">
+
+    <Grid>
+        <TabControl>
+            <TabItem Header="Database" Margin="1,0,-1,0" Height="20">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0*"/>
+                        <ColumnDefinition Width="93*"/>
+                        <ColumnDefinition Width="781*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="StaffCb" HorizontalAlignment="Left" Margin="64,16,0,0" VerticalAlignment="Top" Width="229" SelectionChanged="StaffCb_SelectionChanged" Grid.Column="1" Height="22" Grid.ColumnSpan="2"/>
+                    <DataGrid x:Name="SeasonsDataGrid" Margin="255,46,57,10" AutoGenerateColumns="False" Grid.Column="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Season" Binding="{Binding SeasonId}"/>
+                            <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Height="20" Source="{Binding Team.TeamLogo}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Team" Binding="{Binding Team.TeamName}"/>
+                            <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Height="10" Source="{Binding Team.Flag}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="League" Binding="{Binding League.LeagueShort}"/>
+                            <DataGridTextColumn Header="Role" Binding="{Binding StaffRole}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button x:Name="UpdateBtn" Content="Update" HorizontalAlignment="Left" Margin="393,17,0,0" VerticalAlignment="Top" Click="UpdateBtn_Click" Grid.Column="2" Height="20" Width="43"/>
+                    <TextBox x:Name="PositionTb" HorizontalAlignment="Left" Margin="64,126,0,0" Text="Pos" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" Grid.Column="1" Height="18" Grid.ColumnSpan="2"/>
+                    <Label x:Name="PosLbl" Content="Position" Grid.Column="1" HorizontalAlignment="Left" Margin="0,122,0,0" VerticalAlignment="Top" Height="26" Width="52"/>
+                    <Label x:Name="NatLbl" Content="Nationality" HorizontalAlignment="Left" Margin="0,168,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="68"/>
+                    <TextBox x:Name="BirthplaceTb" Grid.Column="1" HorizontalAlignment="Left" Margin="64,149,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" Height="18" Grid.ColumnSpan="2"/>
+                    <Label x:Name="BirthplaceLbl" Content="Birthplace" HorizontalAlignment="Left" Margin="0,145,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="63" RenderTransformOrigin="-0.238,0.503"/>
+                    <DatePicker x:Name="BirthdateDP" Grid.Column="1" HorizontalAlignment="Left" Margin="64,85,0,0" VerticalAlignment="Top" Height="24" Width="129" Grid.ColumnSpan="2"/>
+                    <Label x:Name="BirthdateLbl" Content="Birthdate" HorizontalAlignment="Left" Margin="2,85,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="58"/>
+                    <ComboBox x:Name="NatCb" HorizontalAlignment="Left" Margin="64,172,0,0" VerticalAlignment="Top" Width="57" Grid.Column="1" Height="22" Grid.ColumnSpan="2"/>
+                    <ComboBox x:Name="Nat2Cb" HorizontalAlignment="Left" Margin="61,172,0,0" VerticalAlignment="Top" Width="58" Grid.Column="2" Height="22"/>
+
+
+                    <ComboBox x:Name="NatFilterCb" HorizontalAlignment="Left" Margin="2,15,0,0" VerticalAlignment="Top" Width="57" Grid.Column="1" Height="22" SelectionChanged="NatFilterCb_SelectionChanged"/>
+                    <Button x:Name="BtnNext" Content="Next" Grid.Column="2" HorizontalAlignment="Left" Margin="245,18,0,0" VerticalAlignment="Top" Click="BtnNext_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Advanced" Margin="1,0,-1,0" Height="20" VerticalAlignment="Top">
+                <Grid Background="#FFE5E5E5">
+                    <TextBox x:Name="IdTb" HorizontalAlignment="Left" Margin="24,113,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,2.285"/>
+                    <TextBox x:Name="NameTb" HorizontalAlignment="Left" Margin="24,160,0,0" Text="FullName" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <Button x:Name="Insert" Content="Insert" HorizontalAlignment="Left" Margin="110,238,0,0" VerticalAlignment="Top" Click="Insert_Click" RenderTransformOrigin="0.536,2.507"/>
+                    <ComboBox x:Name="SeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="167,198,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0"/>
+                    <Button x:Name="InsertPlayerTeamTb" Content="Insert staff team" HorizontalAlignment="Left" Margin="177,238,0,0" VerticalAlignment="Top" Click="InsertStaffTeamTb_Click"/>
+                    <ComboBox x:Name="TeamCb" HorizontalAlignment="Left" Margin="167,156,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.608,-0.727"/>
+                    <ComboBox x:Name="StaffCb_Copy" HorizontalAlignment="Left" Margin="167,113,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="StaffCb_Copy_SelectionChanged"/>
+                    <Button x:Name="ResetBtn" Content="Reset" HorizontalAlignment="Left" Margin="24,238,0,0" VerticalAlignment="Top" Click="ResetBtn_Click"/>
+                    <Button x:Name="DeleteBtn" Content="Delete staff team" HorizontalAlignment="Left" Margin="177,284,0,0" VerticalAlignment="Top" Click="DeleteBtn_Click"/>
+                    <DataGrid x:Name="StaffGrid" Margin="308,10,24,97" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding FullName}"/>
+                            <DataGridTextColumn Header="Position" Binding="{Binding Position}"/>
+                            <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Height="10" Source="{Binding Flag}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Height="10" Source="{Binding Flag2}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Birthplace" Binding="{Binding BirthPlace}"/>
+                            <DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate, StringFormat=\{0:dd.MM.yyyy.\}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button x:Name="UpdatePlayersBtn" Content="Update Edited Players" HorizontalAlignment="Left" Margin="428,319,0,0" VerticalAlignment="Bottom" Click="UpdateStaffBtn_Click"/>
+                    <ComboBox x:Name="NatCb_Copy" HorizontalAlignment="Left" Margin="88,198,0,0" VerticalAlignment="Top" Width="56" Height="22"/>
+                    <TextBox x:Name="PosTb" HorizontalAlignment="Left" Margin="24,200,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="49"/>
+                    <Button x:Name="copySelectedBtn" Content="Copy selected" HorizontalAlignment="Left" Margin="330,0,0,25" VerticalAlignment="Bottom" Click="copySelectedBtn_Click"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</local:BasePage>

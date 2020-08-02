@@ -29,6 +29,14 @@ namespace DbServices.Services
                 return players;
             }
         }
+        public List<Staff> GetStaff()
+        {
+            using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+            {
+                var staff = connection.Query<Staff>("Select StaffId, FullName, Position, Nation, Nation2, BirthPlace, Birthdate from fan.Staff order by FullName").AsList();
+                return staff;
+            }
+        }
         public List<Player> GetPlayersWithFlags()
         {
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
@@ -37,6 +45,16 @@ namespace DbServices.Services
                                                                   from fan.Players
                                                                   inner join fan.Nations n1 on n1.NationId = Nation left join fan.Nations n2 on n2.NationId = Nation2").AsList();
                 return players;
+            }
+        }
+        public List<Staff> GetStaffWithFlags()
+        {
+            using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+            {
+                var staff = connection.Query<Staff>(@"Select StaffId, FullName, Position, Nation, n1.Flag Flag, Nation2, n2.Flag Flag2, BirthPlace, Birthdate 
+                                                                  from fan.Staff
+                                                                  inner join fan.Nations n1 on n1.NationId = Nation left join fan.Nations n2 on n2.NationId = Nation2").AsList();
+                return staff;
             }
         }
         public List<Team> GetTeams()

@@ -44,6 +44,34 @@ namespace HockeyDb.Views
             TeamNationCb.ItemsSource = m_dbService.GetNations();
         }
 
+        private void GenerateRoster(string selectedSeason)
+        {
+            if (TeamCb.SelectedItem != null)
+            {
+                List<Player> players = m_dbService.GetPlayers(TeamCb.SelectedItem, selectedSeason);
+
+                RosterDataGrid.ItemsSource = players.FindAll(p => p.Position != "G");
+                GoaliesDataGrid.ItemsSource = players.FindAll(p => p.Position == "G");
+
+                lineupTextBlock.Text = "Projected lineup:\n";
+                foreach (Player pvm in PlayerService.GetLineup(players))
+                {
+                    if (pvm.FullName == null)
+                    {
+                        lineupTextBlock.Text += "\n";
+                    }
+                    else
+                    {
+                        lineupTextBlock.Text += string.Format("#{0} {1}\n", pvm.Nr.ToString(), pvm.FullName.ToString());
+                    }
+                }
+
+                int foreignPlayers = players.Where(p => p.Nation != ((Team)TeamCb.SelectedItem).Country &&
+                (p.Nation2 == null || p.Nation2 != ((Team)TeamCb.SelectedItem).Country)).ToList().Count;
+                FgnLbl.Content = string.Format("Foreign player count: {0}", foreignPlayers);
+            }
+        }
+
         private void InsertBtn_Click(object sender, RoutedEventArgs e)
         {
             var res = m_dbService.InsertTeam(TeamIdTb.Text, TeamNameTb.Text, TeamNationCb.Text);
@@ -67,34 +95,13 @@ namespace HockeyDb.Views
             RosterDataGrid.ItemsSource = m_dbService.GetPlayers(((ComboBox)sender).SelectedItem, TeamSeasonCb.SelectedItem.ToString()).FindAll(p => p.Position != "G");
             GoaliesDataGrid.ItemsSource = m_dbService.GetPlayers(((ComboBox)sender).SelectedItem, TeamSeasonCb.SelectedItem.ToString()).FindAll(p => p.Position == "G");
             TeamLogoImg.Source = LoadImage((((ComboBox)sender).SelectedItem as Team).TeamLogo);
+
+            GenerateRoster(TeamSeasonCb.SelectedItem.ToString());
         }
 
         private void TeamSeasonCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (TeamCb.SelectedItem != null)
-            {
-                List<Player> players = m_dbService.GetPlayers(TeamCb.SelectedItem, ((ComboBox)sender).SelectedItem.ToString());
-
-                RosterDataGrid.ItemsSource = players.FindAll(p => p.Position != "G");
-                GoaliesDataGrid.ItemsSource = players.FindAll(p => p.Position == "G");
-
-                lineupTextBlock.Text = "Projected lineup:\n";
-                foreach (Player pvm in PlayerService.GetLineup(players))
-                {
-                    if (pvm.FullName == null)
-                    {
-                        lineupTextBlock.Text += "\n";
-                    }
-                    else
-                    {
-                        lineupTextBlock.Text += string.Format("#{0} {1}\n", pvm.Nr.ToString(), pvm.FullName.ToString());
-                    }
-                }
-
-                int foreignPlayers = players.Where(p => p.Nation != ((Team)TeamCb.SelectedItem).Country &&
-                (p.Nation2 == null || p.Nation2 != ((Team)TeamCb.SelectedItem).Country)).ToList().Count;
-                FgnLbl.Content = string.Format("Foreign player count: {0}", foreignPlayers);
-            }
+            GenerateRoster(((ComboBox)sender).SelectedItem.ToString());
         }
 
         private void UpdateBtn_Click(object sender, RoutedEventArgs e)

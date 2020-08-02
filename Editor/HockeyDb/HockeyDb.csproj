@@ -10,4 +10,16 @@
     <ProjectReference Include="..\DbServices\DbServices.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\StaffPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\StaffPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>
