@@ -47,7 +47,7 @@ namespace Client.Controllers
         [HttpPut("{id}")]
         public Task<IActionResult> Put(int id, [FromBody] Player player)
         {
-            service.UpdatePlayer(player.Nation, player.Position, id, player.Nation2, player.BirthPlace, player.Birthdate);
+            service.UpdatePlayer(player.Nation, player.FullName, player.Position, id, player.Nation2, player.BirthPlace, player.Birthdate, player.Active, player.Comment);
             return null;
         }
 

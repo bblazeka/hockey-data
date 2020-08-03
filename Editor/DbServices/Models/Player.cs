@@ -23,6 +23,8 @@ namespace DbServices.Models
         public decimal SavesPercent { get; set; }
         public string Nation2 { get; set; }
         public byte[] Flag2 { get; set; }
+        public bool Active { get; set; }
+        public string Comment { get; set; }
         public PositionalCompatibility positionalCompatibility { get; set; }
         public List<PlayerSeason> PlayerSeasons { get; set; }
 

@@ -26,14 +26,14 @@ namespace DbServices.Services
             }
         }
 
-        public int InsertLeague(string a, string b)
+        public int InsertLeague(string id, string shortName, string fullName)
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
                 {
-                    var affectedRows = connection.Execute("Insert into fan.Leagues (LeagueId, LeagueName) " +
-                                "values (@Id, @Name)", new { Id = a, Name = b });
+                    var affectedRows = connection.Execute("Insert into fan.Leagues (LeagueId, LeagueShort, LeagueName) " +
+                                "values (@Id, @Short, @Name)", new { Id = id, Short = shortName, Name = fullName });
                     return affectedRows;
                 }
             }

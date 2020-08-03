@@ -9,7 +9,7 @@
 
     <Grid>
         <TabControl>
-            <TabItem Header="TabItem">
+            <TabItem Header="Team">
                 <Grid Background="#FFE5E5E5">
                     <GridSplitter HorizontalAlignment="Center" Height="0" VerticalAlignment="Top" Width="794" Margin="0,59,0,0"/>
                     <DataGrid x:Name="RosterDataGrid" Margin="0,54,300,31" AutoGenerateColumns="False" GridLinesVisibility="None">
@@ -17,7 +17,8 @@
                             <DataGridTextColumn Header="#" Binding="{Binding Path=Nr}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Path=FullName}"/>
                             <DataGridTextColumn Header="Position" Binding="{Binding Path=Position}"/>
-                            <DataGridTextColumn Header="Nation" Binding="{Binding Path=Nation}"/>
+                            <DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate, StringFormat=\{0:dd.MM.yyyy.\}}"/>
+                            <DataGridTextColumn Header="Birthplace" Binding="{Binding BirthPlace}"/>
                             <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -25,6 +26,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Nation" Binding="{Binding Path=Nation}"/>
                             <DataGridTextColumn Header="GP" Binding="{Binding Path=Games}"/>
                             <DataGridTextColumn Header="G" Binding="{Binding Path=Goals}"/>
                             <DataGridTextColumn Header="A" Binding="{Binding Path=Assists}"/>
@@ -40,7 +42,8 @@
                             <DataGridTextColumn Header="#" Binding="{Binding Path=Nr}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Path=FullName}"/>
                             <DataGridTextColumn Header="Position" Binding="{Binding Path=Position}"/>
-                            <DataGridTextColumn Header="Nation" Binding="{Binding Path=Nation}"/>
+                            <DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate, StringFormat=\{0:dd.MM.yyyy.\}}"/>
+                            <DataGridTextColumn Header="Birthplace" Binding="{Binding BirthPlace}"/>
                             <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -48,6 +51,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Nation" Binding="{Binding Path=Nation}"/>
                             <DataGridTextColumn Header="GP" Binding="{Binding Path=Games}"/>
                             <DataGridTextColumn Header="GAA" Binding="{Binding Path=GoalsAgainstAvg}"/>
                             <DataGridTextColumn Header="SVS%" Binding="{Binding Path=SavesPercent}"/>
@@ -75,8 +79,6 @@
                     <Button x:Name="DeleteLeagueBtn" Content="Delete League" HorizontalAlignment="Left" Margin="399,169,0,0" VerticalAlignment="Top" Click="DeleteLeagueBtn_Click"/>
                 </Grid>
             </TabItem>
-            <Grid/>
-            <Button Content="Button"/>
         </TabControl>
 
     </Grid>

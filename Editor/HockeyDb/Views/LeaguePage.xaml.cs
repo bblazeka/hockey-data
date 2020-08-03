@@ -48,8 +48,8 @@ namespace HockeyDb.Views
 
         private void BtnAddLeague_Click(object sender, RoutedEventArgs e)
         {
-            var res = m_dbService.InsertLeague(TbLeagueId.Text, TbLeagueName.Text);
-            RaiseStatusChange(string.Format("INSERT {0}", TbLeagueName.Text), res);
+            var res = m_dbService.InsertLeague(TbLeagueId.Text, ShortTb.Text, TbLeagueName.Text);
+            RaiseStatusChange(string.Format("INSERT {0} {1}", ShortTb.Text, TbLeagueName.Text), res);
         }
     }
 }

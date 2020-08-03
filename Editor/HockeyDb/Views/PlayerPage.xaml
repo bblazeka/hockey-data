@@ -47,6 +47,8 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="UpdateBtn" Content="Update" HorizontalAlignment="Left" Margin="393,17,0,0" VerticalAlignment="Top" Click="UpdateBtn_Click" Grid.Column="2" Height="20" Width="43"/>
+                    <Label x:Name="FullNameLabel" Content="Name:" Grid.Column="1" HorizontalAlignment="Left" Margin="2,54,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="FullNameTb" Grid.Column="1" HorizontalAlignment="Left" Margin="64,58,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="171" Grid.ColumnSpan="2"/>
                     <TextBox x:Name="PositionTb" HorizontalAlignment="Left" Margin="64,126,0,0" Text="Pos" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" Grid.Column="1" Height="18" Grid.ColumnSpan="2"/>
                     <Label x:Name="PosLbl" Content="Position" Grid.Column="1" HorizontalAlignment="Left" Margin="0,122,0,0" VerticalAlignment="Top" Height="26" Width="52"/>
                     <Label x:Name="NatLbl" Content="Nationality" HorizontalAlignment="Left" Margin="0,168,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="68"/>
@@ -60,6 +62,8 @@
 
                     <ComboBox x:Name="NatFilterCb" HorizontalAlignment="Left" Margin="2,15,0,0" VerticalAlignment="Top" Width="57" Grid.Column="1" Height="22" SelectionChanged="NatFilterCb_SelectionChanged"/>
                     <Button x:Name="BtnNext" Content="Next" Grid.Column="2" HorizontalAlignment="Left" Margin="245,18,0,0" VerticalAlignment="Top" Click="BtnNext_Click"/>
+                    <CheckBox x:Name="CbActive" Content="Active" Grid.Column="2" HorizontalAlignment="Left" Margin="172,61,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="CommentTb" Grid.Column="1" HorizontalAlignment="Left" Margin="67,217,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="226" Grid.ColumnSpan="2" Height="91"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Advanced" Margin="1,0,-1,0" Height="20" VerticalAlignment="Top">
@@ -77,20 +81,8 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding FullName}"/>
                             <DataGridTextColumn Header="Position" Binding="{Binding Position}"/>
-                            <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Image Height="10" Source="{Binding Flag}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Image Height="10" Source="{Binding Flag2}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="" Binding="{Binding Nation}"/>
+                            <DataGridTextColumn Header="" Binding="{Binding Nation2}"/>
                             <DataGridTextColumn Header="Birthplace" Binding="{Binding BirthPlace}"/>
                             <DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate, StringFormat=\{0:dd.MM.yyyy.\}}"/>
                         </DataGrid.Columns>

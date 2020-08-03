@@ -30,7 +30,7 @@ namespace DbServices.Services
             {
                 return new List<PlayerSeason>();
             }
-            var sql = @"SELECT a.PlayerId, a.FullName, a.Position, b.SeasonId, b.Nr, b.Games GP, b.Goals, b.Assists, b.Goals + b.Assists Points, b.PIM, b.PlusMinus, b.GoalsAgainstAvg, b.SavesPercent, c.TeamId, c.TeamName, c.TeamLogo, f.Flag, e.LeagueId, e.LeagueShort 
+            var sql = @"SELECT a.PlayerId, a.FullName, a.Position, a.Active, a.Comment, b.SeasonId, b.SequNo, b.Nr, b.Games GP, b.Goals, b.Assists, b.Goals + b.Assists Points, b.PIM, b.PlusMinus, b.GoalsAgainstAvg, b.SavesPercent, c.TeamId, c.TeamName, c.TeamLogo, f.Flag, e.LeagueId, e.LeagueShort 
                         FROM fan.Players a
                         INNER JOIN fan.PlayersTeams b on a.PlayerId = b.PlayerId
                         INNER JOIN fan.Teams c ON c.TeamId = b.TeamId
@@ -38,7 +38,7 @@ namespace DbServices.Services
                         INNER JOIN fan.Leagues e ON e.LeagueId = d.LeagueId
                         INNER JOIN fan.Nations f ON f.NationId = c.Country
                         WHERE a.PlayerId = @PlayerId
-                        ORDER BY b.seasonId";
+                        ORDER BY b.seasonId, b.SequNo";
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
                 var res = connection.Query<Player, PlayerSeason, Team, League, PlayerSeason>(
@@ -46,12 +46,12 @@ namespace DbServices.Services
                 return res;
             }
         }
-        public int UpdatePlayer(string nation, string position, int playerId, string nation2, string birthplace, DateTime birthdate)
+        public int UpdatePlayer(string nation, string fullName, string position, int playerId, string nation2, string birthplace, DateTime birthdate, bool active, string comment)
         {
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
-                var affectedRows = connection.Execute("UPDATE fan.Players SET Nation = @nation, position = @position, nation2 = @nation2, birthplace = @birthplace, birthdate = @birthdate " +
-                "where playerId = @PlayerId", new { nation, position, PlayerId = playerId, nation2, birthplace, birthdate });
+                var affectedRows = connection.Execute("UPDATE fan.Players SET Nation = @nation, position = @position, nation2 = @nation2, birthplace = @birthplace, birthdate = @birthdate, fullName = @fullName, active = @active, comment = @comment " +
+                "where playerId = @PlayerId", new { nation, fullName, position, PlayerId = playerId, nation2, birthplace, birthdate, active, comment });
                 return affectedRows;
             }
         }

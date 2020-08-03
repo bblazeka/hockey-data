@@ -25,7 +25,7 @@ namespace DbServices.Services
         {
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
-                var players = connection.Query<Player>("Select PlayerId, FullName, Position, Nation, Nation2, BirthPlace, Birthdate from fan.Players order by FullName").AsList();
+                var players = connection.Query<Player>("Select PlayerId, FullName, Position, Nation, Nation2, BirthPlace, Birthdate, Active, Comment from fan.Players order by FullName").AsList();
                 return players;
             }
         }
@@ -41,7 +41,7 @@ namespace DbServices.Services
         {
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
-                var players = connection.Query<Player>(@"Select PlayerId, FullName, Position, Nation, n1.Flag Flag, Nation2, n2.Flag Flag2, BirthPlace, Birthdate 
+                var players = connection.Query<Player>(@"Select PlayerId, FullName, Position, Active, Comment, Nation, n1.Flag Flag, Nation2, n2.Flag Flag2, BirthPlace, Birthdate 
                                                                   from fan.Players
                                                                   inner join fan.Nations n1 on n1.NationId = Nation left join fan.Nations n2 on n2.NationId = Nation2").AsList();
                 return players;
@@ -51,7 +51,7 @@ namespace DbServices.Services
         {
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
-                var staff = connection.Query<Staff>(@"Select StaffId, FullName, Position, Nation, n1.Flag Flag, Nation2, n2.Flag Flag2, BirthPlace, Birthdate 
+                var staff = connection.Query<Staff>(@"Select StaffId, FullName, Position, Active, Nation, n1.Flag Flag, Nation2, n2.Flag Flag2, BirthPlace, Birthdate 
                                                                   from fan.Staff
                                                                   inner join fan.Nations n1 on n1.NationId = Nation left join fan.Nations n2 on n2.NationId = Nation2").AsList();
                 return staff;

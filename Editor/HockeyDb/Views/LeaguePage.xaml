@@ -45,6 +45,7 @@
                     <TextBox x:Name="TbLeagueId" HorizontalAlignment="Left" Margin="33,121,0,0" Text="Id" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                     <TextBox x:Name="TbLeagueName" HorizontalAlignment="Left" Margin="33,187,0,0" Text="Name" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                     <Button x:Name="BtnAddLeague" Content="Add League" HorizontalAlignment="Left" Margin="86,263,0,0" VerticalAlignment="Top" Click="BtnAddLeague_Click"/>
+                    <TextBox x:Name="ShortTb" HorizontalAlignment="Left" Margin="33,150,0,0" Text="Short" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                 </Grid>
             </TabItem>
         </TabControl>

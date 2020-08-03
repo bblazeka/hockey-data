@@ -36,7 +36,7 @@ namespace HockeyDb.Views
 
         public override void Refresh()
         {
-            var players = m_dbService.GetPlayersWithFlags();
+            var players = m_dbService.GetPlayers();
             PlayerCb.ItemsSource = players.OrderBy(player => player.FullName);
             TeamCb.ItemsSource = m_dbService.GetTeams();
             PlayerCb_Copy.ItemsSource = players.OrderBy(player => player.FullName);
@@ -66,11 +66,14 @@ namespace HockeyDb.Views
                 GAACol.Visibility = player.Position.Equals("G") ? Visibility.Visible : Visibility.Collapsed;
             }
 
+            CbActive.IsChecked = player.Active;
             PositionTb.Text = player.Position;
+            FullNameTb.Text = player.FullName;
             NatCb.Text = player.Nation;
             Nat2Cb.Text = player.Nation2;
             BirthplaceTb.Text = player.BirthPlace;
             BirthdateDP.SelectedDate = player.Birthdate;
+            CommentTb.Text = player.Comment;
         }
 
         private void UpdateBtn_Click(object sender, RoutedEventArgs e)
@@ -88,8 +91,8 @@ namespace HockeyDb.Views
                 Console.WriteLine(ex);
             }
 
-            var res = m_dbService.UpdatePlayer(NatCb.Text, PositionTb.Text, (PlayerCb.SelectedItem as Player).PlayerId,
-                Nat2Cb.Text, BirthplaceTb.Text, BirthdateDP.SelectedDate.GetValueOrDefault());
+            var res = m_dbService.UpdatePlayer(NatCb.Text, FullNameTb.Text, PositionTb.Text, (PlayerCb.SelectedItem as Player).PlayerId,
+                Nat2Cb.Text, BirthplaceTb.Text, BirthdateDP.SelectedDate.GetValueOrDefault(), CbActive.IsChecked==true, CommentTb.Text);
             RaiseStatusChange(string.Format("Update for player {0}.",(PlayerCb.SelectedItem as Player).FullName), res);
         }
 
@@ -136,7 +139,8 @@ namespace HockeyDb.Views
             {
                 foreach (Player entry in PlayersGrid.Items)
                 {
-                    m_dbService.UpdatePlayer(entry.Nation, entry.Position, entry.PlayerId, entry.Nation2, entry.BirthPlace, entry.Birthdate);
+                    m_dbService.UpdatePlayer(entry.Nation, entry.FullName, entry.Position, entry.PlayerId, entry.Nation2, 
+                        entry.BirthPlace, entry.Birthdate, entry.Active, entry.Comment);
                 }
             }
             catch (InvalidCastException ex)

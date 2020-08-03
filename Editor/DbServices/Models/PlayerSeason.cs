@@ -7,6 +7,7 @@ namespace DbServices.Models
     public class PlayerSeason
     {
         public int SeasonId { get; set; }
+        public int SequNo { get; set; }
         public int Nr { get; set; }
         public int GP { get; set; }
         public int Goals { get; set; }
