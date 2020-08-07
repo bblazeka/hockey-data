@@ -9,5 +9,6 @@ namespace DbServices.Models
         public int SeasonId { get; set; }
         public Team Team { get; set; }
         public League League { get; set; }
+        public string Comment { get; set; }
     }
 }

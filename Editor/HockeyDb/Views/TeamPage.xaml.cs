@@ -92,11 +92,20 @@ namespace HockeyDb.Views
 
         private void TeamCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RosterDataGrid.ItemsSource = m_dbService.GetPlayers(((ComboBox)sender).SelectedItem, TeamSeasonCb.SelectedItem.ToString()).FindAll(p => p.Position != "G");
-            GoaliesDataGrid.ItemsSource = m_dbService.GetPlayers(((ComboBox)sender).SelectedItem, TeamSeasonCb.SelectedItem.ToString()).FindAll(p => p.Position == "G");
+            Team selectedTeam = (Team)((ComboBox)sender).SelectedItem;
+            RosterDataGrid.ItemsSource = m_dbService.GetPlayers(selectedTeam, TeamSeasonCb.SelectedItem.ToString()).FindAll(p => p.Position != "G");
+            GoaliesDataGrid.ItemsSource = m_dbService.GetPlayers(selectedTeam, TeamSeasonCb.SelectedItem.ToString()).FindAll(p => p.Position == "G");
             TeamLogoImg.Source = LoadImage((((ComboBox)sender).SelectedItem as Team).TeamLogo);
 
-            GenerateRoster(TeamSeasonCb.SelectedItem.ToString());
+
+            TeamSeason teamSeason = m_dbService.GetTeamSeason(selectedTeam, Int32.Parse(TeamSeasonCb.SelectedItem.ToString()));
+
+            if (teamSeason != null)
+            {
+                CommentCb.Text = teamSeason.Comment;
+
+                GenerateRoster(TeamSeasonCb.SelectedItem.ToString());
+            }
         }
 
         private void TeamSeasonCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -144,6 +153,12 @@ namespace HockeyDb.Views
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            m_dbService.UpdateComment((Team)TeamCb.SelectedItem, int.Parse(TeamSeasonCb.SelectedItem.ToString()),
+                CommentCb.Text);
         }
     }
 }

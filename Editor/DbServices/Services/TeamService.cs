@@ -123,5 +123,31 @@ namespace DbServices.Services
                     return affectedRows;
             }
         }
+
+        public TeamSeason GetTeamSeason(Team team, int season)
+        {
+            var sql = @"SELECT a.SeasonId, a.Comment, b.TeamId, b.TeamName, c.LeagueId, c.LeagueName
+                        FROM fan.Teams b 
+                        LEFT JOIN fan.TeamsSeason a ON a.teamId = b.TeamId
+                        LEFT JOIN fan.Leagues c ON c.leagueId = a.leagueId
+                        WHERE a.TeamId = @teamId and seasonId = @season";
+            using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+            {
+                var res = connection.Query<TeamSeason, Team, League, TeamSeason>(
+                    sql, (teamSeason, team, league) => { teamSeason.Team = team; teamSeason.League = league; return teamSeason; }, new { team.TeamId, season }, splitOn: "SeasonId,TeamId,LeagueId").AsList().FirstOrDefault();
+                return res;
+            }
+        }
+
+        public int UpdateComment(Team team, int season, string comment)
+        {
+            var sql = @"UPDATE fan.TeamsSeason SET comment = @comment
+                        WHERE TeamId = @teamId AND SeasonId = @seasonId";
+            using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+            {
+                var affectedRows = connection.Execute(sql, new { teamId = team.TeamId, SeasonId = season, comment });
+                return affectedRows;
+            }
+        }
     }
 }
