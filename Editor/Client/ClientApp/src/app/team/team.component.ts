@@ -25,7 +25,11 @@ interface Team {
 }
 
 interface Player {
+  nr: number;
   fullName: string;
   position: string;
+  birthPlace: string;
+  birthdate: string;
   nation: string;
+  flagBase64: string;
 }

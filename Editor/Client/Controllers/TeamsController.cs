@@ -26,7 +26,7 @@ namespace Client.Controllers
         public List<Team> Get()
         {
             var teams = ts.GetTeams();
-            teams.Where(t => t.TeamLogo != null).ToList().ForEach(t => t.GenerateWebLogo());
+            teams.Where(t => t.TeamLogo != null).ToList().ForEach(t => t.GenerateWebImages());
             return teams;
         }
 
@@ -34,8 +34,12 @@ namespace Client.Controllers
         public Team Get(int id, int seasonId)
         {
             Team t = ts.GetTeam(id);
-            t.GenerateWebLogo();
+            t.GenerateWebImages();
             t.Players = ts.GetPlayers(t, seasonId.ToString());
+            t.Players.ForEach((player) =>
+            {
+                player.GenerateWebImages();
+            });
             return t;
         }
     }

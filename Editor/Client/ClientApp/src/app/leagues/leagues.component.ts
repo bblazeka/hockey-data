@@ -17,5 +17,6 @@ export class LeaguesComponent {
 
 interface League {
   leagueId: number;
+  leagueShort: string;
   leagueName: string;
 }

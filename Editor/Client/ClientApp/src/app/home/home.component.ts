@@ -10,7 +10,7 @@ export class HomeComponent {
   private http: HttpClient;
   private router: Router;
   private baseUrl: string;
-  private playerName: string;
+  playerName: string;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, router: Router) {
     this.http = http;

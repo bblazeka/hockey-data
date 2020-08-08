@@ -13,6 +13,7 @@ namespace DbServices.Models
         public DateTime Birthdate { get; set; }
         public string Nation { get; set; }
         public byte[] Flag { get; set; }
+        public string FlagBase64 { get; set; }
         public int Nr { get; set; }
         public int Games { get; set; }
         public int Goals { get; set; }
@@ -23,6 +24,7 @@ namespace DbServices.Models
         public decimal SavesPercent { get; set; }
         public string Nation2 { get; set; }
         public byte[] Flag2 { get; set; }
+        public string AltFlagBase64 { get; set; }
         public bool Active { get; set; }
         public string Comment { get; set; }
         public PositionalCompatibility positionalCompatibility { get; set; }
@@ -41,6 +43,15 @@ namespace DbServices.Models
             positionalCompatibility.LW = Position.Contains("LW") || Position.Equals("F");
             positionalCompatibility.C = Position.Contains("C") || Position.Equals("F");
             positionalCompatibility.RW = Position.Contains("RW") || Position.Equals("F");
+        }
+
+        public void GenerateWebImages()
+        {
+            FlagBase64 = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(Flag));
+            if (Flag2 != null)
+            {
+                AltFlagBase64 = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(Flag2));
+            }
         }
     }
 

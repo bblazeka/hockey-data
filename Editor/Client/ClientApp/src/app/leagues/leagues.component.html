@@ -8,14 +8,15 @@
   <thead>
     <tr>
       <th></th>
-      <th>League</th>
-      <th>Country</th>
+      <th>League Short</th>
+      <th>League Name</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let league of leagues">
       <td></td>
-      <td><a class="nav-link text-dark" routerLink="/league/{{league.leagueId}}/20202021">{{ league.leagueName }}</a></td>
+      <td><a class="nav-link text-dark" routerLink="/league/{{league.leagueId}}/20202021">{{ league.leagueShort }}</a></td>
+      <td>{{ league.leagueName }}</td>
     </tr>
   </tbody>
 </table>

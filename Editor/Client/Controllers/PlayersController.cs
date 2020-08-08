@@ -3,6 +3,7 @@ using DbServices.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,16 +33,18 @@ namespace Client.Controllers
         {
             Player player = service.GetPlayer(id);
             player.PlayerSeasons = service.GetPlayerSeasons(player);
-            player.PlayerSeasons.ForEach(ps => ps.Team.GenerateWebLogo());
+            player.PlayerSeasons.ForEach(ps => ps.Team.GenerateWebImages());
             return player;
         }
 
         [HttpGet("search/{name}")]
         public Player SearchPlayer(string name)
         {
+            CultureInfo culture = CultureInfo.CurrentCulture;
             List<Player> players = service.GetPlayers();
             
-            return players.Where(p => p.FullName.Contains(name)).First();
+            return players.Where(p => culture.CompareInfo.IndexOf(p.FullName, name, CompareOptions.IgnoreCase) >= 0)
+                .FirstOrDefault();
         }
 
         [HttpPut("{id}")]
