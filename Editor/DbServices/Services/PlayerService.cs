@@ -55,24 +55,25 @@ namespace DbServices.Services
                 return affectedRows;
             }
         }
-        public int UpdatePlayerSeason(int seasonId, int playerId, int teamId, int Nr, int GP, int G, int A, int PIM, decimal GAA, decimal Svs)
+        public int UpdatePlayerSeason(int seasonId, int sequNo, int playerId, int teamId, int Nr, int GP, int G, int A, int PIM, decimal GAA, decimal Svs)
         {
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
-                var affectedRows = connection.Execute("UPDATE fan.PlayersTeams SET Games = @GP, Nr = @Nr, Goals = @G, Assists = @A, PIM = @PIM, GoalsAgainstAvg = @GAA, SavesPercent = @Svs " +
-                "where playerId = @PlayerId and teamId = @TeamId and seasonId = @SeasonId", new { GP, Nr, G, A, PIM, GAA, Svs, PlayerId = playerId, TeamId = teamId, SeasonId = seasonId });
+                var affectedRows = connection.Execute("UPDATE fan.PlayersTeams SET Games = @GP, Nr = @Nr, Goals = @G, Assists = @A, PIM = @PIM, GoalsAgainstAvg = @GAA, SavesPercent = @Svs, SequNo = @SequNo " +
+                "where playerId = @PlayerId and teamId = @TeamId and seasonId = @SeasonId", new { GP, Nr, G, A, PIM, GAA, Svs, PlayerId = playerId, TeamId = teamId, SeasonId = seasonId, SequNo = sequNo });
                 return affectedRows;
             }
         }
-        public int InsertPlayer(string id, string name, string pos, string nat)
+        public int InsertPlayer(string id, string name, string pos, string nat, string birthplace, DateTime birthdate)
         {
             try
             {
                 using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
                 {
 
-                    var affectedRows = connection.Execute("Insert into fan.Players (PlayerId, FullName, Position, Nation) " +
-                                "values (@Id, @Name, @Pos, @Nat)", new { Id = id, Name = name, Pos = pos, Nat = nat });
+                    var affectedRows = connection.Execute("Insert into fan.Players (PlayerId, FullName, Position, Nation, BirthPlace, Birthdate) " +
+                                "values (@Id, @Name, @Pos, @Nat, @Birthplace, @Birthdate)", 
+                                new { Id = id, Name = name, Pos = pos, Nat = nat, Birthplace = birthplace, Birthdate = birthdate });
                     return affectedRows;
                 }
             }

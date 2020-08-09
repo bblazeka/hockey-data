@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HockeyDb"
         xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1200">
+        Title="Editor" Height="600" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>

@@ -36,6 +36,7 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="League" Binding="{Binding League.LeagueShort}"/>
+                            <DataGridTextColumn Header="" Binding="{Binding SequNo}" x:Name="SequNo" Visibility="Collapsed"/>
                             <DataGridTextColumn Header="#" Binding="{Binding Nr}"/>
                             <DataGridTextColumn Header="GP" Binding="{Binding GP}"/>
                             <DataGridTextColumn Header="G" Binding="{Binding Goals}" x:Name="GoalsCol"/>
@@ -64,19 +65,20 @@
                     <Button x:Name="BtnNext" Content="Next" Grid.Column="2" HorizontalAlignment="Left" Margin="245,18,0,0" VerticalAlignment="Top" Click="BtnNext_Click"/>
                     <CheckBox x:Name="CbActive" Content="Active" Grid.Column="2" HorizontalAlignment="Left" Margin="172,61,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="CommentTb" Grid.Column="1" HorizontalAlignment="Left" Margin="67,217,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="226" Grid.ColumnSpan="2" Height="91"/>
+                    <CheckBox x:Name="cbInfoColumns" Content="Show Info Cols" Grid.Column="2" HorizontalAlignment="Left" Margin="571,20,0,0" VerticalAlignment="Top" Click="cbInfoColumns_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Advanced" Margin="1,0,-1,0" Height="20" VerticalAlignment="Top">
                 <Grid Background="#FFE5E5E5">
-                    <TextBox x:Name="IdTb" HorizontalAlignment="Left" Margin="24,113,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,2.285"/>
-                    <TextBox x:Name="NameTb" HorizontalAlignment="Left" Margin="24,160,0,0" Text="FullName" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <Button x:Name="Insert" Content="Insert" HorizontalAlignment="Left" Margin="110,238,0,0" VerticalAlignment="Top" Click="Insert_Click" RenderTransformOrigin="0.536,2.507"/>
-                    <ComboBox x:Name="SeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="167,198,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0"/>
-                    <Button x:Name="InsertPlayerTeamTb" Content="Insert player team" HorizontalAlignment="Left" Margin="177,238,0,0" VerticalAlignment="Top" Click="InsertPlayerTeamTb_Click"/>
-                    <ComboBox x:Name="TeamCb" HorizontalAlignment="Left" Margin="167,156,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="1.608,-0.727"/>
-                    <ComboBox x:Name="PlayerCb_Copy" HorizontalAlignment="Left" Margin="167,113,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="PlayerCb_Copy_SelectionChanged"/>
-                    <Button x:Name="ResetBtn" Content="Reset" HorizontalAlignment="Left" Margin="24,238,0,0" VerticalAlignment="Top" Click="ResetBtn_Click"/>
-                    <Button x:Name="DeleteBtn" Content="Delete player team" HorizontalAlignment="Left" Margin="177,284,0,0" VerticalAlignment="Top" Click="DeleteBtn_Click"/>
+                    <TextBox x:Name="IdTb" HorizontalAlignment="Left" Margin="24,66,0,0" Text="0" TextWrapping="Wrap" VerticalAlignment="Top" Width="77" RenderTransformOrigin="0.483,2.285"/>
+                    <TextBox x:Name="NameTb" HorizontalAlignment="Left" Margin="24,90,0,0" Text="FullName" TextWrapping="Wrap" VerticalAlignment="Top" Width="252"/>
+                    <Button x:Name="Insert" Content="Insert Player" HorizontalAlignment="Left" Margin="106,167,0,0" VerticalAlignment="Top" Click="Insert_Click" RenderTransformOrigin="0.536,2.507"/>
+                    <ComboBox x:Name="SeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="24,218,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0"/>
+                    <Button x:Name="InsertPlayerTeamTb" Content="Insert" HorizontalAlignment="Left" Margin="149,219,0,0" VerticalAlignment="Top" Click="InsertPlayerTeamTb_Click" Width="68"/>
+                    <ComboBox x:Name="TeamCb" HorizontalAlignment="Left" Margin="24,192,0,0" VerticalAlignment="Top" Width="252" RenderTransformOrigin="1.608,-0.727"/>
+                    <ComboBox x:Name="PlayerCb_Copy" HorizontalAlignment="Left" Margin="24,39,0,0" VerticalAlignment="Top" Width="252" SelectionChanged="PlayerCb_Copy_SelectionChanged"/>
+                    <Button x:Name="ResetBtn" Content="Reset fields" HorizontalAlignment="Left" Margin="24,259,0,0" VerticalAlignment="Top" Click="ResetBtn_Click"/>
+                    <Button x:Name="DeletePlayerTeamBtn" Content="Delete" HorizontalAlignment="Left" Margin="223,219,0,0" VerticalAlignment="Top" Click="DeleteBtn_Click" Width="53"/>
                     <DataGrid x:Name="PlayersGrid" Margin="308,10,24,97" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding FullName}"/>
@@ -88,9 +90,11 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="UpdatePlayersBtn" Content="Update Edited Players" HorizontalAlignment="Left" Margin="428,319,0,0" VerticalAlignment="Bottom" Click="UpdatePlayersBtn_Click"/>
-                    <ComboBox x:Name="NatCb_Copy" HorizontalAlignment="Left" Margin="88,198,0,0" VerticalAlignment="Top" Width="56" Height="22"/>
-                    <TextBox x:Name="PosTb" HorizontalAlignment="Left" Margin="24,200,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="49"/>
+                    <ComboBox x:Name="NatCb_Copy" HorizontalAlignment="Left" Margin="24,165,0,0" VerticalAlignment="Top" Width="77" Height="22"/>
+                    <TextBox x:Name="PosTb" HorizontalAlignment="Left" Margin="24,119,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="77"/>
                     <Button x:Name="copySelectedBtn" Content="Copy selected" HorizontalAlignment="Left" Margin="330,0,0,25" VerticalAlignment="Bottom" Click="copySelectedBtn_Click"/>
+                    <TextBox x:Name="BirthplaceAdvancedTb" HorizontalAlignment="Left" Margin="24,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="252"/>
+                    <DatePicker x:Name="AdvDatePicker" HorizontalAlignment="Left" Margin="106,113,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -82,7 +82,7 @@ namespace HockeyDb.Views
             {
                 foreach (PlayerSeason entry in SeasonsDataGrid.Items)
                 {
-                    m_dbService.UpdatePlayerSeason(entry.SeasonId, entry.Player.PlayerId, entry.Team.TeamId, entry.Nr, entry.GP, entry.Goals, entry.Assists, entry.PIM, entry.GoalsAgainstAvg, entry.SavesPercent);
+                    m_dbService.UpdatePlayerSeason(entry.SeasonId, entry.SequNo, entry.Player.PlayerId, entry.Team.TeamId, entry.Nr, entry.GP, entry.Goals, entry.Assists, entry.PIM, entry.GoalsAgainstAvg, entry.SavesPercent);
                 }
             }
             catch (InvalidCastException ex)
@@ -115,7 +115,8 @@ namespace HockeyDb.Views
 
         private void Insert_Click(object sender, RoutedEventArgs e)
         {
-            var res = m_dbService.InsertPlayer(IdTb.Text, NameTb.Text, PosTb.Text, NatCb_Copy.Text);
+            var res = m_dbService.InsertPlayer(IdTb.Text, NameTb.Text, PosTb.Text, NatCb_Copy.Text, 
+                BirthplaceAdvancedTb.Text, AdvDatePicker.SelectedDate.GetValueOrDefault());
             RaiseStatusChange(string.Format("Inserted {0} from {1}", NameTb.Text, NatCb_Copy.Text), res);
         }
 
@@ -170,6 +171,12 @@ namespace HockeyDb.Views
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
             PlayerCb.SelectedIndex++;
+        }
+
+        private void cbInfoColumns_Click(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            SequNo.Visibility = (checkBox.IsChecked==true) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
