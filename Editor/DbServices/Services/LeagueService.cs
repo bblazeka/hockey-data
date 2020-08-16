@@ -13,12 +13,13 @@ namespace DbServices.Services
         public List<Team> GetLeagueTeams(object leagueObj, string season)
         {
             var league = (leagueObj as League);
-            var sql = @"SELECT a.LeagueId, a.LeagueShort, a.LeagueName, b.SeasonId, c.TeamId, c.TeamName, c.TeamLogo, c.Country, d.Flag
+            var sql = @"SELECT a.LeagueId, a.LeagueShort, a.LeagueName, b.SeasonId, b.Division, c.TeamId, c.TeamName, c.TeamLogo, c.Country, d.Flag
                         FROM fan.Leagues a
                         INNER JOIN fan.TeamsSeason b on a.LeagueId = b.LeagueId
                         INNER JOIN fan.Teams c ON c.TeamId = b.TeamId
                         INNER JOIN fan.Nations d ON d.NationId = c.Country
-                        WHERE a.LeagueId = @LeagueId and b.SeasonId = @Season";
+                        WHERE a.LeagueId = @LeagueId and b.SeasonId = @Season
+                        ORDER BY Division desc";
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
                 return connection.Query<League, TeamSeason, Team, Team>(

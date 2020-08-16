@@ -66,7 +66,7 @@ namespace HockeyDb.Views
                 GAACol.Visibility = player.Position.Equals("G") ? Visibility.Visible : Visibility.Collapsed;
             }
 
-            CbActive.IsChecked = player.Active;
+            CbRetired.IsChecked = !player.Active;
             PositionTb.Text = player.Position;
             FullNameTb.Text = player.FullName;
             NatCb.Text = player.Nation;
@@ -92,7 +92,7 @@ namespace HockeyDb.Views
             }
 
             var res = m_dbService.UpdatePlayer(NatCb.Text, FullNameTb.Text, PositionTb.Text, (PlayerCb.SelectedItem as Player).PlayerId,
-                Nat2Cb.Text, BirthplaceTb.Text, BirthdateDP.SelectedDate.GetValueOrDefault(), CbActive.IsChecked==true, CommentTb.Text);
+                Nat2Cb.Text, BirthplaceTb.Text, BirthdateDP.SelectedDate.GetValueOrDefault(), CbRetired.IsChecked==false, CommentTb.Text);
             RaiseStatusChange(string.Format("Update for player {0}.",(PlayerCb.SelectedItem as Player).FullName), res);
         }
 
@@ -177,6 +177,7 @@ namespace HockeyDb.Views
         {
             CheckBox checkBox = (CheckBox)sender;
             SequNo.Visibility = (checkBox.IsChecked==true) ? Visibility.Visible : Visibility.Collapsed;
+            Nr.Visibility = (checkBox.IsChecked == true) ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

@@ -54,7 +54,7 @@ namespace HockeyDb.Views
                 GoaliesDataGrid.ItemsSource = players.FindAll(p => p.Position == "G");
 
                 lineupTextBlock.Text = "Projected lineup:\n";
-                foreach (Player pvm in PlayerService.GetLineup(players))
+                foreach (Player pvm in TeamService.GetLineup(players))
                 {
                     if (pvm.FullName == null)
                     {
@@ -68,7 +68,7 @@ namespace HockeyDb.Views
 
                 int foreignPlayers = players.Where(p => p.Nation != ((Team)TeamCb.SelectedItem).Country &&
                 (p.Nation2 == null || p.Nation2 != ((Team)TeamCb.SelectedItem).Country)).ToList().Count;
-                FgnLbl.Content = string.Format("Foreign player count: {0}", foreignPlayers);
+                FgnLbl.Content = string.Format("Players: {0} Foreign: {1}", players.Count, foreignPlayers);
             }
         }
 
@@ -110,7 +110,15 @@ namespace HockeyDb.Views
 
         private void TeamSeasonCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GenerateRoster(((ComboBox)sender).SelectedItem.ToString());
+            if (TeamCb.SelectedItem != null)
+            {
+                TeamSeason teamSeason = m_dbService.GetTeamSeason((Team)TeamCb.SelectedItem, Int32.Parse(TeamSeasonCb.SelectedItem.ToString()));
+                if (teamSeason != null)
+                {
+                    CommentCb.Text = teamSeason.Comment;
+                }
+            }
+            GenerateRoster(TeamSeasonCb.SelectedItem.ToString());
         }
 
         private void UpdateBtn_Click(object sender, RoutedEventArgs e)
@@ -145,6 +153,10 @@ namespace HockeyDb.Views
         private void TeamsCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var team = (((ComboBox)sender).SelectedItem as Team);
+            if (team == null)
+            {
+                return;
+            }
             TeamIdTb.Text = team.TeamId.ToString();
             TeamNameTb.Text = team.TeamName;
             TeamNationCb.Text = team.Country;

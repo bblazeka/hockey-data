@@ -53,14 +53,14 @@
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Nation" Binding="{Binding Path=Nation}"/>
                             <DataGridTextColumn Header="GP" Binding="{Binding Path=Games}"/>
-                            <DataGridTextColumn Header="GAA" Binding="{Binding Path=GoalsAgainstAvg}"/>
-                            <DataGridTextColumn Header="SVS%" Binding="{Binding Path=SavesPercent}"/>
+                            <DataGridTextColumn Header="GAA" Binding="{Binding Path=GoalsAgainstAvg, StringFormat=N2}"/>
+                            <DataGridTextColumn Header="SVS%" Binding="{Binding Path=SavesPercent, StringFormat=N1}"/>
 
                         </DataGrid.Columns>
                     </DataGrid>
-                    <TextBlock x:Name="lineupTextBlock" HorizontalAlignment="Right" Margin="0,64,45,0" Text="Projected lineup:" TextWrapping="Wrap" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="lineupTextBlock" HorizontalAlignment="Right" Margin="0,13,45,0" Text="Projected lineup:" TextWrapping="Wrap" VerticalAlignment="Top"/>
                     <Label x:Name="FgnLbl" Content="Foreign player count:" HorizontalAlignment="Left" Margin="467,13,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="CommentCb" HorizontalAlignment="Right" Margin="0,0,39,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="256" Height="26"/>
+                    <TextBox x:Name="CommentCb" HorizontalAlignment="Right" Margin="0,0,39,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="256" Height="54"/>
                     <Button x:Name="BtnSave" Content="Save" HorizontalAlignment="Right" Margin="0,0,5,3" VerticalAlignment="Bottom" Click="BtnSave_Click"/>
                 </Grid>
             </TabItem>

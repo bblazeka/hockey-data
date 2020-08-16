@@ -34,6 +34,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Division" Binding="{Binding Division}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <ComboBox x:Name="LeagueSeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="239,10,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="LeagueSeasonCb_SelectionChanged"/>

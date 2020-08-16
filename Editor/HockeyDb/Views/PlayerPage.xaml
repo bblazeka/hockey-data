@@ -37,14 +37,14 @@
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="League" Binding="{Binding League.LeagueShort}"/>
                             <DataGridTextColumn Header="" Binding="{Binding SequNo}" x:Name="SequNo" Visibility="Collapsed"/>
-                            <DataGridTextColumn Header="#" Binding="{Binding Nr}"/>
+                            <DataGridTextColumn Header="#" Binding="{Binding Nr}" x:Name="Nr" Visibility="Collapsed"/>
                             <DataGridTextColumn Header="GP" Binding="{Binding GP}"/>
                             <DataGridTextColumn Header="G" Binding="{Binding Goals}" x:Name="GoalsCol"/>
                             <DataGridTextColumn Header="A" Binding="{Binding Assists}" x:Name="AssistCol"/>
                             <DataGridTextColumn Header="PTS" Binding="{Binding Points}" x:Name="PtsCol"/>
                             <DataGridTextColumn Header="PIM" Binding="{Binding PIM}" x:Name="PimCol"/>
-                            <DataGridTextColumn Header="GAA" Binding="{Binding GoalsAgainstAvg}" x:Name="GAACol"/>
-                            <DataGridTextColumn Header="SVS%" Binding="{Binding SavesPercent}" x:Name="SvsCol"/>
+                            <DataGridTextColumn Header="GAA" Binding="{Binding GoalsAgainstAvg, StringFormat=N2}" x:Name="GAACol"/>
+                            <DataGridTextColumn Header="SVS%" Binding="{Binding SavesPercent, StringFormat=N1}" x:Name="SvsCol"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="UpdateBtn" Content="Update" HorizontalAlignment="Left" Margin="393,17,0,0" VerticalAlignment="Top" Click="UpdateBtn_Click" Grid.Column="2" Height="20" Width="43"/>
@@ -63,9 +63,9 @@
 
                     <ComboBox x:Name="NatFilterCb" HorizontalAlignment="Left" Margin="2,15,0,0" VerticalAlignment="Top" Width="57" Grid.Column="1" Height="22" SelectionChanged="NatFilterCb_SelectionChanged"/>
                     <Button x:Name="BtnNext" Content="Next" Grid.Column="2" HorizontalAlignment="Left" Margin="245,18,0,0" VerticalAlignment="Top" Click="BtnNext_Click"/>
-                    <CheckBox x:Name="CbActive" Content="Active" Grid.Column="2" HorizontalAlignment="Left" Margin="172,61,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="CbRetired" Content="Retired" Grid.Column="2" HorizontalAlignment="Left" Margin="172,61,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="CommentTb" Grid.Column="1" HorizontalAlignment="Left" Margin="67,217,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="226" Grid.ColumnSpan="2" Height="91"/>
-                    <CheckBox x:Name="cbInfoColumns" Content="Show Info Cols" Grid.Column="2" HorizontalAlignment="Left" Margin="571,20,0,0" VerticalAlignment="Top" Click="cbInfoColumns_Click"/>
+                    <CheckBox x:Name="cbInfoColumns" Content="Show Info Columns" Grid.Column="2" HorizontalAlignment="Left" Margin="571,20,0,0" VerticalAlignment="Top" Click="cbInfoColumns_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Advanced" Margin="1,0,-1,0" Height="20" VerticalAlignment="Top">
