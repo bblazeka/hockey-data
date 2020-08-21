@@ -1,7 +1,6 @@
 <h1 *ngIf="player" id="tableLabel">{{player.fullName}}</h1>
 
-<p *ngIf="player"><em>{{player.nation}}</em></p>
-
+<p *ngIf="player"><em>{{player.nation}}</em> {{player.birthdate.split("T")[0]}} {{player.birthPlace}}</p>
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="player">
   <thead>
     <tr>
@@ -9,7 +8,6 @@
       <th></th>
       <th>Team</th>
       <th>League</th>
-      <th>Nr</th>
       <th>GP</th>
       <th *ngIf="isSkater">G</th>
       <th *ngIf="isSkater">A</th>
@@ -21,22 +19,22 @@
   </thead>
   <tbody>
     <tr *ngFor="let season of player.playerSeasons">
-      <td>{{ season.seasonId }}</td>
-      <td><img [src]="season.team.teamLogoBase64" style="max-height:20px" /></td>
-      <td>
-        <a class="nav-link text-dark" routerLink="/team/{{season.team.teamId}}/{{season.seasonId}}">
-          {{ season.team.teamName }}
-        </a>
-      </td>
-      <td>{{ season.league.leagueShort }}</td>
-      <td>{{ season.nr }}</td>
-      <td>{{ season.gp }}</td>
-      <td *ngIf="isSkater">{{ season.goals }}</td>
-      <td *ngIf="isSkater">{{ season.assists }}</td>
-      <td *ngIf="isSkater">{{ season.points }}</td>
-      <td *ngIf="isSkater">{{ season.pim }}</td>
-      <td *ngIf="!isSkater">{{ season.goalsAgainstAvg }}</td>
-      <td *ngIf="!isSkater">{{ season.savesPercent }}</td>
-    </tr>
+      <td>{{ season.seasonId
+  }}</td>
+  <td><img [src]="season.team.teamLogoBase64" style="max-height:20px" /></td>
+  <td>
+    <a class="nav-link text-dark" routerLink="/team/{{season.team.teamId}}/{{season.seasonId}}">
+      {{ season.team.teamName }}
+    </a>
+  </td>
+  <td>{{ season.league.leagueShort }}</td>
+  <td>{{ season.gp }}</td>
+  <td *ngIf="isSkater">{{ season.goals }}</td>
+  <td *ngIf="isSkater">{{ season.assists }}</td>
+  <td *ngIf="isSkater">{{ season.points }}</td>
+  <td *ngIf="isSkater">{{ season.pim }}</td>
+  <td *ngIf="!isSkater">{{ season.goalsAgainstAvg }}</td>
+  <td *ngIf="!isSkater">{{ season.savesPercent }}</td>
+  </tr>
   </tbody>
-</table>
+  </table>

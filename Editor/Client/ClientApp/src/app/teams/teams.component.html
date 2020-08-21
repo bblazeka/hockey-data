@@ -1,8 +1,11 @@
 <h1 id="tableLabel">TEAMS</h1>
 
+<input [(ngModel)]="teamName" />
+<button (click)="onSearchClicked()">Search</button>
+
 <p>List of teams in the database.</p>
 
-<p *ngIf="!teams"><em>Loading...</em></p>
+<p *ngIf="!teams"><em>No teams listed.</em></p>
 
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="teams">
   <thead>

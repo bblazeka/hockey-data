@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,6 +42,15 @@ namespace Client.Controllers
                 player.GenerateWebImages();
             });
             return t;
+        }
+
+        [HttpGet("search/{name}")]
+        public List<Team> SearchTeam(string name)
+        {
+            CultureInfo culture = CultureInfo.CurrentCulture;
+            List<Team> teams = ts.GetTeams();
+
+            return teams.Where(t => culture.CompareInfo.IndexOf(t.TeamName, name, CompareOptions.IgnoreCase) >= 0).ToList();
         }
     }
 }

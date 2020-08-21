@@ -22,6 +22,8 @@ export class PlayerComponent {
 interface Player {
   fullName: string;
   position: string;
+  birthdate: Date;
+  birthPlace: string;
   playerSeasons: PlayerSeason[]
 }
 
@@ -29,7 +31,6 @@ interface PlayerSeason {
   seasonId: number;
   team: Team;
   league: League;
-  nr: number;
   gp: number;
   goals: number;
   assists: number;
