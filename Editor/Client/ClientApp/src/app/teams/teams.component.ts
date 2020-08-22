@@ -12,16 +12,19 @@ export class TeamsComponent {
   private router: Router;
   private baseUrl: string;
   teamName: string;
+  loading: boolean;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, router: Router) {
     this.http = http;
     this.baseUrl = baseUrl;
     this.router = router;
+    this.loading = false;
   }
 
   onSearchClicked() {
+    this.loading = true;
     return this.http.get<Team[]>(this.baseUrl + 'api/teams/search/' + this.teamName)
-      .subscribe(result => this.teams = result);
+      .subscribe(result => { this.teams = result; this.loading = false; });
   }
 }
 
