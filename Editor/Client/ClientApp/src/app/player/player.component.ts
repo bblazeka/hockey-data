@@ -24,7 +24,9 @@ interface Player {
   position: string;
   birthdate: Date;
   birthPlace: string;
-  playerSeasons: PlayerSeason[]
+  nation: string;
+  flagBase64: string;
+  playerSeasons: PlayerSeason[];
 }
 
 interface PlayerSeason {

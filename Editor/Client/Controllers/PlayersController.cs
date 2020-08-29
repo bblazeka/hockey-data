@@ -34,6 +34,7 @@ namespace Client.Controllers
             Player player = service.GetPlayer(id);
             player.PlayerSeasons = service.GetPlayerSeasons(player);
             player.PlayerSeasons.ForEach(ps => ps.Team.GenerateWebImages());
+            player.GenerateWebImages();
             return player;
         }
 
@@ -43,8 +44,9 @@ namespace Client.Controllers
             CultureInfo culture = CultureInfo.CurrentCulture;
             List<Player> players = service.GetPlayers();
             
-            return players.Where(p => culture.CompareInfo.IndexOf(p.FullName, name, CompareOptions.IgnoreCase) >= 0)
+            Player foundPlayer = players.Where(p => culture.CompareInfo.IndexOf(p.FullName, name, CompareOptions.IgnoreCase) >= 0)
                 .FirstOrDefault();
+            return service.GetPlayer(foundPlayer.PlayerId);
         }
 
         [HttpPut("{id}")]

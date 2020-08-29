@@ -12,7 +12,6 @@ import { LeaguesComponent } from './leagues/leagues.component';
 import { TeamsComponent } from './teams/teams.component';
 import { TeamComponent } from './team/team.component';
 import { PlayerComponent } from './player/player.component';
-import { PlayersComponent } from './players/players.component';
 import { EditPlayerComponent } from './edit-player/edit-player.component';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { EditPlayerComponent } from './edit-player/edit-player.component';
     TeamsComponent,
     TeamComponent,
     PlayerComponent,
-    PlayersComponent,
     EditPlayerComponent
   ],
   imports: [
@@ -37,7 +35,6 @@ import { EditPlayerComponent } from './edit-player/edit-player.component';
       { path: 'counter', component: CounterComponent },
       { path: 'player', component: EditPlayerComponent },
       { path: 'player/:id', component: PlayerComponent },
-      { path: 'players', component: PlayersComponent },
       { path: 'player/:id', component: PlayerComponent },
       { path: 'teams', component: TeamsComponent },
       { path: 'team/:id/:season', component: TeamComponent },

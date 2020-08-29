@@ -15,6 +15,7 @@ namespace DbServices.Services
         public Player GetPlayer(int playerId)
         {
             var sql = @"SELECT * FROM fan.Players a
+                        LEFT JOIN fan.Nations b ON a.Nation = b.NationId
                         WHERE a.PlayerId = @playerId";
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
