@@ -21,6 +21,17 @@ namespace DbServices.Services
                 return res;
             }
         }
+        public List<Team> GetTeamsMatchingName(string teamName)
+        {
+            var sql = @"SELECT * FROM fan.Teams a
+                        LEFT JOIN fan.Nations b ON a.Country = b.NationId
+                        WHERE UPPER(a.teamName) like '%' + UPPER(@teamName) + '%'";
+            using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+            {
+                var res = connection.Query<Team>(sql, new { teamName }).ToList();
+                return res;
+            }
+        }
         public int InsertTeam(string a, string b, string c)
         {
             try

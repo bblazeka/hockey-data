@@ -42,7 +42,7 @@ namespace Client.Controllers
         public Player SearchPlayer(string name)
         {
             CultureInfo culture = CultureInfo.CurrentCulture;
-            List<Player> players = service.GetPlayers();
+            List<Player> players = service.GetPlayers(name);
             
             Player foundPlayer = players.Where(p => culture.CompareInfo.IndexOf(p.FullName, name, CompareOptions.IgnoreCase) >= 0)
                 .FirstOrDefault();

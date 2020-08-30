@@ -48,7 +48,8 @@ namespace Client.Controllers
         public List<Team> SearchTeam(string name)
         {
             CultureInfo culture = CultureInfo.CurrentCulture;
-            List<Team> teams = ts.GetTeams();
+            List<Team> teams = ts.GetTeamsMatchingName(name);
+            teams.ForEach(team => team.GenerateWebImages());
 
             return teams.Where(t => culture.CompareInfo.IndexOf(t.TeamName, name, CompareOptions.IgnoreCase) >= 0).ToList();
         }

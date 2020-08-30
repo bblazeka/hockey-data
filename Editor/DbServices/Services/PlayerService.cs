@@ -24,6 +24,18 @@ namespace DbServices.Services
             }
         }
 
+        public List<Player> GetPlayers(string playerName)
+        {
+            var sql = @"SELECT * FROM fan.Players a
+                        LEFT JOIN fan.Nations b ON a.Nation = b.NationId
+                        WHERE UPPER(a.FullName) like '%' + UPPER(@playerName) + '%'";
+            using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+            {
+                var res = connection.Query<Player>(sql, new { playerName }).ToList();
+                return res;
+            }
+        }
+
         public List<PlayerSeason> GetPlayerSeasons(object playerObj)
         {
             var player = (playerObj as Player);
