@@ -117,21 +117,21 @@ namespace HockeyDb.Views
         {
             var res = m_dbService.InsertPlayer(IdTb.Text, NameTb.Text, PosTb.Text, NatCb_Copy.Text, 
                 BirthplaceAdvancedTb.Text, AdvDatePicker.SelectedDate.GetValueOrDefault());
-            RaiseStatusChange(string.Format("Inserted {0} from {1}", NameTb.Text, NatCb_Copy.Text), res);
+            RaiseStatusChange(string.Format("INSERT {0} from {1}", NameTb.Text, NatCb_Copy.Text), res);
         }
 
         private void InsertPlayerTeamTb_Click(object sender, RoutedEventArgs e)
         {
             var res = m_dbService.AddPlayerTeam(IdTb.Text.Length == 0 ? 0 : Convert.ToInt32(IdTb.Text),
                 NameTb.Text, TeamCb.SelectedItem, Convert.ToInt32(SeasonCb.SelectedItem));
-            RaiseStatusChange(string.Format("Inserted {0} - {1} {2}", NameTb.Text, TeamCb.SelectedItem, SeasonCb.SelectedItem), res);
+            RaiseStatusChange(string.Format("INSERT {0} - {1} {2}", NameTb.Text, TeamCb.SelectedItem, SeasonCb.SelectedItem), res);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var res = m_dbService.DeletePlayerTeam(IdTb.Text.Length == 0 ? 0 : Convert.ToInt32(IdTb.Text),
                 NameTb.Text, TeamCb.SelectedItem, Convert.ToInt32(SeasonCb.SelectedItem));
-            RaiseStatusChange(string.Format("Deleted {0} - {1} {2}", NameTb.Text, TeamCb.SelectedItem, SeasonCb.SelectedItem), res);
+            RaiseStatusChange(string.Format("DELETE {0} - {1} {2}", NameTb.Text, TeamCb.SelectedItem, SeasonCb.SelectedItem), res);
         }
 
         private void UpdatePlayersBtn_Click(object sender, RoutedEventArgs e)

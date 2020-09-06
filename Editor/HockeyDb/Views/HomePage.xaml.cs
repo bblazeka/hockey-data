@@ -38,14 +38,14 @@ namespace HockeyDb.Views
         {
             Player player = PlayerCb_Copy.SelectedItem as Player;
             var res = m_dbService.AddPlayerTeam(player.PlayerId, player.FullName, TeamCb.SelectedItem, Convert.ToInt32(SeasonCb.SelectedItem));
-            RaiseStatusChange(string.Format("Added {0} {1} {2}", player.FullName, TeamCb.Text, SeasonCb.SelectedItem), res);
+            RaiseStatusChange(string.Format("INSERT {0} {1} {2}", player.FullName, TeamCb.Text, SeasonCb.SelectedItem), res);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             var res = m_dbService.DeletePlayerTeam(((Player)PlayerCb_Copy.SelectedItem).PlayerId,
                 PlayerCb_Copy.Text, TeamCb.SelectedItem, Convert.ToInt32(SeasonCb.SelectedItem));
-            RaiseStatusChange(string.Format("Deleted {0} {1} {2}", PlayerCb_Copy.SelectedItem, TeamCb.Text, SeasonCb.SelectedItem), res);
+            RaiseStatusChange(string.Format("DELETE {0} {1} {2}", PlayerCb_Copy.SelectedItem, TeamCb.Text, SeasonCb.SelectedItem), res);
         }
     }
 }

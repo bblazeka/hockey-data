@@ -12,14 +12,14 @@
             <TabItem Header="Team">
                 <Grid Background="#FFE5E5E5">
                     <GridSplitter HorizontalAlignment="Center" Height="0" VerticalAlignment="Top" Width="794" Margin="0,59,0,0"/>
-                    <DataGrid x:Name="RosterDataGrid" Margin="0,54,300,31" AutoGenerateColumns="False" GridLinesVisibility="None">
+                    <DataGrid x:Name="RosterDataGrid" Margin="0,54,300,31" AutoGenerateColumns="False" GridLinesVisibility="None" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Path=Nr}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Path=FullName}"/>
                             <DataGridTextColumn Header="Position" Binding="{Binding Path=Position}"/>
                             <DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate, StringFormat=\{0:dd.MM.yyyy.\}}"/>
                             <DataGridTextColumn Header="Birthplace" Binding="{Binding BirthPlace}"/>
-                            <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
+                            <DataGridTemplateColumn Header="" Width="SizeToCells">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Image Height="10" Source="{Binding Flag}" />
@@ -37,7 +37,7 @@
                     <ComboBox x:Name="TeamCb" HorizontalAlignment="Left" Margin="108,15,0,0" VerticalAlignment="Top" Width="194" SelectionChanged="TeamCb_SelectionChanged"/>
                     <ComboBox x:Name="TeamSeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="319,15,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="TeamSeasonCb_SelectionChanged"/>
                     <Image x:Name="TeamLogoImg" HorizontalAlignment="Left" Height="37" Margin="45,10,0,0" VerticalAlignment="Top" Width="53"/>
-                    <DataGrid x:Name="GoaliesDataGrid" VerticalAlignment="Bottom" Margin="0,329,300,0" AutoGenerateColumns="False" GridLinesVisibility="None">
+                    <DataGrid x:Name="GoaliesDataGrid" VerticalAlignment="Bottom" Margin="0,329,300,0" AutoGenerateColumns="False" GridLinesVisibility="None" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Path=Nr}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Path=FullName}"/>
