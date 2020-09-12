@@ -42,6 +42,8 @@ namespace HockeyDb.Views
             TeamsCb.ItemsSource = m_dbService.GetTeams();
             LeagueCb.ItemsSource = m_dbService.GetLeagues();
             TeamNationCb.ItemsSource = m_dbService.GetNations();
+            var nations = m_dbService.GetNations();
+            cbNation.ItemsSource = nations;
         }
 
         private void GenerateRoster(string selectedSeason)
@@ -93,6 +95,10 @@ namespace HockeyDb.Views
         private void TeamCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Team selectedTeam = (Team)((ComboBox)sender).SelectedItem;
+            if (selectedTeam == null)
+            {
+                return;
+            }
             RosterDataGrid.ItemsSource = m_dbService.GetPlayers(selectedTeam, TeamSeasonCb.SelectedItem.ToString()).FindAll(p => p.Position != "G");
             GoaliesDataGrid.ItemsSource = m_dbService.GetPlayers(selectedTeam, TeamSeasonCb.SelectedItem.ToString()).FindAll(p => p.Position == "G");
             TeamLogoImg.Source = LoadImage((((ComboBox)sender).SelectedItem as Team).TeamLogo);
@@ -171,6 +177,15 @@ namespace HockeyDb.Views
         {
             m_dbService.UpdateComment((Team)TeamCb.SelectedItem, int.Parse(TeamSeasonCb.SelectedItem.ToString()),
                 CommentCb.Text);
+        }
+
+        private void cbNation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbNation.SelectedItem != null)
+            {
+                string selectedNation = (cbNation.SelectedItem as Nation).NationId;
+                TeamCb.ItemsSource = m_dbService.GetTeams().Where(p => p.Country.Equals(selectedNation)).ToList();
+            }
         }
     }
 }

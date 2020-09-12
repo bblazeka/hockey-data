@@ -35,7 +35,7 @@ namespace HockeyDb.Views
         private void LeagueCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TeamDataGrid.ItemsSource = m_dbService.GetLeagueTeams(((ComboBox)sender).SelectedItem, LeagueSeasonCb.SelectedItem.ToString());
-
+            lblTeamCnt.Content = $"Teams: {TeamDataGrid.Items.Count}";
         }
 
         private void LeagueSeasonCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -43,6 +43,7 @@ namespace HockeyDb.Views
             if (LeagueCb.SelectedItem != null)
             {
                 TeamDataGrid.ItemsSource = m_dbService.GetLeagueTeams(LeagueCb.SelectedItem, (((ComboBox)sender).SelectedItem).ToString());
+                lblTeamCnt.Content = $"Teams: {TeamDataGrid.Items.Count}";
             }
         }
 

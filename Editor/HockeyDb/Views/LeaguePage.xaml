@@ -16,7 +16,7 @@
             <TabItem Header="Overview">
                 <Grid Background="#FFE5E5E5">
                     <ComboBox x:Name="LeagueCb" HorizontalAlignment="Left" Margin="59,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="LeagueCb_SelectionChanged"/>
-                    <DataGrid x:Name="TeamDataGrid" Margin="47,50,43,10" AutoGenerateColumns="False">
+                    <DataGrid x:Name="TeamDataGrid" Margin="47,50,43,10" AutoGenerateColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -38,6 +38,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <ComboBox x:Name="LeagueSeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="239,10,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="LeagueSeasonCb_SelectionChanged"/>
+                    <Label x:Name="lblTeamCnt" Content="" HorizontalAlignment="Left" Margin="372,8,0,0" VerticalAlignment="Top"/>
 
                 </Grid>
             </TabItem>

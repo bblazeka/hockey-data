@@ -36,6 +36,18 @@ namespace DbServices.Services
             }
         }
 
+        public List<Player> GetPlayersByNation(string nation)
+        {
+            var sql = @"SELECT * FROM fan.Players a
+                        LEFT JOIN fan.Nations b ON a.Nation = b.NationId
+                        WHERE a.Nation = @nation";
+            using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+            {
+                var res = connection.Query<Player>(sql, new { nation }).ToList();
+                return res;
+            }
+        }
+
         public List<PlayerSeason> GetPlayerSeasons(object playerObj)
         {
             var player = (playerObj as Player);
