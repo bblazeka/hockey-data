@@ -40,7 +40,7 @@ namespace DbServices.Services
         {
             var sql = @"SELECT * FROM fan.Players a
                         LEFT JOIN fan.Nations b ON a.Nation = b.NationId
-                        WHERE a.Nation = @nation";
+                        WHERE a.Nation = @nation or a.Nation2 = @nation";
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
                 var res = connection.Query<Player>(sql, new { nation }).ToList();
@@ -55,13 +55,14 @@ namespace DbServices.Services
             {
                 return new List<PlayerSeason>();
             }
-            var sql = @"SELECT a.PlayerId, a.FullName, a.Position, a.Active, a.Comment, b.SeasonId, b.SequNo, b.Nr, b.Games GP, b.Goals, b.Assists, b.Goals + b.Assists Points, b.PIM, b.PlusMinus, b.GoalsAgainstAvg, b.SavesPercent, c.TeamId, c.TeamName, c.TeamLogo, f.Flag, e.LeagueId, e.LeagueShort 
+            var sql = @"SELECT a.PlayerId, a.FullName, a.Position, a.Active, a.Comment, b.SeasonId, b.SequNo, b.StartDate, b.EndDate, b.Nr, b.Games GP, b.Goals, b.Assists, b.Goals + b.Assists Points, b.PIM, b.PlusMinus, b.GoalsAgainstAvg, b.SavesPercent, c.TeamId, c.TeamName, c.TeamLogo, f.Flag, e.LeagueId, ISNULL(g.LeagueName, e.LeagueShort) LeagueShort
                         FROM fan.Players a
                         INNER JOIN fan.PlayersTeams b on a.PlayerId = b.PlayerId
                         INNER JOIN fan.Teams c ON c.TeamId = b.TeamId
                         INNER JOIN fan.TeamsSeason d ON c.TeamId = d.TeamId and b.SeasonId = d.SeasonId
                         INNER JOIN fan.Leagues e ON e.LeagueId = d.LeagueId
                         INNER JOIN fan.Nations f ON f.NationId = c.Country
+                        LEFT JOIN fan.LeaguesSeason g ON g.LeagueId = d.LeagueId AND d.SeasonId = g.SeasonId
                         WHERE a.PlayerId = @PlayerId
                         ORDER BY b.seasonId, b.SequNo";
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
@@ -80,12 +81,12 @@ namespace DbServices.Services
                 return affectedRows;
             }
         }
-        public int UpdatePlayerSeason(int seasonId, int sequNo, int playerId, int teamId, int Nr, int GP, int G, int A, int PIM, decimal GAA, decimal Svs)
+        public int UpdatePlayerSeason(int seasonId, int sequNo, int playerId, int teamId, int Nr, int GP, int G, int A, int PIM, decimal GAA, decimal Svs, DateTime? start, DateTime? end)
         {
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
-                var affectedRows = connection.Execute("UPDATE fan.PlayersTeams SET Games = @GP, Nr = @Nr, Goals = @G, Assists = @A, PIM = @PIM, GoalsAgainstAvg = @GAA, SavesPercent = @Svs, SequNo = @SequNo " +
-                "where playerId = @PlayerId and teamId = @TeamId and seasonId = @SeasonId", new { GP, Nr, G, A, PIM, GAA, Svs, PlayerId = playerId, TeamId = teamId, SeasonId = seasonId, SequNo = sequNo });
+                var affectedRows = connection.Execute("UPDATE fan.PlayersTeams SET Games = @GP, Nr = @Nr, Goals = @G, Assists = @A, PIM = @PIM, GoalsAgainstAvg = @GAA, SavesPercent = @Svs, SequNo = @SequNo, StartDate = @Start, EndDate = @End " +
+                "where playerId = @PlayerId and teamId = @TeamId and seasonId = @SeasonId", new { GP, Nr, G, A, PIM, GAA, Svs, PlayerId = playerId, TeamId = teamId, SeasonId = seasonId, SequNo = sequNo, Start = start, End = end });
                 return affectedRows;
             }
         }

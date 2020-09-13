@@ -82,7 +82,7 @@ namespace HockeyDb.Views
             {
                 foreach (PlayerSeason entry in SeasonsDataGrid.Items)
                 {
-                    m_dbService.UpdatePlayerSeason(entry.SeasonId, entry.SequNo, entry.Player.PlayerId, entry.Team.TeamId, entry.Nr, entry.GP, entry.Goals, entry.Assists, entry.PIM, entry.GoalsAgainstAvg, entry.SavesPercent);
+                    m_dbService.UpdatePlayerSeason(entry.SeasonId, entry.SequNo, entry.Player.PlayerId, entry.Team.TeamId, entry.Nr, entry.GP, entry.Goals, entry.Assists, entry.PIM, entry.GoalsAgainstAvg, entry.SavesPercent, entry.StartDate, entry.EndDate);
                 }
             }
             catch (InvalidCastException ex)
@@ -176,8 +176,11 @@ namespace HockeyDb.Views
         private void cbInfoColumns_Click(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = (CheckBox)sender;
-            SequNo.Visibility = (checkBox.IsChecked==true) ? Visibility.Visible : Visibility.Collapsed;
-            Nr.Visibility = (checkBox.IsChecked == true) ? Visibility.Visible : Visibility.Collapsed;
+            Visibility visibility = (checkBox.IsChecked == true) ? Visibility.Visible : Visibility.Collapsed;
+            SequNo.Visibility = visibility;
+            Nr.Visibility = visibility;
+            StartDate.Visibility = visibility;
+            EndDate.Visibility = visibility;
         }
     }
 }

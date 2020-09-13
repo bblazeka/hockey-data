@@ -17,6 +17,8 @@ namespace DbServices.Models
         public int PlusMinus { get; set; }
         public decimal GoalsAgainstAvg { get; set; }
         public decimal SavesPercent { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public Player Player { get; set; }
         public Team Team { get; set; }
         public League League { get; set; }

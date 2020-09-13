@@ -36,6 +36,20 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="League" Binding="{Binding League.LeagueShort}"/>
+                            <DataGridTemplateColumn Header="Start" x:Name="StartDate" Visibility="Collapsed">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding StartDate, StringFormat=\{0:dd.MM.yyyy.\}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="End" x:Name="EndDate" Visibility="Collapsed">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding EndDate, StringFormat=\{0:dd.MM.yyyy.\}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Header="" Binding="{Binding SequNo}" x:Name="SequNo" Visibility="Collapsed"/>
                             <DataGridTextColumn Header="#" Binding="{Binding Nr}" x:Name="Nr" Visibility="Collapsed"/>
                             <DataGridTextColumn Header="GP" Binding="{Binding GP}"/>
