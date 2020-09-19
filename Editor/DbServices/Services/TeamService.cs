@@ -278,7 +278,7 @@ namespace DbServices.Services
 
         public TeamSeason GetTeamSeason(Team team, int season)
         {
-            var sql = @"SELECT a.SeasonId, a.Comment, b.TeamId, b.TeamName, c.LeagueId, c.LeagueName
+            var sql = @"SELECT a.SeasonId, a.Comment, a.Done, b.TeamId, b.TeamName, c.LeagueId, c.LeagueName
                         FROM fan.Teams b 
                         LEFT JOIN fan.TeamsSeason a ON a.teamId = b.TeamId
                         LEFT JOIN fan.Leagues c ON c.leagueId = a.leagueId
@@ -291,13 +291,13 @@ namespace DbServices.Services
             }
         }
 
-        public int UpdateComment(Team team, int season, string comment)
+        public int UpdateComment(Team team, int season, string comment, bool done)
         {
-            var sql = @"UPDATE fan.TeamsSeason SET comment = @comment
+            var sql = @"UPDATE fan.TeamsSeason SET comment = @comment, Done = @done
                         WHERE TeamId = @teamId AND SeasonId = @seasonId";
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
-                var affectedRows = connection.Execute(sql, new { teamId = team.TeamId, SeasonId = season, comment });
+                var affectedRows = connection.Execute(sql, new { teamId = team.TeamId, SeasonId = season, comment, done });
                 return affectedRows;
             }
         }

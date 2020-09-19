@@ -21,20 +21,21 @@
                             <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Image Height="20" Source="{Binding TeamLogo}" />
+                                        <Image Height="20" Source="{Binding Team.TeamLogo}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Team" Binding="{Binding TeamName}"/>
-                            <DataGridTextColumn Header="Country" Binding="{Binding Country}"/>
+                            <DataGridTextColumn Header="Team" Binding="{Binding Team.TeamName}"/>
+                            <DataGridTextColumn Header="Country" Binding="{Binding Team.Country}"/>
                             <DataGridTemplateColumn Header="" Width="SizeToCells" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Image Height="15" Source="{Binding Flag}" />
+                                        <Image Height="15" Source="{Binding Team.Flag}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Division" Binding="{Binding Division}"/>
+                            <DataGridCheckBoxColumn Header="Done" Binding="{Binding Done}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <ComboBox x:Name="LeagueSeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="239,10,0,0" VerticalAlignment="Top" Width="120" SelectedIndex="0" SelectionChanged="LeagueSeasonCb_SelectionChanged"/>

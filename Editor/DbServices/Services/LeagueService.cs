@@ -10,10 +10,10 @@ namespace DbServices.Services
     public class LeagueService : DatabaseService
     {
         public LeagueService() : base() { }
-        public List<Team> GetLeagueTeams(object leagueObj, string season)
+        public List<TeamSeason> GetLeagueTeams(object leagueObj, string season)
         {
             var league = (leagueObj as League);
-            var sql = @"SELECT a.LeagueId, a.LeagueShort, a.LeagueName, b.SeasonId, b.Division, c.TeamId, c.TeamName, c.TeamLogo, c.Country, d.Flag
+            var sql = @"SELECT a.LeagueId, a.LeagueShort, a.LeagueName, b.SeasonId, b.Division, b.Done, c.TeamId, c.TeamName, c.TeamLogo, c.Country, d.Flag
                         FROM fan.Leagues a
                         INNER JOIN fan.TeamsSeason b on a.LeagueId = b.LeagueId
                         INNER JOIN fan.Teams c ON c.TeamId = b.TeamId
@@ -22,8 +22,8 @@ namespace DbServices.Services
                         ORDER BY Division desc";
             using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
             {
-                return connection.Query<League, TeamSeason, Team, Team>(
-                    sql, (league, leagueTeam, team) => { leagueTeam.League = league; leagueTeam.Team = team; return team; }, new { LeagueId = league.LeagueId, Season = season }, splitOn: "LeagueId,SeasonId,TeamId").AsList();
+                return connection.Query<League, TeamSeason, Team, TeamSeason>(
+                    sql, (league, leagueTeam, team) => { leagueTeam.League = league; leagueTeam.Team = team; return leagueTeam; }, new { LeagueId = league.LeagueId, Season = season }, splitOn: "LeagueId,SeasonId,TeamId").AsList();
             }
         }
 

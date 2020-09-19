@@ -82,6 +82,11 @@ namespace HockeyDb.Views
 
         private void UpdateLeagueBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (LeagueCb.SelectedItem == null)
+            {
+                RaiseStatusChange("League not selected", -1);
+                return;
+            }
             var res = m_dbService.UpdateLeague(Convert.ToInt32(TeamIdTb.Text), TeamNameTb.Text, LeagueCb.SelectedItem as League, Convert.ToInt32(SeasonCb.Text));
             RaiseStatusChange(string.Format("{0} {1} {2}", TeamNameTb.Text, LeagueCb.Text, SeasonCb.Text), res);
         }
@@ -109,6 +114,7 @@ namespace HockeyDb.Views
             if (teamSeason != null)
             {
                 CommentCb.Text = teamSeason.Comment;
+                cbOk.IsChecked = teamSeason.Done == true;
 
                 GenerateRoster(TeamSeasonCb.SelectedItem.ToString());
             }
@@ -168,15 +174,11 @@ namespace HockeyDb.Views
             TeamNationCb.Text = team.Country;
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            m_dbService.UpdateComment((Team)TeamCb.SelectedItem, int.Parse(TeamSeasonCb.SelectedItem.ToString()),
-                CommentCb.Text);
+            var result = m_dbService.UpdateComment((Team)TeamCb.SelectedItem, int.Parse(TeamSeasonCb.SelectedItem.ToString()),
+                CommentCb.Text, cbOk.IsChecked == true);
+            RaiseStatusChange($"{((Team)TeamCb.SelectedItem).TeamName} - Status update", result);
         }
 
         private void cbNation_SelectionChanged(object sender, SelectionChangedEventArgs e)

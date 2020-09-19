@@ -10,5 +10,6 @@ namespace DbServices.Models
         public Team Team { get; set; }
         public League League { get; set; }
         public string Comment { get; set; }
+        public bool Done { get; set; }
     }
 }

@@ -60,9 +60,10 @@
                     </DataGrid>
                     <TextBlock x:Name="lineupTextBlock" HorizontalAlignment="Right" Margin="0,13,45,0" Text="Projected lineup:" TextWrapping="Wrap" VerticalAlignment="Top"/>
                     <Label x:Name="FgnLbl" Content="Foreign player count:" HorizontalAlignment="Left" Margin="467,13,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="CommentCb" HorizontalAlignment="Right" Margin="0,0,39,0" Text="Enter text here..." TextWrapping="Wrap" VerticalAlignment="Bottom" Width="256" Height="54"/>
-                    <Button x:Name="BtnSave" Content="Save" HorizontalAlignment="Right" Margin="0,0,5,3" VerticalAlignment="Bottom" Click="BtnSave_Click"/>
+                    <TextBox x:Name="CommentCb" HorizontalAlignment="Right" Margin="0,0,52,0" Text="Enter text here..." TextWrapping="Wrap" VerticalAlignment="Bottom" Width="243" Height="54"/>
+                    <Button x:Name="BtnSave" Content="Save" HorizontalAlignment="Right" Margin="0,0,5,3" VerticalAlignment="Bottom" Click="BtnSave_Click" Width="42"/>
                     <ComboBox x:Name="cbNation" HorizontalAlignment="Left" Margin="108,2,0,0" VerticalAlignment="Top" Width="71" SelectionChanged="cbNation_SelectionChanged"/>
+                    <CheckBox x:Name="cbOk" Content="OK" HorizontalAlignment="Right" Margin="0,0,4,30" VerticalAlignment="Bottom" RenderTransformOrigin="0.504,0.709" Width="44"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="EditTab" Header="Advanced">

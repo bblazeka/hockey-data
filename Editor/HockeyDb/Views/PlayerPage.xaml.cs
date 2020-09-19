@@ -46,6 +46,12 @@ namespace HockeyDb.Views
             NatCb_Copy.ItemsSource = nations;
             Nat2Cb.ItemsSource = nations;
             NatFilterCb.ItemsSource = nations;
+
+            FullNameTb.Text = "";
+            PositionTb.Text = "";
+            BirthplaceTb.Text = "";
+            BirthdateDP.SelectedDate = null;
+            CbRetired.IsChecked = false;
         }
 
         private void PlayerCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
