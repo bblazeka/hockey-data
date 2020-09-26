@@ -52,6 +52,9 @@ namespace HockeyDb.Views
             BirthplaceTb.Text = "";
             BirthdateDP.SelectedDate = null;
             CbRetired.IsChecked = false;
+            NatCb.SelectedItem = null;
+            Nat2Cb.SelectedItem = null;
+            NatFilterCb.SelectedItem = null;
         }
 
         private void PlayerCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -117,6 +120,8 @@ namespace HockeyDb.Views
             IdTb.Text = "";
             NameTb.Text = "";
             PosTb.Text = "";
+            AdvDatePicker.SelectedDate = null;
+            BirthplaceAdvancedTb.Text = "";
         }
 
         private void Insert_Click(object sender, RoutedEventArgs e)
@@ -187,6 +192,12 @@ namespace HockeyDb.Views
             Nr.Visibility = visibility;
             StartDate.Visibility = visibility;
             EndDate.Visibility = visibility;
+        }
+
+        private void BtnResetNationality_Click(object sender, RoutedEventArgs e)
+        {
+            NatCb.SelectedItem = null;
+            Nat2Cb.SelectedItem = null;
         }
     }
 }

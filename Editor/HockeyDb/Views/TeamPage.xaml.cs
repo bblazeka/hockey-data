@@ -128,6 +128,7 @@ namespace HockeyDb.Views
                 if (teamSeason != null)
                 {
                     CommentCb.Text = teamSeason.Comment;
+                    cbOk.IsChecked = teamSeason.Done == true;
                 }
             }
             GenerateRoster(TeamSeasonCb.SelectedItem.ToString());

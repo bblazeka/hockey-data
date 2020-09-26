@@ -45,20 +45,8 @@
                             <DataGridTextColumn Header="PIM" Binding="{Binding PIM}" x:Name="PimCol"/>
                             <DataGridTextColumn Header="GAA" Binding="{Binding GoalsAgainstAvg, StringFormat=N2}" x:Name="GAACol"/>
                             <DataGridTextColumn Header="SVS%" Binding="{Binding SavesPercent, StringFormat=N1}" x:Name="SvsCol"/>
-                            <DataGridTemplateColumn Header="Start" x:Name="StartDate" Visibility="Collapsed">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding StartDate, StringFormat=\{0:dd.MM.yyyy.\}}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="End" x:Name="EndDate" Visibility="Collapsed">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <DatePicker SelectedDate="{Binding EndDate, StringFormat=\{0:dd.MM.yyyy.\}}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Start" x:Name="StartDate" Binding="{Binding StartDate, StringFormat=d, ConverterCulture=de-DE}" Visibility="Collapsed"/>
+                            <DataGridTextColumn Header="End" x:Name="EndDate" Binding="{Binding EndDate, StringFormat=d, ConverterCulture=de-DE}" Visibility="Collapsed"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="UpdateBtn" Content="Update" HorizontalAlignment="Left" Margin="393,17,0,0" VerticalAlignment="Top" Click="UpdateBtn_Click" Grid.Column="2" Height="20" Width="43"/>
@@ -80,6 +68,7 @@
                     <CheckBox x:Name="CbRetired" Content="Retired" Grid.Column="2" HorizontalAlignment="Left" Margin="172,61,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="CommentTb" Grid.Column="1" HorizontalAlignment="Left" Margin="67,217,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="226" Grid.ColumnSpan="2" Height="91"/>
                     <CheckBox x:Name="cbInfoColumns" Content="Show Info Columns" Grid.Column="2" HorizontalAlignment="Left" Margin="571,20,0,0" VerticalAlignment="Top" Click="cbInfoColumns_Click"/>
+                    <Button x:Name="BtnClearNationality" Content="Clear" Grid.Column="2" HorizontalAlignment="Left" Margin="124,172,0,0" VerticalAlignment="Top" Click="BtnResetNationality_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Advanced" Margin="1,0,-1,0" Height="20" VerticalAlignment="Top">
