@@ -90,6 +90,7 @@
                             <DataGridTextColumn Header="" Binding="{Binding Nation2}"/>
                             <DataGridTextColumn Header="Birthplace" Binding="{Binding BirthPlace}"/>
                             <DataGridTextColumn Header="Birthdate" Binding="{Binding Birthdate, StringFormat=\{0:dd.MM.yyyy.\}}"/>
+                            <DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="UpdatePlayersBtn" Content="Update Edited Players" HorizontalAlignment="Left" Margin="428,319,0,0" VerticalAlignment="Bottom" Click="UpdatePlayersBtn_Click"/>

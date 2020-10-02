@@ -55,7 +55,7 @@ namespace DbServices.Services
             {
                 return new List<PlayerSeason>();
             }
-            var sql = @"SELECT a.PlayerId, a.FullName, a.Position, a.Active, a.Comment, b.SeasonId, b.SequNo, b.StartDate, b.EndDate, b.Nr, b.Games GP, b.Goals, b.Assists, b.Goals + b.Assists Points, b.PIM, b.PlusMinus, b.GoalsAgainstAvg, b.SavesPercent, c.TeamId, c.TeamName, c.TeamLogo, f.Flag, e.LeagueId, ISNULL(g.LeagueName, e.LeagueShort) LeagueShort
+            var sql = @"SELECT a.PlayerId, a.FullName, a.Position, a.Active, a.Comment, b.SeasonId, b.SequNo, b.StartDate, b.EndDate, b.Nr, b.Games GP, b.Goals, b.Assists, b.Goals + b.Assists Points, b.PIM, b.PlusMinus, b.GoalsAgainstAvg, b.SavesPercent, c.TeamId, ISNULL(d.TeamName, c.TeamName) TeamName, c.TeamLogo, f.Flag, e.LeagueId, ISNULL(g.LeagueName, e.LeagueShort) LeagueShort
                         FROM fan.Players a
                         INNER JOIN fan.PlayersTeams b on a.PlayerId = b.PlayerId
                         INNER JOIN fan.Teams c ON c.TeamId = b.TeamId

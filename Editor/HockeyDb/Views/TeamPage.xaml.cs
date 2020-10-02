@@ -145,6 +145,12 @@ namespace HockeyDb.Views
 
         }
 
+        private void UpdateTeamBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var res = m_dbService.UpdateTeam(TeamIdTb.Text, TeamNameTb.Text, TeamNationCb.Text);
+            RaiseStatusChange(string.Format("UPDATE {0}", TeamNameTb.Text), res);
+        }
+
         private static BitmapImage LoadImage(byte[] imageData)
         {
             if (imageData == null || imageData.Length == 0) return null;
@@ -189,6 +195,12 @@ namespace HockeyDb.Views
                 string selectedNation = (cbNation.SelectedItem as Nation).NationId;
                 TeamCb.ItemsSource = m_dbService.GetTeams().Where(p => p.Country.Equals(selectedNation)).ToList();
             }
+        }
+
+        private void btnUpdateTeamLeague_Click(object sender, RoutedEventArgs e)
+        {
+            var res = m_dbService.UpdateTeamLeague(Convert.ToInt32(TeamIdTb.Text), TeamNameTb.Text, LeagueCb.SelectedItem as League, Convert.ToInt32(SeasonCb.Text));
+            RaiseStatusChange(string.Format("UPDATE team league {0} {1} {2}", TeamNameTb.Text, LeagueCb.Text, SeasonCb.Text), res);
         }
     }
 }

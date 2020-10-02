@@ -75,12 +75,14 @@
                     <ComboBox x:Name="SeasonCb" ItemsSource="{Binding Source={StaticResource Seasons}}" HorizontalAlignment="Left" Margin="249,102,0,0" VerticalAlignment="Top" SelectedIndex="0" Width="158"/>
                     <Button x:Name="UpdateLeagueBtn" Content="Insert League" HorizontalAlignment="Left" Margin="297,169,0,0" VerticalAlignment="Top" Click="UpdateLeagueBtn_Click"/>
                     <Button x:Name="UpdateBtn" Content="Update Image" HorizontalAlignment="Left" Margin="484,113,0,0" VerticalAlignment="Top" Click="UpdateBtn_Click"/>
+                    <Button x:Name="UpdateTeamBtn" Content="Update Team" HorizontalAlignment="Left" Margin="182,183,0,0" VerticalAlignment="Top" Click="UpdateTeamBtn_Click"/>
                     <ComboBox x:Name="TeamsCb" HorizontalAlignment="Left" Margin="249,10,0,0" VerticalAlignment="Top" Width="158" SelectionChanged="TeamsCb_SelectionChanged"/>
                     <Label x:Name="TeamIdLbl" Content="Team Id" HorizontalAlignment="Left" Margin="5,45,0,0" VerticalAlignment="Top" RenderTransformOrigin="-4.83,0.772"/>
                     <Label x:Name="NameLbl" Content="Name" HorizontalAlignment="Left" Margin="5,89,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="NationLbl" Content="Nation" HorizontalAlignment="Left" Margin="5,136,0,0" VerticalAlignment="Top"/>
                     <ComboBox x:Name="TeamNationCb" HorizontalAlignment="Left" Margin="56,138,0,0" VerticalAlignment="Top" Width="120"/>
-                    <Button x:Name="DeleteLeagueBtn" Content="Delete League" HorizontalAlignment="Left" Margin="399,169,0,0" VerticalAlignment="Top" Click="DeleteLeagueBtn_Click"/>
+                    <Button x:Name="DeleteLeagueBtn" Content="Delete League" HorizontalAlignment="Left" Margin="473,169,0,0" VerticalAlignment="Top" Click="DeleteLeagueBtn_Click"/>
+                    <Button x:Name="btnUpdateTeamLeague" Content="Update League" HorizontalAlignment="Left" Margin="386,169,0,0" VerticalAlignment="Top" Click="btnUpdateTeamLeague_Click"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="DiagnosticsTab" Header="Diagnostics">

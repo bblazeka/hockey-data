@@ -13,7 +13,7 @@ namespace DbServices.Services
         public List<TeamSeason> GetLeagueTeams(object leagueObj, string season)
         {
             var league = (leagueObj as League);
-            var sql = @"SELECT a.LeagueId, a.LeagueShort, a.LeagueName, b.SeasonId, b.Division, b.Done, c.TeamId, c.TeamName, c.TeamLogo, c.Country, d.Flag
+            var sql = @"SELECT a.LeagueId, a.LeagueShort, a.LeagueName, b.SeasonId, b.Division, b.Done, c.TeamId, ISNULL(b.TeamName, c.TeamName) TeamName, c.TeamLogo, c.Country, d.Flag
                         FROM fan.Leagues a
                         INNER JOIN fan.TeamsSeason b on a.LeagueId = b.LeagueId
                         INNER JOIN fan.Teams c ON c.TeamId = b.TeamId

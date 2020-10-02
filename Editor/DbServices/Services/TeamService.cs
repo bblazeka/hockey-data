@@ -50,6 +50,24 @@ namespace DbServices.Services
             }
         }
 
+        public int UpdateTeam(string a, string b, string c)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+                {
+                    var affectedRows = connection.Execute("Update fan.Teams Set TeamName = @Name, Country = @Nation " +
+                                "where TeamId = @Id", new { Id = a, Name = b, Nation = c });
+                    return affectedRows;
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.ToString());
+                return -1;
+            }
+        }
+
         public int UpdateLeague(int teamId, string teamName, object league, int season)
         {
             try
@@ -64,11 +82,33 @@ namespace DbServices.Services
                         teamId = teams.Find(el => el.TeamName == teamName).TeamId;
                     }
 
-                    var affectedRows = connection.Execute("Insert into fan.TeamsSeason (TeamId, LeagueId, SeasonId) " +
-            "values (@TeamId, @LeagueId, @SeasonId)", new { TeamId = teamId, ((League)league).LeagueId, SeasonId = season });
+                    var affectedRows = connection.Execute("Insert into fan.TeamsSeason (TeamId, TeamName, LeagueId, SeasonId) " +
+            "values (@TeamId, @TeamName, @LeagueId, @SeasonId)", new { TeamId = teamId, TeamName = teamName, ((League)league).LeagueId, SeasonId = season });
                     return affectedRows;
                 }
                 
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.ToString());
+                return -1;
+            }
+        }
+        public int UpdateTeamLeague(int teamId, string teamName, object league, int season)
+        {
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(m_builder.ConnectionString))
+                {
+             
+
+                    var affectedRows = connection.Execute("update fan.TeamsSeason set TeamName = @TeamName" +
+                        " where TeamId = @TeamId and @LeagueId = LeagueId and SeasonId = @SeasonId ", 
+                        new { TeamId = teamId, TeamName = teamName, ((League)league).LeagueId, SeasonId = season });
+                    return affectedRows;
+                }
+
             }
             catch (SqlException e)
             {
@@ -185,7 +225,8 @@ namespace DbServices.Services
             }
             catch (InvalidOperationException)
             {
-                d = players.First();
+                // when picking replacement for a defender, pick one with least points and most games
+                d = players.Last();
             }
             players.Remove(d);
 
