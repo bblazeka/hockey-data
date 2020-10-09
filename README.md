@@ -8,8 +8,6 @@ Currently consists of four segments:
 - Server project (C# .NET Core)
 - Web (Javascript React Redux)
 - SQL Database on Azure - used to reduce number of API calls (having metadata, relations not available in API, etc.)
-Optional part:
-- Predictor/NL Processing (Python/Django) - https://github.com/bblazeka/hockey-analysis
 
 ## Links
 Fetching data from publicly available NHL API with help of documentation: https://gitlab.com/dword4/nhlapi/blob/master/stats-api.md
