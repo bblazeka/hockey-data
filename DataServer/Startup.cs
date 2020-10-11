@@ -33,7 +33,7 @@ namespace DataServer
                     options.AddPolicy(MyAllowSpecificOrigins,
                     builder =>
                     {
-                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(origin => true);
                     });
                 });
 

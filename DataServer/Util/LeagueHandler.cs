@@ -138,12 +138,12 @@ namespace DataServer.Util
                     teams.Add(new Team(Int32.Parse(teamRecord["team"]["id"].ToString()), teamRecord["team"]["name"].ToString()));
                 }
             }
-            return teams.OrderBy(team => team.Name).ToList();
+            return teams.OrderBy(team => team.FullName).ToList();
         }
 
         public string GetTeamNameById(int id)
         {
-            return Teams.Find(x => x.Id == id).Name;
+            return Teams.Find(x => x.Id == id).FullName;
         }
     }
 }

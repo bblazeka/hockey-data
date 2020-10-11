@@ -11,7 +11,7 @@ namespace DataServer.Models
 {
     public class Player : IEntity
     {
-        public int Id { get; set; }
+        public int PlayerId { get; set; }
         public bool Active { get; set; }
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
@@ -42,20 +42,20 @@ namespace DataServer.Models
             {
                 string answer = ApiMediator.SendRequest(RequestBuilder(id));
                 ParseJsonAnswer(answer);
-                Id = id;
+                PlayerId = id;
             }
         }
 
         public Player(int id, string name, Team team)
         {
-            Id = id;
+            PlayerId = id;
             Name = name;
             Team = team;
         }
 
         public Player(int id, string name, string position)
         {
-            Id = id;
+            PlayerId = id;
             Name = name;
             Position = position;
         }
@@ -67,7 +67,7 @@ namespace DataServer.Models
 
         public void ApiLoad()
         {
-            ParseJsonAnswer(ApiMediator.SendRequest(RequestBuilder(Id)));
+            ParseJsonAnswer(ApiMediator.SendRequest(RequestBuilder(PlayerId)));
         }
 
         public void ApiLoad(JToken jsonObject)

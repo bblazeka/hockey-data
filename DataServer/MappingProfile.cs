@@ -25,11 +25,11 @@ namespace DataServer
                 .ForMember(dto => dto.AwayGoals, opt => opt.MapFrom(src => src.AwayGoals))
                 .ForMember(dto => dto.StartDate, opt => opt.MapFrom(src => src.DatePlayed));
             CreateMap<Team, TeamViewModel>()
-                .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.FullName))
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dto => dto.Logo, opt => opt.MapFrom(src => src.Logo));
             CreateMap<TeamViewModel, Team>()
-                .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dto => dto.FullName, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dto => dto.Logo, opt => opt.MapFrom(src => src.Logo));
             CreateMap<Player, PlayerViewModel>()
@@ -46,7 +46,7 @@ namespace DataServer
                 .ForMember(dto => dto.RosteredStatus, opt => opt.MapFrom(src => src.Rostered))
                 .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position));
             CreateMap<Skater, SkaterViewModel>()
-                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.PlayerId))
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position))
                 .ForMember(dto => dto.Goals, opt => opt.MapFrom(src => src.Goals))
@@ -69,7 +69,7 @@ namespace DataServer
                 .ForMember(dto => dto.ShortHandedTimeOnIce, opt => opt.MapFrom(src => src.ShortHandedTimeOnIce));
             CreateMap<SkaterViewModel, Skater>();
             CreateMap<Goalie, GoalieViewModel>()
-                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.PlayerId))
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dto => dto.Position, opt => opt.MapFrom(src => src.Position))
                 .ForMember(dto => dto.Games, opt => opt.MapFrom(src => src.Games))
@@ -84,17 +84,17 @@ namespace DataServer
             CreateMap<GoalieViewModel, Goalie>();
             CreateMap<Player, Goalie>();
             CreateMap<Player, Goalie>()
-                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dto => dto.PlayerId, opt => opt.MapFrom(src => src.PlayerId))
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name));
             CreateMap<Player, Skater>();
             CreateMap<Player, Skater>()
-                .ForMember(dto => dto.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dto => dto.PlayerId, opt => opt.MapFrom(src => src.PlayerId))
                 .ForMember(dto => dto.Name, opt => opt.MapFrom(src => src.Name));
             CreateMap<Article, ArticleViewModel>()
                 .ForMember(dto => dto.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dto => dto.Headline, opt => opt.MapFrom(src => src.Headline));
             CreateMap<Team, DropdownViewModel>()
-                .ForMember(dto => dto.Value, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dto => dto.Value, opt => opt.MapFrom(src => src.FullName))
                 .ForMember(dto => dto.Key, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dto => dto.Src, opt => opt.MapFrom(src => src.Logo));
         }

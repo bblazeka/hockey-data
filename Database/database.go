@@ -89,10 +89,10 @@ func main() {
 	fmt.Printf("Connected!\n")
 
 	// option that also inserts new players
-	PopulateTeams()
+	//PopulateTeams()
 
 	// update player data and player teams
-	//UpdatePlayers()
+	UpdatePlayers()
 }
 
 func dateParse(date string) (time.Time, error) {

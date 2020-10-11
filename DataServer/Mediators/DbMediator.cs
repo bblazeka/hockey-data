@@ -33,11 +33,11 @@ namespace DataServer.Mediators
                     var position = p.Position;
                     if (position == "G")
                     {
-                        team.Players.Add(new Goalie(p.Id));
+                        team.Players.Add(new Goalie(p.PlayerId));
                     }
                     else
                     {
-                        team.Players.Add(new Skater(p.Id));
+                        team.Players.Add(new Skater(p.PlayerId));
                     }
                 }
             }
@@ -81,7 +81,7 @@ namespace DataServer.Mediators
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 var res = connection.Query<Team>(
-                    string.Format("select * from Teams where name like '%{0}%' and active = 1", name)).ToList();
+                    string.Format("select * from Teams where fullname like '%{0}%' and active = 1", name)).ToList();
                 return res;
             }
         }

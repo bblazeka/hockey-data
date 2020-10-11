@@ -260,7 +260,7 @@ func UpdatePlayer(player FullPerson) (int64, error) {
                         SET FullName = @Name,
                             BirthPlace = @BirthPlace,
                             DateOfBirth = @BirthDate,
-							Nationality = @Nationality,
+							Nation = @Nationality,
 							Position = @Position,
 							Weight = @Weight,
 							Height = @Height,

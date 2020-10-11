@@ -32,7 +32,7 @@ namespace DataServer.Models
                 Home = new Team
                 {
                     Id = int.Parse(homeTeam["team"]["id"].ToString()),
-                    Name = homeTeam["team"]["name"].ToString()
+                    FullName = homeTeam["team"]["name"].ToString()
                 };
 
                 var homePlayers = homeTeam["players"];
@@ -60,7 +60,7 @@ namespace DataServer.Models
                 Away = new Team
                 {
                     Id = int.Parse(awayTeam["team"]["id"].ToString()),
-                    Name = awayTeam["team"]["name"].ToString()
+                    FullName = awayTeam["team"]["name"].ToString()
                 };
 
                 var awayPlayers = awayTeam["players"];

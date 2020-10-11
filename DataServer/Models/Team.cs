@@ -11,7 +11,7 @@ namespace DataServer.Models
     public class Team : IEntity
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string FullName { get; set; }
         public int? FranchiseId { get; set; }
         public bool Active { get; set; }
         public string Logo { get; set; }
@@ -32,7 +32,7 @@ namespace DataServer.Models
         public Team(int id, string name)
         {
             Id = id;
-            Name = name;
+            FullName = name;
         }
 
         public Team(int id, string name, int franchiseId) : this(id, name)
@@ -44,7 +44,7 @@ namespace DataServer.Models
         {
             var jsonObject = JObject.Parse(answer);
             var team = jsonObject["teams"][0];
-            Name = team["name"].ToString();
+            FullName = team["name"].ToString();
             try
             {
                 FranchiseId = Int32.Parse(team["franchiseId"].ToString());
@@ -81,7 +81,7 @@ namespace DataServer.Models
 
         public override string ToString()
         {
-            return Name;
+            return FullName;
         }
 
     }
