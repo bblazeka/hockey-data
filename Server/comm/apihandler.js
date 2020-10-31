@@ -1,13 +1,27 @@
 const https = require('https')
 
-var options = {
-  hostname: 'statsapi.web.nhl.com',
-  port: 443,
-  path: '/api/v1/people/{0}',
-  method: 'GET'
+function espnApiRequest(path, callback) {
+  var options = {
+    hostname: 'site.api.espn.com',
+    //port: 443,
+    path: path,
+    method: 'GET'
+  }
+
+  const req = https.request(options, res => {
+    console.log(`statusCode: ${res.statusCode}`)
+
+    res.on('data', d => {
+      return callback(JSON.parse(d))
+    })
+  })
+
+  req.on('error', error => {
+    console.error(error)
+  })
+
+  req.end()
 }
-
-
 
 function nhlApiRequest(path, callback) {
   var options = {
@@ -33,5 +47,6 @@ function nhlApiRequest(path, callback) {
 }
 
 module.exports = {
-  nhlApiRequest
+  nhlApiRequest,
+  espnApiRequest
 }
