@@ -1,6 +1,6 @@
 const https = require('https')
 
-function espnApiRequest(path, callback) {
+function espnApiRequest(path) {
   var options = {
     hostname: 'site.api.espn.com',
     //port: 443,
@@ -12,7 +12,16 @@ function espnApiRequest(path, callback) {
     console.log(`statusCode: ${res.statusCode}`)
 
     res.on('data', d => {
-      return callback(JSON.parse(d))
+      return new Promise((resolve, reject) => {
+        try 
+        {
+          resolve(JSON.parse(d))
+        }
+        catch(ex)
+        {
+          reject(ex)
+        }
+      });
     })
   })
 
@@ -23,7 +32,7 @@ function espnApiRequest(path, callback) {
   req.end()
 }
 
-function nhlApiRequest(path, callback) {
+async function nhlApiRequest(path) {
   var options = {
     hostname: 'statsapi.web.nhl.com',
     //port: 443,
@@ -31,19 +40,26 @@ function nhlApiRequest(path, callback) {
     method: 'GET'
   }
 
-  const req = https.request(options, res => {
-    console.log(`statusCode: ${res.statusCode}`)
-
-    res.on('data', d => {
-      return callback(JSON.parse(d))
+  return new Promise((resolve, reject) => {
+    const req = https.request(options, res => {
+      console.log(`statusCode: ${res.statusCode}`)
+  
+      res.on('data', d => {
+        resolve(JSON.parse(d))
+      })
     })
-  })
 
-  req.on('error', error => {
-    console.error(error)
-  })
+    req.on('error', error => {
+      console.error(error)
+      reject(error)
+    })
+  
+    req.end()
+  });
 
-  req.end()
+  
+
+
 }
 
 module.exports = {

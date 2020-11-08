@@ -1,1 +1,0 @@
-go run database.go methods.go structs.go
