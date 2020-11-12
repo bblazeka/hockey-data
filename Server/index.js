@@ -1,7 +1,8 @@
 const db = require('./comm/dbhandler.js')
 const apicomm = require('./comm/apihandler');
 
-const express = require('express')
+const express = require('express');
+const dbhandler = require('./comm/dbhandler.js');
 const app = express()
 const port = 52700
 
@@ -10,21 +11,21 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/player/:id', (req, res) => {
-  apicomm.nhlApiRequest(`/api/v1/people/${req.params.id}`, function(result){
-    res.send(result)
-  })
+  apicomm.nhlApiRequest(`/api/v1/people/${req.params.id}`).then(response => {
+    res.send(response)
+  }).catch(err => console.log(err));
 })
 
 app.get('/api/team/:id', (req, res) => {
-  apicomm.nhlApiRequest(`/api/v1/teams/${req.params.id}`, function(result){
-    res.send(result)
-  })
+  apicomm.nhlApiRequest(`/api/v1/teams/${req.params.id}?expand=team.roster`).then(response => {
+    res.send(response.teams[0]);
+  }).catch(err => console.log(err));
 })
 
 app.get('/api/news', (req, res) => {
-  apicomm.espnApiRequest('/apis/site/v2/sports/hockey/nhl/news', function(result){
-    res.send(result)
-  })
+  apicomm.espnApiRequest('/apis/site/v2/sports/hockey/nhl/news').then(response => {
+    res.send(response.articles);
+  }).catch(err => console.log(err));
 })
 
 app.get('/api/scoreboard', (req, res) => {
@@ -42,10 +43,6 @@ app.get('/api/scoreboard', (req, res) => {
             return string.Format("https://statsapi.web.nhl.com/api/v1/game/{0}/boxscore", id);
             */
 // https://statsapi.web.nhl.com/api/v1/people/{0}/stats?stats=statsSingleSeason&season={1}
-/*
-            // http://site.api.espn.com/apis/site/v2/sports/hockey/nhl/teams/1
-            return string.Format("https://statsapi.web.nhl.com/api/v1/teams/{0}?expand=team.roster", id);
-*/
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

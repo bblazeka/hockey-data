@@ -1,56 +1,54 @@
-const db = require('../keys.json')
+const { MongoClient } = require("mongodb");
+const db = require('../db.json');
 
-const { Connection, Request } = require("tedious");
-
-// Create connection to database
-const config = {
-  authentication: {
-    options: {
-      userName: db.user,
-      password: db.password
-    },
-    type: "default"
-  },
-  server: db.datasource,
-  options: {
-    database: db.initialcatalog,
-    encrypt: true
-  }
-};
-
-const connection = new Connection(config);
-
-// Attempt to connect and execute queries if connection goes through
-connection.on("connect", err => {
+const client = new MongoClient(db.uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}, (err, client) => {
   if (err) {
-    console.error(err.message);
-  } else {
-    //queryDatabase(x, callback);
+    console.error(err)
+    return
   }
 });
 
-function queryDatabase(query, callback) {
-    console.log(query)
-  // Read all rows from table
-  const request = new Request(
-    "SELECT * from dbo.Teams",
-    (err, rowCount) => {
-      if (err) {
-        console.error(err.message);
-      } else {
-        console.log(`${rowCount} row(s) returned`);
-      }
-    }
-  );
+async function getTeam(teamId) {
+  try {
 
-  request.on("row", columns => {
-      console.log(columns)
-    return callback(columns);
+    await client.connect();
+
+    const database = client.db("hockey-data");
+    const collection = database.collection("teams");
+    const query = { id: teamId };
+    const options = {
+      projection: { _id: 0, id: 1, name: 1, abbreviation: 0 },
+    };
+    collection.findOne(query, options).then(team => {
+      console.log(team)
+    });
+
+    /*return new Promise((resolve, reject) => {
+      resolve(team);
+    });*/
+  } finally {
+    await client.close();
+  }
+}
+
+async function getPlayers() {
+  const client = await MongoClient.connect(db.uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   });
-
-  connection.execSql(request);
+  // specify the DB's name
+  const database = client.db('hockey-data');
+  // execute find query
+  const items = await database.collection('players').find({}).toArray();
+  // close connection
+  client.close();
+  return items
 }
 
 module.exports = {
-    queryDatabase
+  getTeam,
+  getPlayers
 }
