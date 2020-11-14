@@ -11,15 +11,39 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/player/:id', (req, res) => {
-  apicomm.nhlApiRequest(`/api/v1/people/${req.params.id}`).then(response => {
-    res.send(response)
-  }).catch(err => console.log(err));
+  dbhandler.getPlayer(req.params.id).then(player => {
+    apicomm.nhlApiRequest(`/api/v1/people/${req.params.id}/stats?stats=yearByYear`)
+    .then(result => {
+      res.send({
+        ...player,
+        stats: result.stats[0].splits
+      })
+    })
+    .catch(err => console.log(err));
+  })
+})
+
+app.get('/api/player/:id/season', (req, res) => {
+  dbhandler.getPlayer(req.params.id).then(player => {
+    apicomm.nhlApiRequest(`/api/v1/people/${req.params.id}/stats?stats=statsSingleSeason&season=${req.query.id}`)
+    .then(result => {
+      res.send({
+        ...player,
+        stats: result.stats[0].splits
+      })
+    })
+    .catch(err => console.log(err));
+  })
 })
 
 app.get('/api/team/:id', (req, res) => {
-  apicomm.nhlApiRequest(`/api/v1/teams/${req.params.id}?expand=team.roster`).then(response => {
-    res.send(response.teams[0]);
+  dbhandler.getTeam(parseInt(req.params.id)).then(response => {
+    res.send(response);
   }).catch(err => console.log(err));
+})
+
+app.get('/api/team/:id/schedule', (req, res) => {
+  apicomm.nhlApiRequest(`/api/v1/schedule?teamId=${req.params.id}&startDate=${req.query.start}&endDate=${req.query.end}`).then(result => res.send(result))
 })
 
 app.get('/api/news', (req, res) => {
@@ -34,16 +58,21 @@ app.get('/api/scoreboard', (req, res) => {
   })
 })
 
-// GET api/game/{date}?homeId={homeId}&awayId={awayId}
-// https://statsapi.web.nhl.com/api/v1/standings?season={startyear}{endyear}
-// https://statsapi.web.nhl.com/api/v1/schedule?expand=schedule.linescore&startDate={0}&endDate={1}
-// https://statsapi.web.nhl.com/api/v1/schedule?expand=schedule.linescore&teamId={0}&startDate={1}&endDate={2}
-/*
-            // https://statsapi.web.nhl.com/api/v1/game/2019020056/boxscore
-            return string.Format("https://statsapi.web.nhl.com/api/v1/game/{0}/boxscore", id);
-            */
-// https://statsapi.web.nhl.com/api/v1/people/{0}/stats?stats=statsSingleSeason&season={1}
+app.get('/api/standings/:season', (req, res) => {
+  apicomm.nhlApiRequest(`/api/v1/standings?season=${req.params.season.substring(0,4)}${req.params.season.substring(4,8)}`).then(result => res.send(result))
+})
 
-app.listen(port, () => {
+app.get('/api/schedule/:start', (req, res) => {
+  apicomm.nhlApiRequest(`/api/v1/schedule?startDate=${req.params.start}&endDate=${req.query.end}`).then(result => res.send(result))
+})
+
+// TEST:2019020056
+app.get('/api/game/:id', (req, res) => {
+  apicomm.nhlApiRequest(`/api/v1/game/${req.params.id}/boxscore`).then(result => res.send(result))
+})
+
+
+app.listen(port, async () => {
+  await dbhandler.init();
   console.log(`Example app listening at http://localhost:${port}`)
 })

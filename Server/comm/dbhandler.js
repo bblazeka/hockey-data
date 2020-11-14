@@ -1,7 +1,7 @@
 const { MongoClient } = require("mongodb");
 const db = require('../db.json');
 
-const client = new MongoClient(db.uri, {
+var client = new MongoClient(db.uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }, (err, client) => {
@@ -11,44 +11,58 @@ const client = new MongoClient(db.uri, {
   }
 });
 
-async function getTeam(teamId) {
-  try {
-
-    await client.connect();
-
-    const database = client.db("hockey-data");
-    const collection = database.collection("teams");
-    const query = { id: teamId };
-    const options = {
-      projection: { _id: 0, id: 1, name: 1, abbreviation: 0 },
-    };
-    collection.findOne(query, options).then(team => {
-      console.log(team)
-    });
-
-    /*return new Promise((resolve, reject) => {
-      resolve(team);
-    });*/
-  } finally {
-    await client.close();
-  }
-}
-
-async function getPlayers() {
-  const client = await MongoClient.connect(db.uri, {
+async function init() {
+  client = await MongoClient.connect(db.uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  // specify the DB's name
+}
+
+async function getTeam(teamId) {
+  const database = client.db("hockey-data");
+  const collection = database.collection("teams");
+  const query = { id: teamId };
+  const options = {
+    sort: { id: -1 },
+    projection: { _id: 0, id: 1, name: 1, abbreviation: 1 },
+  };
+  const team = await collection.findOne(query, options);
+
+  team.rosterResponse = await getPlayersFromTeam(teamId);
+
+  return team
+}
+
+async function getPlayer(playerId) {
+  const database = client.db("hockey-data");
+  const collection = database.collection("players");
+  const query = { id: parseInt(playerId) };
+  const options = {
+    sort: { id: -1 },
+    projection: { _id: 0, id: 1, fullName: 1, jerseyNumber: 1, birthCity: 1, birthDate: 1, nationality: 1 },
+  };
+  const player = await collection.findOne(query, options);
+
+  return player
+}
+
+async function getPlayersFromTeam(teamId) {
   const database = client.db('hockey-data');
-  // execute find query
+  const items = await database.collection('players').find({ "currentTeam.id": parseInt(teamId) }).toArray();
+
+  return items
+}
+
+async function getPlayers() {
+  const database = client.db('hockey-data');
   const items = await database.collection('players').find({}).toArray();
-  // close connection
-  client.close();
+
   return items
 }
 
 module.exports = {
+  init,
   getTeam,
+  getPlayer,
   getPlayers
 }
