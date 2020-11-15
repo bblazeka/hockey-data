@@ -92,7 +92,7 @@ export const getStandings = () => (dispatch, getState) => {
     type: 'GET_STANDINGS',
   });
 
-  common.customFetch(`${common.apiServiceEndpoint}/api/league/standings`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/standings/20192020`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({
@@ -230,7 +230,7 @@ export const getHome = () => (dispatch, getState) => {
   dispatch({
     type: 'GET_HOME_NEWS',
   });
-  common.customFetch(`${common.apiServiceEndpoint}/api/league/news`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/news`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({

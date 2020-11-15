@@ -73,11 +73,6 @@ export default (state = defaultAppState, action) => {
                     }
                 }),
             }
-        case 'PREDICTION_LOADED':
-            return {
-                ...state,
-                prediction: action.payload
-            }
         case 'NEWS_LOADED':
             return {
                 ...state,

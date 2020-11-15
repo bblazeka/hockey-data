@@ -1,38 +1,54 @@
 const db = require('./comm/dbhandler.js')
 const apicomm = require('./comm/apihandler');
+const dbhandler = require('./comm/dbhandler.js');
 
 const express = require('express');
-const dbhandler = require('./comm/dbhandler.js');
+const cors = require('cors')
 const app = express()
 const port = 52700
 
+let whitelist = ['http://localhost:3000', 'http://abc.com']
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin 
+    if (!origin) return callback(null, true);
+    if (whitelist.indexOf(origin) === -1) {
+      var message = 'The CORS policy for this origin doesn\'t ' +
+        'allow access from the particular origin.';
+      return callback(new Error(message), false);
+    }
+    return callback(null, true);
+  }
+}));
+
 app.get('/', (req, res) => {
-    res.send("Root")
+  res.send("Root")
 })
 
 app.get('/api/player/:id', (req, res) => {
   dbhandler.getPlayer(req.params.id).then(player => {
     apicomm.nhlApiRequest(`/api/v1/people/${req.params.id}/stats?stats=yearByYear`)
-    .then(result => {
-      res.send({
-        ...player,
-        stats: result.stats[0].splits
+      .then(result => {
+        res.send({
+          ...player,
+          stats: result.stats[0].splits
+        })
       })
-    })
-    .catch(err => console.log(err));
+      .catch(err => console.log(err));
   })
 })
 
 app.get('/api/player/:id/season', (req, res) => {
   dbhandler.getPlayer(req.params.id).then(player => {
     apicomm.nhlApiRequest(`/api/v1/people/${req.params.id}/stats?stats=statsSingleSeason&season=${req.query.id}`)
-    .then(result => {
-      res.send({
-        ...player,
-        stats: result.stats[0].splits
+      .then(result => {
+        res.send({
+          ...player,
+          stats: result.stats[0].splits
+        })
       })
-    })
-    .catch(err => console.log(err));
+      .catch(err => console.log(err));
   })
 })
 
@@ -53,13 +69,13 @@ app.get('/api/news', (req, res) => {
 })
 
 app.get('/api/scoreboard', (req, res) => {
-  apicomm.espnApiRequest('/apis/site/v2/sports/hockey/nhl/scoreboard', function(result){
+  apicomm.espnApiRequest('/apis/site/v2/sports/hockey/nhl/scoreboard', function (result) {
     res.send(result)
   })
 })
 
 app.get('/api/standings/:season', (req, res) => {
-  apicomm.nhlApiRequest(`/api/v1/standings?season=${req.params.season.substring(0,4)}${req.params.season.substring(4,8)}`).then(result => res.send(result))
+  apicomm.nhlApiRequest(`/api/v1/standings?season=${req.params.season}`).then(result => res.send(result.records))
 })
 
 app.get('/api/schedule/:start', (req, res) => {

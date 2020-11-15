@@ -25,26 +25,14 @@ class Home extends Component {
                         <Feed>
                         {homeNews.map((article)=>{
                             return (<Feed.Event>
-                                <Feed.Label>
-                                    <Image avatar src={article.Team.Logo} />
-                                </Feed.Label>
                                 <Feed.Content>
                                     <Feed.Summary>
-                                        <Feed.User>{article.Headline}</Feed.User>
-                                        <Feed.Date>{article.Source}</Feed.Date>
+                                        <Feed.User>{article.headline}</Feed.User>
+                                        <Feed.Date>ESPN</Feed.Date>
                                     </Feed.Summary>
                                     <Feed.Extra>
-                                        {article.Description}
+                                        {article.description}
                                     </Feed.Extra>
-                                    <Feed.Meta>
-                                        {article.Players.map((name)=>{
-                                            return (
-                                                <Label>
-                                                    {name.text}
-                                                </Label>
-                                            )
-                                        })}
-                                    </Feed.Meta>
                                 </Feed.Content>
                             </Feed.Event>);
                         })}

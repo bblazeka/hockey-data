@@ -3,11 +3,10 @@
 Applying various technologies in various aspects of NHL game and stats analysis. Client enables the user to have an overview of NHL stats, schedule and team data.
 
 ## Architecture
-Currently consists of four segments: 
-- Database project (Golang code for database maintenance, updates, etc.)
-- Server project (C# .NET Core)
-- Web (Javascript React Redux)
-- SQL Database on Azure - used to reduce number of API calls (having metadata, relations not available in API, etc.)
+Currently consists of three segments: 
+- MongoDB database
+- Server (Express.js)
+- Web interface (Javascript React Redux)
 
 ## Links
 Fetching data from publicly available NHL API with help of documentation: https://gitlab.com/dword4/nhlapi/blob/master/stats-api.md
