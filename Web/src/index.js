@@ -7,7 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from './reducers/rootReducer';
+import rootReducer from './services/rootReducer';
 import * as serviceWorker from './serviceWorker';
 import {
     Schedule,
@@ -20,7 +20,7 @@ import {
     Prediction,
     Lineup,
     Game,
-} from './components';
+} from './views';
 import routes from './routes';
 import 'semantic-ui-css/semantic.min.css';
 

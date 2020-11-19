@@ -5,9 +5,9 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-import * as appActions from '../../actions/appActions';
+import * as actions from '../../services/league';
 import './Schedule.css';
-import Loader from '../Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 import { covertDateTimeToString, getDatesArray } from '../../util/converter';
 
 import { Table, Button } from 'semantic-ui-react';
@@ -116,7 +116,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getSchedule: (start, end) => dispatch(appActions.getSchedule(start, end))
+    getSchedule: (start, end) => dispatch(actions.getSchedule(start, end))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Schedule);

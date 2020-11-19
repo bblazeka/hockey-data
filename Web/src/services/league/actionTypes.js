@@ -1,0 +1,8 @@
+export const GET_SCHEDULE = 'GET_SCHEDULE'
+export const SCHEDULE_LOADED = 'SCHEDULE_LOADED'
+export const GET_STANDINGS = 'GET_STANDINGS'
+export const STANDINGS_LOADED = 'STANDINGS_LOADED'
+export const GET_NEWS = 'GET_NEWS'
+export const NEWS_LOADED = 'NEWS_LOADED'
+export const GET_GAME = 'GET_GAME'
+export const GAME_LOADED = 'GAME_LOADED'

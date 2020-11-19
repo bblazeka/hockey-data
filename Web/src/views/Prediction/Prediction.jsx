@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import * as appActions from '../../actions/appActions';
+import * as actions from '../../services/league';
 import './Prediction.css';
 
-import Loader from '../Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 import { Image, List, Segment, Grid, Label, Header, Progress } from 'semantic-ui-react';
 
 class Prediction extends Component {
     constructor(props) {
         super(props)
-        this.props.getPrediction()
+        //this.props.getPrediction()
     }
 
 
@@ -73,7 +73,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getPrediction: () => dispatch(appActions.getPrediction())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Prediction);

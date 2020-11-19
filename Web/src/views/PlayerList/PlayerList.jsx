@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import * as appActions from '../../actions/appActions';
+import * as actions from '../../services/player';
 import './PlayerList.css';
 import routes from '../../routes';
 
@@ -78,9 +78,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    removePlayer: (id) => dispatch(appActions.removePlayer(id)),
-    searchBasicPlayer: (name) => dispatch(appActions.searchBasicPlayer(name)),
-    searchPlayer: (name) => dispatch(appActions.searchPlayer(name, false))
+    removePlayer: (id) => dispatch(actions.removePlayer(id)),
+    searchBasicPlayer: (name) => dispatch(actions.searchBasicPlayer(name)),
+    searchPlayer: (name) => dispatch(actions.searchPlayer(name, false))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerList);

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import * as appActions from '../../actions/appActions';
+import * as actions from '../../services/team';
 import './Team.css';
-import Loader from '../Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 import routes from '../../routes';
 
 import { Table, Header } from 'semantic-ui-react';
-import SkaterRow from '../Common/SkaterRow';
-import SkaterHeader from '../Common/SkaterHeader';
+import SkaterRow from '../../components/Common/SkaterRow';
+import SkaterHeader from '../../components/Common/SkaterHeader';
 
 class Team extends Component {
     constructor(props) {
@@ -91,7 +91,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getTeam: (id) => dispatch(appActions.getTeam(id))
+    getTeam: (id) => dispatch(actions.getTeam(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Team);

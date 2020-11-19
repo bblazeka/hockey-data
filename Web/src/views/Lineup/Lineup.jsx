@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import * as appActions from '../../actions/appActions';
+import * as teamActions from '../../services/team';
+import * as playerActions from '../../services/player';
 import './Lineup.css';
 
 import { Grid, Search } from 'semantic-ui-react';
-import LineupCard from './LineupCard';
+import LineupCard from '../../components/LineupCard/LineupCard';
 
 const initialState = { isLoading: false, results: [], value: '' }
 
@@ -80,9 +81,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    removePlayer: (id) => dispatch(appActions.removePlayer(id)),
-    searchBasicPlayer: (name) => dispatch(appActions.searchBasicPlayer(name)),
-    addToLineup: (player) => dispatch(appActions.addToLineup(player))
+    removePlayer: (id) => dispatch(playerActions.removePlayer(id)),
+    searchBasicPlayer: (name) => dispatch(playerActions.searchBasicPlayer(name)),
+    addToLineup: (player) => dispatch(playerActions.addToLineup(player))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lineup);

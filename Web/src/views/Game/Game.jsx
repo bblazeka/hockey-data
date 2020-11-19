@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import * as appActions from '../../actions/appActions';
+import * as actions from '../../services/league';
 
 import { Button, Dropdown, Header, Segment, Table } from 'semantic-ui-react';
 
@@ -146,7 +146,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getGame: (home,away) => dispatch(appActions.getGame(home,away))
+  getGame: (home,away) => dispatch(actions.getGame(home,away))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

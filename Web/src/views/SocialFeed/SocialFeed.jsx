@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Image, Feed, Label } from 'semantic-ui-react';
 
-import * as appActions from '../../actions/appActions';
+import * as actions from '../../services/league';
 import './SocialFeed.css';
-import Loader from '../Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 
 class SocialFeed extends Component {
 
@@ -65,7 +65,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getNews: () => dispatch(appActions.getNews())
+    getNews: () => dispatch(actions.getNews())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SocialFeed);

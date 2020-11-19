@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Flag, Header, List, Search, Segment, Table } from 'semantic-ui-react';
 
-import * as appActions from '../../actions/appActions';
+import * as actions from '../../services/player';
 import './Player.css';
-import Loader from '../Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 
 
-import SkaterRow from '../Common/SkaterRow';
-import SkaterHeader from '../Common/SkaterHeader';
+import SkaterRow from '../../components/Common/SkaterRow';
+import SkaterHeader from '../../components/Common/SkaterHeader';
 
 import routes from '../../routes';
 
@@ -112,9 +112,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getPlayer: (id) => dispatch(appActions.getPlayer(id)),
-    searchBasicPlayer: (name) => dispatch(appActions.searchBasicPlayer(name)),
-    searchPlayer: (name) => dispatch(appActions.searchPlayer(name, true))
+    getPlayer: (id) => dispatch(actions.getPlayer(id)),
+    searchBasicPlayer: (name) => dispatch(actions.searchBasicPlayer(name)),
+    searchPlayer: (name) => dispatch(actions.searchPlayer(name, true))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

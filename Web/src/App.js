@@ -3,7 +3,7 @@ import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.css';
 import routes from './routes';
-import * as appActions from './actions/appActions';
+import * as teamActions from './services/team/actions';
 
 class App extends Component {
 
@@ -57,12 +57,12 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  teams: state.app.teams
+  teams: state.team.teams
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getTeams: () => dispatch(appActions.getTeams()),
-  getDropdownTeams: () => dispatch(appActions.getDropdownTeams())
+  getTeams: () => dispatch(teamActions.getTeams()),
+  getDropdownTeams: () => dispatch(teamActions.getDropdownTeams())
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

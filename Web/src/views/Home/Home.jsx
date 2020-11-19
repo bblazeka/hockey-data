@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Image, Feed, Label } from 'semantic-ui-react';
 
-import * as appActions from '../../actions/appActions';
-import Loader from '../Loader/Loader';
+import * as actions from '../../services/league';
+import Loader from '../../components/Loader/Loader';
 
 import './Home.css';
 
@@ -42,12 +42,12 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-    homeNews: state.app.homeNews,
-    teams: state.app.teams,
+    homeNews: state.league.homeNews,
+    teams: state.team.teams,
 })
 
 const mapDispatchToProps = dispatch => ({
-    getHome: () => dispatch(appActions.getHome())
+    getHome: () => dispatch(actions.getHome())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
