@@ -1,5 +1,5 @@
-const db = require('./comm/dbhandler.js')
 const apicomm = require('./comm/apihandler');
+const twtcomm = require('./comm/twitterhandler');
 const dbhandler = require('./comm/dbhandler.js');
 
 const express = require('express');
@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
   res.send("Root")
 })
 
-app.get('/api/player/:id', (req, res) => {
+app.get('/api/players/:id', (req, res) => {
   dbhandler.getPlayer(req.params.id).then(player => {
     apicomm.nhlApiRequest(`/api/v1/people/${req.params.id}/stats?stats=yearByYear`)
       .then(result => {
@@ -39,7 +39,7 @@ app.get('/api/player/:id', (req, res) => {
   })
 })
 
-app.get('/api/player/:id/season', (req, res) => {
+app.get('/api/players/:id/season', (req, res) => {
   dbhandler.getPlayer(req.params.id).then(player => {
     apicomm.nhlApiRequest(`/api/v1/people/${req.params.id}/stats?stats=statsSingleSeason&season=${req.query.id}`)
       .then(result => {
@@ -52,13 +52,19 @@ app.get('/api/player/:id/season', (req, res) => {
   })
 })
 
-app.get('/api/team/:id', (req, res) => {
+app.get('/api/teams', (req, res) => {
+  dbhandler.getTeams().then(response => {
+    res.send(response);
+  }).catch(err => console.log(err));
+})
+
+app.get('/api/teams/:id', (req, res) => {
   dbhandler.getTeam(parseInt(req.params.id)).then(response => {
     res.send(response);
   }).catch(err => console.log(err));
 })
 
-app.get('/api/team/:id/schedule', (req, res) => {
+app.get('/api/teams/:id/schedule', (req, res) => {
   apicomm.nhlApiRequest(`/api/v1/schedule?teamId=${req.params.id}&startDate=${req.query.start}&endDate=${req.query.end}`).then(result => res.send(result))
 })
 
@@ -87,6 +93,15 @@ app.get('/api/game/:id', (req, res) => {
   apicomm.nhlApiRequest(`/api/v1/game/${req.params.id}/boxscore`).then(result => res.send(result))
 })
 
+app.get('/api/tweets/:name', (req, res) => {
+  twtcomm.getTweets(req.params.name).then(result => res.send(result))
+})
+
+app.get('/api/tweets/search/:query', (req, res) => {
+  twtcomm.searchTweets(req.params.query, 10).then(result => {
+    res.send(result)
+  } )
+})
 
 app.listen(port, async () => {
   await dbhandler.init();

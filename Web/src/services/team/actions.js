@@ -20,7 +20,7 @@ export const getTeams = () => (dispatch, getState) => {
   dispatch({
     type: 'GET_TEAMS',
   });
-  common.customFetch(`${common.apiServiceEndpoint}/api/data/teams`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/teams`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({
@@ -35,12 +35,12 @@ export const getDropdownTeams = () => (dispatch, getState) => {
     type: 'GET_DROPDOWN_TEAMS',
   });
 
-  common.customFetch(`${common.apiServiceEndpoint}/api/data/teams/dropdown`, getState, {
+  /*common.customFetch(`${common.apiServiceEndpoint}/api/teams/dropdown`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({
       type: 'DROPDOWN_TEAMS_LOADED',
       payload: data
     })
-  }));
+  }));*/
 }

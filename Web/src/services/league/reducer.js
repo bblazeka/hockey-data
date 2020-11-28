@@ -21,11 +21,6 @@ const leagueReducer = (state = defaultAppState, action) => {
         ...state,
         standings: action.payload
       }
-    case 'NEWS_LOADED':
-      return {
-        ...state,
-        news: action.payload
-      }
     case 'GAME_LOADED':
       return {
         ...state,
@@ -35,11 +30,6 @@ const leagueReducer = (state = defaultAppState, action) => {
       return {
         ...state,
         dropdownTeams: action.payload
-      }
-    case 'HOME_NEWS_LOADED':
-      return {
-        ...state,
-        homeNews: action.payload
       }
     default:
       return state

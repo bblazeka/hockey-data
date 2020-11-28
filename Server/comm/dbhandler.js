@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-const db = require('../db.json');
+const db = require('../keys/db.json');
 
 var client = new MongoClient(db.uri, {
   useNewUrlParser: true,
@@ -18,6 +18,13 @@ async function init() {
   });
 }
 
+async function getTeams()
+{
+  const database = client.db('hockey-data');
+  const items = await database.collection('teams').find({}).toArray();
+  return items;
+}
+
 async function getTeam(teamId) {
   const database = client.db("hockey-data");
   const collection = database.collection("teams");
@@ -28,9 +35,12 @@ async function getTeam(teamId) {
   };
   const team = await collection.findOne(query, options);
 
-  team.rosterResponse = await getPlayersFromTeam(teamId);
+  if (team != null)
+  {
+    team.rosterResponse = await getPlayersFromTeam(teamId);
+  }
 
-  return team
+  return team;
 }
 
 async function getPlayer(playerId) {
@@ -43,26 +53,27 @@ async function getPlayer(playerId) {
   };
   const player = await collection.findOne(query, options);
 
-  return player
+  return player;
 }
 
 async function getPlayersFromTeam(teamId) {
   const database = client.db('hockey-data');
   const items = await database.collection('players').find({ "currentTeam.id": parseInt(teamId) }).toArray();
 
-  return items
+  return items;
 }
 
 async function getPlayers() {
   const database = client.db('hockey-data');
   const items = await database.collection('players').find({}).toArray();
 
-  return items
+  return items;
 }
 
 module.exports = {
   init,
   getTeam,
+  getTeams,
   getPlayer,
   getPlayers
 }

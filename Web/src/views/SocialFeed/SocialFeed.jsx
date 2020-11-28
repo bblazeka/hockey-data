@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Image, Feed, Label } from 'semantic-ui-react';
 
-import * as actions from '../../services/league';
+import * as actions from '../../services/news';
 import './SocialFeed.css';
 import Loader from '../../components/Loader/Loader';
 

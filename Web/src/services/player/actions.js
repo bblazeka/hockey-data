@@ -21,7 +21,7 @@ export const searchBasicPlayer = (name) => (dispatch, getState) => {
     type: actionTypes.BASIC_SEARCH_PLAYER,
   });
 
-  common.customFetch(`${common.apiServiceEndpoint}/api/data/player/search/${name}`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/player/search/${name}`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({
