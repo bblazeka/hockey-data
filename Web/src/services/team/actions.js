@@ -3,10 +3,10 @@ import * as common from '../../util/common';
 
 export const getTeam = (id) => (dispatch, getState) => {
   dispatch({
-    type: 'GET_TEAMS',
+    type: 'GET_TEAM',
   });
 
-  common.customFetch(`${common.apiServiceEndpoint}/api/team/${id}`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/teams/${id}`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({

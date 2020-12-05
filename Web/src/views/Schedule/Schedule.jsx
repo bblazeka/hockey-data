@@ -112,7 +112,7 @@ class Schedule extends Component {
 }
 
 const mapStateToProps = state => ({
-    schedule: state.app.schedule,
+    schedule: state.league.schedule,
 })
 
 const mapDispatchToProps = dispatch => ({

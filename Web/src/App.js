@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './App.css';
 import routes from './routes';
 import * as teamActions from './services/team/actions';
+import { getLogo } from './util/assets';
 
 class App extends Component {
 
@@ -46,11 +47,14 @@ class App extends Component {
           </div>
           <div className="App-menu">
             {teams && teams.map(team => {
-              return (<NavLink className="App-link" to={routes.teams + "/" + team.Id} key={"link" + team.Id}><img className="small-logo" src={team.Logo} alt={"img" + team.Id}></img></NavLink>);
+              return (<NavLink className="App-link" to={routes.teams + "/" + team.id} key={"link" + team.id}><img className="small-logo" src={getLogo(team.id)} alt={"img" + team.id}></img></NavLink>);
             })}
           </div>
         </header>
         {this.props.children}
+        <footer>
+          <a href="https://www.puckmarks.net/nhllogos">Puckmarks</a>
+        </footer>
       </div>
     );
   }

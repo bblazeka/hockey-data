@@ -25,3 +25,6 @@ yarn-error.log*
 # semantic ui
 semantic/dist/
 semantic/tasks/
+
+# ignore assets
+assets/

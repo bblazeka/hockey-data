@@ -34,7 +34,6 @@ export const getGame = (home, away) => (dispatch, getState) => {
   dispatch({
     type: 'GET_GAME',
   });
-  console.log(home,away)
   common.customFetch(`${common.apiServiceEndpoint}/api/game/2019-10-16?homeId=${home}&awayId=${away}`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {

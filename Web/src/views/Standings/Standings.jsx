@@ -6,6 +6,7 @@ import * as actions from '../../services/league';
 import './Standings.css';
 import Loader from '../../components/Loader/Loader';
 import routes from '../../routes';
+import { getLogo } from '../../util/assets';
 
 import { Table } from 'semantic-ui-react';
 
@@ -47,7 +48,7 @@ class Standings extends Component {
                       <Table.Row>
                         <Table.Cell>{record.divisionRank}</Table.Cell>
                         <Table.Cell>
-                          <Link to={routes.teams + "/" + record.team.id}><img className="logo" src={record.logo} alt={"img" + record.team.Id}></img></Link>
+                          <Link to={routes.teams + "/" + record.team.id}><img className="logo" src={getLogo(record.team.id)} alt={"img" + record.team.Id}></img></Link>
                         </Table.Cell>
                         <Table.Cell>
                           <Link to={routes.teams + "/" + record.team.id}>{record.team.name}</Link>
@@ -71,7 +72,7 @@ class Standings extends Component {
 }
 
 const mapStateToProps = state => ({
-  standings: state.app.standings,
+  standings: state.league.standings,
 })
 
 const mapDispatchToProps = dispatch => ({

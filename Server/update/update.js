@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-const db = require('../db.json');
+const db = require('../keys/db.json');
 // Replace the uri string with your MongoDB deployment's connection string.
 const apicomm = require('../comm/apihandler');
 const functions = require('./updatefunctions');
@@ -29,6 +29,7 @@ async function run() {
       const updateDoc = {
         $set: {
           name: team.name,
+          active: team.active,
           abbreviation: team.abbreviation
         },
       };

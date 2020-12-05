@@ -1,7 +1,5 @@
 export const apiServiceEndpoint = 'http://localhost:52700';
 
-export const pyServiceEndpoint = 'http://localhost:5000';
-
 export const customFetch = (input, getState, init) => {
     if (isNullOrUndefined(input) || isNullOrUndefined(getState) || isNullOrUndefined(init)) {
         return;

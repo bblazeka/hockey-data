@@ -86,8 +86,8 @@ class Team extends Component {
 }
 
 const mapStateToProps = state => ({
-    team: state.app.team,
-    teams: state.app.teams,
+    team: state.team.team,
+    teams: state.team.teams,
 })
 
 const mapDispatchToProps = dispatch => ({

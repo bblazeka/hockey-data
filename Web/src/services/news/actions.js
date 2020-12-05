@@ -1,17 +1,17 @@
 import * as common from '../../util/common';
 
 
-export const getNews = () => (dispatch, getState) => {
+export const getTweets = () => (dispatch, getState) => {
   dispatch({
-    type: 'GET_NEWS',
+    type: 'GET_TWEETS',
   });
 
-  common.customFetch(`${common.pyServiceEndpoint}/news`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/tweets/search/nhl`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({
-      type: 'NEWS_LOADED',
-      payload: data
+      type: 'TWEETS_LOADED',
+      payload: data.statuses
     })
   }));
 }
