@@ -104,7 +104,7 @@ app.get('/api/tweets/:name', (req, res) => {
 })
 
 app.get('/api/tweets/search/:query', (req, res) => {
-  twtcomm.searchTweets(req.params.query, 10).then(result => {
+  twtcomm.searchTweets(req.params.query, 10, 'en', "popular").then(result => {
     res.send(result)
   } )
 })

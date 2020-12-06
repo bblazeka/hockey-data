@@ -8,7 +8,6 @@ import RosterElement from '../RosterElement/RosterElement';
 
 function RosterGrid(props) {
   const { team } = props;
-  console.log(team)
   return (
     <div>
       <div className="roster">

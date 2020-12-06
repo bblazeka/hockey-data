@@ -14,8 +14,8 @@ async function getTweets(accountScreenName) {
   return(res);
 }
 
-async function searchTweets(q, count) {
-  var params = { q, count };
+async function searchTweets(q, count, lang, result_type) {
+  var params = { q, count, lang, result_type };
   res = await client.get('search/tweets', params);
   return(res);
 }
