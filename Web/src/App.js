@@ -27,7 +27,7 @@ class App extends Component {
               Prediction
             </NavLink>
             <NavLink className="App-link" to={routes.socialFeed}>
-              Social Feed
+              Social
             </NavLink>
             <NavLink className="App-link" to={routes.game}>
               Game
@@ -53,7 +53,8 @@ class App extends Component {
         </header>
         {this.props.children}
         <footer>
-          <a href="https://www.puckmarks.net/nhllogos">Puckmarks</a>
+          Made using <a href="https://semantic-ui.com/">Semantic UI</a>
+          Logos: <a href="https://www.puckmarks.net/nhllogos">Puckmarks</a>
         </footer>
       </div>
     );

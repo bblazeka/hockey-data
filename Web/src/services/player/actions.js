@@ -6,7 +6,7 @@ export const getPlayer = (id) => (dispatch, getState) => {
     type: 'GET_PLAYER',
   });
 
-  common.customFetch(`${common.apiServiceEndpoint}/api/player/${id}`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/players/${id}`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({

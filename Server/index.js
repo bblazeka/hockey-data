@@ -60,7 +60,13 @@ app.get('/api/teams', (req, res) => {
 
 app.get('/api/teams/:id', (req, res) => {
   dbhandler.getTeam(parseInt(req.params.id)).then(response => {
-    res.send(response);
+    var players = response.rosterResponse;
+    res.send({
+      ...response,
+      goalies: players.filter(p => p.primaryPosition.type == "Goalie"),
+      defenders: players.filter(p => p.primaryPosition.type == "Defenseman"),
+      forwards: players.filter(p => p.primaryPosition.type == "Forward")
+    });
   }).catch(err => console.log(err));
 })
 

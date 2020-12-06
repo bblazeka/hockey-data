@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Flag, Header, List, Search, Segment, Table } from 'semantic-ui-react';
+import { Flag, Header, List, Search, Segment } from 'semantic-ui-react';
 
 import * as actions from '../../services/player';
 import './Player.css';
 import Loader from '../../components/Loader/Loader';
 
-
-import SkaterRow from '../../components/Common/SkaterRow';
-import SkaterHeader from '../../components/Common/SkaterHeader';
-
 import routes from '../../routes';
+import { StatsGrid } from '../../components';
 
 const initialState = { isLoading: false, results: [], value: '' }
 
@@ -66,49 +63,42 @@ class Player extends Component {
                     value={value}
                 />
                 <Segment textAlign='center'>
-                    <Header as="h2">{player.Name}
+                    <Header as="h2">{player.fullName}
                         <Header.Subheader>
-                            <Flag name={player.Nationality.substring(0,2).toLowerCase()} />
+                            <Flag name={player.nationality.substring(0,2).toLowerCase()} />
                         </Header.Subheader>
                     </Header>
                     <List horizontal>
                         <List.Item>
                             <List.Icon name='user' />
                             <List.Header>Position</List.Header>
-                            <List.Content>{player.Position}</List.Content>
+                            <List.Content>{player.primaryPosition.name}</List.Content>
                         </List.Item>
                         <List.Item>
                             <List.Icon name='users' />
                             <List.Header>Team</List.Header>
-                                <Link to={routes.teams + "/" + player.Team.Id}>{player.Team.Name}</Link>
+                                <Link to={routes.teams + "/" + player.currentTeam.id}>{player.currentTeam.name}</Link>
                             </List.Item>
                         <List.Item>
                             <List.Icon name='birthday cake' />
                             <List.Header>Birthdate</List.Header>
-                            <List.Content>{player.BirthDate.split("T")[0]}</List.Content>
+                            <List.Content>{player.birthDate}</List.Content>
                         </List.Item>
                         <List.Item>
                             <List.Icon name='marker' />
                             <List.Header>Birthplace</List.Header>
-                            <List.Content>{player.BirthPlace}</List.Content>
+                            <List.Content>{player.birthCity}</List.Content>
                         </List.Item>
                     </List>
                 </Segment>
-                <Header as='h4'>Statistics</Header>
-                <Table><Table.Header>
-                    <SkaterHeader individual={true} />
-                </Table.Header>
-                    <Table.Body>
-                        <SkaterRow player={player} individual={true} />
-                    </Table.Body>
-                </Table>
+                <StatsGrid player={player}></StatsGrid>
             </div>);
     }
 }
 
 const mapStateToProps = state => ({
-    player: state.app.player,
-    suggestions: state.app.suggestions,
+    player: state.player.player,
+    suggestions: state.player.suggestions,
 })
 
 const mapDispatchToProps = dispatch => ({
