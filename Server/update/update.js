@@ -3,12 +3,14 @@ const db = require('../keys/db.json');
 // Replace the uri string with your MongoDB deployment's connection string.
 const apicomm = require('../comm/apihandler');
 const functions = require('./updatefunctions');
-const { getPlayers } = require("../comm/dbhandler");
+const dbhandler = require('../comm/dbhandler.js');
 const { fetchTeams } = require("./updatefunctions");
 
 const client = new MongoClient(db.uri);
 
 async function run() {
+
+  await dbhandler.init();
 
   var teams = []
 
@@ -30,7 +32,8 @@ async function run() {
         $set: {
           name: team.name,
           active: team.active,
-          abbreviation: team.abbreviation
+          abbreviation: team.abbreviation,
+          lastUpdate: new Date()
         },
       };
       try {
@@ -70,15 +73,15 @@ async function run() {
       }
 
     }
+    
+  var players = await dbhandler.getPlayers();
 
     const playerCollection = database.collection("players");
-  
-    var players = await getPlayers();
   
     for (let playerTemp of players) {
       var response = await apicomm.nhlApiRequest(`/api/v1/people/${playerTemp.id}`);
       var player = response.people[0]
-  
+
       const options = { upsert: true };
       const filter = { id: player.id };
   
@@ -90,9 +93,9 @@ async function run() {
           primaryNumber: parseInt(player.primaryNumber),
           birthDate: player.birthDate,
           positon: player.position,
-          height: parseInt(player.height.split(" ")[0].replace(/\D/g, '')) / 3.2808 * 100 + parseInt(player.height.split(" ")[1].replace(/\D/g, '')) / 0.39370,
-          weight: player.weight * 0.45359237,
-          birthCity: player.birthStateProvince != undefined ? `${player.birthCity},${player.birthStateProvince},${player.birthCountry}` : `${player.birthCity},${player.birthCountry}`,
+          height: Math.ceil(parseInt(player.height.split(" ")[0].replace(/\D/g, '')) / 3.2808 * 100 + parseInt(player.height.split(" ")[1].replace(/\D/g, '')) / 0.39370),
+          weight: Math.floor(player.weight * 0.45359237),
+          birthCity: player.birthStateProvince != undefined ? `${player.birthCity}, ${player.birthStateProvince}, ${player.birthCountry}` : `${player.birthCity}, ${player.birthCountry}`,
           nationality: player.nationality,
           active: player.active,
           alternateCaptain: player.alternateCaptain,
@@ -101,7 +104,8 @@ async function run() {
           shootsCatches: player.shootsCatches,
           rosterStatus: player.rosterStatus,
           currentTeam: player.currentTeam,
-          primaryPosition: player.primaryPosition
+          primaryPosition: player.primaryPosition,
+          lastUpdate: new Date()
         },
       };
       try {
