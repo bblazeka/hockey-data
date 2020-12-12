@@ -14,7 +14,6 @@ import {
     Standings,
     Team,
     Home,
-    SocialFeed,
     Player,
     PlayerList,
     Prediction,
@@ -33,7 +32,6 @@ ReactDOM.render(
     <Router>
       <App>
         <Switch>
-          <Route exact path={routes.socialFeed} component={SocialFeed} />
           <Route exact path={routes.schedule} component={Schedule} />
           <Route exact path={routes.game} component={Game} />
           <Route exact path={routes.standings} component={Standings} />

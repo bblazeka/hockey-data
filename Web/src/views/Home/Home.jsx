@@ -6,6 +6,7 @@ import * as actions from '../../services/news';
 import Loader from '../../components/Loader/Loader';
 
 import './Home.css';
+import { SocialFeed } from '../../components';
 
 class Home extends Component {
 
@@ -13,10 +14,11 @@ class Home extends Component {
         super(props)
 
         this.props.getHome()
+        this.props.getTweets("NHL")
     }
 
     render() {
-        const { homeNews, teams } = this.props;
+        const { homeNews, tweets } = this.props;
         if (!homeNews) {
             return (<div><Loader></Loader></div>)
         }
@@ -37,6 +39,7 @@ class Home extends Component {
                             </Feed.Event>);
                         })}
                         </Feed>
+                        <SocialFeed tweets={tweets}></SocialFeed>
             </div>);
     }
 }
@@ -44,10 +47,12 @@ class Home extends Component {
 const mapStateToProps = state => ({
     homeNews: state.news.homeNews,
     teams: state.team.teams,
+    tweets: state.news.tweets,
 })
 
 const mapDispatchToProps = dispatch => ({
-    getHome: () => dispatch(actions.getHome())
+    getHome: () => dispatch(actions.getHome()),
+    getTweets: (query) => dispatch(actions.getTweets(query))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

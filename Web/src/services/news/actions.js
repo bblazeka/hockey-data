@@ -1,12 +1,11 @@
 import * as common from '../../util/common';
 
 
-export const getTweets = () => (dispatch, getState) => {
+export const getTweets = (query) => (dispatch, getState) => {
   dispatch({
     type: 'GET_TWEETS',
   });
-
-  common.customFetch(`${common.apiServiceEndpoint}/api/tweets/search/nhl`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/tweets/search/${query}`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({
