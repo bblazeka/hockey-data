@@ -9,7 +9,7 @@ import { SocialFeed } from '../../components';
 import { RosterGrid } from '../../components';
 import { getLogo } from '../../util/assets';
 
-import { Table, Header } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 import { getTweets } from '../../services/news';
 
 class Team extends Component {
@@ -31,7 +31,7 @@ class Team extends Component {
         id,
       }
     }
-    else if (team != undefined && state.teamQuery != team.name)
+    if (team !== null && state.teamQuery !== team.name)
     {
       props.getTweets(team.abbreviation);
       return {

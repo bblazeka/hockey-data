@@ -52,6 +52,12 @@ app.get('/api/players/:id/season', (req, res) => {
   })
 })
 
+app.get('/api/players/search/:name', (req, res) => {
+  dbhandler.getPlayerByName(req.params.name).then(players => {
+    res.send(players);
+  })
+})
+
 app.get('/api/teams', (req, res) => {
   dbhandler.getTeams().then(response => {
     res.send(response.filter(team => team.active == true).sort((a, b) => (a.name > b.name) ? 1 : -1));

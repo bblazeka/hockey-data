@@ -1,3 +1,5 @@
+import { getLogo } from '../../util/assets';
+
 const defaultAppState = {
   loaded: false,
   players: [],
@@ -6,36 +8,6 @@ const defaultAppState = {
 
 const playerReducer = (state = defaultAppState, action) => {
   switch (action.type) {
-    case 'GET_SCHEDULE':
-      return {
-        ...state,
-        schedule: null
-      }
-    case 'SCHEDULE_LOADED':
-      return {
-        ...state,
-        schedule: action.payload
-      }
-    case 'STANDINGS_LOADED':
-      return {
-        ...state,
-        standings: action.payload
-      }
-    case 'GET_TEAM':
-      return {
-        ...state,
-        team: null
-      }
-    case 'TEAM_LOADED':
-      return {
-        ...state,
-        team: action.payload
-      }
-    case 'TEAMS_LOADED':
-      return {
-        ...state,
-        teams: action.payload
-      }
     case 'GET_PLAYER':
       return {
         ...state,
@@ -66,17 +38,12 @@ const playerReducer = (state = defaultAppState, action) => {
         ...state,
         suggestions: action.payload.map((result) => {
           return {
-            "title": result.name,
-            "description": result.team.name,
-            "image": result.team.logo,
+            "title": result.fullName,
+            "description": result.currentTeam.name,
+            "image": getLogo(result.currentTeam.id),
             "id": result.id,
           }
         }),
-      }
-    case 'NEWS_LOADED':
-      return {
-        ...state,
-        news: action.payload
       }
     case 'GAME_LOADED':
       return {
@@ -87,11 +54,6 @@ const playerReducer = (state = defaultAppState, action) => {
       return {
         ...state,
         dropdownTeams: action.payload
-      }
-    case 'HOME_NEWS_LOADED':
-      return {
-        ...state,
-        homeNews: action.payload
       }
     default:
       return state

@@ -56,6 +56,14 @@ async function getPlayer(playerId) {
   return player;
 }
 
+async function getPlayerByName(name) {
+  const database = client.db("hockey-data");
+  const collection = database.collection("players");
+  const query = { fullName: new RegExp(name, "i") };
+  const players = await collection.find(query).toArray();
+  return players;
+}
+
 async function getPlayersFromTeam(teamId) {
   const database = client.db('hockey-data');
   const items = await database.collection('players').find({ "currentTeam.id": parseInt(teamId) }).toArray();
@@ -75,5 +83,6 @@ module.exports = {
   getTeam,
   getTeams,
   getPlayer,
-  getPlayers
+  getPlayers,
+  getPlayerByName,
 }

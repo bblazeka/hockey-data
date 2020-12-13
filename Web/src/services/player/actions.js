@@ -20,8 +20,7 @@ export const searchBasicPlayer = (name) => (dispatch, getState) => {
   dispatch({
     type: actionTypes.BASIC_SEARCH_PLAYER,
   });
-
-  common.customFetch(`${common.apiServiceEndpoint}/api/player/search/${name}`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/players/search/${name}`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({
@@ -35,11 +34,10 @@ export const searchPlayer = (name, individual)  => (dispatch, getState) => {
   dispatch({
     type: actionTypes.SEARCH_PLAYER,
   });
-
-  common.customFetch(`${common.apiServiceEndpoint}/api/data/player/search/${name}`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/players/search/${name}`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
-    common.customFetch(`${common.apiServiceEndpoint}/api/player/${data[0].id}`, getState, {
+    common.customFetch(`${common.apiServiceEndpoint}/api/players/${data[0].id}`, getState, {
       method: 'GET',
     }).then(response => response.json().then(data2 => {
       if (individual) {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import * as teamActions from '../../services/team';
 import * as playerActions from '../../services/player';
 import './Lineup.css';
 
