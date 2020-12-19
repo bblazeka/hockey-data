@@ -1,4 +1,4 @@
-export { default as Lineup } from './Lineup/Lineup';
+export { default as Fantasy } from './Fantasy/Fantasy';
 export { default as Home } from './Home/Home';
 export { default as Player } from './Player/Player';
 export { default as PlayerList } from './PlayerList/PlayerList';

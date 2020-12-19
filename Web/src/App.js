@@ -29,8 +29,8 @@ class App extends Component {
             <NavLink className="App-link" to={routes.game}>
               Game
             </NavLink>
-            <NavLink className="App-link" to={routes.lineup}>
-              Lineup
+            <NavLink className="App-link" to={routes.fantasy}>
+              Fantasy
             </NavLink>
             <NavLink className="App-link" to={routes.standings}>
               Standings
@@ -48,10 +48,10 @@ class App extends Component {
             })}
           </div>
         </header>
-        {this.props.children}
-        <footer>
-          Made using <a href="https://semantic-ui.com/">Semantic UI</a>
-          Logos: <a href="https://www.puckmarks.net/nhllogos">Puckmarks</a>
+        <div className="App-container">{this.props.children}</div>
+        <footer className="footer">
+          <div>Made using <a href="https://semantic-ui.com/">Semantic UI</a></div>
+          <div>Logos: <a href="https://www.puckmarks.net/nhllogos">Puckmarks</a></div>
         </footer>
       </div>
     );

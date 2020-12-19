@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import * as actions from '../../services/league';
+//import * as actions from '../../services/league';
 import './Prediction.css';
 
 import Loader from '../../components/Loader/Loader';
 import { Image, List, Segment, Grid, Label, Header, Progress } from 'semantic-ui-react';
 
 class Prediction extends Component {
-    constructor(props) {
-        super(props)
-        //this.props.getPrediction()
-    }
-
 
     render() {
         const { prediction, teams } = this.props;

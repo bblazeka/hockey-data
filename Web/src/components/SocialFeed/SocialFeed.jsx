@@ -1,22 +1,23 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Image, Feed, Label } from 'semantic-ui-react';
+import React from 'react';
+import { Feed, Label } from 'semantic-ui-react';
 
-import * as actions from '../../services/news';
 import './SocialFeed.css';
 import Loader from '../Loader/Loader';
+import { Header } from 'semantic-ui-react';
 
 function SocialFeed(props) {
   const { tweets } = props;
-  if (tweets == undefined)
+  if (tweets === undefined)
   {
     return (<Loader></Loader>)
   }
   return (
     <div className="news-container">
+      <Header as='h3'>Feed</Header>
       <Feed>
         {tweets.map((start) => {
-          return (<Feed.Event key={start.id}>
+          return (
+          <Feed.Event key={start.id}>
             <Feed.Label>
             </Feed.Label>
             <Feed.Content>

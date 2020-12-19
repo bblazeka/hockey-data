@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import * as actions from '../../services/team';
 import './Team.css';
@@ -43,14 +42,12 @@ class Team extends Component {
 
   render() {
     const { team, tweets } = this.props;
-    const { filterActive } = this.props;
     if (!team) {
       return (<div><Loader></Loader></div>)
     }
     return (
       <div>
-        <img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`}></img>
-        <Header as='h1'>{team.name}</Header>
+        <Header as='h1'><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`}></img>{team.name}</Header>
         <RosterGrid team={team} />
         <SocialFeed tweets={tweets}></SocialFeed>
       </div>);

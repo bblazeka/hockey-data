@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import * as playerActions from '../../services/player';
-import './Lineup.css';
+import './Fantasy.css';
 
 import { Grid, Search } from 'semantic-ui-react';
-import LineupCard from '../../components/LineupCard/LineupCard';
 
 const initialState = { isLoading: false, results: [], value: '' }
 
@@ -38,7 +37,7 @@ class Lineup extends Component {
     }
 
     render() {
-        const { suggestions, roster } = this.props;
+        const { suggestions } = this.props;
         const { isLoading, value } = this.state;
         return (
             <div>
@@ -52,21 +51,16 @@ class Lineup extends Component {
                 <Grid columns='equal'>
                     <Grid.Row>
                         <Grid.Column>
-                            <LineupCard player={roster[0]} />
                         </Grid.Column>
                         <Grid.Column>
-                            <LineupCard player={roster[1]} />
                         </Grid.Column>
                         <Grid.Column>
-                            <LineupCard player={roster[2]} />
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
                         <Grid.Column>
-                            <LineupCard player={roster[3]} />
                         </Grid.Column>
                         <Grid.Column>
-                            <LineupCard player={roster[4]} />
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
@@ -75,8 +69,7 @@ class Lineup extends Component {
 }
 
 const mapStateToProps = state => ({
-    suggestions: state.app.suggestions,
-    roster: state.app.roster,
+    suggestions: state.player.suggestions,
 })
 
 const mapDispatchToProps = dispatch => ({

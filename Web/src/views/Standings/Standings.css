@@ -3,3 +3,8 @@
   flex-direction: row;*/
   padding: 5px;
 }
+
+
+td {
+  padding: .51429em .51429em;
+}

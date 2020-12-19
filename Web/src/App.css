@@ -14,6 +14,10 @@
   color: white;
 }
 
+.App-container {
+  margin: 5px;
+}
+
 .App-menu {
   display: flex;
   flex-direction: row;
@@ -33,4 +37,13 @@
 .mid-logo {
   max-height: 60px; 
   max-width: 60px;
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #282c34;
+  color: white;
+  text-align: center;
 }

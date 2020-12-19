@@ -1,8 +1,4 @@
 import React from 'react';
-import { Table, Header } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-
-import routes from '../../routes';
 import './RosterGrid.css';
 import RosterElement from '../RosterElement/RosterElement';
 

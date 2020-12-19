@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Image, Feed, Label } from 'semantic-ui-react';
+import { Feed } from 'semantic-ui-react';
 
 import * as actions from '../../services/news';
 import Loader from '../../components/Loader/Loader';
