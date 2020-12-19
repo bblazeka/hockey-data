@@ -7,6 +7,7 @@ import { Header } from 'semantic-ui-react';
 
 function SocialFeed(props) {
   const { tweets } = props;
+  console.log(tweets)
   if (tweets === undefined)
   {
     return (<Loader></Loader>)
@@ -15,6 +16,7 @@ function SocialFeed(props) {
     <div className="news-container">
       <Header as='h3'>Feed</Header>
       <Feed>
+        {tweets.length == 0 && <div>Nothing found.</div>}
         {tweets.map((start) => {
           return (
           <Feed.Event key={start.id}>
@@ -26,7 +28,7 @@ function SocialFeed(props) {
                 <Feed.Date>{start.created_at}</Feed.Date>
               </Feed.Summary>
               <Feed.Extra>
-                {start.text}
+                {start.full_text}
               </Feed.Extra>
               <Feed.Meta>
                 {start.entities.hashtags.map((hashtag) => {

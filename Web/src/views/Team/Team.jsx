@@ -32,7 +32,7 @@ class Team extends Component {
     }
     if (team !== null && state.teamQuery !== team.name)
     {
-      props.getTweets(team.abbreviation);
+      props.getTweets(team.name);
       return {
         teamQuery: team.name,
       }

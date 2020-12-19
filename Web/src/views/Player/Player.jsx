@@ -8,10 +8,11 @@ import './Player.css';
 import Loader from '../../components/Loader/Loader';
 
 import routes from '../../routes';
-import { StatsGrid } from '../../components';
+import { SocialFeed, StatsGrid } from '../../components';
 import { getLogo } from '../../util/assets';
+import { getTweets } from '../../services/news';
 
-const initialState = { isLoading: false, results: [], value: '' }
+const initialState = { isLoading: false, results: [], value: '', playerQuery: "" }
 
 class Player extends Component {
   constructor(props) {
@@ -21,10 +22,18 @@ class Player extends Component {
 
   static getDerivedStateFromProps(props, state) {
     const { id } = props.match.params;
+    const { player, tweets } = props;
     if (state.id !== id) {
       props.getPlayer(id);
       return {
         id,
+      }
+    }
+    if (player !== null && state.playerQuery !== player.fullName && tweets == undefined)
+    {
+      props.getTweets(player.fullName);
+      return {
+        teamQuery: player.fullName,
       }
     }
     return null
@@ -50,7 +59,7 @@ class Player extends Component {
 
   render() {
     const { isLoading, value } = this.state;
-    const { player, suggestions } = this.props;
+    const { player, suggestions, tweets } = this.props;
     if (!player) {
       return (<div><Loader></Loader></div>)
     }
@@ -102,6 +111,7 @@ class Player extends Component {
           </Grid>
         </Segment>
         <StatsGrid player={player}></StatsGrid>
+        <SocialFeed tweets={tweets}></SocialFeed>
       </div>);
   }
 }
@@ -109,12 +119,14 @@ class Player extends Component {
 const mapStateToProps = state => ({
   player: state.player.player,
   suggestions: state.player.suggestions,
+  tweets: state.news.tweets,
 })
 
 const mapDispatchToProps = dispatch => ({
   getPlayer: (id) => dispatch(actions.getPlayer(id)),
   searchBasicPlayer: (name) => dispatch(actions.searchBasicPlayer(name)),
-  searchPlayer: (name) => dispatch(actions.searchPlayer(name, true))
+  searchPlayer: (name) => dispatch(actions.searchPlayer(name, true)),
+  getTweets: (query) => dispatch(getTweets(query))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);

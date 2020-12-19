@@ -11,13 +11,22 @@ var client = new Twitter({
 async function getTweets(accountScreenName) {
   var params = { screen_name: accountScreenName };
   res = await client.get('statuses/user_timeline', params);
-  return(res);
+  return (res);
 }
 
 async function searchTweets(q, count, lang, result_type) {
   var params = { q, count, lang, result_type };
-  res = await client.get('search/tweets', params);
-  return(res);
+  params.tweet_mode = "extended";
+  try {
+    res = await client.get('search/tweets', params);
+    return res;
+  }
+  catch (error) {
+    console.log("Error when trying to get tweets.", error);
+    return {
+      "statuses": []
+    };
+  }
 }
 
 module.exports = {
