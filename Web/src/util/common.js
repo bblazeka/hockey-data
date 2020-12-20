@@ -26,4 +26,16 @@ export const customFetch = (input, getState, init) => {
     return fetch(input, innerInit);
 }
 
-const isNullOrUndefined = (obj) => obj === null || obj === undefined;
+export function generateSemanticUICountryId(countryName) {
+  switch (countryName)
+  {
+    case "SWE": return "se";
+    case "DNK": return "dk";
+    case "SVN": return "si";
+    case "SVK": return "sk";
+    case "AUT": return "at";
+    default: return countryName.substring(0, 2).toLowerCase()
+  }
+}
+
+export const isNullOrUndefined = (obj) => obj === null || obj === undefined;

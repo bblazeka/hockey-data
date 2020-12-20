@@ -1,5 +1,6 @@
 import React from 'react';
-import { Table, Header } from 'semantic-ui-react';
+import { generateSemanticUICountryId } from  '../../util/common';
+import { Flag, Header, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import routes from '../../routes';
@@ -33,7 +34,7 @@ function RosterElement(props) {
                 <Table.Cell>{player.primaryPosition.name}</Table.Cell>
                 <Table.Cell>{player.birthDate}</Table.Cell>
                 <Table.Cell>{player.birthCity}</Table.Cell>
-                <Table.Cell>{player.nationality}</Table.Cell>
+                <Table.Cell><Flag name={generateSemanticUICountryId(player.nationality)} /> {player.nationality}</Table.Cell>
                 <Table.Cell>{player.height}</Table.Cell>
                 <Table.Cell>{player.weight}</Table.Cell>
                 <Table.Cell>{player.shootsCatches}</Table.Cell>

@@ -29,9 +29,6 @@ class App extends Component {
             <NavLink className="App-link" to={routes.game}>
               Game
             </NavLink>
-            <NavLink className="App-link" to={routes.fantasy}>
-              Fantasy
-            </NavLink>
             <NavLink className="App-link" to={routes.standings}>
               Standings
             </NavLink>

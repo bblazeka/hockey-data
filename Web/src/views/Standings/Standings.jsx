@@ -8,7 +8,7 @@ import Loader from '../../components/Loader/Loader';
 import routes from '../../routes';
 import { getLogo } from '../../util/assets';
 
-import { Table } from 'semantic-ui-react';
+import { Grid, Header, Table } from 'semantic-ui-react';
 
 class Standings extends Component {
   constructor(props) {
@@ -23,10 +23,11 @@ class Standings extends Component {
     }
     return (
       <div>
+        <Grid columns={2}>
         {standings && standings.map((entry) => {
           return (
-            <div className="standings" id={entry.division.name}>
-              <label>{entry.division.name}</label>
+            <Grid.Column className="standings" id={entry.division.name}>
+              <Header as='h3'>{entry.division.name}</Header>
               <Table celled>
                 <Table.Header>
                   <Table.Row>
@@ -64,8 +65,10 @@ class Standings extends Component {
                     )
                   })}
                 </Table.Body>
-              </Table></div>)
+              </Table></Grid.Column>)
         })}
+        </Grid>
+
       </div>
     );
   }

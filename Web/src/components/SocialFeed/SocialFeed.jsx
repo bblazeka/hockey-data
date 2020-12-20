@@ -1,14 +1,13 @@
 import React from 'react';
-import { Feed, Label } from 'semantic-ui-react';
+import { Feed, Header, Icon, Label } from 'semantic-ui-react';
 
 import './SocialFeed.css';
 import Loader from '../Loader/Loader';
-import { Header } from 'semantic-ui-react';
+import { isNullOrUndefined } from  '../../util/common';
 
 function SocialFeed(props) {
   const { tweets } = props;
-  console.log(tweets)
-  if (tweets === undefined)
+  if (isNullOrUndefined(tweets))
   {
     return (<Loader></Loader>)
   }
@@ -16,11 +15,12 @@ function SocialFeed(props) {
     <div className="news-container">
       <Header as='h3'>Feed</Header>
       <Feed>
-        {tweets.length == 0 && <div>Nothing found.</div>}
+        {tweets.length === 0 && <div>Nothing found.</div>}
         {tweets.map((start) => {
           return (
           <Feed.Event key={start.id}>
             <Feed.Label>
+              <Icon name="twitter"></Icon>
             </Feed.Label>
             <Feed.Content>
               <Feed.Summary>

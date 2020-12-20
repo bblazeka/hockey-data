@@ -22,7 +22,7 @@ app.use(cors({
   }
 }));
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.send("Root")
 })
 
@@ -32,7 +32,8 @@ app.get('/api/players/:id', (req, res) => {
       .then(result => {
         res.send({
           ...player,
-          stats: result.stats[0].splits
+          nhlstats: result.stats[0].splits.filter(el => el.league.id === 133),
+          careerstats: result.stats[0].splits
         })
       })
       .catch(err => console.log(err));
@@ -58,7 +59,7 @@ app.get('/api/players/search/:name', (req, res) => {
   })
 })
 
-app.get('/api/teams', (req, res) => {
+app.get('/api/teams', (_req, res) => {
   dbhandler.getTeams().then(response => {
     res.send(response.filter(team => team.active == true).sort((a, b) => (a.name > b.name) ? 1 : -1));
   }).catch(err => console.log(err));
@@ -80,13 +81,13 @@ app.get('/api/teams/:id/schedule', (req, res) => {
   apicomm.nhlApiRequest(`/api/v1/schedule?teamId=${req.params.id}&startDate=${req.query.start}&endDate=${req.query.end}`).then(result => res.send(result))
 })
 
-app.get('/api/news', (req, res) => {
+app.get('/api/news', (_req, res) => {
   apicomm.espnApiRequest('/apis/site/v2/sports/hockey/nhl/news').then(response => {
     res.send(response.articles);
   }).catch(err => console.log(err));
 })
 
-app.get('/api/scoreboard', (req, res) => {
+app.get('/api/scoreboard', (_req, res) => {
   apicomm.espnApiRequest('/apis/site/v2/sports/hockey/nhl/scoreboard', function (result) {
     res.send(result)
   })
@@ -103,6 +104,10 @@ app.get('/api/schedule/:start', (req, res) => {
 // TEST:2019020056
 app.get('/api/game/:id', (req, res) => {
   apicomm.nhlApiRequest(`/api/v1/game/${req.params.id}/boxscore`).then(result => res.send(result))
+})
+
+app.get('/api/tweets/apistatus', (_req, res) => {
+  twtcomm.getLimitStatus().then(result => res.send(result))
 })
 
 app.get('/api/tweets/:name', (req, res) => {

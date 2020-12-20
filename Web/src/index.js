@@ -17,7 +17,6 @@ import {
     Player,
     PlayerList,
     Prediction,
-    Fantasy,
     Game,
 } from './views';
 import routes from './routes';
@@ -35,7 +34,6 @@ ReactDOM.render(
           <Route exact path={routes.schedule} component={Schedule} />
           <Route exact path={routes.game} component={Game} />
           <Route exact path={routes.standings} component={Standings} />
-          <Route exact path={routes.fantasy} component={Fantasy} />
           <Route exact path={routes.prediction} component={Prediction} />
           <Route exact path={routes.teams+"/:id"} component={Team} />
           <Route exact path={routes.players} component={PlayerList} />

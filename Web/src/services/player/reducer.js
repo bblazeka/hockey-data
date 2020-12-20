@@ -1,7 +1,7 @@
 import { getLogo } from '../../util/assets';
 
 const defaultAppState = {
-  loaded: false,
+  loadingPlayer: false,
   players: [],
   roster: [],
 }
@@ -11,6 +11,8 @@ const playerReducer = (state = defaultAppState, action) => {
     case 'GET_PLAYER':
       return {
         ...state,
+        player: null,
+        loadingPlayer: true,
       }
     case 'ADD_PLAYER':
       return {
@@ -32,6 +34,7 @@ const playerReducer = (state = defaultAppState, action) => {
       return {
         ...state,
         player: action.payload,
+        loadingPlayer: false,
       }
     case 'BASIC_PLAYER_LOADED':
       return {

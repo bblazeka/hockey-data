@@ -73,8 +73,8 @@ class PlayerList extends Component {
 }
 
 const mapStateToProps = state => ({
-    players: state.app.players,
-    suggestions: state.app.suggestions,
+    players: state.player.players,
+    suggestions: state.player.suggestions,
 })
 
 const mapDispatchToProps = dispatch => ({

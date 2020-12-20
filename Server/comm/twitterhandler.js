@@ -8,6 +8,13 @@ var client = new Twitter({
   access_token_secret: twitterKeys.access_token_secret
 });
 
+async function getLimitStatus() {
+  var res = await client.get('application/rate_limit_status', {}).catch(err => {
+    console.log(err)
+  });
+  return res;
+}
+
 async function getTweets(accountScreenName) {
   var params = { screen_name: accountScreenName };
   res = await client.get('statuses/user_timeline', params);
@@ -30,6 +37,7 @@ async function searchTweets(q, count, lang, result_type) {
 }
 
 module.exports = {
+  getLimitStatus,
   getTweets,
   searchTweets,
 }

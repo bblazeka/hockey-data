@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Flag, Grid, Header, Image, List, Search, Segment } from 'semantic-ui-react';
+import { Flag, Grid, Header, Image, List, Search, Segment, Tab } from 'semantic-ui-react';
 
 import * as actions from '../../services/player';
 import './Player.css';
@@ -9,10 +9,11 @@ import Loader from '../../components/Loader/Loader';
 
 import routes from '../../routes';
 import { SocialFeed, StatsGrid } from '../../components';
+import { generateSemanticUICountryId, isNullOrUndefined } from  '../../util/common';
 import { getLogo } from '../../util/assets';
 import { getTweets } from '../../services/news';
 
-const initialState = { isLoading: false, results: [], value: '', playerQuery: "" }
+const initialState = { isLoading: false, results: [], value: '', playerQuery: '' }
 
 class Player extends Component {
   constructor(props) {
@@ -22,18 +23,18 @@ class Player extends Component {
 
   static getDerivedStateFromProps(props, state) {
     const { id } = props.match.params;
-    const { player, tweets } = props;
+    const { player, tweets, loadingTweets } = props;
     if (state.id !== id) {
       props.getPlayer(id);
       return {
         id,
       }
     }
-    if (player !== null && state.playerQuery !== player.fullName && tweets == undefined)
+    if ((player !== null && state.playerQuery !== player.fullName) || (!loadingTweets && isNullOrUndefined(tweets)))
     {
       props.getTweets(player.fullName);
       return {
-        teamQuery: player.fullName,
+        playerQuery: player.fullName,
       }
     }
     return null
@@ -63,6 +64,12 @@ class Player extends Component {
     if (!player) {
       return (<div><Loader></Loader></div>)
     }
+    const panes = [
+      { menuItem: 'NHL stats', render: () => <Tab.Pane>
+      <StatsGrid stats={player.nhlstats} skater={player.primaryPosition.code !== "G"} detailed={true}></StatsGrid></Tab.Pane> },
+      { menuItem: 'Career stats', render: () => <Tab.Pane>
+      <StatsGrid stats={player.careerstats} skater={player.primaryPosition.code !== "G"} detailed={false}></StatsGrid></Tab.Pane> },
+    ]
     return (
       <div>
         <Search
@@ -80,7 +87,7 @@ class Player extends Component {
             <Grid.Column key="colName" floated="left">
               <Header as="h2">{player.fullName}
                 <Header.Subheader>
-                  <Flag name={player.nationality.substring(0, 2).toLowerCase()} /> {player.nationality}
+                  <Flag name={generateSemanticUICountryId(player.nationality)} /> {player.nationality}
                 </Header.Subheader>
               </Header>
             </Grid.Column>
@@ -110,7 +117,7 @@ class Player extends Component {
             </Grid.Column>
           </Grid>
         </Segment>
-        <StatsGrid player={player}></StatsGrid>
+        <Tab panes={panes} />
         <SocialFeed tweets={tweets}></SocialFeed>
       </div>);
   }
@@ -120,6 +127,7 @@ const mapStateToProps = state => ({
   player: state.player.player,
   suggestions: state.player.suggestions,
   tweets: state.news.tweets,
+  loadingTweets: state.news.loadingTweets,
 })
 
 const mapDispatchToProps = dispatch => ({

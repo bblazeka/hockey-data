@@ -1,6 +1,5 @@
 const routes = {
   landing: '/',
-  fantasy: '/fantasy',
   players: '/players',
   prediction: '/prediction',
   schedule: '/schedule',

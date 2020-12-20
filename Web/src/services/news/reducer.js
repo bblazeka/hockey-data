@@ -1,5 +1,6 @@
 const defaultAppState = {
-  loaded: false,
+  loadingNews: false,
+  loadingTweets: false,
   players: [],
   news: [],
   tweets: []
@@ -12,11 +13,18 @@ const newsReducer = (state = defaultAppState, action) => {
         ...state,
         news: action.payload
       }
-      case 'TWEETS_LOADED':
-        return {
-          ...state,
-          tweets: action.payload
-        }
+    case 'GET_TWEETS':
+      return {
+        ...state,
+        loadingTweets: true,
+        tweets: null
+      }
+    case 'TWEETS_LOADED':
+      return {
+        ...state,
+        loadingTweets: false,
+        tweets: action.payload
+      }
     case 'HOME_NEWS_LOADED':
       return {
         ...state,
