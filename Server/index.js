@@ -97,8 +97,17 @@ app.get('/api/standings/:season', (req, res) => {
   apicomm.nhlApiRequest(`/api/v1/standings?season=${req.params.season}`).then(result => res.send(result.records))
 })
 
-app.get('/api/schedule/:start', (req, res) => {
-  apicomm.nhlApiRequest(`/api/v1/schedule?startDate=${req.params.start}&endDate=${req.query.end}`).then(result => res.send(result))
+app.get('/api/schedule', async (req, res) => {
+  var teams = await (await dbhandler.getTeams()).sort((a, b) => (a.name > b.name) ? 1 : (a.name < b.name) ? -1 : 0 );
+  dbhandler.getSchedule(`${req.query.start} 00:00:00`, `${req.query.end} 00:00:00`).then(games => {
+    for (let team of teams) {
+      team.games = JSON.parse(JSON.stringify(games)).filter(g => g.home.team.id === team.id || g.away.team.id === team.id).map(el => {
+        el.opponent = (el.home.team.id === team.id) ? el.away : el.home;
+        return el;
+      });
+    }
+    res.send(teams.filter(team => team.games !== undefined && team.games.length > 0));
+  })
 })
 
 // TEST:2019020056
@@ -117,7 +126,7 @@ app.get('/api/tweets/:name', (req, res) => {
 app.get('/api/tweets/search/:query', (req, res) => {
   twtcomm.searchTweets(req.params.query, 10, 'en', "popular").then(result => {
     res.send(result)
-  } )
+  })
 })
 
 app.listen(port, async () => {

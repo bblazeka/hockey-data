@@ -18,6 +18,15 @@ async function init() {
   });
 }
 
+async function getSchedule(start, end)
+{
+  const database = client.db('hockey-data');
+  const items = await database.collection('games').find({"gameDate" : { $gt : new Date(start),
+    $lt : new Date(end)
+  }}).toArray();
+  return items;
+}
+
 async function getTeams()
 {
   const database = client.db('hockey-data');
@@ -85,4 +94,5 @@ module.exports = {
   getPlayer,
   getPlayers,
   getPlayerByName,
+  getSchedule,
 }

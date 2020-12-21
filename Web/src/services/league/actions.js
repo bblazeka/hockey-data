@@ -5,7 +5,7 @@ export const getSchedule = (start, end) => (dispatch, getState) => {
     type: 'GET_SCHEDULE',
   });
 
-  common.customFetch(`${common.apiServiceEndpoint}/api/league/schedule/${start}?enddate=${end}`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/schedule?start=${start}&end=${end}`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({

@@ -26,7 +26,7 @@ class Standings extends Component {
         <Grid columns={2}>
         {standings && standings.map((entry) => {
           return (
-            <Grid.Column className="standings" id={entry.division.name}>
+            <Grid.Column className="standings" key={entry.division.id}>
               <Header as='h3'>{entry.division.name}</Header>
               <Table celled>
                 <Table.Header>
@@ -46,13 +46,13 @@ class Standings extends Component {
                 <Table.Body>
                   {entry.teamRecords.map((record) => {
                     return (
-                      <Table.Row>
+                      <Table.Row key={`row${record.team.id}`}>
                         <Table.Cell>{record.divisionRank}</Table.Cell>
                         <Table.Cell>
-                          <Link to={routes.teams + "/" + record.team.id}><img className="logo" src={getLogo(record.team.id)} alt={"img" + record.team.Id}></img></Link>
+                          <Link to={`${routes.teams}/${record.team.id}`}><img className="logo" src={getLogo(record.team.id)} alt={`img${record.team.Id}`}></img></Link>
                         </Table.Cell>
                         <Table.Cell>
-                          <Link to={routes.teams + "/" + record.team.id}>{record.team.name}</Link>
+                          <Link to={`${routes.teams}/${record.team.id}`}>{record.team.name}</Link>
                         </Table.Cell>
                         <Table.Cell>{record.gamesPlayed}</Table.Cell>
                         <Table.Cell>{record.leagueRecord.wins}</Table.Cell>

@@ -20,6 +20,12 @@ async function fetchTeams() {
     });
   }
 
+async function fetchGames() {
+  var games = await apicomm.nhlApiRequest('/api/v1/schedule?startDate=2019-10-01&endDate=2020-04-01')
+  return games.dates;
+}
+
   module.exports = {
-    fetchTeams
+    fetchTeams,
+    fetchGames,
   }
