@@ -2,17 +2,8 @@ import React from 'react';
 import { Table, Header } from 'semantic-ui-react';
 
 import { getLogo } from '../../util/assets';
-import { isNullOrUndefined } from '../../util/common';
+import { formatDecimals } from '../../util/common';
 import './StatsGrid.css';
-
-function formatDecimals(number, decimalPlaces)
-{
-  if (!isNullOrUndefined(number) && !isNaN(number))
-  {
-    return number.toFixed(decimalPlaces)
-  }
-  return null;
-}
 
 function StatsGrid(props) {
   const { stats, skater, detailed } = props;

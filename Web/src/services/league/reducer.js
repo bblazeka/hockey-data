@@ -21,7 +21,22 @@ const leagueReducer = (state = defaultAppState, action) => {
         ...state,
         standings: action.payload
       }
+    case 'LOAD_GAME':
+      return {
+        ...state,
+        game: null
+      }
+    case 'FIND_GAME':
+      return {
+        ...state,
+        game: null
+      }
     case 'GAME_LOADED':
+      return {
+        ...state,
+        game: action.payload
+      }
+    case 'GAME_FOUND':
       return {
         ...state,
         game: action.payload

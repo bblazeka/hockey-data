@@ -32,12 +32,12 @@ ReactDOM.render(
       <App>
         <Switch>
           <Route exact path={routes.schedule} component={Schedule} />
-          <Route exact path={routes.game} component={Game} />
+          <Route exact path={`${routes.game}/:id`} component={Game} />
           <Route exact path={routes.standings} component={Standings} />
           <Route exact path={routes.prediction} component={Prediction} />
-          <Route exact path={routes.teams+"/:id"} component={Team} />
+          <Route exact path={`${routes.teams}/:id`} component={Team} />
           <Route exact path={routes.players} component={PlayerList} />
-          <Route exact path={routes.player+"/:id"} component={Player} />
+          <Route exact path={`${routes.player}/:id`} component={Player} />
           <Route component={Home} />
         </Switch>
       </App>

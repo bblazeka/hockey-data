@@ -27,6 +27,13 @@ async function getSchedule(start, end)
   return items;
 }
 
+async function getGamesWithTeams(homeId, awayId)
+{
+  const database = client.db('hockey-data');
+  const items = await database.collection('games').find({"home.team.id" : parseInt(homeId), "away.team.id": parseInt(awayId)}).toArray();
+  return items;
+}
+
 async function getTeams()
 {
   const database = client.db('hockey-data');
@@ -95,4 +102,5 @@ module.exports = {
   getPlayers,
   getPlayerByName,
   getSchedule,
+  getGamesWithTeams,
 }

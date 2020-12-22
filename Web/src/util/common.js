@@ -38,4 +38,13 @@ export function generateSemanticUICountryId(countryName) {
   }
 }
 
+export function formatDecimals(number, decimalPlaces)
+{
+  if (!isNullOrUndefined(number) && !isNaN(number))
+  {
+    return number.toFixed(decimalPlaces)
+  }
+  return null;
+}
+
 export const isNullOrUndefined = (obj) => obj === null || obj === undefined;

@@ -111,8 +111,17 @@ app.get('/api/schedule', async (req, res) => {
 })
 
 // TEST:2019020056
-app.get('/api/game/:id', (req, res) => {
-  apicomm.nhlApiRequest(`/api/v1/game/${req.params.id}/boxscore`).then(result => res.send(result))
+app.get('/api/game/:id', async (req, res) => {
+  const linescore = await apicomm.nhlApiRequest(`/api/v1/game/${req.params.id}/linescore`);
+  apicomm.nhlApiRequest(`/api/v1/game/${req.params.id}/boxscore`).then(result => {
+    result.id = req.params.id
+    result.linescore = linescore;
+    res.send(result)
+  })
+})
+
+app.get('/api/games/search', (req, res) => {
+  dbhandler.getGamesWithTeams(req.query.homeId, req.query.awayId).then(result => res.send(result))
 })
 
 app.get('/api/tweets/apistatus', (_req, res) => {

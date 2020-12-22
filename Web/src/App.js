@@ -26,7 +26,7 @@ class App extends Component {
             <NavLink className="App-link" to={routes.prediction}>
               Prediction
             </NavLink>
-            <NavLink className="App-link" to={routes.game}>
+            <NavLink className="App-link" to={`${routes.game}/0`}>
               Game
             </NavLink>
             <NavLink className="App-link" to={routes.standings}>
@@ -41,7 +41,10 @@ class App extends Component {
           </div>
           <div className="App-menu">
             {teams && teams.map(team => {
-              return (<NavLink className="App-link" to={routes.teams + "/" + team.id} key={"link" + team.id}><img className="small-logo" src={getLogo(team.id)} alt={"img" + team.id}></img></NavLink>);
+              return (
+                <NavLink className="App-link" to={`${routes.teams}/${team.id}`} key={`link${team.id}`}>
+                  <img className="small-logo" src={getLogo(team.id)} alt={`img${team.id}`} />
+                </NavLink>);
             })}
           </div>
         </header>

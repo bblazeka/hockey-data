@@ -47,7 +47,7 @@ class Team extends Component {
     }
     return (
       <div>
-        <Header as='h1'><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`}></img>{team.name}</Header>
+        <Header as='h1'><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`} />{team.name}</Header>
         <RosterGrid team={team} />
         <SocialFeed tweets={tweets}></SocialFeed>
       </div>);

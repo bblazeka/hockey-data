@@ -30,16 +30,33 @@ export const getStandings = () => (dispatch, getState) => {
   }));
 }
 
-export const getGame = (home, away) => (dispatch, getState) => {
+export const findGame = (date, home, away) => (dispatch, getState) => {
   dispatch({
-    type: 'GET_GAME',
+    type: 'FIND_GAME',
   });
-  common.customFetch(`${common.apiServiceEndpoint}/api/game/2019-10-16?homeId=${home}&awayId=${away}`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/games/search?homeId=${home}&awayId=${away}`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
-    dispatch({
-      type: 'GAME_LOADED',
-      payload: data
-    })
+    common.customFetch(`${common.apiServiceEndpoint}/api/game/${data[0].gamePk}`, getState, {
+      method: 'GET',
+    }).then(response => response.json().then(data2 => {
+      dispatch({
+        type: 'GAME_FOUND',
+        payload: data2
+      })
+    }));
+  }));
+}
+
+export const getGame = (id) => (dispatch, getState) => {
+  dispatch({
+    type: 'GET_GAME',
+  });common.customFetch(`${common.apiServiceEndpoint}/api/game/${id}`, getState, {
+      method: 'GET',
+    }).then(response => response.json().then(data => {
+      dispatch({
+        type: 'GAME_LOADED',
+        payload: data
+      })
   }));
 }
