@@ -3,7 +3,8 @@ const twtcomm = require('./comm/twitterhandler');
 const dbhandler = require('./comm/dbhandler.js');
 
 const express = require('express');
-const cors = require('cors')
+const cors = require('cors');
+const { query } = require('express');
 const app = express()
 const port = 52700
 
@@ -81,10 +82,11 @@ app.get('/api/teams/:id/schedule', (req, res) => {
   apicomm.nhlApiRequest(`/api/v1/schedule?teamId=${req.params.id}&startDate=${req.query.start}&endDate=${req.query.end}`).then(result => res.send(result))
 })
 
-app.get('/api/news', (_req, res) => {
-  apicomm.espnApiRequest('/apis/site/v2/sports/hockey/nhl/news').then(response => {
-    res.send(response.articles);
-  }).catch(err => console.log(err));
+app.get('/api/news', async (req, res) => {
+  var date = new Date();
+  console.log(req.query.query)
+  var newsResponse = await apicomm.newsApiRequest(`/v2/everything?q=${req.query.query}&from=${date.toString().split("T")[0]}&language=en&sortBy=popularity`);
+  res.send(newsResponse.articles);
 })
 
 app.get('/api/scoreboard', (_req, res) => {

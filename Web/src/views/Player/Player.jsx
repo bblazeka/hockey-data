@@ -8,10 +8,10 @@ import './Player.css';
 import Loader from '../../components/Loader/Loader';
 
 import routes from '../../routes';
-import { SocialFeed, StatsGrid } from '../../components';
+import { NewsFeed, SocialFeed, StatsGrid } from '../../components';
 import { generateSemanticUICountryId, isNullOrUndefined } from  '../../util/common';
 import { getLogo } from '../../util/assets';
-import { getTweets } from '../../services/news';
+import { getTweets, getNews } from '../../services/news';
 
 const initialState = { isLoading: false, results: [], value: '', playerQuery: '' }
 
@@ -33,6 +33,7 @@ class Player extends Component {
     if ((player !== null && state.playerQuery !== player.fullName) || (!loadingTweets && isNullOrUndefined(tweets)))
     {
       props.getTweets(player.fullName);
+      props.getNews(player.fullName);
       return {
         playerQuery: player.fullName,
       }
@@ -60,7 +61,7 @@ class Player extends Component {
 
   render() {
     const { isLoading, value } = this.state;
-    const { player, suggestions, tweets } = this.props;
+    const { player, suggestions, tweets, news } = this.props;
     if (!player) {
       return (<div><Loader></Loader></div>)
     }
@@ -118,6 +119,7 @@ class Player extends Component {
           </Grid>
         </Segment>
         <Tab panes={panes} />
+        <NewsFeed news={news}></NewsFeed>
         <SocialFeed tweets={tweets}></SocialFeed>
       </div>);
   }
@@ -127,6 +129,7 @@ const mapStateToProps = state => ({
   player: state.player.player,
   suggestions: state.player.suggestions,
   tweets: state.news.tweets,
+  news: state.news.news,
   loadingTweets: state.news.loadingTweets,
 })
 
@@ -134,6 +137,7 @@ const mapDispatchToProps = dispatch => ({
   getPlayer: (id) => dispatch(actions.getPlayer(id)),
   searchBasicPlayer: (name) => dispatch(actions.searchBasicPlayer(name)),
   searchPlayer: (name) => dispatch(actions.searchPlayer(name, true)),
+  getNews: (query) => dispatch(getNews(query)),
   getTweets: (query) => dispatch(getTweets(query))
 })
 

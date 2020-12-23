@@ -25,11 +25,6 @@ const newsReducer = (state = defaultAppState, action) => {
         loadingTweets: false,
         tweets: action.payload
       }
-    case 'HOME_NEWS_LOADED':
-      return {
-        ...state,
-        homeNews: action.payload
-      }
     default:
       return state
   }

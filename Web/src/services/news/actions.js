@@ -15,15 +15,16 @@ export const getTweets = (query) => (dispatch, getState) => {
   }));
 }
 
-export const getHome = () => (dispatch, getState) => {
+export const getNews = (query) => (dispatch, getState) => {
   dispatch({
-    type: 'GET_HOME_NEWS',
+    type: 'GET_NEWS',
   });
-  common.customFetch(`${common.apiServiceEndpoint}/api/news`, getState, {
+  common.customFetch(`${common.apiServiceEndpoint}/api/news?query=${query}`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
+    console.log(data)
     dispatch({
-      type: 'HOME_NEWS_LOADED',
+      type: 'NEWS_LOADED',
       payload: data
     })
   }));
