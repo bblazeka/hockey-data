@@ -1,5 +1,5 @@
 import React from 'react';
-import { Feed, Header, Image, Label } from 'semantic-ui-react';
+import { Feed, Header, Image } from 'semantic-ui-react';
 
 import './NewsFeed.css';
 import Loader from '../Loader/Loader';

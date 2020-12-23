@@ -6,7 +6,6 @@ import Loader from '../../components/Loader/Loader';
 
 import './Home.css';
 import { SocialFeed } from '../../components';
-import { isNullOrUndefined } from '../../util/common';
 import NewsFeed from '../../components/NewsFeed/NewsFeed';
 
 class Home extends Component {

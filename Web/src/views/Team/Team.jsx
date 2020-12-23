@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import * as actions from '../../services/team';
 import './Team.css';
 import Loader from '../../components/Loader/Loader';
-import { SocialFeed } from '../../components';
-import { RosterGrid } from '../../components';
+import { NewsFeed, RosterGrid, SocialFeed } from '../../components';
 import { getLogo } from '../../util/assets';
 
 import { Header } from 'semantic-ui-react';
-import { getTweets } from '../../services/news';
+import { getNews, getTweets } from '../../services/news';
 
 class Team extends Component {
   constructor(props) {
@@ -32,6 +31,7 @@ class Team extends Component {
     }
     if (team !== null && state.teamQuery !== team.name)
     {
+      props.getNews(team.name);
       props.getTweets(team.name);
       return {
         teamQuery: team.name,
@@ -41,7 +41,7 @@ class Team extends Component {
   }
 
   render() {
-    const { team, tweets } = this.props;
+    const { team, tweets, news } = this.props;
     if (!team) {
       return (<div><Loader></Loader></div>)
     }
@@ -49,6 +49,7 @@ class Team extends Component {
       <div>
         <Header as='h1'><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`} />{team.name}</Header>
         <RosterGrid team={team} />
+        <NewsFeed news={news}></NewsFeed>
         <SocialFeed tweets={tweets}></SocialFeed>
       </div>);
   }
@@ -58,11 +59,13 @@ const mapStateToProps = state => ({
   team: state.team.team,
   tweets: state.news.tweets,
   teams: state.team.teams,
+  news: state.news.news,
 })
 
 const mapDispatchToProps = dispatch => ({
   getTeam: (id) => dispatch(actions.getTeam(id)),
-  getTweets: (query) => dispatch(getTweets(query))
+  getTweets: (query) => dispatch(getTweets(query)),
+  getNews: (query) => dispatch(getNews(query)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Team);
