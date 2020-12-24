@@ -1,15 +1,17 @@
 import * as common from '../../util/common';
+import * as actionTypes from './actionTypes';
+
 
 export const getSchedule = (start, end) => (dispatch, getState) => {
   dispatch({
-    type: 'GET_SCHEDULE',
+    type: actionTypes.GET_SCHEDULE,
   });
 
   common.customFetch(`${common.apiServiceEndpoint}/api/schedule?start=${start}&end=${end}`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({
-      type: 'SCHEDULE_LOADED',
+      type: actionTypes.SCHEDULE_LOADED,
       payload: data
     })
   }));
@@ -17,14 +19,14 @@ export const getSchedule = (start, end) => (dispatch, getState) => {
 
 export const getStandings = () => (dispatch, getState) => {
   dispatch({
-    type: 'GET_STANDINGS',
+    type: actionTypes.GET_STANDINGS,
   });
 
   common.customFetch(`${common.apiServiceEndpoint}/api/standings/20192020`, getState, {
     method: 'GET',
   }).then(response => response.json().then(data => {
     dispatch({
-      type: 'STANDINGS_LOADED',
+      type: actionTypes.STANDINGS_LOADED,
       payload: data
     })
   }));
@@ -32,7 +34,7 @@ export const getStandings = () => (dispatch, getState) => {
 
 export const findGame = (date, home, away) => (dispatch, getState) => {
   dispatch({
-    type: 'FIND_GAME',
+    type: actionTypes.FIND_GAME,
   });
   common.customFetch(`${common.apiServiceEndpoint}/api/games/search?homeId=${home}&awayId=${away}`, getState, {
     method: 'GET',
@@ -41,7 +43,7 @@ export const findGame = (date, home, away) => (dispatch, getState) => {
       method: 'GET',
     }).then(response => response.json().then(data2 => {
       dispatch({
-        type: 'GAME_FOUND',
+        type: actionTypes.GAME_FOUND,
         payload: data2
       })
     }));
@@ -50,12 +52,12 @@ export const findGame = (date, home, away) => (dispatch, getState) => {
 
 export const getGame = (id) => (dispatch, getState) => {
   dispatch({
-    type: 'GET_GAME',
+    type: actionTypes.GET_GAME,
   });common.customFetch(`${common.apiServiceEndpoint}/api/game/${id}`, getState, {
       method: 'GET',
     }).then(response => response.json().then(data => {
       dispatch({
-        type: 'GAME_LOADED',
+        type: actionTypes.GAME_LOADED,
         payload: data
       })
   }));

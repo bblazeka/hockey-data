@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import * as actions from '../../services/league';
 
 import { getLogo } from '../../util/assets';
+import { Loader } from '../../components';
 import { isNullOrUndefined, formatDecimals } from '../../util/common';
 
 class Game extends Component {
@@ -160,7 +161,7 @@ class Game extends Component {
   render() {
     const { game, dropdownTeams } = this.props;
     if (!dropdownTeams) {
-      return (<div></div>);
+      return (<Loader></Loader>);
     }
     return (
       <div>
@@ -233,8 +234,7 @@ class Game extends Component {
 
 const mapStateToProps = state => ({
   game: state.league.game,
-  dropdownTeams: state.league.dropdownTeams
-
+  dropdownTeams: state.team.dropdownTeams,
 })
 
 const mapDispatchToProps = dispatch => ({

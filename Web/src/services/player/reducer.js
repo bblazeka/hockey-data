@@ -1,36 +1,36 @@
 import { getLogo } from '../../util/assets';
+import * as actionTypes from './actionTypes';
 
 const defaultAppState = {
   loadingPlayer: false,
   players: [],
   roster: [],
+  selectedPlayers: [],
 }
 
 const playerReducer = (state = defaultAppState, action) => {
   switch (action.type) {
-    case 'GET_PLAYER':
+    case actionTypes.GET_PLAYER:
       return {
         ...state,
         player: null,
         loadingPlayer: true,
       }
-    case 'ADD_PLAYER':
+    case actionTypes.ADD_PLAYER:
       return {
         ...state,
-        players: state.players.concat(action.payload),
       }
-    case 'REMOVE_PLAYER':
+    case actionTypes.PLAYER_ADDED:
+      return {
+        ...state,
+      }
+    case actionTypes.REMOVE_PLAYER:
       const newPlayers = state.players.filter(p => p.Id !== parseInt(action.payload.id))
       return {
         ...state,
         players: newPlayers
       }
-    case 'ADD_TO_LINEUP':
-      return {
-        ...state,
-        roster: state.roster.concat(action.payload.player),
-      }
-    case 'PLAYER_LOADED':
+    case actionTypes.PLAYER_LOADED:
       return {
         ...state,
         player: action.payload,
@@ -48,15 +48,10 @@ const playerReducer = (state = defaultAppState, action) => {
           }
         }),
       }
-    case 'GAME_LOADED':
+    case actionTypes.SELECTED_PLAYERS_LOADED:
       return {
         ...state,
-        game: action.payload
-      }
-    case 'DROPDOWN_TEAMS_LOADED':
-      return {
-        ...state,
-        dropdownTeams: action.payload
+        selectedPlayers: action.payload
       }
     default:
       return state

@@ -41,6 +41,13 @@ async function getTeams()
   return items;
 }
 
+async function getProfiles()
+{
+  const database = client.db('hockey-data');
+  const items = await database.collection('profiles').find({}).toArray();
+  return items;
+}
+
 async function getTeam(teamId) {
   const database = client.db("hockey-data");
   const collection = database.collection("teams");
@@ -94,8 +101,33 @@ async function getPlayers() {
   return items;
 }
 
+async function addSelectedPlayer(id) {
+  const database = client.db('hockey-data');
+  var myquery = { userId: 0 };
+  var newvalues = { $addToSet: { selectedPlayers: parseInt(id) } };
+  database.collection("profiles").updateOne(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log(`${res.result.nModified} selected players added`);
+  });
+
+  return true;
+}
+
+async function deleteSelectedPlayer(id) {
+  const database = client.db('hockey-data');
+  var myquery = { userId: 0 };
+  var newvalues = { $pull: { selectedPlayers: parseInt(id) } };
+  database.collection("profiles").updateOne(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    console.log(`${res.result.nModified} selected players deleted`);
+  });
+
+  return true;
+}
+
 module.exports = {
   init,
+  getProfiles,
   getTeam,
   getTeams,
   getPlayer,
@@ -103,4 +135,6 @@ module.exports = {
   getPlayerByName,
   getSchedule,
   getGamesWithTeams,
+  addSelectedPlayer,
+  deleteSelectedPlayer,
 }

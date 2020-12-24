@@ -3,7 +3,7 @@ import * as actionTypes from './actionTypes';
 
 export const getPlayer = (id) => (dispatch, getState) => {
   dispatch({
-    type: 'GET_PLAYER',
+    type: actionTypes.GET_PLAYER,
   });
 
   common.customFetch(`${common.apiServiceEndpoint}/api/players/${id}`, getState, {
@@ -11,6 +11,36 @@ export const getPlayer = (id) => (dispatch, getState) => {
   }).then(response => response.json().then(data => {
     dispatch({
       type: actionTypes.PLAYER_LOADED,
+      payload: data
+    })
+  }));
+}
+
+export const addPlayer = (id) => (dispatch, getState) => {
+  dispatch({
+    type: actionTypes.ADD_PLAYER,
+  });
+
+  common.customFetch(`${common.apiServiceEndpoint}/api/players/selected?id=${id}`, getState, {
+    method: 'PUT',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: actionTypes.SELECTED_PLAYERS_LOADED,
+      payload: data
+    })
+  }));
+}
+
+export const deletePlayer = (id) => (dispatch, getState) => {
+  dispatch({
+    type: actionTypes.REMOVE_PLAYER,
+  });
+
+  common.customFetch(`${common.apiServiceEndpoint}/api/players/selected?id=${id}`, getState, {
+    method: 'DELETE',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: actionTypes.SELECTED_PLAYERS_LOADED,
       payload: data
     })
   }));
@@ -64,9 +94,16 @@ export const removePlayer = (id) => ({
   }
 })
 
-export const addToLineup = (player) => ({
-  type: actionTypes.ADD_TO_LINEUP,
-  payload: {
-    player,
-  }
-})
+export const getSelectedPlayers = ()  => (dispatch, getState) => {
+  dispatch({
+    type: actionTypes.GET_SELECTED_PLAYERS,
+  });
+  common.customFetch(`${common.apiServiceEndpoint}/api/players/selected`, getState, {
+    method: 'GET',
+  }).then(response => response.json().then(data => {
+    dispatch({
+      type: actionTypes.SELECTED_PLAYERS_LOADED,
+      payload: data
+    })
+  }));
+}

@@ -1,3 +1,5 @@
+import * as actionTypes from './actionTypes';
+
 const defaultAppState = {
   loaded: false,
   players: [],
@@ -6,22 +8,22 @@ const defaultAppState = {
 
 const teamReducer = (state = defaultAppState, action) => {
   switch (action.type) {
-    case 'GET_TEAM':
+    case actionTypes.GET_TEAM:
       return {
         ...state,
         team: null
       }
-    case 'TEAM_LOADED':
+    case actionTypes.TEAM_LOADED:
       return {
         ...state,
         team: action.payload
       }
-    case 'TEAMS_LOADED':
+    case actionTypes.TEAMS_LOADED:
       return {
         ...state,
         teams: action.payload
       }
-    case 'DROPDOWN_TEAMS_LOADED':
+    case actionTypes.DROPDOWN_TEAMS_LOADED:
       return {
         ...state,
         dropdownTeams: action.payload

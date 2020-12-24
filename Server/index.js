@@ -27,6 +27,46 @@ app.get('/', (_req, res) => {
   res.send("Root")
 })
 
+async function getSelectedPlayers() {
+  var profiles = await dbhandler.getProfiles();
+  var skaters = [];
+  var goalies = [];
+  for(playerId of profiles[0].selectedPlayers)
+  {
+    var player = await apicomm.nhlApiRequest(`/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=20192020`);
+    player.player = await dbhandler.getPlayer(playerId);
+    if (player.player.primaryPosition.code !== "G")
+    {
+      skaters.push(player)
+    }
+    else
+    {
+      goalies.push(player)
+    }
+  }
+  return {
+    "skaters": skaters,
+    "goalies": goalies,
+  };
+}
+
+app.get('/api/players/selected', async (req, res) => {
+  var selectedPlayers = await getSelectedPlayers();
+  res.send(selectedPlayers);
+})
+
+app.put('/api/players/selected', async (req, res) => {
+  await dbhandler.addSelectedPlayer(req.query.id);
+  var selectedPlayers = await getSelectedPlayers();
+  res.send(selectedPlayers);
+})
+
+app.delete('/api/players/selected', async (req, res) => {
+  await dbhandler.deleteSelectedPlayer(req.query.id);
+  var selectedPlayers = await getSelectedPlayers();
+  res.send(selectedPlayers);
+})
+
 app.get('/api/players/:id', (req, res) => {
   dbhandler.getPlayer(req.params.id).then(player => {
     apicomm.nhlApiRequest(`/api/v1/people/${req.params.id}/stats?stats=yearByYear`)
@@ -84,7 +124,6 @@ app.get('/api/teams/:id/schedule', (req, res) => {
 
 app.get('/api/news', async (req, res) => {
   var date = new Date();
-  console.log(req.query.query)
   var newsResponse = await apicomm.newsApiRequest(`/v2/everything?q=${req.query.query}&from=${date.toString().split("T")[0]}&language=en&sortBy=popularity`);
   res.send(newsResponse.articles);
 })

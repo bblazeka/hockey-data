@@ -1,3 +1,5 @@
+import * as actionTypes from './actionTypes';
+
 const defaultAppState = {
   loadingNews: false,
   loadingTweets: false,
@@ -8,18 +10,25 @@ const defaultAppState = {
 
 const newsReducer = (state = defaultAppState, action) => {
   switch (action.type) {
-    case 'NEWS_LOADED':
+    case actionTypes.GET_NEWS:
       return {
         ...state,
+        loadingNews: true,
+        news: null
+      }
+    case actionTypes.NEWS_LOADED:
+      return {
+        ...state,
+        loadingNews: false,
         news: action.payload
       }
-    case 'GET_TWEETS':
+    case actionTypes.GET_TWEETS:
       return {
         ...state,
         loadingTweets: true,
         tweets: null
       }
-    case 'TWEETS_LOADED':
+    case actionTypes.TWEETS_LOADED:
       return {
         ...state,
         loadingTweets: false,

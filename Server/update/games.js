@@ -21,7 +21,6 @@ async function run() {
 
     const database = client.db("hockey-data", { useUnifiedTopology: true });
     const collection = database.collection("games");
-    console.log("start")
     for (let date of dates) {
       for (let game of date.games)
       {
