@@ -4,6 +4,7 @@ const defaultAppState = {
   loaded: false,
   players: [],
   roster: [],
+  prediction: [],
 }
 
 const leagueReducer = (state = defaultAppState, action) => {

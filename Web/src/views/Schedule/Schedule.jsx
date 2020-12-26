@@ -16,7 +16,7 @@ import { getLogo } from '../../util/assets';
 class Schedule extends Component {
   constructor(props) {
     super(props)
-    var today = new Date("2020-01-01");
+    var today = new Date("2021-01-13");
     var finish = new Date(today);
     finish.setDate(finish.getDate() + 7);
     this.state = {
@@ -41,8 +41,8 @@ class Schedule extends Component {
   getScheduleForTimePeriod() {
     //var start = covertDateTimeToString(this.state.start);
     //var end = covertDateTimeToString(this.state.end);
-    var start = "2020-01-01";
-    var end = "2020-01-07";
+    var start = "2021-01-13";
+    var end = "2021-01-20";
     this.props.getSchedule(start, end)
   }
 
@@ -94,6 +94,7 @@ class Schedule extends Component {
                           className={element.id === game.home.team.id ? 'home-game' : 'away-game'}
                         >
                           <img className="logo" src={logo} alt={`img${game.gameDate}${element.id}`}></img>
+                          {game.opponent.leagueRecord.wins}-{game.opponent.leagueRecord.losses}-{game.opponent.leagueRecord.ot}
                         </Table.Cell>
                       )
                     } catch (err) {

@@ -21,7 +21,7 @@ async function fetchTeams() {
   }
 
 async function fetchGames() {
-  var games = await apicomm.nhlApiRequest('/api/v1/schedule?startDate=2019-10-01&endDate=2020-04-01')
+  var games = await apicomm.nhlApiRequest('/api/v1/schedule?startDate=2021-01-01&endDate=2021-08-01')
   return games.dates;
 }
 

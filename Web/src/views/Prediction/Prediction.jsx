@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 //import * as actions from '../../services/league';
 import './Prediction.css';
+import { isNullOrUndefined } from  '../../util/common';
 
 import Loader from '../../components/Loader/Loader';
 import { Image, List, Segment, Grid, Label, Header, Progress } from 'semantic-ui-react';
@@ -11,7 +12,7 @@ class Prediction extends Component {
 
     render() {
         const { prediction, teams } = this.props;
-        if (!prediction) {
+        if (isNullOrUndefined(prediction)) {
             return (<div><Loader></Loader></div>)
         }
         return (
@@ -63,8 +64,8 @@ class Prediction extends Component {
 }
 
 const mapStateToProps = state => ({
-    prediction: state.app.prediction,
-    teams: state.app.teams,
+    prediction: state.league.prediction,
+    teams: state.team.teams,
 })
 
 const mapDispatchToProps = dispatch => ({
