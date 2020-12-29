@@ -1,0 +1,10 @@
+type DetailedTeam {
+    id: Int
+    abbreviation: String
+    name: String
+    active: Boolean
+    rosterResponse: [Player]
+    goalies: [Player]
+    defenders: [Player]
+    forwards: [Player]
+  }

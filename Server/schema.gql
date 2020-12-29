@@ -1,0 +1,21 @@
+scalar Date  
+  
+  type Query {
+    player(id: Int): Player
+    team(id: Int): DetailedTeam
+    teams: [Team]
+    articles(query: String): [Article]
+    tweets(query: String): [Tweet]
+    schedule(start: String, end: String): [ScheduleTeam]
+    standings(season: String): [Record]
+    gamesBetweenTeams(homeId: Int, awayId: Int): [BasicGame]
+    game(gameId: Int): Game
+  }
+
+  type Team {
+    id: Int
+    abbreviation: String
+    name: String
+    active: Boolean
+    rosterResponse: [Player]
+  }

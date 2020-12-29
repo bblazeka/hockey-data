@@ -1,0 +1,126 @@
+type ScheduleTeam {
+  id: Int
+  name: String
+  abbreviation: String
+  active: Boolean
+  games: [BasicGame]
+}
+
+type BasicGame {
+  gamePk: Int
+  gameDate: Date
+  season: String
+  home: Opponent
+  away: Opponent
+  opponent: Opponent
+}
+
+type Opponent {
+  score: Int
+  team: Team
+  leagueRecord: LeagueRecord
+}
+
+type LeagueRecord {
+  wins: Int
+  losses: Int
+  ot: Int
+  type: String
+}
+
+type Record {
+  standingsType: String
+  division: Division
+  teamRecords: [TeamRecord]
+}
+
+type Division {
+  id: Int
+  name: String
+}
+
+type TeamRecord {
+  divisionRank: Int
+  team: Team
+  leagueRecord: LeagueRecord
+  gamesPlayed: Int
+  goalsScored: Int
+  goalsAgainst: Int
+  points: Int
+}
+
+type Game {
+  id: Int
+  teams: GameTeams
+  officials: [GameOfficial]
+  linescore: Linescore
+}
+
+type GameTeams {
+  home: GameTeam
+  away: GameTeam
+}
+
+type GameTeam {
+  team: Team
+  skaters: [GamePlayer]
+  goalies: [GamePlayer]
+  teamSkaterStats: TeamSkaterStats
+  coaches: [Coach]
+}
+
+type GamePlayer {
+  person: Player
+  jerseyNumber: Int
+  position: Position
+  stats: GamePlayerStats
+}
+
+type GamePlayerStats {
+  skaterStats: Stats
+  goalieStats: Stats
+}
+
+type TeamSkaterStats {
+  goals: Int,
+  pim: Int,
+  shots: Int,
+  powerPlayPercentage: String,
+  powerPlayGoals: Int,
+  powerPlayOpportunities: Int,
+  faceOffWinPercentage: String,
+  blocked: Int,
+  takeaways: Int,
+  giveaways: Int,
+  hits: Int
+}
+
+type Linescore {
+  currentPeriodTimeRemaining: String
+}
+
+type GameOfficial {
+  official: Official
+  officialType: String
+}
+
+type Official {
+  id: Int
+  fullName: String
+}
+
+type Coach {
+  person: Person
+  position: StaffPosition
+}
+
+type StaffPosition {
+  code: String
+  name: String
+  type: String
+  abbreviation: String
+}
+
+type Person {
+  fullName: String
+}

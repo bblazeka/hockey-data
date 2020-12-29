@@ -1,0 +1,35 @@
+  type Article {
+    source: Source
+    title: String
+    description: String
+    publishedAt: String
+    url: String
+    author: String
+    urlToImage: String
+  }
+
+  type Source {
+    id: Int
+    name: String
+  }
+
+  type Tweet {
+    id: Int
+    text: String
+    favoriteCount: Int
+    retweetCount: Int
+    user: User
+    entities: [Entity]
+  }
+
+  type User {
+    id: Int
+    name: String
+    screenName: String
+    description: String
+    profileImageUrl: String
+  }
+
+  type Entity {
+    text: String
+  }

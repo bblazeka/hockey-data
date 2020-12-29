@@ -1,0 +1,85 @@
+type Player {
+    id: Int
+    fullName: String
+    jerseyNumber: Int
+    active: Boolean
+    alternateCaptain: Boolean
+    birthCity: String
+    birthDate: String
+    captain: Boolean
+    currentTeam: Team
+    firstName: String
+    lastName: String
+    height: Int
+    primaryNumber: Int
+    primaryPosition: Position
+    rookie: Boolean
+    rosterStatus: String
+    shootsCatches: String
+    weight: Int
+    nationality: String
+    nhlStats: [SeasonStats]
+    careerStats: [SeasonStats]
+}
+
+type SeasonStats {
+  season: String
+  team: Team
+  league: League
+  stat: Stats
+}
+
+type Stats {
+  games: Int
+  timeOnIce: String
+  # skater props
+  goals: Int
+  assists: Int
+  points: Int
+  pim: Int
+  plusMinus: String
+  shots: Int
+  hits: Int
+  blocked: Int
+  faceOffPct: String
+  evenTimeOnIce: String
+  powerPlayTimeOnIce: String
+  shotPct: String
+  gameWinningGoals: Int
+  powerPlayGoals: Int
+  powerPlayPoints: Int
+  shortHandedGoals: Int
+  shortHandedPoints: Int
+  shortHandedTimeOnIce: String
+  # goalie props
+  gamesStarted: Int
+  goalAgainstAverage: Float
+  savePercentage: Float
+  wins: Int
+  losses: Int
+  ot: Int
+  saves: Int
+  evenSaves: Int
+  powerPlaySaves: Int
+  shortHandedSaves: Int
+  shotsAgainst: Int
+  evenShots: Int
+  powerPlayShots: Int
+  shortHandedShots: Int
+  evenStrengthSavePercentage: Float
+  powerPlaySavePercentage: Float
+  shortHandedSavePercentage: Float
+  shutouts: Int
+}
+
+type League {
+  id: Int
+  name: String
+}
+
+type Position {
+    code: String
+    name: String
+    type: String
+    abbreviation: String
+}
