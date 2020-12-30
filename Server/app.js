@@ -5,11 +5,17 @@ const cors = require('cors');
 var fs = require('fs');
 
 const { Database } = require('./comm/dbhandler.js');
-const team = require('./services/team/team.js');
-const news = require('./services/news/news.js');
-const league = require('./services/league/league.js');
+const team = require('./services/team/index.js');
+const news = require('./services/news/index.js');
+const league = require('./services/league/index.js');
+const player = require('./services/player/index.js');
 
-var schemaDefinition = fs.readFileSync('schema.graphql', "utf8");
+var mainSchema = fs.readFileSync('schema.gql', "utf8");
+var leagueSchema = fs.readFileSync('./services/league/schema.gql', "utf8");
+var newsSchema = fs.readFileSync('./services/news/schema.gql', "utf8");
+var teamSchema = fs.readFileSync('./services/team/schema.gql', "utf8");
+var playerSchema = fs.readFileSync('./services/player/schema.gql', "utf8");
+var schemaDefinition = `${mainSchema} ${newsSchema} ${leagueSchema} ${teamSchema} ${playerSchema}`
 
 let whitelist = ['http://localhost:3000', 'http://abc.com']
 
@@ -20,9 +26,13 @@ var schema = buildSchema(schemaDefinition);
 var root = {
   team: team.getTeam,
   teams: team.getTeams,
+  player: player.getPlayer,
   articles: news.getArticles,
   tweets: news.getTweets,
   schedule: league.getSchedule,
+  standings: league.getStandings,
+  gamesBetweenTeams: league.gamesBetweenTeams,
+  game: league.getGame,
 };
 
 const port = 4000
@@ -51,6 +61,7 @@ app.listen(port, async () => {
   var database = new Database();
   await database.init();
   team.init(database);
+  player.init(database);
   news.init(database);
   league.init(database);
   console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`)

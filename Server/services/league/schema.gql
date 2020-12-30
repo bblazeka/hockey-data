@@ -97,6 +97,26 @@ type TeamSkaterStats {
 
 type Linescore {
   currentPeriodTimeRemaining: String
+  teams: LinescoreTeams
+  periods: [Period]
+}
+
+type LinescoreTeams {
+  home: TeamGameStats
+  away: TeamGameStats
+}
+
+type Period {
+  num: Int
+  home: TeamGameStats
+  away: TeamGameStats
+}
+
+type TeamGameStats {
+  goals: Int
+  shotsOnGoal: Int
+  rinkSide: String
+  team: Team
 }
 
 type GameOfficial {

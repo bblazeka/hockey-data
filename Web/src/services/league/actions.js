@@ -1,64 +1,61 @@
-import * as common from '../../util/common';
+import { axiosGraphQL } from '../../util/common';
 import * as actionTypes from './actionTypes';
+import * as querySchemas from './querySchemas';
 
 
-export const getSchedule = (start, end) => (dispatch, getState) => {
+export const getSchedule = (start, end) => (dispatch) => {
   dispatch({
     type: actionTypes.GET_SCHEDULE,
   });
-
-  common.customFetch(`${common.apiServiceEndpoint}/api/schedule?start=${start}&end=${end}`, getState, {
-    method: 'GET',
-  }).then(response => response.json().then(data => {
-    dispatch({
-      type: actionTypes.SCHEDULE_LOADED,
-      payload: data
-    })
-  }));
+  axiosGraphQL
+    .post('', { query: querySchemas.getSchedule(start, end) })
+    .then(response => {
+      dispatch({
+        type: actionTypes.SCHEDULE_LOADED,
+        payload: response.data.data.schedule
+      })
+    });
 }
 
-export const getStandings = () => (dispatch, getState) => {
+export const getStandings = () => (dispatch) => {
   dispatch({
     type: actionTypes.GET_STANDINGS,
   });
-
-  common.customFetch(`${common.apiServiceEndpoint}/api/standings/20192020`, getState, {
-    method: 'GET',
-  }).then(response => response.json().then(data => {
+  axiosGraphQL
+  .post('', { query: querySchemas.getStandings("20202021") })
+  .then(response => {
     dispatch({
       type: actionTypes.STANDINGS_LOADED,
-      payload: data
+      payload: response.data.data.standings
     })
-  }));
+  });
 }
 
-export const findGame = (date, home, away) => (dispatch, getState) => {
+export const findGame = (homeId, awayId) => (dispatch) => {
   dispatch({
     type: actionTypes.FIND_GAME,
   });
-  common.customFetch(`${common.apiServiceEndpoint}/api/games/search?homeId=${home}&awayId=${away}`, getState, {
-    method: 'GET',
-  }).then(response => response.json().then(data => {
-    common.customFetch(`${common.apiServiceEndpoint}/api/game/${data[0].gamePk}`, getState, {
-      method: 'GET',
-    }).then(response => response.json().then(data2 => {
-      dispatch({
-        type: actionTypes.GAME_FOUND,
-        payload: data2
-      })
-    }));
-  }));
+  axiosGraphQL
+  .post('', { query: querySchemas.getGamesBetweenTeams(homeId, awayId) })
+  .then(response => {
+    dispatch(getGame(response.data.data.gamesBetweenTeams[0].gamePk))
+    dispatch({
+      type: actionTypes.GAME_FOUND,
+      payload: response.data.data.gamesBetweenTeams[0]
+    })
+  });
 }
 
-export const getGame = (id) => (dispatch, getState) => {
+export const getGame = (id) => (dispatch) => {
   dispatch({
     type: actionTypes.GET_GAME,
-  });common.customFetch(`${common.apiServiceEndpoint}/api/game/${id}`, getState, {
-      method: 'GET',
-    }).then(response => response.json().then(data => {
-      dispatch({
-        type: actionTypes.GAME_LOADED,
-        payload: data
-      })
-  }));
+  });
+  axiosGraphQL
+  .post('', { query: querySchemas.getGame(id) })
+  .then(response => {
+    dispatch({
+      type: actionTypes.GAME_LOADED,
+      payload: response.data.data.game
+    })
+  });
 }

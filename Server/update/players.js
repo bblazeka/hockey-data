@@ -1,26 +1,17 @@
-const { MongoClient } = require("mongodb");
-const db = require('../keys/db.json');
-// Replace the uri string with your MongoDB deployment's connection string.
 const apicomm = require('../comm/apihandler');
-const functions = require('./functions');
 const dbhandler = require('../comm/dbhandler.js');
-const { fetchTeams } = require("./functions");
-
-const client = new MongoClient(db.uri);
 
 async function run() {
 
-  await dbhandler.init();
+  var db = new dbhandler.Database();
+  await db.init();
 
-  await client.connect();
+  var players = await db.getCollection('players').find({}).toArray();
 
   try {
-
-    const database = client.db("hockey-data", { useUnifiedTopology: true });
     
-  var players = await dbhandler.getPlayers();
 
-    const playerCollection = database.collection("players");
+    const playerCollection = db.getCollection("players");
   
     for (let playerTemp of players) {
       var response = await apicomm.nhlApiRequest(`/api/v1/people/${playerTemp.id}`);
@@ -61,7 +52,7 @@ async function run() {
     }
 
   } finally {
-    await client.close();
+    db.closeClient();
   }
 }
 

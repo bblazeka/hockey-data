@@ -37,18 +37,23 @@ type Stats {
   assists: Int
   points: Int
   pim: Int
+  penaltyMinutes: Int
   plusMinus: String
   shots: Int
   hits: Int
   blocked: Int
   faceOffPct: String
+  faceOffWins: Int
+  faceoffTaken: Int
   evenTimeOnIce: String
   powerPlayTimeOnIce: String
   shotPct: String
   gameWinningGoals: Int
   powerPlayGoals: Int
+  powerPlayAssists: Int
   powerPlayPoints: Int
   shortHandedGoals: Int
+  shortHandedAssists: Int
   shortHandedPoints: Int
   shortHandedTimeOnIce: String
   # goalie props

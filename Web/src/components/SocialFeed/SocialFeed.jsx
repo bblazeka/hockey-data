@@ -24,14 +24,14 @@ function SocialFeed(props) {
             </Feed.Label>
             <Feed.Content>
               <Feed.Summary>
-                <Feed.User>{start.user.name} (@{start.user.screen_name})</Feed.User>
-                <Feed.Date>{start.created_at}</Feed.Date>
+                <Feed.User>{start.user.name} (@{start.user.screenName})</Feed.User>
+                <Feed.Date>{start.createdAt}</Feed.Date>
               </Feed.Summary>
               <Feed.Extra>
-                {start.full_text}
+                {start.text}
               </Feed.Extra>
               <Feed.Meta>
-                {start.entities.hashtags.map((hashtag) => {
+                {start.entities.map((hashtag) => {
                   return (
                     <Label key={`${start.user.id}${hashtag.text}`}>
                       {hashtag.text}

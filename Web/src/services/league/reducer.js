@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 
 const defaultAppState = {
-  loaded: false,
+  loading: false,
   players: [],
   roster: [],
   prediction: [],
@@ -32,6 +32,7 @@ const leagueReducer = (state = defaultAppState, action) => {
     case actionTypes.FIND_GAME:
       return {
         ...state,
+        loading: true,
         game: null
       }
     case actionTypes.GAME_LOADED:
@@ -42,7 +43,7 @@ const leagueReducer = (state = defaultAppState, action) => {
     case actionTypes.GAME_FOUND:
       return {
         ...state,
-        game: action.payload
+        loading: false,
       }
     default:
       return state

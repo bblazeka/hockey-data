@@ -17,15 +17,15 @@ async function getLimitStatus() {
 
 async function getTweets(accountScreenName) {
   var params = { screen_name: accountScreenName };
-  res = await client.get('statuses/user_timeline', params);
+  var res = await client.get('statuses/user_timeline', params);
   return (res);
 }
 
 async function searchTweets(q, count, lang, result_type) {
-  var params = { q, count, lang, result_type };
-  params.tweet_mode = "extended";
+  var tweet_mode = "extended";
+  var params = { q, count, lang, result_type, tweet_mode };
   try {
-    res = await client.get('search/tweets', params);
+    var res = await client.get('search/tweets', params);
     return res;
   }
   catch (error) {

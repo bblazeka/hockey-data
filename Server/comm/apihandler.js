@@ -1,5 +1,5 @@
-const axios = require('axios');
-const db = require('../keys/newsapi.json');
+var axios = require('axios');
+const newsapi = require('../keys/newsapi.json');
 
 async function nhlApiRequest(path) {
   const response = await axios.get(`http://statsapi.web.nhl.com${path}`);
@@ -7,7 +7,7 @@ async function nhlApiRequest(path) {
 }
 
 async function newsApiRequest(path) {
-  const response = await axios.get(`http://newsapi.org${path}&apiKey=${db.key}`);
+  const response = await axios.get(`http://newsapi.org${path}&apiKey=${newsapi.key}`);
   return response.data;
 }
 

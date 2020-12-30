@@ -1,30 +1,41 @@
+import axios from 'axios';
+
 export const apiServiceEndpoint = 'http://localhost:52700';
 
 export const customFetch = (input, getState, init) => {
-    if (isNullOrUndefined(input) || isNullOrUndefined(getState) || isNullOrUndefined(init)) {
-        return;
-    }
+  if (isNullOrUndefined(input) || isNullOrUndefined(getState) || isNullOrUndefined(init)) {
+      return;
+  }
 
-    /*const state = getState();
+  /*const state = getState();
 
-    const accessToken = state.app.loginData.accessToken;
-    const userId = state.app.loginData.userId;
-    const loginType = state.app.loginData.loginType;*/
+  const accessToken = state.app.loginData.accessToken;
+  const userId = state.app.loginData.userId;
+  const loginType = state.app.loginData.loginType;*/
 
-    const innerInit = {
-        mode: 'cors',
-        headers: {
-            'Accept': 'application/json; charset=utf-8',
-            'Content-Type': 'application/json; charset=utf-8',
-            /*'AccessToken': accessToken,
-            'UserId': userId,
-            'LoginType': loginType*/
-        },
-        ...init
-    };
+  const innerInit = {
+      mode: 'cors',
+      headers: {
+          'Accept': 'application/json; charset=utf-8',
+          'Content-Type': 'application/json; charset=utf-8',
+          /*'AccessToken': accessToken,
+          'UserId': userId,
+          'LoginType': loginType*/
+      },
+      ...init
+  };
 
-    return fetch(input, innerInit);
+  return fetch(input, innerInit);
 }
+
+export const axiosGraphQL = axios.create({
+  baseURL: 'http://localhost:4000/graphql',
+  /*headers: {
+    Authorization: `bearer ${
+      process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
+    }`,
+  },*/
+});
 
 export function generateSemanticUICountryId(countryName) {
   switch (countryName)

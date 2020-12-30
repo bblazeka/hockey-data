@@ -1,31 +1,32 @@
-import * as common from '../../util/common';
+import { axiosGraphQL } from '../../util/common';
 import * as actionTypes from './actionTypes';
+import * as querySchemas from './querySchemas';
 
 
-export const getTweets = (query) => (dispatch, getState) => {
+export const getTweets = (query) => (dispatch) => {
   dispatch({
     type: actionTypes.GET_TWEETS,
   });
-  common.customFetch(`${common.apiServiceEndpoint}/api/tweets/search/${query}`, getState, {
-    method: 'GET',
-  }).then(response => response.json().then(data => {
-    dispatch({
-      type: actionTypes.TWEETS_LOADED,
-      payload: data.statuses
-    })
-  }));
+  axiosGraphQL
+    .post('', { query: querySchemas.getTweets(query) })
+    .then(response => {
+      dispatch({
+        type: actionTypes.TWEETS_LOADED,
+        payload: response.data.data.tweets
+      })
+    });
 }
 
-export const getNews = (query) => (dispatch, getState) => {
+export const getNews = (query) => (dispatch) => {
   dispatch({
     type: actionTypes.GET_NEWS,
   });
-  common.customFetch(`${common.apiServiceEndpoint}/api/news?query=${query}`, getState, {
-    method: 'GET',
-  }).then(response => response.json().then(data => {
-    dispatch({
-      type: actionTypes.NEWS_LOADED,
-      payload: data
-    })
-  }));
+  axiosGraphQL
+    .post('', { query: querySchemas.getNews(query) })
+    .then(response => {
+      dispatch({
+        type: actionTypes.NEWS_LOADED,
+        payload: response.data.data.articles
+      })
+    });
 }

@@ -26,13 +26,16 @@ class Game extends Component {
 
   static getDerivedStateFromProps(props, state) {
     const { id } = props.match.params;
+    console.log(props.game, id)
     if (!isNullOrUndefined(props.game) && props.game.id !== state.id) {
+      console.log("option 1", props.game)
       props.history.push(`/game/${props.game.id}`);
       return {
         id: props.game.id
       }
     }
-    if (isNullOrUndefined(props.game) && id !== 0) {
+    if (isNullOrUndefined(props.game) && parseInt(id) !== 0) {
+      console.log("option 2")
       props.getGame(id)
       return {
         id,
@@ -54,7 +57,7 @@ class Game extends Component {
   }
 
   fetch() {
-    this.props.findGame("2019-10-16", this.state.home, this.state.away)
+    this.props.findGame(this.state.home, this.state.away)
   }
 
   TeamRender(team) {
@@ -84,7 +87,8 @@ class Game extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {Object.values(team.players).filter((player) => { return player.position.code !== 'G' && !isNullOrUndefined(player.stats.skaterStats) }).map((player) => {
+            {team.skaters.map((player) => {
+              console.log(player)
               return (<Table.Row key={player.person.fullName}>
                 <Table.Cell><Link to={routes.player + "/" + player.person.id}><Header as="h4">{player.person.fullName}
                   <Header.Subheader>
@@ -121,8 +125,7 @@ class Game extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {Object.values(team.players).filter((player) => { return player.position.code === 'G' && !isNullOrUndefined(player.stats) })
-              .map((player) => {
+            {team.goalies.map((player) => {
                 return (<Table.Row key={player.person.fullName}>
                   <Table.Cell><Link to={routes.player + "/" + player.person.id}><Header as="h4">{player.person.fullName}
                     <Header.Subheader>
@@ -159,6 +162,7 @@ class Game extends Component {
   }
 
   render() {
+    console.log("render")
     const { game, dropdownTeams } = this.props;
     if (!dropdownTeams) {
       return (<Loader></Loader>);
@@ -238,7 +242,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  findGame: (date, home, away) => dispatch(actions.findGame(date, home, away)),
+  findGame: (home, away) => dispatch(actions.findGame(home, away)),
   getGame: (id) => dispatch(actions.getGame(id)),
 })
 
