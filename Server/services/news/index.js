@@ -22,7 +22,7 @@ async function getTweets({query})
   for(let status of tweetsResponse.statuses)
   {
     tweets.push({
-      id: status.id,
+      id: status.id_str,
       text: status.full_text,
       user: {
         id: status.user.id,

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import DatePicker from "react-datepicker";
 
@@ -8,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import * as actions from '../../services/league';
 import './Schedule.css';
 import Loader from '../../components/Loader/Loader';
+import routes from '../../routes';
 import { covertDateTimeToString, getDatesArray } from '../../util/converter';
 
 import { Table, Button } from 'semantic-ui-react';
@@ -16,7 +18,7 @@ import { getLogo } from '../../util/assets';
 class Schedule extends Component {
   constructor(props) {
     super(props)
-    var today = new Date("2021-01-13");
+    var today = new Date();
     var finish = new Date(today);
     finish.setDate(finish.getDate() + 7);
     this.state = {
@@ -39,10 +41,8 @@ class Schedule extends Component {
   };
 
   getScheduleForTimePeriod() {
-    //var start = covertDateTimeToString(this.state.start);
-    //var end = covertDateTimeToString(this.state.end);
-    var start = "2021-01-13";
-    var end = "2021-01-20";
+    var start = covertDateTimeToString(this.state.start);
+    var end = covertDateTimeToString(this.state.end);
     this.props.getSchedule(start, end)
   }
 
@@ -82,7 +82,7 @@ class Schedule extends Component {
               return (
                 <Table.Row key={`games ${element.id}`}>
                   <Table.Cell key={`logo ${element.id}`}>
-                    <img className="logo" src={getLogo(element.id)} alt={`img${element.id}`}></img>
+                    <Link to={`${routes.teams}/${element.id}`}><img className="logo" src={getLogo(element.id)} alt={`img${element.id}`}></img></Link>
                   </Table.Cell>
                   {dates.map((date) => {
                     var game = (element.games.filter(game => game.gameDate && game.gameDate.split("T")[0] === covertDateTimeToString(date)))[0]
