@@ -88,3 +88,17 @@ type Position {
     type: String
     abbreviation: String
 }
+
+type SelectedPlayers {
+  skaters: [SelectedPlayer]
+  goalies: [SelectedPlayer]
+}
+
+type SelectedPlayer {
+  stats: [ComparisonStats]
+  player: Player
+}
+
+type ComparisonStats {
+  splits: [SeasonStats]
+}

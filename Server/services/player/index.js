@@ -21,7 +21,7 @@ async function getPlayer({id}) {
   return player;
 }
 
-async function getPlayerByName(name) {
+async function getPlayerByName({name}) {
   const query = { fullName: new RegExp(name, "i") };
   const players = await db.getCollection("players").find(query).toArray();
   return players;
@@ -39,7 +39,7 @@ async function getPlayers() {
   return items;
 }
 
-async function addSelectedPlayer(id) {
+async function addSelectedPlayer({id}) {
   var myquery = { userId: 0 };
   var newvalues = { $addToSet: { selectedPlayers: parseInt(id) } };
   db.getCollection('profiles').updateOne(myquery, newvalues, function (err, res) {
@@ -47,10 +47,11 @@ async function addSelectedPlayer(id) {
     console.log(`${res.result.nModified} selected players added`);
   });
 
-  return true;
+  var selectedPlayers = await getSelectedPlayers();
+  return selectedPlayers;
 }
 
-async function deleteSelectedPlayer(id) {
+async function deleteSelectedPlayer({id}) {
   var myquery = { userId: 0 };
   var newvalues = { $pull: { selectedPlayers: parseInt(id) } };
   db.getCollection('profiles').updateOne(myquery, newvalues, function (err, res) {
@@ -58,7 +59,36 @@ async function deleteSelectedPlayer(id) {
     console.log(`${res.result.nModified} selected players deleted`);
   });
 
-  return true;
+  var selectedPlayers = await getSelectedPlayers();
+  return selectedPlayers;
+}
+
+async function getSelectedPlayers() {
+  var profiles = await getProfiles();
+  var skaters = [];
+  var goalies = [];
+  for(playerId of profiles[0].selectedPlayers)
+  {
+    var player = await apicomm.nhlApiRequest(`/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=20192020`);
+    player.player = await getPlayer({id: playerId});
+    if (player.player.primaryPosition.code !== "G")
+    {
+      skaters.push(player)
+    }
+    else
+    {
+      goalies.push(player)
+    }
+  }
+  return {
+    "skaters": skaters,
+    "goalies": goalies,
+  };
+}
+
+async function getProfiles() {
+  const items = await db.getCollection('profiles').find({}).toArray();
+  return items;
 }
 
 module.exports = {
@@ -67,6 +97,7 @@ module.exports = {
   getPlayers,
   getPlayersFromTeam,
   getPlayerByName,
+  getSelectedPlayers,
   addSelectedPlayer,
   deleteSelectedPlayer,
 }

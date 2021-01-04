@@ -42,8 +42,8 @@ const playerReducer = (state = defaultAppState, action) => {
         suggestions: action.payload.map((result) => {
           return {
             "title": result.fullName,
-            "description": result.currentTeam.name,
-            "image": getLogo(result.currentTeam.id),
+            "description": result.currentTeam ? result.currentTeam.name : "Unknown",
+            "image": result.currentTeam ? getLogo(result.currentTeam.id) : 0,
             "id": result.id,
           }
         }),

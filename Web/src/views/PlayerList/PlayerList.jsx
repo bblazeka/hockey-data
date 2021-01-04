@@ -6,6 +6,8 @@ import * as actions from '../../services/player';
 import './PlayerList.css';
 
 import { Search } from 'semantic-ui-react';
+import { isNullOrUndefined } from '../../util/common';
+import { Loader } from '../../components';
 
 const initialState = { isLoading: false, results: [], value: '' }
 
@@ -38,13 +40,16 @@ class PlayerList extends Component {
 
   handleResultSelect = (e, { result }) => {
     this.setState({ value: result.title });
-    this.props.searchPlayer(result.title);
     this.props.addPlayer(result.id);
   }
 
   render() {
     const { selectedPlayers, suggestions } = this.props;
     const { isLoading, value } = this.state;
+    if (isNullOrUndefined(selectedPlayers))
+    {
+      return (<Loader />)
+    }
     return (
       <div>
         <Search
@@ -79,7 +84,6 @@ const mapDispatchToProps = dispatch => ({
   getSelectedPlayers: () => dispatch(actions.getSelectedPlayers()),
   removePlayer: (id) => dispatch(actions.removePlayer(id)),
   searchBasicPlayer: (name) => dispatch(actions.searchBasicPlayer(name)),
-  searchPlayer: (name) => dispatch(actions.searchPlayer(name, false)),
   addPlayer: (id) => dispatch(actions.addPlayer(id)),
   deletePlayer: (id) => dispatch(actions.deletePlayer(id)),
 })

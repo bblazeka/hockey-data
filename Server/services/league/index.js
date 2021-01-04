@@ -37,12 +37,6 @@ async function gamesBetweenTeams({homeId, awayId}) {
   return items;
 }
 
-
-async function getProfiles() {
-  const items = await db.getCollection('profiles').find({}).toArray();
-  return items;
-}
-
 async function getGame({gameId}) {
   const linescore = await apicomm.nhlApiRequest(`/api/v1/game/${gameId}/linescore`);
   var result = await apicomm.nhlApiRequest(`/api/v1/game/${gameId}/boxscore`);
@@ -58,7 +52,6 @@ async function getGame({gameId}) {
 module.exports = {
   init,
   gamesBetweenTeams,
-  getProfiles,
   getSchedule,
   getStandings,
   getGame,

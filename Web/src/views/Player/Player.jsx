@@ -56,7 +56,8 @@ class Player extends Component {
 
   handleResultSelect = (e, { result }) => {
     this.setState({ value: result.title });
-    this.props.searchPlayer(result.title);
+    console.log(result)
+    this.props.getPlayer(result.id);
   }
 
   render() {
@@ -136,7 +137,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getPlayer: (id) => dispatch(actions.getPlayer(id)),
   searchBasicPlayer: (name) => dispatch(actions.searchBasicPlayer(name)),
-  searchPlayer: (name) => dispatch(actions.searchPlayer(name, true)),
   getNews: (query) => dispatch(getNews(query)),
   getTweets: (query) => dispatch(getTweets(query))
 })

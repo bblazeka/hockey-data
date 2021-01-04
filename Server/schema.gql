@@ -2,6 +2,8 @@ scalar Date
   
   type Query {
     player(id: Int): Player
+    searchPlayerByName(name: String): [Player]
+    selectedPlayers: SelectedPlayers
     team(id: Int): DetailedTeam
     teams: [Team]
     articles(query: String): [Article]
@@ -10,6 +12,11 @@ scalar Date
     standings(season: String): [Record]
     gamesBetweenTeams(homeId: Int, awayId: Int): [BasicGame]
     game(gameId: Int): Game
+  }
+
+  type Mutation {
+    addSelectedPlayer(id: Int): SelectedPlayers
+    deleteSelectedPlayer(id: Int): SelectedPlayers
   }
 
   type Team {
