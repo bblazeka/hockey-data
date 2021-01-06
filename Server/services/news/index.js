@@ -41,8 +41,19 @@ async function getTweets({query})
   return tweets;
 }
 
+async function getUserTweets({name}) {
+  var result = await twtcomm.getTweets(name);
+  return result;
+}
+
+async function getTwitterStatus() {
+  var result = await twtcomm.getLimitStatus();
+  return result;
+}
+
 module.exports = {
   init,
   getArticles,
+  getUserTweets,
   getTweets,
 }

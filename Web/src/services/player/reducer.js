@@ -36,7 +36,7 @@ const playerReducer = (state = defaultAppState, action) => {
         player: action.payload,
         loadingPlayer: false,
       }
-    case 'BASIC_PLAYER_LOADED':
+    case actionTypes.BASIC_PLAYER_LOADED:
       return {
         ...state,
         suggestions: action.payload.map((result) => {

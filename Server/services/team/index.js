@@ -36,6 +36,11 @@ async function getTeams() {
   return teams.filter(t => t.active).sort().sort((a, b) => (a.name > b.name) ? 1 : -1);
 }
 
+async function getTeamSchedule({id, start, end}) {
+  var result = await apicomm.nhlApiRequest(`/api/v1/schedule?teamId=${id}&startDate=${start}&endDate=${end}`)
+  return result
+}
+
 module.exports = {
   init,
   getTeam,
