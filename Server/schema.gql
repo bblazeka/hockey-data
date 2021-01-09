@@ -8,6 +8,7 @@ scalar Date
     teams: [Team]
     articles(query: String): [Article]
     tweets(query: String): [Tweet]
+    twitterApiStatus: TwitterStats
     schedule(start: String, end: String): [ScheduleTeam]
     standings(season: String): [Record]
     gamesBetweenTeams(homeId: Int, awayId: Int): [BasicGame]

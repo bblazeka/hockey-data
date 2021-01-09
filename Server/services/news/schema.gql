@@ -1,3 +1,7 @@
+  type TwitterStats {
+    requests: Int
+  }
+
   type Article {
     source: Source
     title: String

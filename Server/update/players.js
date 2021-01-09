@@ -6,20 +6,21 @@ async function run() {
   var db = new dbhandler.Database();
   await db.init();
 
-  var players = await db.getCollection('players').find({}).toArray();
 
   try {
-    
 
     const playerCollection = db.getCollection("players");
-  
+
+    var players = await playerCollection.find({ rookie: true }).toArray();
+
+    console.log(`updating ${players.length} players...`)
     for (let playerTemp of players) {
       var response = await apicomm.nhlApiRequest(`/api/v1/people/${playerTemp.id}`);
       var player = response.people[0]
 
       const options = { upsert: true };
       const filter = { id: player.id };
-  
+
       const updateDoc = {
         $set: {
           fullName: player.fullName,

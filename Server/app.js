@@ -33,6 +33,7 @@ var root = {
   deleteSelectedPlayer: player.deleteSelectedPlayer,
   articles: news.getArticles,
   tweets: news.getTweets,
+  twitterApiStatus: news.getTwitterApiStatus,
   schedule: league.getSchedule,
   standings: league.getStandings,
   gamesBetweenTeams: league.gamesBetweenTeams,

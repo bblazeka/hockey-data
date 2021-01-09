@@ -46,8 +46,9 @@ async function getUserTweets({name}) {
   return result;
 }
 
-async function getTwitterStatus() {
+async function getTwitterApiStatus() {
   var result = await twtcomm.getLimitStatus();
+  console.log(result.resources.tweets)
   return result;
 }
 
@@ -56,4 +57,5 @@ module.exports = {
   getArticles,
   getUserTweets,
   getTweets,
+  getTwitterApiStatus,
 }
