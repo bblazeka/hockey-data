@@ -48,7 +48,6 @@ async function getUserTweets({name}) {
 
 async function getTwitterApiStatus() {
   var result = await twtcomm.getLimitStatus();
-  console.log(result.resources.tweets)
   return result;
 }
 

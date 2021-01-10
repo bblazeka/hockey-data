@@ -56,7 +56,6 @@ class Player extends Component {
 
   handleResultSelect = (e, { result }) => {
     this.setState({ value: result.title });
-    console.log(result)
     this.props.getPlayer(result.id);
   }
 

@@ -9,6 +9,7 @@ import * as actions from '../../services/league';
 import { getLogo } from '../../util/assets';
 import { Loader } from '../../components';
 import { isNullOrUndefined, formatDecimals } from '../../util/common';
+import './Game.css';
 
 class Game extends Component {
   constructor(props) {
@@ -26,16 +27,13 @@ class Game extends Component {
 
   static getDerivedStateFromProps(props, state) {
     const { id } = props.match.params;
-    console.log(props.game, id)
     if (!isNullOrUndefined(props.game) && props.game.id !== state.id) {
-      console.log("option 1", props.game)
       props.history.push(`/game/${props.game.id}`);
       return {
         id: props.game.id
       }
     }
     if (isNullOrUndefined(props.game) && parseInt(id) !== 0) {
-      console.log("option 2")
       props.getGame(id)
       return {
         id,
@@ -88,7 +86,6 @@ class Game extends Component {
           </Table.Header>
           <Table.Body>
             {team.skaters.map((player) => {
-              console.log(player)
               return (<Table.Row key={player.person.fullName}>
                 <Table.Cell><Link to={routes.player + "/" + player.person.id}><Header as="h4">{player.person.fullName}
                   <Header.Subheader>
@@ -162,19 +159,21 @@ class Game extends Component {
   }
 
   render() {
-    console.log("render")
     const { game, dropdownTeams } = this.props;
     if (!dropdownTeams) {
       return (<Loader></Loader>);
     }
+    console.log(game)
     return (
       <div>
         <Segment>
           <Dropdown
+            placeholder='Home team'
             onChange={this.changeHome}
             options={dropdownTeams.map(el => { return { "key": el.id, "text": el.name, "value": el.id, "logo": { "avatar": true, "logo": getLogo(el.id) } } })
             } />
           <Dropdown
+            placeholder='Away team'
             onChange={this.changeAway}
             options={dropdownTeams.map(el => { return { "key": el.id, "text": el.name, "value": el.id, "logo": { "avatar": true, "logo": getLogo(el.id) } } })
             } />
@@ -188,7 +187,7 @@ class Game extends Component {
                 <Statistic.Value>{`${game.linescore.teams.home.goals}:${game.linescore.teams.away.goals}`}</Statistic.Value>
                 <Statistic.Label>{game.linescore.currentPeriodTimeRemaining}</Statistic.Label>
               </Statistic>
-              {game.teams.away.team.name}
+              {game.teams.away.team.name} <br />
               {game.linescore.teams.home.shotsOnGoal} SOG {game.linescore.teams.away.shotsOnGoal}
             </Grid.Column>
             <Grid.Column floated='right' width={5}>

@@ -8,7 +8,7 @@ async function run() {
   var db = new dbhandler.Database();
   await db.init();
 
-  await fetchTeams().then((res) => teams = res)
+  var teams = await fetchTeams()
   try {
 
     const collection = db.getCollection("teams");
@@ -17,12 +17,17 @@ async function run() {
       const options = { upsert: true };
       const filter = { id: team.id };
 
-
       const updateDoc = {
         $set: {
           name: team.name,
           active: team.active,
           abbreviation: team.abbreviation,
+          locationName: team.locationName,
+          firstYearOfPlay: parseInt(team.firstYearOfPlay),
+          franchiseId: team.franchiseId,
+          division: team.division,
+          conference: team.conference,
+          venue: team.venue,
           lastUpdate: new Date()
         },
       };

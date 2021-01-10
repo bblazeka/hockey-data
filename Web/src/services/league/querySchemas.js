@@ -90,7 +90,7 @@ export function getGame(id) {
         home {
           skaters {
             jerseyNumber,
-            person { fullName },
+            person { id, fullName },
             position { code, name }
             stats {
               skaterStats { timeOnIce, assists, goals, points, shots, hits, blocked, plusMinus, penaltyMinutes, faceOffWins, faceoffTaken, powerPlayGoals, powerPlayAssists, shortHandedGoals, shortHandedAssists, shortHandedTimeOnIce, powerPlayTimeOnIce }
@@ -98,7 +98,7 @@ export function getGame(id) {
           },
           goalies {
             jerseyNumber,
-            person { fullName },
+            person { id, fullName },
             position { code, name }
             stats { 
               goalieStats  { timeOnIce, shots, saves, savePercentage }
@@ -113,7 +113,7 @@ export function getGame(id) {
         away {
           skaters {
             jerseyNumber,
-            person { fullName },
+            person { id, fullName },
             position { code, name }
             stats {
               skaterStats { timeOnIce, assists, goals, points, shots, hits, blocked, plusMinus, penaltyMinutes, faceOffWins, faceoffTaken, powerPlayGoals, powerPlayAssists, shortHandedGoals, shortHandedAssists, shortHandedTimeOnIce, powerPlayTimeOnIce }
@@ -121,7 +121,7 @@ export function getGame(id) {
           },
           goalies {
             jerseyNumber,
-            person { fullName },
+            person { id, fullName },
             position { code, name }
             stats { 
               goalieStats  { timeOnIce, shots, saves, savePercentage }
