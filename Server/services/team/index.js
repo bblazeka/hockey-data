@@ -17,7 +17,6 @@ async function getTeam({id}) {
   const query = { id: id };
   const options = {
     sort: { id: -1 },
-    projection: { _id: 0, id: 1, name: 1, abbreviation: 1 },
   };
   const team = await collection.findOne(query, options);
 

@@ -14,7 +14,8 @@ export function getTeam(id)
     team(id: ${id}) { 
       id, 
       name, 
-      abbreviation, 
+      abbreviation,
+      venue { name, },
       goalies {
           id,
           fullName,

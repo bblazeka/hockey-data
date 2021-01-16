@@ -26,5 +26,6 @@ yarn-error.log*
 semantic/dist/
 semantic/tasks/
 
-# ignore assets
+# ignore assets and keys
 assets/
+keys.json

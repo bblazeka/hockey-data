@@ -9,7 +9,9 @@ const client = new MongoClient(db.uri);
 
 async function run() {
 
-  await dbhandler.init();
+
+  var db = new dbhandler.Database();
+  await db.init();
 
   var dates = []
 
@@ -26,11 +28,11 @@ async function run() {
       {
         const options = { upsert: true };
         const filter = { gamePk: game.gamePk };
-
         const updateDoc = {
           $set: {
             gameType: game.gameType,
             season: game.season,
+            date: date.date,
             gameDate: new Date(game.gameDate),
             teams: null,
             home: game.teams.home,

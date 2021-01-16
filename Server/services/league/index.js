@@ -16,9 +16,9 @@ async function getStandings({season}){
 async function getSchedule({start, end}) {
   var teams = await (await db.getCollection('teams').find({ "active": true }).toArray()).sort((a, b) => (a.name > b.name) ? 1 : (a.name < b.name) ? -1 : 0 );
   await db.getCollection('games').find({
-    "gameDate": {
-      $gt: new Date(`${start} 00:00:00`),
-      $lt: new Date( `${end} 00:00:00`)
+    "date": {
+      $gte: `${start}`,
+      $lte: `${end}`
     }
   }).toArray().then(games => {
     for (let team of teams) {

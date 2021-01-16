@@ -13,6 +13,7 @@ scalar Date
     standings(season: String): [Record]
     gamesBetweenTeams(homeId: Int, awayId: Int): [BasicGame]
     game(gameId: Int): Game
+    geocode(query: String): [Location]
   }
 
   type Mutation {
@@ -26,4 +27,17 @@ scalar Date
     name: String
     active: Boolean
     rosterResponse: [Player]
+  }
+
+  type Venue {
+    id: Int,
+    name: String,
+    city: String,
+    timeZone: TimeZone
+  }
+
+  type TimeZone {
+    id: String,
+    offset: Int,
+    tz: String
   }

@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import * as actions from '../../services/team';
 import './Team.css';
 import Loader from '../../components/Loader/Loader';
-import { NewsFeed, RosterGrid, SocialFeed } from '../../components';
+import { Map, NewsFeed, RosterGrid, SocialFeed } from '../../components';
 import { getLogo } from '../../util/assets';
 
 import { Header } from 'semantic-ui-react';
 import { getNews, getTweets } from '../../services/news';
+import { geocode } from '../../services/util';
 
 class Team extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class Team extends Component {
     }
     if (team !== null && state.teamQuery !== team.name)
     {
+      props.geocode(team.venue.name)
       props.getNews(team.name);
       props.getTweets(team.name);
       return {
@@ -41,7 +43,7 @@ class Team extends Component {
   }
 
   render() {
-    const { team, tweets, news } = this.props;
+    const { team, tweets, news, location } = this.props;
     if (!team) {
       return (<div><Loader></Loader></div>)
     }
@@ -51,6 +53,7 @@ class Team extends Component {
         <RosterGrid team={team} />
         <NewsFeed news={news}></NewsFeed>
         <SocialFeed tweets={tweets}></SocialFeed>
+        {location && location.center && <Map center={location.center} />}
       </div>);
   }
 }
@@ -60,10 +63,12 @@ const mapStateToProps = state => ({
   tweets: state.news.tweets,
   teams: state.team.teams,
   news: state.news.news,
+  location: state.util.location
 })
 
 const mapDispatchToProps = dispatch => ({
   getTeam: (id) => dispatch(actions.getTeam(id)),
+  geocode: (query) => dispatch(geocode(query)),
   getTweets: (query) => dispatch(getTweets(query)),
   getNews: (query) => dispatch(getNews(query)),
 })

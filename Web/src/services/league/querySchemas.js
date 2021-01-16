@@ -6,6 +6,7 @@ export function getSchedule(start, end) {
     name,
     games {
       gamePk,
+      date,
       gameDate,
       season,
       home { 

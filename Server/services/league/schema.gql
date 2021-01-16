@@ -8,6 +8,7 @@ type ScheduleTeam {
 
 type BasicGame {
   gamePk: Int
+  date: String
   gameDate: Date
   season: String
   home: Opponent

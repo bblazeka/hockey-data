@@ -3,6 +3,7 @@ type DetailedTeam {
     abbreviation: String
     name: String
     active: Boolean
+    venue: Venue
     rosterResponse: [Player]
     goalies: [Player]
     defenders: [Player]

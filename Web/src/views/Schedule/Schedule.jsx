@@ -85,7 +85,7 @@ class Schedule extends Component {
                     <Link to={`${routes.teams}/${element.id}`}><img className="logo" src={getLogo(element.id)} alt={`img${element.id}`}></img></Link>
                   </Table.Cell>
                   {dates.map((date) => {
-                    var game = (element.games.filter(game => game.gameDate && game.gameDate.split("T")[0] === covertDateTimeToString(date)))[0]
+                    var game = (element.games.filter(game => game.date && game.date === covertDateTimeToString(date)))[0]
                     try {
                       const logo = getLogo(game.opponent.team.id)
                       return (

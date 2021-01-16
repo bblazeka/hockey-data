@@ -9,13 +9,15 @@ const team = require('./services/team/index.js');
 const news = require('./services/news/index.js');
 const league = require('./services/league/index.js');
 const player = require('./services/player/index.js');
+const util = require('./services/util/index.js');
 
 var mainSchema = fs.readFileSync('schema.gql', "utf8");
 var leagueSchema = fs.readFileSync('./services/league/schema.gql', "utf8");
 var newsSchema = fs.readFileSync('./services/news/schema.gql', "utf8");
 var teamSchema = fs.readFileSync('./services/team/schema.gql', "utf8");
 var playerSchema = fs.readFileSync('./services/player/schema.gql', "utf8");
-var schemaDefinition = `${mainSchema} ${newsSchema} ${leagueSchema} ${teamSchema} ${playerSchema}`
+var utilSchema = fs.readFileSync('./services/util/schema.gql', "utf8");
+var schemaDefinition = `${mainSchema} ${newsSchema} ${leagueSchema} ${teamSchema} ${playerSchema} ${utilSchema}`
 
 let whitelist = ['http://localhost:3000', 'http://abc.com']
 
@@ -38,6 +40,7 @@ var root = {
   standings: league.getStandings,
   gamesBetweenTeams: league.gamesBetweenTeams,
   game: league.getGame,
+  geocode: util.geocode,
 };
 
 const port = 4000
