@@ -23,6 +23,11 @@ const teamReducer = (state = defaultAppState, action) => {
         ...state,
         teams: action.payload
       }
+      case actionTypes.TEAM_LOCATIONS_LOADED:
+        return {
+          ...state,
+          locations: action.payload
+        }
     case actionTypes.DROPDOWN_TEAMS_LOADED:
       return {
         ...state,

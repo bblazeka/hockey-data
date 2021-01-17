@@ -7,7 +7,7 @@ import Loader from '../../components/Loader/Loader';
 import { Map, NewsFeed, RosterGrid, SocialFeed } from '../../components';
 import { getLogo } from '../../util/assets';
 
-import { Header } from 'semantic-ui-react';
+import { Header, Segment } from 'semantic-ui-react';
 import { getNews, getTweets } from '../../services/news';
 import { geocode } from '../../services/util';
 
@@ -30,9 +30,8 @@ class Team extends Component {
         id,
       }
     }
-    if (team !== null && state.teamQuery !== team.name)
-    {
-      props.geocode(team.venue.name)
+    if (team !== null && state.teamQuery !== team.name) {
+      props.geocode(`${team.venue.name} ${team.venue.city}`)
       props.getNews(team.name);
       props.getTweets(team.name);
       return {
@@ -53,7 +52,14 @@ class Team extends Component {
         <RosterGrid team={team} />
         <NewsFeed news={news}></NewsFeed>
         <SocialFeed tweets={tweets}></SocialFeed>
-        {location && location.center && <Map center={location.center} />}
+        {location &&
+          <Segment className="mapComponent">
+            <Map className="mapControl" points={[location]} center={location} zoom={8} />
+            <Header as='h4'>{team.venue.name}
+            <Header.Subheader>{team.venue.city}</Header.Subheader>
+            </Header>
+          </Segment>}
+        <Segment>{team.description}</Segment>
       </div>);
   }
 }

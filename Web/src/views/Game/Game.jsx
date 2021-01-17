@@ -154,7 +154,6 @@ class Game extends Component {
           </Table.Body>
         </Table>
       </Segment>
-
     )
   }
 
@@ -163,7 +162,6 @@ class Game extends Component {
     if (!dropdownTeams) {
       return (<Loader></Loader>);
     }
-    console.log(game)
     return (
       <div>
         <Segment>
@@ -189,6 +187,8 @@ class Game extends Component {
               </Statistic>
               {game.teams.away.team.name} <br />
               {game.linescore.teams.home.shotsOnGoal} SOG {game.linescore.teams.away.shotsOnGoal}
+              Season: {game.gameDate}
+              {game.season}
             </Grid.Column>
             <Grid.Column floated='right' width={5}>
               <List horizontal>
@@ -200,7 +200,7 @@ class Game extends Component {
                   </List.Content>
                 </List.Item>
                 {game.linescore.periods && game.linescore.periods.map(period => {
-                  return (<List.Item key={`${period.ordinalNum}${period.home}`}><List.Content><List.Header>{period.home.goals}</List.Header>{period.home.shotsOnGoal}</List.Content>
+                  return (<List.Item key={`${period.num}${period.home}`}><List.Content><List.Header>{period.home.goals}</List.Header>{period.home.shotsOnGoal}</List.Content>
                   </List.Item>);
                 })}
               </List>
@@ -214,7 +214,7 @@ class Game extends Component {
                   </List.Content>
                 </List.Item>
                 {game.linescore.periods && game.linescore.periods.map(period => {
-                  return (<List.Item key={`${period.ordinalNum}${period.away}`}><List.Content><List.Header>{period.away.goals}</List.Header>{period.away.shotsOnGoal}</List.Content>
+                  return (<List.Item key={`${period.num}${period.away}`}><List.Content><List.Header>{period.away.goals}</List.Header>{period.away.shotsOnGoal}</List.Content>
                   </List.Item>);
                 })}
               </List>

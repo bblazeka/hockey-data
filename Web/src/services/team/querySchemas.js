@@ -8,14 +8,24 @@ export function getTeams()
   }`
 };
 
+export function getTeamLocations()
+{
+  return `{
+    teamLocations {
+      center
+    }
+  }`
+};
+
 export function getTeam(id)
 {
   return `{
     team(id: ${id}) { 
       id, 
-      name, 
+      name,
+      description,
       abbreviation,
-      venue { name, },
+      venue { name, city },
       goalies {
           id,
           fullName,

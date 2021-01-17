@@ -43,7 +43,7 @@ const leagueReducer = (state = defaultAppState, action) => {
     case actionTypes.GAME_FOUND:
       return {
         ...state,
-        loading: false,
+        loading: false
       }
     default:
       return state

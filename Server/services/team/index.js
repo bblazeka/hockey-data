@@ -1,4 +1,6 @@
 const { Database } = require("../../comm/dbhandler");
+const apicomm = require('../../comm/apihandler');
+const util = require('../util/index.js');
 
 var db = new Database();
 
@@ -26,6 +28,7 @@ async function getTeam({id}) {
     team.goalies = team.rosterResponse.filter(p => p.primaryPosition.type == "Goalie")
     team.defenders = team.rosterResponse.filter(p => p.primaryPosition.type == "Defenseman")
     team.forwards = team.rosterResponse.filter(p => p.primaryPosition.type == "Forward")
+    team.description = (await apicomm.wikiApiRequest(team.name)).extract;
   }
   return team;
 }
@@ -33,6 +36,15 @@ async function getTeam({id}) {
 async function getTeams() {
   var teams = await db.getCollection('teams').find({}).toArray();
   return teams.filter(t => t.active).sort().sort((a, b) => (a.name > b.name) ? 1 : -1);
+}
+
+async function getTeamLocations() {
+  var teams = await getTeams();
+  var response = await teams.map(async (team) => {
+    var location = await util.geocode({query:`${team.venue.name} ${team.venue.city}`});
+    return location[0];
+  });
+  return response;
 }
 
 async function getTeamSchedule({id, start, end}) {
@@ -44,4 +56,5 @@ module.exports = {
   init,
   getTeam,
   getTeams,
+  getTeamLocations,
 }

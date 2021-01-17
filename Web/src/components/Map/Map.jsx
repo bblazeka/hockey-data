@@ -2,8 +2,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-import { Segment } from 'semantic-ui-react';
-
 import keys from '../../util/keys.json';
 import './Map.css';
 
@@ -14,24 +12,27 @@ const Map = (props) => {
 
   const [, setLng] = useState(5);
   const [, setLat] = useState(34);
-  const [zoom, setZoom] = useState(10);
+  const [zoom, setZoom] = useState(props.zoom);
 
   // Initialize map when component mounts
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: props.center,
+      center: props.center.center,
       zoom: zoom
     });
 
     // Add navigation control (the +/- zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-    var marker = new mapboxgl.Marker({
-      draggable: false
-      }).setLngLat(props.center)
-      .addTo(map);
+    props.points.forEach((point) => {
+      new mapboxgl.Marker({
+        draggable: false
+      }).setLngLat(point.center)
+        .addTo(map);
+    });
+
 
     map.on('move', () => {
       setLng(map.getCenter().lng.toFixed(4));
@@ -44,9 +45,9 @@ const Map = (props) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Segment>
+    <div className={`${props.className}`}>
       <div className='mapContainer' ref={mapContainerRef} />
-    </Segment>
+    </div>
   );
 };
 

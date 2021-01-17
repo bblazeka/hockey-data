@@ -3,21 +3,23 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import * as actions from '../../services/league';
+import * as teamActions from '../../services/team';
 import './Standings.css';
-import Loader from '../../components/Loader/Loader';
+import {Loader, Map} from '../../components';
 import routes from '../../routes';
 import { getLogo } from '../../util/assets';
 
-import { Grid, Header, Table } from 'semantic-ui-react';
+import { Grid, Header, Segment, Table } from 'semantic-ui-react';
 
 class Standings extends Component {
   constructor(props) {
     super(props)
     this.props.getStandings()
+    this.props.getTeamLocations()
   }
 
   render() {
-    const { standings } = this.props;
+    const { locations, standings } = this.props;
     if (!standings) {
       return (<div><Loader></Loader></div>)
     }
@@ -68,7 +70,9 @@ class Standings extends Component {
               </Table></Grid.Column>)
         })}
         </Grid>
-
+        <Segment>
+          {locations && <Map className="mapControl" center={{center: [-102.131087,39.509726]}} points={locations} zoom={3} />}
+        </Segment>
       </div>
     );
   }
@@ -76,10 +80,12 @@ class Standings extends Component {
 
 const mapStateToProps = state => ({
   standings: state.league.standings,
+  locations: state.team.locations,
 })
 
 const mapDispatchToProps = dispatch => ({
-  getStandings: () => dispatch(actions.getStandings())
+  getStandings: () => dispatch(actions.getStandings()),
+  getTeamLocations: () => dispatch(teamActions.getTeamLocations()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Standings);

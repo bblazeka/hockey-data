@@ -53,6 +53,7 @@ class App extends Component {
           <div>Made using <a href="https://semantic-ui.com/">Semantic UI</a></div>
           <div>Logos: <a href="https://www.puckmarks.net/nhllogos">Puckmarks</a></div>
           <div>Icons made by <a href="https://www.flaticon.com/authors/prettycons" title="prettycons">prettycons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+          <div>Mapbox for maps</div>
         </footer>
       </div>
     );

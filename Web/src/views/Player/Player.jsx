@@ -121,6 +121,7 @@ class Player extends Component {
         <Tab panes={panes} />
         <NewsFeed news={news}></NewsFeed>
         <SocialFeed tweets={tweets}></SocialFeed>
+        <Segment>{player.description}</Segment>
       </div>);
   }
 }

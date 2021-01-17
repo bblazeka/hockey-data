@@ -40,6 +40,9 @@ async function gamesBetweenTeams({homeId, awayId}) {
 async function getGame({gameId}) {
   const linescore = await apicomm.nhlApiRequest(`/api/v1/game/${gameId}/linescore`);
   var result = await apicomm.nhlApiRequest(`/api/v1/game/${gameId}/boxscore`);
+  var dbGame = (await db.getCollection('games').find({ "gamePk": gameId }).toArray())[0];
+  result.gameDate = dbGame.gameDate;
+  result.season = dbGame.season;
   result.id = gameId;
   result.linescore = linescore;
   result.teams.home.skaters = Object.values(result.teams.home.players).filter((player) => { return player.position.code !== 'G' && player.position.code !== 'N/A' && player.stats.skaterStats !== null })

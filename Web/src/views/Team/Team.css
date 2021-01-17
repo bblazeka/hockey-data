@@ -5,3 +5,11 @@
 td {
   padding: .51429em .51429em;
 }
+
+.mapComponent {
+  display: flex;
+}
+
+.mapControl {
+  width: 50%;
+}

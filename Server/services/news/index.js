@@ -12,7 +12,7 @@ function init(database)
 async function getArticles({query})
 {
   var newsResponse = await apicomm.newsApiRequest(`/v2/everything?q=${query}&language=en&sortBy=popularity`);
-  return newsResponse.articles;
+  return newsResponse.articles.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 }
 
 async function getTweets({query})

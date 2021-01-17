@@ -17,6 +17,20 @@ export const getTeam = (id) => (dispatch) => {
     });
 }
 
+export const getTeamLocations = () => (dispatch) => {
+  dispatch({
+    type: actionTypes.GET_TEAM_LOCATIONS,
+  });
+  axiosGraphQL
+    .post('', { query: querySchemas.getTeamLocations() })
+    .then(response => {
+      dispatch({
+        type: actionTypes.TEAM_LOCATIONS_LOADED,
+        payload: response.data.data.teamLocations
+      })
+    });
+}
+
 export const getTeams = () => (dispatch) => {
   dispatch({
     type: actionTypes.GET_TEAMS,

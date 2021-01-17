@@ -39,7 +39,8 @@ export function getSkater(id) {
     player(id: ${id}) { 
       id,
       jerseyNumber,
-      fullName, 
+      fullName,
+      description,
       nationality,
       birthCity,
       birthDate,
@@ -111,6 +112,7 @@ export function getGoalie(id) {
       jerseyNumber,
       fullName, 
       nationality,
+      description,
       birthCity,
       birthDate,
       primaryPosition {

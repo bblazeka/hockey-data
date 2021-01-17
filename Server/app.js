@@ -28,6 +28,7 @@ var schema = buildSchema(schemaDefinition);
 var root = {
   team: team.getTeam,
   teams: team.getTeams,
+  teamLocations: team.getTeamLocations,
   player: player.getPlayer,
   searchPlayerByName: player.getPlayerByName,
   selectedPlayers: player.getSelectedPlayers,

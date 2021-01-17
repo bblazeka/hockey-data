@@ -17,8 +17,15 @@ async function mapboxApiRequest(query) {
   return response.data;
 }
 
+async function wikiApiRequest(query) {
+  const response = await axios.get(`https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=${encodeURIComponent(query)}`);
+  var pages = response.data.query.pages;
+  return pages[Object.keys(pages)[0]];
+}
+
 module.exports = {
   nhlApiRequest,
   newsApiRequest,
   mapboxApiRequest,
+  wikiApiRequest,
 }

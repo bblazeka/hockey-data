@@ -1,5 +1,6 @@
 type Player {
     id: Int
+    description: String
     fullName: String
     jerseyNumber: Int
     active: Boolean

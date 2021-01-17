@@ -7,8 +7,6 @@ export function getSchedule(start, end) {
     games {
       gamePk,
       date,
-      gameDate,
-      season,
       home { 
         team { 
           id, 
@@ -78,7 +76,8 @@ export function getStandings(season) {
 export function getGamesBetweenTeams(homeId,awayId) {
   return`{
     gamesBetweenTeams(homeId: ${homeId}, awayId: ${awayId}){ 
-        gamePk
+        gamePk,
+        gameDate
       }
   }`
 }
@@ -87,6 +86,8 @@ export function getGame(id) {
   return`{
     game(gameId: ${id}){ 
         id,
+        gameDate,
+        season,
       teams {
         home {
           skaters {
@@ -136,9 +137,7 @@ export function getGame(id) {
         }
       }
       officials {
-        official {
-          fullName
-        },
+        official { id, fullName },
         officialType
       },
       linescore {

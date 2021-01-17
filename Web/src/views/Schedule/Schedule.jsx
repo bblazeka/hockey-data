@@ -90,7 +90,7 @@ class Schedule extends Component {
                       const logo = getLogo(game.opponent.team.id)
                       return (
                         <Table.Cell
-                          key={`opp ${element.id}${game.gameDate}`}
+                          key={`opp ${element.id}${game.date}`}
                           className={element.id === game.home.team.id ? 'home-game' : 'away-game'}
                         >
                           <img className="logo" src={logo} alt={`img${game.gameDate}${element.id}`}></img>

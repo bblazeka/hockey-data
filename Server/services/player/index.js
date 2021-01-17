@@ -18,6 +18,7 @@ async function getPlayer({id}) {
   var result = await apicomm.nhlApiRequest(`/api/v1/people/${id}/stats?stats=yearByYear`)
   player.nhlStats = result.stats[0].splits.filter(el => el.league.id === 133);
   player.careerStats = result.stats[0].splits;
+  player.description = (await apicomm.wikiApiRequest(player.fullName)).extract;
   return player;
 }
 

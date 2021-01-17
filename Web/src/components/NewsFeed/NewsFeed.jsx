@@ -1,5 +1,5 @@
 import React from 'react';
-import { Feed, Header, Image } from 'semantic-ui-react';
+import { Header, Item } from 'semantic-ui-react';
 
 import './NewsFeed.css';
 import Loader from '../Loader/Loader';
@@ -14,24 +14,19 @@ function NewsFeed(props) {
   return (
     <div className="news-container">
       <Header as='h3'>News</Header>
-      <Feed>
+      <Item.Group>
           {news.map((article, index) => {
-            return (<Feed.Event key={index}>
-              <Feed.Content>
-                <Feed.Label>
-                  <Image src={article.urlToImage} className="mid-logo" alt={article.urlToImage} />
-                </Feed.Label>
-                <Feed.Summary>
-                  <Feed.User>{article.title}</Feed.User>
-                  <Feed.Date>{article.author} ({article.source.name})</Feed.Date>
-                </Feed.Summary>
-                <Feed.Extra>
-                  {article.description}
-                </Feed.Extra>
-              </Feed.Content>
-            </Feed.Event>);
+            return (<Item key={index}>
+                <Item.Image src={article.urlToImage} className="mid-logo" alt={article.urlToImage} />
+                <Item.Content>
+                  <Item.Header>{article.title}</Item.Header>
+                  <Item.Meta>{article.author} ({article.source.name})</Item.Meta>
+                  <Item.Description>{article.description}</Item.Description>
+                  <Item.Extra>{article.publishedAt}</Item.Extra>
+                </Item.Content>
+            </Item>);
           })}
-        </Feed>
+        </Item.Group>
     </div>);
 
 }

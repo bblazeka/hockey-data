@@ -2,6 +2,7 @@ type DetailedTeam {
     id: Int
     abbreviation: String
     name: String
+    description: String
     active: Boolean
     venue: Venue
     rosterResponse: [Player]
