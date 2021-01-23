@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CompareGrid } from '../../components';
+import { CompareGrid, Loader } from '../../components';
 
 import * as actions from '../../services/player';
 import './PlayerList.css';
 
 import { Search } from 'semantic-ui-react';
 import { isNullOrUndefined } from '../../util/common';
-import { Loader } from '../../components';
 
 const initialState = { isLoading: false, results: [], value: '' }
 
@@ -16,6 +15,8 @@ class PlayerList extends Component {
     super(props)
     this.state = initialState;
     this.onRemove = this.onRemove.bind(this);
+    this.handleResultSelect = this.handleResultSelect.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
 
     this.props.getSelectedPlayers()
   }
@@ -25,7 +26,7 @@ class PlayerList extends Component {
     this.props.removePlayer(e.target.value);
   }
 
-  handleSearchChange = (e, { value }) => {
+  handleSearchChange (e, { value }) {
     this.setState({ isLoading: true, value });
 
     if (this.state.value.length < 1 && value.length < 1) {
@@ -34,11 +35,12 @@ class PlayerList extends Component {
 
     if (value.length > 2) {
       this.props.searchBasicPlayer(value);
+      console.log(value)
       this.setState({ isLoading: false, value });
     }
   }
 
-  handleResultSelect = (e, { result }) => {
+  handleResultSelect(e, { result }) {
     this.setState({ value: result.title });
     this.props.addPlayer(result.id);
   }
@@ -46,17 +48,19 @@ class PlayerList extends Component {
   render() {
     const { selectedPlayers, suggestions } = this.props;
     const { isLoading, value } = this.state;
-    if (isNullOrUndefined(selectedPlayers))
+    if (isNullOrUndefined(selectedPlayers) || selectedPlayers.length === 0)
     {
       return (<Loader />)
     }
     return (
       <div>
         <Search
+          className="search"
           loading={isLoading}
           onResultSelect={this.handleResultSelect}
           onSearchChange={this.handleSearchChange}
           results={suggestions}
+          size="large"
           value={value}
         />
         <CompareGrid

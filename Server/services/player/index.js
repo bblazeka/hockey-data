@@ -1,5 +1,6 @@
 const { Database } = require("../../comm/dbhandler");
 const apicomm = require('../../comm/apihandler');
+const config = require('../../config.json');
 
 var db = new Database();
 
@@ -70,7 +71,7 @@ async function getSelectedPlayers() {
   var goalies = [];
   for(playerId of profiles[0].selectedPlayers)
   {
-    var player = await apicomm.nhlApiRequest(`/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=20192020`);
+    var player = await apicomm.nhlApiRequest(`/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${config.currentSeason}`);
     player.player = await getPlayer({id: playerId});
     if (player.player.primaryPosition.code !== "G")
     {

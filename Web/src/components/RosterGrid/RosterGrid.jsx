@@ -3,13 +3,13 @@ import './RosterGrid.css';
 import RosterElement from '../RosterElement/RosterElement';
 
 function RosterGrid(props) {
-  const { team } = props;
+  const { filterPlayers, team } = props;
   return (
     <div>
       <div className="roster">
-        <RosterElement title={"Goalies"} players={team.goalies}/>
-        <RosterElement title={"Defenders"} players={team.defenders}/>
-        <RosterElement title={"Forwards"} players={team.forwards}/>
+        <RosterElement title={"Goalies"} players={team.goalies} filterPlayers={filterPlayers}/>
+        <RosterElement title={"Defenders"} players={team.defenders} filterPlayers={filterPlayers}/>
+        <RosterElement title={"Forwards"} players={team.forwards} filterPlayers={filterPlayers}/>
       </div>
     </div>
   );

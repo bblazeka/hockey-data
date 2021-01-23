@@ -1,5 +1,11 @@
-.search {
-    position: relative;
+.search > div {
+  width: 203px;
+  height: 40px;
+  border-color: transparent;
+}
+
+.search > .ui.icon.input > i.icon::before {
+  width: 0;
 }
 
 .search-icon {

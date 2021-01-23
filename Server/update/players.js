@@ -11,7 +11,7 @@ async function run() {
 
     const playerCollection = db.getCollection("players");
 
-    var players = await playerCollection.find({ rookie: true }).toArray();
+    var players = await playerCollection.find({ active: true }).toArray();
 
     console.log(`updating ${players.length} players...`)
     for (let playerTemp of players) {

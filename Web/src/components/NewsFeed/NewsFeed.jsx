@@ -14,6 +14,7 @@ function NewsFeed(props) {
   return (
     <div className="news-container">
       <Header as='h3'>News</Header>
+      {news.length === 0 && <div>Nothing found.</div>}
       <Item.Group>
           {news.map((article, index) => {
             return (<Item key={index}>

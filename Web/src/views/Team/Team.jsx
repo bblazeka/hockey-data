@@ -7,7 +7,7 @@ import Loader from '../../components/Loader/Loader';
 import { Map, NewsFeed, RosterGrid, SocialFeed } from '../../components';
 import { getLogo } from '../../util/assets';
 
-import { Header, Segment } from 'semantic-ui-react';
+import { Checkbox, Header, Segment } from 'semantic-ui-react';
 import { getNews, getTweets } from '../../services/news';
 import { geocode } from '../../services/util';
 
@@ -17,8 +17,13 @@ class Team extends Component {
     this.state = {
       id: "0",
       teamQuery: "",
-      filterActive: true,
+      filterActive: false,
     }
+    this.checkedChanged = this.checkedChanged.bind(this);
+  }
+  
+  checkedChanged(e, { checked }) {
+    this.setState({ filterActive: checked});
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -43,13 +48,15 @@ class Team extends Component {
 
   render() {
     const { team, tweets, news, location } = this.props;
+    const { filterActive } = this.state;
     if (!team) {
       return (<div><Loader></Loader></div>)
     }
     return (
       <div>
         <Header as='h1'><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`} />{team.name}</Header>
-        <RosterGrid team={team} />
+        <Checkbox label='Show active players only' onChange={this.checkedChanged} />
+        <RosterGrid team={team} filterPlayers={filterActive} />
         <NewsFeed news={news}></NewsFeed>
         <SocialFeed tweets={tweets}></SocialFeed>
         {location &&

@@ -13,3 +13,7 @@ td {
 .mapControl {
   width: 50%;
 }
+
+label {
+  white-space: nowrap;
+}

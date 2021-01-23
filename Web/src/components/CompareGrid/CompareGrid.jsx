@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, Table, Header } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import routes from '../../routes';
 
 import { formatDecimals, isNullOrUndefined } from '../../util/common';
 import './CompareGrid.css';
@@ -64,7 +66,7 @@ function CompareGrid(props) {
             var stats = stat.stats[0].splits[0].stat
             const key = `${stat.player.id}`;
             return (<Table.Row key={`row${key}`}>
-              <Table.Cell>{stat.player.fullName}</Table.Cell>
+              <Table.Cell><Link to={routes.player + "/" + stat.player.id}>{stat.player.fullName}</Link></Table.Cell>
               <Table.Cell>{stats.games}</Table.Cell>
               {skater && <Table.Cell>{stats.goals}</Table.Cell>}
               {skater && <Table.Cell>{stats.assists}</Table.Cell>}

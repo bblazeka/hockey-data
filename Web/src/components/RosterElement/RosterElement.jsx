@@ -7,7 +7,7 @@ import routes from '../../routes';
 import './RosterElement.css';
 
 function RosterElement(props) {
-  const { players, title } = props;
+  const { filterPlayers, players, title } = props;
   return (
     <div className="roster-part">
       <Header as='h4'>{title}</Header>
@@ -26,7 +26,7 @@ function RosterElement(props) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {players.map((player) => {
+          {players.filter(p => (filterPlayers && p.rosterStatus === "Y") || !filterPlayers).map((player) => {
             return (
               <Table.Row key={title + player.id}>
                 <Table.Cell>{player.jerseyNumber}</Table.Cell>
