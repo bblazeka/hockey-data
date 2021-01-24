@@ -9,6 +9,7 @@ import * as actions from '../../services/league';
 import { getLogo } from '../../util/assets';
 import { Loader } from '../../components';
 import { isNullOrUndefined, formatDecimals } from '../../util/common';
+import { convertDateTimeToString, dateTimeFilterTime } from '../../util/converter';
 import './Game.css';
 
 class Game extends Component {
@@ -60,56 +61,58 @@ class Game extends Component {
 
   TeamRender(team) {
     return (
-      <Segment>
+      <Segment className="teamSegment">
         <Header as='h2'><img className="mid-logo" src={getLogo(team.team.id)} alt={`img${team.team.id}${team.team.name}`} /> {team.team.name}</Header>
         <Header as="h3">Roster</Header>
-        <Table celled>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>G</Table.HeaderCell>
-              <Table.HeaderCell>A</Table.HeaderCell>
-              <Table.HeaderCell>PIM</Table.HeaderCell>
-              <Table.HeaderCell>SOG</Table.HeaderCell>
-              <Table.HeaderCell>HIT</Table.HeaderCell>
-              <Table.HeaderCell>BLK</Table.HeaderCell>
-              <Table.HeaderCell>FW</Table.HeaderCell>
-              <Table.HeaderCell>FO</Table.HeaderCell>
-              <Table.HeaderCell>PPG</Table.HeaderCell>
-              <Table.HeaderCell>PPA</Table.HeaderCell>
-              <Table.HeaderCell>SHG</Table.HeaderCell>
-              <Table.HeaderCell>SHA</Table.HeaderCell>
-              <Table.HeaderCell>TOI</Table.HeaderCell>
-              <Table.HeaderCell>TOI-PP</Table.HeaderCell>
-              <Table.HeaderCell>TOI-SH</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {team.skaters.map((player) => {
-              return (<Table.Row key={player.person.fullName}>
-                <Table.Cell><Link to={routes.player + "/" + player.person.id}><Header as="h4">{player.person.fullName}
-                  <Header.Subheader>
-                    {'#' + player.jerseyNumber + " " + player.position.name}
-                  </Header.Subheader></Header></Link></Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.goals}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.assists}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.penaltyMinutes}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.shots}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.hits}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.blocked}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.faceOffWins}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.faceoffTaken}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.powerPlayGoals}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.powerPlayAssists}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.shortHandedGoals}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.shortHandedAssists}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.timeOnIce}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.powerPlayTimeOnIce}</Table.Cell>
-                <Table.Cell>{player.stats.skaterStats.shortHandedTimeOnIce}</Table.Cell>
-              </Table.Row>)
-            })}
-          </Table.Body>
-        </Table>
+        <div className="teamTable">
+          <Table celled>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Name</Table.HeaderCell>
+                <Table.HeaderCell>G</Table.HeaderCell>
+                <Table.HeaderCell>A</Table.HeaderCell>
+                <Table.HeaderCell>PIM</Table.HeaderCell>
+                <Table.HeaderCell>SOG</Table.HeaderCell>
+                <Table.HeaderCell>HIT</Table.HeaderCell>
+                <Table.HeaderCell>BLK</Table.HeaderCell>
+                <Table.HeaderCell>FW</Table.HeaderCell>
+                <Table.HeaderCell>FO</Table.HeaderCell>
+                <Table.HeaderCell>PPG</Table.HeaderCell>
+                <Table.HeaderCell>PPA</Table.HeaderCell>
+                <Table.HeaderCell>SHG</Table.HeaderCell>
+                <Table.HeaderCell>SHA</Table.HeaderCell>
+                <Table.HeaderCell>TOI</Table.HeaderCell>
+                <Table.HeaderCell>TOI-PP</Table.HeaderCell>
+                <Table.HeaderCell>TOI-SH</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {team.skaters.map((player) => {
+                return (<Table.Row key={player.person.fullName}>
+                  <Table.Cell><Link to={routes.player + "/" + player.person.id}><Header as="h4">{player.person.fullName}
+                    <Header.Subheader>
+                      {'#' + player.jerseyNumber + " " + player.position.name}
+                    </Header.Subheader></Header></Link></Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.goals}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.assists}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.penaltyMinutes}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.shots}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.hits}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.blocked}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.faceOffWins}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.faceoffTaken}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.powerPlayGoals}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.powerPlayAssists}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.shortHandedGoals}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.shortHandedAssists}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.timeOnIce}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.powerPlayTimeOnIce}</Table.Cell>
+                  <Table.Cell>{player.stats.skaterStats.shortHandedTimeOnIce}</Table.Cell>
+                </Table.Row>)
+              })}
+            </Table.Body>
+          </Table>
+        </div>
         <Header as="h3">Goalies</Header>
         <Table celled>
           <Table.Header>
@@ -123,17 +126,17 @@ class Game extends Component {
           </Table.Header>
           <Table.Body>
             {team.goalies.map((player) => {
-                return (<Table.Row key={player.person.fullName}>
-                  <Table.Cell><Link to={routes.player + "/" + player.person.id}><Header as="h4">{player.person.fullName}
-                    <Header.Subheader>
-                      {`#${player.jerseyNumber} ${player.position.name}`}
-                    </Header.Subheader></Header></Link></Table.Cell>
-                  <Table.Cell>{player.stats.goalieStats.saves}</Table.Cell>
-                  <Table.Cell>{player.stats.goalieStats.shots}</Table.Cell>
-                  <Table.Cell>{formatDecimals(player.stats.goalieStats.savePercentage, 2)}</Table.Cell>
-                  <Table.Cell>{player.stats.goalieStats.timeOnIce}</Table.Cell>
-                </Table.Row>)
-              })}
+              return (<Table.Row key={player.person.fullName}>
+                <Table.Cell><Link to={routes.player + "/" + player.person.id}><Header as="h4">{player.person.fullName}
+                  <Header.Subheader>
+                    {`#${player.jerseyNumber} ${player.position.name}`}
+                  </Header.Subheader></Header></Link></Table.Cell>
+                <Table.Cell>{player.stats.goalieStats.saves}</Table.Cell>
+                <Table.Cell>{player.stats.goalieStats.shots}</Table.Cell>
+                <Table.Cell>{formatDecimals(player.stats.goalieStats.savePercentage, 2)}</Table.Cell>
+                <Table.Cell>{player.stats.goalieStats.timeOnIce}</Table.Cell>
+              </Table.Row>)
+            })}
           </Table.Body>
         </Table>
         <Header as="h3">Staff</Header>
@@ -179,16 +182,50 @@ class Game extends Component {
         </Segment>
         {game && <Segment>
           <Grid>
-            <Grid.Column floated='left' width={5}>
-              {game.teams.home.team.name}
-              <Statistic>
-                <Statistic.Value>{`${game.linescore.teams.home.goals}:${game.linescore.teams.away.goals}`}</Statistic.Value>
-                <Statistic.Label>{game.linescore.currentPeriodTimeRemaining}</Statistic.Label>
-              </Statistic>
-              {game.teams.away.team.name} <br />
-              {game.linescore.teams.home.shotsOnGoal} SOG {game.linescore.teams.away.shotsOnGoal}
-              Season: {game.gameDate}
-              {game.season}
+            <Grid.Column floated='left' width={6}>
+              <Statistic.Group>
+                <Statistic>
+                  <Statistic.Value>
+                    <Image avatar className="mainImg" src={getLogo(game.teams.home.team.id)} />
+                  </Statistic.Value>
+                  <Statistic.Label>{game.teams.home.team.name}</Statistic.Label>
+                </Statistic>
+
+                <Statistic>
+                  <Statistic.Value>
+                    {`${game.linescore.teams.home.goals}:${game.linescore.teams.away.goals}`}
+                  </Statistic.Value>
+                  <Statistic.Label>
+                    {game.linescore.currentPeriodTimeRemaining}<br />
+                    {game.linescore.teams.home.shotsOnGoal} SOG {game.linescore.teams.away.shotsOnGoal}
+
+                  </Statistic.Label>
+                </Statistic>
+
+                <Statistic>
+                  <Statistic.Value>
+                    <Image avatar className="mainImg" src={getLogo(game.teams.away.team.id)} />
+                  </Statistic.Value>
+                  <Statistic.Label>{game.teams.away.team.name}</Statistic.Label>
+                </Statistic>
+              </Statistic.Group>
+            </Grid.Column>
+            <Grid.Column floated='right' width={1}>
+              <List>
+                <List.Item>
+                  <List.Icon name='trophy' />
+                  <List.Content>{game.season}</List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Icon name='calendar outline' />
+                  <List.Content>{convertDateTimeToString(game.gameDate)}</List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Icon name='clock outline' />
+                  <List.Content>{dateTimeFilterTime(game.gameDate)}</List.Content>
+                </List.Item>
+              </List>
+
             </Grid.Column>
             <Grid.Column floated='right' width={5}>
               <List horizontal>
@@ -222,14 +259,26 @@ class Game extends Component {
           </Grid>
 
         </Segment>}
-        {game && <Segment.Group horizontal>
-          {this.TeamRender(game.teams.home)}
-          {this.TeamRender(game.teams.away)}
-        </Segment.Group>}
+        {game && <Grid columns={2}>
+          <Grid.Column>
+            {this.TeamRender(game.teams.home)}
+          </Grid.Column>
+          <Grid.Column>
+            {this.TeamRender(game.teams.away)}
+          </Grid.Column>
+        </Grid>}
         {game && <Segment>
-          {game.officials && game.officials.map(official => {
-            return (<div key={official.official.id}>{official.official.fullName} {official.officialType}</div>);
-          })}
+          <List horizontal>
+            {game.officials && game.officials.map(official => {
+              return (<List.Item key={official.official.id}>
+                <List.Icon name='user' />
+                <List.Content>
+                  <List.Header>{official.official.fullName}</List.Header>
+                  {official.officialType}
+                </List.Content>
+              </List.Item>);
+            })}
+          </List>
         </Segment>}
       </div>);
   }

@@ -1,0 +1,8 @@
+.teamTable {
+  overflow-x:scroll;
+}
+
+.mainImg {
+  max-width: 4rem !important;
+  max-height: 4rem !important;
+}

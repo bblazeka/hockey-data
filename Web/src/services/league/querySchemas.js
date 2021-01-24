@@ -141,6 +141,7 @@ export function getGame(id) {
         officialType
       },
       linescore {
+        currentPeriodTimeRemaining,
         teams {
           home { goals, shotsOnGoal },
           away { goals, shotsOnGoal }
