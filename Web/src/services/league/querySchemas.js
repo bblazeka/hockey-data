@@ -87,6 +87,7 @@ export function getGame(id) {
     game(gameId: ${id}){ 
         id,
         gameDate,
+        venue { id, name },
         season,
       teams {
         home {

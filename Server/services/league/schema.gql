@@ -54,6 +54,7 @@ type Game {
   id: Int
   gameDate: Date
   season: String
+  venue: Venue
   teams: GameTeams
   officials: [GameOfficial]
   linescore: Linescore

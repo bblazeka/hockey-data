@@ -224,6 +224,10 @@ class Game extends Component {
                   <List.Icon name='clock outline' />
                   <List.Content>{dateTimeFilterTime(game.gameDate)}</List.Content>
                 </List.Item>
+                <List.Item>
+                  <List.Icon name='marker' />
+                  <List.Content>{game.venue.name}</List.Content>
+                </List.Item>
               </List>
 
             </Grid.Column>
