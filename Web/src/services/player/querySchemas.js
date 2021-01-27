@@ -180,7 +180,11 @@ export function getSelectedPlayers() {
   {
     selectedPlayers {
       skaters { 
-        player { id, fullName }
+        player { 
+          id, 
+          fullName,
+          primaryPosition { abbreviation }
+        }
         stats {
           splits {
             stat {
@@ -209,7 +213,11 @@ export function getSelectedPlayers() {
         }
       }
       goalies { 
-        player { id, fullName } 
+        player { 
+          id, 
+          fullName,
+          primaryPosition { abbreviation }
+        }
          stats {
           splits {
             stat {

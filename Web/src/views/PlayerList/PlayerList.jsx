@@ -35,13 +35,15 @@ class PlayerList extends Component {
 
     if (value.length > 2) {
       this.props.searchBasicPlayer(value);
-      console.log(value)
-      this.setState({ isLoading: false, value });
+    }
+    else
+    {
+      this.setState({ isLoading: false });
     }
   }
 
   handleResultSelect(e, { result }) {
-    this.setState({ value: result.title });
+    this.setState({ value: '', isLoading: false });
     this.props.addPlayer(result.id);
   }
 

@@ -26,6 +26,10 @@ async function run() {
     for (let date of dates) {
       for (let game of date.games)
       {
+        if (game.status.statusCode === '7')
+        {
+          continue;
+        }
         const options = { upsert: true };
         const filter = { gamePk: game.gamePk };
         const updateDoc = {

@@ -19,6 +19,7 @@ function CompareGrid(props) {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Player</Table.HeaderCell>
+            <Table.HeaderCell>Position</Table.HeaderCell>
             <Table.HeaderCell>GP</Table.HeaderCell>
             {skater && <Table.HeaderCell>Goals</Table.HeaderCell>}
             {skater && <Table.HeaderCell>Assists</Table.HeaderCell>}
@@ -67,6 +68,7 @@ function CompareGrid(props) {
             const key = `${stat.player.id}`;
             return (<Table.Row key={`row${key}`}>
               <Table.Cell><Link to={routes.player + "/" + stat.player.id}>{stat.player.fullName}</Link></Table.Cell>
+              <Table.Cell>{stat.player.primaryPosition.abbreviation}</Table.Cell>
               <Table.Cell>{stats.games}</Table.Cell>
               {skater && <Table.Cell>{stats.goals}</Table.Cell>}
               {skater && <Table.Cell>{stats.assists}</Table.Cell>}
