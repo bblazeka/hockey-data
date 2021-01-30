@@ -12,7 +12,7 @@ import Loader from '../../components/Loader/Loader';
 import routes from '../../routes';
 import { convertDateTimeToString, getDatesArray } from '../../util/converter';
 
-import { Table, Button } from 'semantic-ui-react';
+import { Icon, Label, Table } from 'semantic-ui-react';
 import { getLogo } from '../../util/assets';
 
 class Schedule extends Component {
@@ -54,16 +54,33 @@ class Schedule extends Component {
       return (<div><Loader></Loader></div>)
     }
     return (
-      <div>
-        <DatePicker
-          selected={start}
-          onChange={date => this.handleStartChange(date)}
-        />
-        <DatePicker
-          selected={end}
-          onChange={date => this.handleEndChange(date)}
-        />
-        <Button onClick={() => this.getScheduleForTimePeriod()}>Refresh</Button>
+      <div className="schedule-page">
+        <div className="filter">
+          <div className="dates">
+            <DatePicker
+              selected={start}
+              onChange={date => this.handleStartChange(date)}
+            />
+            <DatePicker
+              selected={end}
+              onChange={date => this.handleEndChange(date)}
+            />
+            <Label
+              className="refresh-button"
+              onClick={() => this.getScheduleForTimePeriod()}
+            >
+              <Icon name='refresh' /> Refresh
+        </Label>
+          </div>
+          <div className='tag-container'>
+            <Label as='a' className='home-game-tag' tag>
+              Home game
+          </Label>
+            <Label as='a' className='away-game-tag' tag>
+              Away game
+          </Label>
+          </div>
+        </div>
         <Table><Table.Header>
           <Table.Row>
             <Table.HeaderCell>
@@ -75,6 +92,7 @@ class Schedule extends Component {
               </Table.HeaderCell>)
             })}
             <Table.HeaderCell>Games</Table.HeaderCell>
+            <Table.HeaderCell>Score</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
           <Table.Body>
@@ -94,7 +112,11 @@ class Schedule extends Component {
                           className={element.id === game.home.team.id ? 'home-game' : 'away-game'}
                         >
                           <img className="logo" src={logo} alt={`img${game.gameDate}${element.id}`}></img>
-                          {game.opponent.leagueRecord.wins}-{game.opponent.leagueRecord.losses}-{game.opponent.leagueRecord.ot}
+                          <div className="matchup-info">
+                            {game.opponent.leagueRecord.wins}-{game.opponent.leagueRecord.losses}-{game.opponent.leagueRecord.ot}
+                            <br />
+                            {game.opponent.rating}
+                          </div>
                         </Table.Cell>
                       )
                     } catch (err) {
@@ -104,12 +126,21 @@ class Schedule extends Component {
                     }
 
                   })}
-                  <td>
+                  <td className="emphasized-letter">
                     {element.games.length}
+                  </td>
+                  <td>
+                    <div className="matchup-info">
+                      {element.scheduleScore}
+                      <br />
+                      {element.avgScheduleScore}
+                    </div>
                   </td>
                 </Table.Row>)
             })}
-          </Table.Body></Table></div>);
+          </Table.Body>
+        </Table>
+      </div>);
   }
 }
 

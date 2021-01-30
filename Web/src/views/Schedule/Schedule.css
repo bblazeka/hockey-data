@@ -1,3 +1,7 @@
+.schedule-page {
+  overflow-x:scroll;
+}
+
 .game {
     display: inline-block;
     overflow-wrap: break-word;
@@ -12,13 +16,48 @@
 }
 
 table, th, td {
-    border: 1px solid black;
-  }
+  border: 1px solid black;
+}
 
 .home-game {
-    background-color: lightblue;
+  background-color: turquoise;
+}
+
+.home-game-tag {
+  background-color: turquoise !important;
 }
 
 .away-game {
-    background-color: azure;
+  background-color: lightblue;
+}
+
+.away-game-tag {
+  background-color: lightblue !important;
+}
+
+.tag-container {
+  display: flex;
+  max-width: 400px;
+}
+
+.matchup-info {
+  display: inline-block;
+}
+
+.emphasized-letter {
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+.dates {
+  display: flex;
+  max-width: 500px;
+}
+
+.refresh-button {
+  cursor: pointer;
+}
+
+.filter {
+  display: inline-flex;
 }

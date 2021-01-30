@@ -3,6 +3,8 @@ export function getSchedule(start, end) {
     schedule(start: "${start}", end: "${end}") {
     id,
     abbreviation,
+    avgScheduleScore,
+    scheduleScore,
     name,
     games {
       gamePk,
@@ -18,7 +20,7 @@ export function getSchedule(start, end) {
           ot
         }
       }, 
-      away { 
+      away {
         team { 
           id, 
           name 
@@ -30,6 +32,7 @@ export function getSchedule(start, end) {
         }
       }, 
       opponent { 
+        rating,
         team { 
           id, 
           name 
