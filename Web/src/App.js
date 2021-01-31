@@ -6,6 +6,8 @@ import routes from './routes';
 import * as teamActions from './services/team/actions';
 import { getLogo } from './util/assets';
 
+import 'react-vis/dist/style.css';
+
 class App extends Component {
 
   constructor(props) {

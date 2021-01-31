@@ -1,12 +1,16 @@
 import React from 'react';
-import { Table, Header } from 'semantic-ui-react';
+import { Table, Header, Statistic } from 'semantic-ui-react';
+import { DiscreteColorLegend, XYPlot, HorizontalGridLines, VerticalGridLines, XAxis, YAxis, LineSeries } from 'react-vis';
 
 import { getLogo } from '../../util/assets';
 import { formatDecimals } from '../../util/common';
 import './StatsGrid.css';
 
 function StatsGrid(props) {
-  const { stats, skater, detailed } = props;
+  const { data, skater, detailed } = props;
+  const { totalGames, totalGoals, totalAssists, totalPoints, totalGamesStarted, totalWins, goalsLine, assistsLine, stats, gamesStartedLine, winsLine } = data;
+  var lineNames = (skater) ? ["goals", "assists"] : ["Games started", "Wins"];
+  var lines = (skater) ? [ goalsLine, assistsLine ] : [ gamesStartedLine, winsLine ];
   return (
     <div className="grid">
       <Header as='h4'>Statistics</Header>
@@ -89,7 +93,7 @@ function StatsGrid(props) {
               {skater && detailed && <Table.Cell>{stat.stat.shortHandedPoints}</Table.Cell>}
               {!skater && detailed && <Table.Cell>{stat.stat.gamesStarted}</Table.Cell>}
               {!skater && <Table.Cell>{formatDecimals(stat.stat.goalAgainstAverage, 2)}</Table.Cell>}
-              {!skater && <Table.Cell>{formatDecimals(stat.stat.savePercentage*100, 1)}</Table.Cell>}
+              {!skater && <Table.Cell>{formatDecimals(stat.stat.savePercentage * 100, 1)}</Table.Cell>}
               {!skater && <Table.Cell>{stat.stat.wins}</Table.Cell>}
               {!skater && <Table.Cell>{stat.stat.losses}</Table.Cell>}
               {!skater && <Table.Cell>{stat.stat.ot}</Table.Cell>}
@@ -110,6 +114,70 @@ function StatsGrid(props) {
           })}
         </Table.Body>
       </Table>
+      <div className="stat-bar">
+        {stats.length === 0 && <div>No stats to show.</div>}
+        {stats.length > 0 && <XYPlot height={300} width={1200} xType="ordinal">
+          <DiscreteColorLegend
+            style={{ position: 'relative', left: '50px', top: '-295px' }}
+            orientation="horizontal"
+            items={[
+              {
+                title: lineNames[0],
+                color: '#12939A'
+              },
+              {
+                title: lineNames[1],
+                color: '#79C7E3'
+              }
+            ]}
+          />
+          <VerticalGridLines />
+          <HorizontalGridLines />
+          <XAxis />
+          <YAxis />
+          {lines.map((l)=>{
+            return (<LineSeries style={{ fill: 'none' }} data={l} />);
+          })}
+        </XYPlot>}
+        <Statistic.Group horizontal>
+        {totalGames && <Statistic>
+            <Statistic.Value>
+              {totalGames}
+            </Statistic.Value>
+            <Statistic.Label>Games</Statistic.Label>
+          </Statistic>}
+          {totalGoals && <Statistic>
+            <Statistic.Value>
+              {totalGoals}
+            </Statistic.Value>
+            <Statistic.Label>Goals</Statistic.Label>
+          </Statistic>}
+          {totalAssists && <Statistic>
+            <Statistic.Value>
+              {totalAssists}
+            </Statistic.Value>
+            <Statistic.Label>Assists</Statistic.Label>
+          </Statistic>}
+          {totalPoints && <Statistic>
+            <Statistic.Value>
+              {totalPoints}
+            </Statistic.Value>
+            <Statistic.Label>Points</Statistic.Label>
+          </Statistic>}
+          {!skater && <Statistic>
+            <Statistic.Value>
+              {totalGamesStarted}
+            </Statistic.Value>
+            <Statistic.Label>Starts</Statistic.Label>
+          </Statistic>}
+          {!skater && <Statistic>
+            <Statistic.Value>
+              {totalWins}
+            </Statistic.Value>
+            <Statistic.Label>Wins</Statistic.Label>
+          </Statistic>}
+        </Statistic.Group>
+      </div>
     </div>
   );
 

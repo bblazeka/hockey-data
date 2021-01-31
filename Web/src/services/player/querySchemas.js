@@ -54,51 +54,61 @@ export function getSkater(id) {
         name
       },
       careerStats { 
-        season,
-        team {
-          id,
-          name
-        },
-        league {
-          id,
-          name
-        }
-        stat {
-          games,
-          goals,
-          assists,
-          points,
-          pim,
-          plusMinus,
+        stats {
+          season,
+          team {
+            id,
+            name
+          },
+          league {
+            id,
+            name
+          }
+          stat {
+            games,
+            goals,
+            assists,
+            points,
+            pim,
+            plusMinus,
+          }
         }
       },
-      nhlStats { 
-        season,
-        team {
-          id,
-          name
-        },
-        stat {
-          games,
-          goals,
-          assists,
-          points,
-          pim,
-          plusMinus,
-          timeOnIce,
-          faceOffPct,
-          shots,
-          hits,
-          blocked,
-          evenTimeOnIce,
-          powerPlayTimeOnIce,
-          shortHandedTimeOnIce,
-          shotPct,
-          gameWinningGoals,
-          powerPlayGoals,
-          powerPlayPoints,
-          shortHandedGoals,
-          shortHandedPoints,
+      nhlStats {
+        totalGames,
+        totalGoals,
+        totalAssists,
+        totalPoints,
+        goalsLine { x, y },
+        assistsLine { x, y },
+        stats { 
+          season,
+          team {
+            id,
+            name
+          },
+          stat {
+            games,
+            goals,
+            assists,
+            points,
+            pim,
+            plusMinus,
+            timeOnIce,
+            faceOffPct,
+            shots,
+            hits,
+            blocked,
+            evenTimeOnIce,
+            powerPlayTimeOnIce,
+            shortHandedTimeOnIce,
+            shotPct,
+            gameWinningGoals,
+            powerPlayGoals,
+            powerPlayPoints,
+            shortHandedGoals,
+            shortHandedPoints,
+          }
         }
       }
     }
@@ -125,51 +135,60 @@ export function getGoalie(id) {
         name
       },
       careerStats { 
-        season,
-        team {
-          id,
-          name
-        },
-        league {
-          id,
-          name
-        }
-        stat {
-          games,
-          goalAgainstAverage,
-          savePercentage,
-          wins,
-          losses,
-          ot
+        stats {
+          season,
+          team {
+            id,
+            name
+          },
+          league {
+            id,
+            name
+          }
+          stat {
+            games,
+            goalAgainstAverage,
+            savePercentage,
+            wins,
+            losses,
+            ot
+          }
         }
       },
-      nhlStats { 
-        season,
-        team {
-          id,
-          name
-        },
-        stat {
-          games,
-          gamesStarted,
-          goalAgainstAverage,
-          savePercentage,
-          wins,
-          losses,
-          ot,
-          evenSaves,  
-          powerPlaySaves,
-          shortHandedSaves,
-          shotsAgainst,
-          evenShots,
-          powerPlayShots,
-          shortHandedShots,
-          evenStrengthSavePercentage,
-          powerPlaySavePercentage,
-          shortHandedSavePercentage,
-          shutouts,
-          timeOnIce
-        }
+      nhlStats {
+        totalGames,
+        totalGamesStarted,
+        totalWins,
+        gamesStartedLine { x, y },
+        winsLine { x, y },
+        stats {
+          season,
+          team {
+            id,
+            name
+          },
+          stat {
+            games,
+            gamesStarted,
+            goalAgainstAverage,
+            savePercentage,
+            wins,
+            losses,
+            ot,
+            evenSaves,  
+            powerPlaySaves,
+            shortHandedSaves,
+            shotsAgainst,
+            evenShots,
+            powerPlayShots,
+            shortHandedShots,
+            evenStrengthSavePercentage,
+            powerPlaySavePercentage,
+            shortHandedSavePercentage,
+            shutouts,
+            timeOnIce
+          }
+        } 
       }
     }
   }`

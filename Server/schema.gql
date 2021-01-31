@@ -42,3 +42,8 @@ scalar Date
     offset: Int,
     tz: String
   }
+
+  type LineInt {
+    x: String,
+    y: Int
+  }

@@ -1,3 +1,7 @@
 .grid {
     padding: 8px;
 }
+
+.stat-bar {
+    display: inline-flex;
+}

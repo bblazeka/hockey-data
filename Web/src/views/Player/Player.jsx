@@ -70,9 +70,9 @@ class Player extends Component {
     }
     const panes = [
       { menuItem: 'NHL stats', render: () => <Tab.Pane>
-      <StatsGrid stats={player.nhlStats} skater={player.primaryPosition.code !== "G"} detailed={true}></StatsGrid></Tab.Pane> },
+      <StatsGrid data={player.nhlStats} skater={player.primaryPosition.code !== "G"} detailed={true}></StatsGrid></Tab.Pane> },
       { menuItem: 'Career stats', render: () => <Tab.Pane>
-      <StatsGrid stats={player.careerStats} skater={player.primaryPosition.code !== "G"} detailed={false}></StatsGrid></Tab.Pane> },
+      <StatsGrid data={player.careerStats} skater={player.primaryPosition.code !== "G"} detailed={false}></StatsGrid></Tab.Pane> },
     ]
     return (
       <div>

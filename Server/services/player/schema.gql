@@ -19,8 +19,23 @@ type Player {
     shootsCatches: String
     weight: Int
     nationality: String
-    nhlStats: [SeasonStats]
-    careerStats: [SeasonStats]
+    nhlStats: StatsCollection
+    careerStats: StatsCollection
+}
+
+type StatsCollection {
+  totalGames: Int
+  totalGoals: Int
+  totalAssists: Int
+  totalPoints: Int
+  totalGamesStarted: Int
+  totalWins: Int
+  gamesLine: [LineInt]
+  gamesStartedLine: [LineInt]
+  winsLine: [LineInt]
+  goalsLine: [LineInt]
+  assistsLine: [LineInt]
+  stats: [SeasonStats]
 }
 
 type SeasonStats {
