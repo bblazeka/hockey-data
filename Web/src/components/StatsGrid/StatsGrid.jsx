@@ -4,7 +4,7 @@ import { DiscreteColorLegend, XYPlot, HorizontalGridLines, VerticalGridLines, XA
 
 import { getLogo } from '../../util/assets';
 import { formatDecimals } from '../../util/common';
-import './StatsGrid.css';
+import './StatsGrid.scss';
 
 function StatsGrid(props) {
   const { data, skater, detailed } = props;
@@ -164,13 +164,13 @@ function StatsGrid(props) {
             </Statistic.Value>
             <Statistic.Label>Points</Statistic.Label>
           </Statistic>}
-          {!skater && <Statistic>
+          {totalGamesStarted && <Statistic>
             <Statistic.Value>
               {totalGamesStarted}
             </Statistic.Value>
             <Statistic.Label>Starts</Statistic.Label>
           </Statistic>}
-          {!skater && <Statistic>
+          {totalWins && <Statistic>
             <Statistic.Value>
               {totalWins}
             </Statistic.Value>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 //import * as actions from '../../services/league';
-import './Prediction.css';
+import './Prediction.scss';
 import { isNullOrUndefined } from  '../../util/common';
 
 import Loader from '../../components/Loader/Loader';

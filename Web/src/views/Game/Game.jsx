@@ -10,7 +10,7 @@ import { getLogo } from '../../util/assets';
 import { Loader } from '../../components';
 import { isNullOrUndefined, formatDecimals } from '../../util/common';
 import { convertDateTimeToString, dateTimeFilterTime } from '../../util/converter';
-import './Game.css';
+import './Game.scss';
 
 class Game extends Component {
   constructor(props) {

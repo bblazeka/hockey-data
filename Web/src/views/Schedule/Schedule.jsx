@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import * as actions from '../../services/league';
-import './Schedule.css';
+import './Schedule.scss';
 import Loader from '../../components/Loader/Loader';
 import routes from '../../routes';
 import { convertDateTimeToString, getDatesArray } from '../../util/converter';

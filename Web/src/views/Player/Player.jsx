@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Flag, Grid, Header, Image, List, Search, Segment, Tab } from 'semantic-ui-react';
 
 import * as actions from '../../services/player';
-import './Player.css';
+import './Player.scss';
 import Loader from '../../components/Loader/Loader';
 
 import routes from '../../routes';

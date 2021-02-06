@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header, Item } from 'semantic-ui-react';
 
-import './NewsFeed.css';
+import './NewsFeed.scss';
 import Loader from '../Loader/Loader';
 import { isNullOrUndefined } from  '../../util/common';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Feed, Header, Icon, Label } from 'semantic-ui-react';
 
-import './SocialFeed.css';
+import './SocialFeed.scss';
 import Loader from '../Loader/Loader';
 import { isNullOrUndefined } from  '../../util/common';
 

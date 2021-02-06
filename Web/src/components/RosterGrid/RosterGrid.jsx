@@ -1,5 +1,5 @@
 import React from 'react';
-import './RosterGrid.css';
+import './RosterGrid.scss';
 import RosterElement from '../RosterElement/RosterElement';
 
 function RosterGrid(props) {

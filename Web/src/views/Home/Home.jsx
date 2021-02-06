@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../services/news';
 import Loader from '../../components/Loader/Loader';
 
-import './Home.css';
+import './Home.scss';
 import { SocialFeed } from '../../components';
 import NewsFeed from '../../components/NewsFeed/NewsFeed';
 

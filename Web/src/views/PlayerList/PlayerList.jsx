@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { CompareGrid, Loader } from '../../components';
 
 import * as actions from '../../services/player';
-import './PlayerList.css';
+import './PlayerList.scss';
 
 import { Search } from 'semantic-ui-react';
 import { isNullOrUndefined } from '../../util/common';

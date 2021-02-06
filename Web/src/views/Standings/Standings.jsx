@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import * as actions from '../../services/league';
 import * as teamActions from '../../services/team';
-import './Standings.css';
+import './Standings.scss';
 import {Loader, Map} from '../../components';
 import routes from '../../routes';
 import { getLogo } from '../../util/assets';

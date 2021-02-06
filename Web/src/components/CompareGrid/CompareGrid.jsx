@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import routes from '../../routes';
 
 import { formatDecimals, isNullOrUndefined } from '../../util/common';
-import './CompareGrid.css';
+import './CompareGrid.scss';
 
 function CompareGrid(props) {
   const { players, skater, detailed, onDelete } = props;

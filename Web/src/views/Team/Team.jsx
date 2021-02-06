@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../services/team';
-import './Team.css';
+import './Team.scss';
 import Loader from '../../components/Loader/Loader';
 import { Map, NewsFeed, RosterGrid, SocialFeed } from '../../components';
 import { getLogo } from '../../util/assets';

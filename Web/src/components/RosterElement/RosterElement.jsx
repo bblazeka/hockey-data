@@ -4,7 +4,7 @@ import { Flag, Header, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import routes from '../../routes';
-import './RosterElement.css';
+import './RosterElement.scss';
 
 function RosterElement(props) {
   const { filterPlayers, players, title } = props;

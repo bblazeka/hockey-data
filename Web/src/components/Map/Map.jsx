@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 
 import keys from '../../util/keys.json';
-import './Map.css';
+import './Map.scss';
 
 mapboxgl.accessToken = keys["mapbox-API"];
 
