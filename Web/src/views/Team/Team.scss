@@ -1,5 +1,5 @@
 .team-header {
-  display: inline-block
+  display: inline-block;
 }
 
 td {
@@ -11,9 +11,13 @@ td {
 }
 
 .mapControl {
-  width: 50%;
+  width: 400vh;
 }
 
 label {
   white-space: nowrap;
+}
+
+.location-text {
+  padding: 15px;
 }

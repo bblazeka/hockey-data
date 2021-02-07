@@ -5,7 +5,7 @@ import { CompareGrid, Loader } from '../../components';
 import * as actions from '../../services/player';
 import './PlayerList.scss';
 
-import { Search } from 'semantic-ui-react';
+import { Button, Search } from 'semantic-ui-react';
 import { isNullOrUndefined } from '../../util/common';
 
 const initialState = { isLoading: false, results: [], value: '' }
@@ -15,10 +15,15 @@ class PlayerList extends Component {
     super(props)
     this.state = initialState;
     this.onRemove = this.onRemove.bind(this);
+    this.onRemoveAll = this.onRemoveAll.bind(this);
     this.handleResultSelect = this.handleResultSelect.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
 
     this.props.getSelectedPlayers()
+  }
+
+  onRemoveAll() {
+    this.props.removeAll();
   }
 
   onRemove(e) {
@@ -57,7 +62,7 @@ class PlayerList extends Component {
     return (
       <div>
         <Search
-          className="search"
+          className="search-box"
           loading={isLoading}
           onResultSelect={this.handleResultSelect}
           onSearchChange={this.handleSearchChange}
@@ -65,6 +70,7 @@ class PlayerList extends Component {
           size="large"
           value={value}
         />
+        <Button className="clear-button" onClick={this.onRemoveAll}>Clear list</Button>
         <CompareGrid
           players={selectedPlayers.skaters} 
           skater={true} 
@@ -89,6 +95,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getSelectedPlayers: () => dispatch(actions.getSelectedPlayers()),
   removePlayer: (id) => dispatch(actions.removePlayer(id)),
+  removeAll: () => dispatch(actions.removeAllPlayers()),
   searchBasicPlayer: (name) => dispatch(actions.searchBasicPlayer(name)),
   addPlayer: (id) => dispatch(actions.addPlayer(id)),
   deletePlayer: (id) => dispatch(actions.deletePlayer(id)),

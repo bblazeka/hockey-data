@@ -198,72 +198,8 @@ export function getSelectedPlayers() {
   return `
   {
     selectedPlayers {
-      skaters { 
-        player { 
-          id, 
-          fullName,
-          primaryPosition { abbreviation }
-        }
-        stats {
-          splits {
-            stat {
-              games,
-              goals,
-              assists,
-              points,
-              pim,
-              plusMinus,
-              faceOffPct,
-              shots,
-              hits,
-              blocked,
-              timeOnIce,
-              evenTimeOnIce,
-              powerPlayTimeOnIce,
-              shortHandedTimeOnIce,
-              shotPct,
-              gameWinningGoals,
-              powerPlayGoals,
-              powerPlayPoints,
-              shortHandedGoals,
-              shortHandedPoints
-            }
-          }
-        }
-      }
-      goalies { 
-        player { 
-          id, 
-          fullName,
-          primaryPosition { abbreviation }
-        }
-         stats {
-          splits {
-            stat {
-              games,
-              gamesStarted,
-              goalAgainstAverage,
-              savePercentage,
-              wins,
-              losses,
-              ot,
-              saves,
-              evenSaves,
-              powerPlaySaves,
-              shortHandedSaves,
-              shotsAgainst,
-              evenShots,
-              powerPlayShots,
-              shortHandedShots,
-              evenStrengthSavePercentage,
-              powerPlaySavePercentage,
-              shortHandedSavePercentage,
-              shutouts,
-              timeOnIce
-            }
-          }
-        }
-      }
+      ${getSelectedSkaterQuery()}
+      ${getSelectedGoalieQuery()}
     }
   }`;
 }
@@ -272,64 +208,18 @@ export function deleteSelectedPlayer(id) {
   return `
     mutation {
       deleteSelectedPlayer(id: ${id}) {
-        skaters { 
-          player { id, fullName }
-          stats {
-            splits {
-              stat {
-                games,
-                goals,
-                assists,
-                points,
-                pim,
-                plusMinus,
-                faceOffPct,
-                shots,
-                hits,
-                blocked,
-                timeOnIce,
-                evenTimeOnIce,
-                powerPlayTimeOnIce,
-                shortHandedTimeOnIce,
-                shotPct,
-                gameWinningGoals,
-                powerPlayGoals,
-                powerPlayPoints,
-                shortHandedGoals,
-                shortHandedPoints
-              }
-            }
-          }
-        }
-        goalies { 
-          player { id, fullName } 
-           stats {
-            splits {
-              stat {
-                games,
-                gamesStarted,
-                goalAgainstAverage,
-                savePercentage,
-                wins,
-                losses,
-                ot,
-                saves,
-                evenSaves,
-                powerPlaySaves,
-                shortHandedSaves,
-                shotsAgainst,
-                evenShots,
-                powerPlayShots,
-                shortHandedShots,
-                evenStrengthSavePercentage,
-                powerPlaySavePercentage,
-                shortHandedSavePercentage,
-                shutouts,
-                timeOnIce
-              }
-            }
-          }
-        }
+        ${getSelectedSkaterQuery()}
+        ${getSelectedGoalieQuery()}
+      }
+    }`;
+}
+
+export function removeAllPlayers() {
+  return `
+    mutation {
+      clearSelectedPlayers {
+        ${getSelectedSkaterQuery()}
+        ${getSelectedGoalieQuery()}
       }
     }`;
 }
@@ -338,64 +228,84 @@ export function addSelectedPlayer(id) {
   return `
       mutation {
         addSelectedPlayer(id: ${id}) {
-          skaters { 
-            player { id, fullName }
-            stats {
-              splits {
-                stat {
-                  games,
-                  goals,
-                  assists,
-                  points,
-                  pim,
-                  plusMinus,
-                  faceOffPct,
-                  shots,
-                  hits,
-                  blocked,
-                  timeOnIce,
-                  evenTimeOnIce,
-                  powerPlayTimeOnIce,
-                  shortHandedTimeOnIce,
-                  shotPct,
-                  gameWinningGoals,
-                  powerPlayGoals,
-                  powerPlayPoints,
-                  shortHandedGoals,
-                  shortHandedPoints
-                }
-              }
-            }
-          }
-          goalies { 
-            player { id, fullName } 
-             stats {
-              splits {
-                stat {
-                  games,
-                  gamesStarted,
-                  goalAgainstAverage,
-                  savePercentage,
-                  wins,
-                  losses,
-                  ot,
-                  saves,
-                  evenSaves,
-                  powerPlaySaves,
-                  shortHandedSaves,
-                  shotsAgainst,
-                  evenShots,
-                  powerPlayShots,
-                  shortHandedShots,
-                  evenStrengthSavePercentage,
-                  powerPlaySavePercentage,
-                  shortHandedSavePercentage,
-                  shutouts,
-                  timeOnIce
-                }
-              }
-            }
-          }
+          ${getSelectedSkaterQuery()}
+          ${getSelectedGoalieQuery()}
         }
       }`;
 }
+
+function getSelectedSkaterQuery() {
+  return `
+  skaters { 
+    player { 
+      id, 
+      fullName,
+      currentTeam { id },
+      primaryPosition { abbreviation }
+    }
+    stats {
+      splits {
+        stat {
+          games,
+          goals,
+          assists,
+          points,
+          pim,
+          plusMinus,
+          faceOffPct,
+          shots,
+          hits,
+          blocked,
+          timeOnIce,
+          evenTimeOnIce,
+          powerPlayTimeOnIce,
+          shortHandedTimeOnIce,
+          shotPct,
+          gameWinningGoals,
+          powerPlayGoals,
+          powerPlayPoints,
+          shortHandedGoals,
+          shortHandedPoints
+        }
+      }
+    }
+  }`;
+}
+
+  function getSelectedGoalieQuery() {
+    return `
+    goalies {  
+      player { 
+        id, 
+        fullName,
+        currentTeam { id },
+        primaryPosition { abbreviation }
+      }
+      stats {
+        splits {
+          stat {
+            games,
+            gamesStarted,
+            goalAgainstAverage,
+            savePercentage,
+            wins,
+            losses,
+            ot,
+            saves,
+            evenSaves,
+            powerPlaySaves,
+            shortHandedSaves,
+            shotsAgainst,
+            evenShots,
+            powerPlayShots,
+            shortHandedShots,
+            evenStrengthSavePercentage,
+            powerPlaySavePercentage,
+            shortHandedSavePercentage,
+            shutouts,
+            timeOnIce
+          }
+        }
+      }
+    }`;
+  }

@@ -52,6 +52,7 @@ class Team extends Component {
     if (!team) {
       return (<div><Loader></Loader></div>)
     }
+    console.log(team.venue)
     return (
       <div>
         <Header as='h1'><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`} />{team.name}</Header>
@@ -62,9 +63,12 @@ class Team extends Component {
         {location &&
           <Segment className="mapComponent">
             <Map className="mapControl" points={[location]} center={location} zoom={8} />
-            <Header as='h4'>{team.venue.name}
-            <Header.Subheader>{team.venue.city}</Header.Subheader>
-            </Header>
+            <div className="location-text">
+              <Header as='h4'>{team.venue.name}
+              <Header.Subheader>{team.venue.city}</Header.Subheader>
+              </Header>
+              <p>{team.venue.description}</p>
+            </div>
           </Segment>}
         <Segment>{team.description}</Segment>
       </div>);

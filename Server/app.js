@@ -34,6 +34,7 @@ var root = {
   selectedPlayers: player.getSelectedPlayers,
   addSelectedPlayer: player.addSelectedPlayer,
   deleteSelectedPlayer: player.deleteSelectedPlayer,
+  clearSelectedPlayers: player.clearSelectedPlayers,
   articles: news.getArticles,
   tweets: news.getTweets,
   twitterApiStatus: news.getTwitterApiStatus,

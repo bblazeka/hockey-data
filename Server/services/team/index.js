@@ -29,6 +29,7 @@ async function getTeam({id}) {
     team.defenders = team.rosterResponse.filter(p => p.primaryPosition.type == "Defenseman")
     team.forwards = team.rosterResponse.filter(p => p.primaryPosition.type == "Forward")
     team.description = (await apicomm.wikiApiRequest(team.name)).extract;
+    team.venue.description = (await apicomm.wikiApiAdvancedRequest(team.venue.name, team.venue.city)).extract;
   }
   return team;
 }

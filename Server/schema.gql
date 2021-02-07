@@ -20,6 +20,7 @@ scalar Date
   type Mutation {
     addSelectedPlayer(id: Int): SelectedPlayers
     deleteSelectedPlayer(id: Int): SelectedPlayers
+    clearSelectedPlayers: SelectedPlayers
   }
 
   type Team {
@@ -34,6 +35,7 @@ scalar Date
     id: Int,
     name: String,
     city: String,
+    description: String,
     timeZone: TimeZone
   }
 

@@ -23,9 +23,19 @@ async function wikiApiRequest(query) {
   return pages[Object.keys(pages)[0]];
 }
 
+async function wikiApiAdvancedRequest(mainQuery, subQuery) {
+  var res = await wikiApiRequest(`${mainQuery} ${subQuery}`);
+  if (res === undefined || res.ns == 0)
+  {
+    res = await wikiApiRequest(`${mainQuery}`);
+  }
+  return res;
+}
+
 module.exports = {
   nhlApiRequest,
   newsApiRequest,
   mapboxApiRequest,
   wikiApiRequest,
+  wikiApiAdvancedRequest,
 }

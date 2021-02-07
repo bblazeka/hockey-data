@@ -48,6 +48,20 @@ export const deletePlayer = (id) => (dispatch) => {
     });
 }
 
+export const removeAllPlayers = () => (dispatch) => {
+  dispatch({
+    type: actionTypes.REMOVE_ALL_PLAYERS,
+  });
+  axiosGraphQL
+    .post('', { query: querySchemas.removeAllPlayers() })
+    .then(response => {
+      dispatch({
+        type: actionTypes.SELECTED_PLAYERS_LOADED,
+        payload: response.data.data.clearSelectedPlayers
+      })
+    });
+}
+
 export const searchBasicPlayer = (name) => (dispatch) => {
   dispatch({
     type: actionTypes.BASIC_SEARCH_PLAYER,

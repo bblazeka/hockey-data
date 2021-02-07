@@ -53,6 +53,11 @@ const playerReducer = (state = defaultAppState, action) => {
         ...state,
         selectedPlayers: action.payload
       }
+    case actionTypes.REMOVE_ALL_PLAYERS:
+      return {
+        ...state,
+        selectedPlayers: action.payload
+      }
     default:
       return state
   }

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import routes from '../../routes';
 
 import { formatDecimals, isNullOrUndefined } from '../../util/common';
+import { getLogo } from '../../util/assets';
 import './CompareGrid.scss';
 
 function CompareGrid(props) {
@@ -64,10 +65,17 @@ function CompareGrid(props) {
         </Table.Header>
         <Table.Body>
           {players.map((stat) => {
-            var stats = stat.stats[0].splits[0].stat
             const key = `${stat.player.id}`;
+            if (stat.stats[0].splits.length === 0)
+            {
+              return (<Table.Row key={`row${key}`}>
+              <Table.Cell><img className="small-logo" src={getLogo(stat.player.currentTeam.id)} alt={`imglogo${stat.player.id}`} /> <Link to={routes.player + "/" + stat.player.id}>{stat.player.fullName}</Link></Table.Cell>
+              <Table.Cell>{stat.player.primaryPosition.abbreviation}</Table.Cell>
+              </Table.Row>);
+            }
+            var stats = stat.stats[0].splits[0].stat;
             return (<Table.Row key={`row${key}`}>
-              <Table.Cell><Link to={routes.player + "/" + stat.player.id}>{stat.player.fullName}</Link></Table.Cell>
+              <Table.Cell><img className="small-logo" src={getLogo(stat.player.currentTeam.id)} alt={`imglogo${stat.player.id}`} /> <Link to={routes.player + "/" + stat.player.id}>{stat.player.fullName}</Link></Table.Cell>
               <Table.Cell>{stat.player.primaryPosition.abbreviation}</Table.Cell>
               <Table.Cell>{stats.games}</Table.Cell>
               {skater && <Table.Cell>{stats.goals}</Table.Cell>}

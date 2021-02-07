@@ -25,7 +25,7 @@ export function getTeam(id)
       name,
       description,
       abbreviation,
-      venue { name, city },
+      venue { name, city, description },
       goalies {
           id,
           fullName,

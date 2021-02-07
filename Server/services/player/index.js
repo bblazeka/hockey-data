@@ -71,10 +71,8 @@ async function getPlayers() {
 async function addSelectedPlayer({ id }) {
   var myquery = { userId: 0 };
   var newvalues = { $addToSet: { selectedPlayers: parseInt(id) } };
-  db.getCollection('profiles').updateOne(myquery, newvalues, function (err, res) {
-    if (err) throw err;
-    console.log(`${res.result.nModified} selected players added`);
-  });
+  var res = await db.getCollection('profiles').updateOne(myquery, newvalues);
+  console.log(`${res.result.nModified} selected players added`);
 
   var selectedPlayers = await getSelectedPlayers();
   return selectedPlayers;
@@ -83,10 +81,8 @@ async function addSelectedPlayer({ id }) {
 async function deleteSelectedPlayer({ id }) {
   var myquery = { userId: 0 };
   var newvalues = { $pull: { selectedPlayers: parseInt(id) } };
-  db.getCollection('profiles').updateOne(myquery, newvalues, function (err, res) {
-    if (err) throw err;
-    console.log(`${res.result.nModified} selected players deleted`);
-  });
+  var res = await db.getCollection('profiles').updateOne(myquery, newvalues);
+  console.log(`${res.result.nModified} selected players deleted`);
 
   var selectedPlayers = await getSelectedPlayers();
   return selectedPlayers;
@@ -112,6 +108,16 @@ async function getSelectedPlayers() {
   };
 }
 
+async function clearSelectedPlayers() {
+  var myquery = { userId: 0 };
+  var newvalues = { $set: { selectedPlayers: [] } };
+  var res = await db.getCollection('profiles').updateOne(myquery, newvalues);
+  console.log(`${res.result.nModified} selected players deleted`);
+
+  var selectedPlayers = await getSelectedPlayers();
+  return selectedPlayers;
+}
+
 async function getProfiles() {
   const items = await db.getCollection('profiles').find({}).toArray();
   return items;
@@ -126,4 +132,5 @@ module.exports = {
   getSelectedPlayers,
   addSelectedPlayer,
   deleteSelectedPlayer,
+  clearSelectedPlayers,
 }
