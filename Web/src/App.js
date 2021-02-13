@@ -7,6 +7,7 @@ import * as teamActions from './services/team/actions';
 import { getLogo } from './util/assets';
 
 import 'react-vis/dist/style.css';
+import { Grid, Icon } from 'semantic-ui-react'
 
 class App extends Component {
 
@@ -52,10 +53,23 @@ class App extends Component {
         </header>
         <div className="App-container">{this.props.children}</div>
         <footer className="footer">
-          <div>Made using <a href="https://semantic-ui.com/">Semantic UI</a></div>
-          <div>Logos: <a href="https://www.puckmarks.net/nhllogos">Puckmarks</a></div>
-          <div>Icons made by <a href="https://www.flaticon.com/authors/prettycons" title="prettycons">prettycons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-          <div>Mapbox for maps</div>
+          <Grid columns='equal'>
+            <Grid.Row>
+              <Grid.Column>
+              <div><a href="https://github.com/bblazeka/hockey-data.git" target="_blank" rel="noopener noreferrer"><Icon name="github" /></a></div>
+                <div><Icon name="node" /> <Icon name="react" /> GraphQL, MongoDB
+                </div>
+              </Grid.Column>
+              <Grid.Column>
+                <div>Mapbox for maps</div>
+                <div>Made using <a href="https://semantic-ui.com/">Semantic UI</a></div>
+              </Grid.Column>
+              <Grid.Column>
+                <div>Logos: <a href="https://www.puckmarks.net/nhllogos">Puckmarks</a></div>
+                <div>Icons made by <a href="https://www.flaticon.com/authors/prettycons" title="prettycons">prettycons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </footer>
       </div>
     );
