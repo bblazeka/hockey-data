@@ -43,6 +43,22 @@ async function getTeamLocations() {
   var teams = await getTeams();
   var response = await teams.map(async (team) => {
     var location = await util.geocode({query:`${team.venue.name} ${team.venue.city}`});
+    switch(team.division.name) {
+      case 'Scotia North':
+        location[0].color = 'red';
+        break;
+      case 'MassMutual East':
+        location[0].color = 'green';
+        break;
+      case 'Discover Central':
+        location[0].color = 'orange';
+        break;
+      case 'Honda West':
+        location[0].color = 'blue';
+        break;
+    }
+    location[0].text = team.name;
+    location[0].id = team.id;
     return location[0];
   });
   return response;

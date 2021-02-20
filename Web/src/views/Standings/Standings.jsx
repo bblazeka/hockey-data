@@ -71,7 +71,7 @@ class Standings extends Component {
         })}
         </Grid>
         <Segment>
-          {locations && <Map className="mapControl" center={{center: [-102.131087,39.509726]}} points={locations} zoom={3} />}
+          {locations && <Map className="standingsMapControl" center={{center: [-102.131087,39.509726]}} points={locations} zoom={3} />}
         </Segment>
       </div>
     );

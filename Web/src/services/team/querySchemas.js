@@ -12,7 +12,10 @@ export function getTeamLocations()
 {
   return `{
     teamLocations {
-      center
+      id,
+      text,
+      center,
+      color
     }
   }`
 };

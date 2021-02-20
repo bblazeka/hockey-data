@@ -52,7 +52,6 @@ class Team extends Component {
     if (!team) {
       return (<div><Loader></Loader></div>)
     }
-    console.log(team.venue)
     return (
       <div>
         <Header as='h1'><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`} />{team.name}</Header>

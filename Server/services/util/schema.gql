@@ -1,5 +1,7 @@
 type Location {
+    id: Int
     text: String
     placeName: String
+    color: String
     center: [Float]
 }
