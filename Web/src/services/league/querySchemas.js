@@ -48,6 +48,49 @@ export function getSchedule(start, end) {
   }`
 };
 
+export function getTeamSchedule(id, start, end) {
+  return `{
+    scheduleByTeam(id: ${id}, start: "${start}", end: "${end}") {
+      gamePk,
+      date,
+      home { 
+        team { 
+          id, 
+          name 
+        },
+        leagueRecord {
+          wins,
+          losses,
+          ot
+        }
+      }, 
+      away {
+        team { 
+          id, 
+          name 
+        },
+        leagueRecord {
+          wins,
+          losses,
+          ot
+        }
+      }, 
+      opponent { 
+        rating,
+        team { 
+          id, 
+          name 
+        },
+        leagueRecord {
+          wins,
+          losses,
+          ot
+        }
+      }
+    }
+  }`
+};
+
 export function getStandings(season) {
   return`
   {

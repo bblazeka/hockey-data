@@ -39,6 +39,7 @@ var root = {
   tweets: news.getTweets,
   twitterApiStatus: news.getTwitterApiStatus,
   schedule: league.getSchedule,
+  scheduleByTeam: team.getTeamSchedule,
   standings: league.getStandings,
   gamesBetweenTeams: league.gamesBetweenTeams,
   game: league.getGame,

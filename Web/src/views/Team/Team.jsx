@@ -10,6 +10,9 @@ import { getLogo } from '../../util/assets';
 import { Checkbox, Header, Segment } from 'semantic-ui-react';
 import { getNews, getTweets } from '../../services/news';
 import { geocode } from '../../services/util';
+import { getTeamSchedule } from '../../services/league';
+import { convertDateTimeToString } from '../../util/converter';
+import TeamSchedule from '../../components/TeamSchedule/TeamSchedule';
 
 class Team extends Component {
   constructor(props) {
@@ -39,6 +42,12 @@ class Team extends Component {
       props.geocode(`${team.venue.name} ${team.venue.city}`)
       props.getNews(team.name);
       props.getTweets(team.name);
+      var today = new Date();
+      var finish = new Date(today);
+      finish.setDate(finish.getDate() + 7);
+      var start = convertDateTimeToString(today);
+      var end = convertDateTimeToString(finish);
+      props.getTeamSchedule(team.id, start, end);
       return {
         teamQuery: team.name,
       }
@@ -47,7 +56,7 @@ class Team extends Component {
   }
 
   render() {
-    const { team, tweets, news, location } = this.props;
+    const { teamGames, team, tweets, news, location } = this.props;
     const { filterActive } = this.state;
     if (!team) {
       return (<div><Loader></Loader></div>)
@@ -57,6 +66,7 @@ class Team extends Component {
         <Header as='h1'><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`} />{team.name}</Header>
         <Checkbox label='Show active players only' onChange={this.checkedChanged} />
         <RosterGrid team={team} filterPlayers={filterActive} />
+        <TeamSchedule games={teamGames} />
         <NewsFeed news={news}></NewsFeed>
         <SocialFeed tweets={tweets}></SocialFeed>
         {location &&
@@ -79,6 +89,7 @@ const mapStateToProps = state => ({
   tweets: state.news.tweets,
   teams: state.team.teams,
   news: state.news.news,
+  teamGames: state.league.teamGames,
   location: state.util.location
 })
 
@@ -87,6 +98,7 @@ const mapDispatchToProps = dispatch => ({
   geocode: (query) => dispatch(geocode(query)),
   getTweets: (query) => dispatch(getTweets(query)),
   getNews: (query) => dispatch(getNews(query)),
+  getTeamSchedule: (id, start, end ) => dispatch(getTeamSchedule(id, start, end)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Team);

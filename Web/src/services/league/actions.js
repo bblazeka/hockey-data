@@ -59,3 +59,17 @@ export const getGame = (id) => (dispatch) => {
     })
   });
 }
+
+export const getTeamSchedule = (id, start, end) => (dispatch) => {
+  dispatch({
+    type: actionTypes.GET_TEAM_SCHEDULE,
+  });
+  axiosGraphQL
+    .post('', { query: querySchemas.getTeamSchedule(id, start, end) })
+    .then(response => {
+      dispatch({
+        type: actionTypes.TEAM_SCHEDULE_LOADED,
+        payload: response.data.data.scheduleByTeam
+      })
+    });
+}

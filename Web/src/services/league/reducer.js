@@ -45,6 +45,11 @@ const leagueReducer = (state = defaultAppState, action) => {
         ...state,
         loading: false
       }
+    case actionTypes.TEAM_SCHEDULE_LOADED:
+        return {
+          ...state,
+          teamGames: action.payload
+        }
     default:
       return state
   }

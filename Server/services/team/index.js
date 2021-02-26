@@ -64,9 +64,18 @@ async function getTeamLocations() {
   return response;
 }
 
-async function getTeamSchedule({id, start, end}) {
-  var result = await apicomm.nhlApiRequest(`/api/v1/schedule?teamId=${id}&startDate=${start}&endDate=${end}`)
-  return result
+async function getTeamSchedule({ id, start, end }) {
+  var games = await db.getCollection('games').find({
+    "date": {
+      $gte: `${start}`,
+      $lte: `${end}`
+    }
+  }).toArray();
+  games = JSON.parse(JSON.stringify(games)).filter(g => g.home.team.id === id || g.away.team.id === id).map(el => {
+    el.opponent = (el.home.team.id === id) ? el.away : el.home;
+    return el;
+  });
+  return games;
 }
 
 module.exports = {
@@ -74,4 +83,5 @@ module.exports = {
   getTeam,
   getTeams,
   getTeamLocations,
+  getTeamSchedule,
 }
