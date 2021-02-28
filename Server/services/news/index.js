@@ -1,6 +1,7 @@
 const { Database } = require("../../comm/dbhandler");
 const apicomm = require('../../comm/apihandler');
 const twtcomm = require('../../comm/twitterhandler');
+const dateTools = require('../../tools/date');
 
 var db = new Database();
 
@@ -11,7 +12,9 @@ function init(database)
 
 async function getArticles({query})
 {
-  var newsResponse = await apicomm.newsApiRequest(`/v2/everything?q=${query}&language=en&sortBy=popularity`);
+  var pastDate = new Date(Date.now() - 604800000);
+
+  var newsResponse = await apicomm.newsApiRequest(`/v2/everything?q=${query}&from=${dateTools.DateToFormat(pastDate)}&language=en&sortBy=relevancy&pageSize=10&language=en`);
   return newsResponse.articles.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 }
 

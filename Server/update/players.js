@@ -20,13 +20,13 @@ async function run() {
 
       const options = { upsert: true };
       const filter = { id: player.id };
-
       const updateDoc = {
         $set: {
           fullName: player.fullName,
           firstName: player.firstName,
           lastName: player.lastName,
           primaryNumber: parseInt(player.primaryNumber),
+          currentAge: player.currentAge,
           birthDate: player.birthDate,
           positon: player.position,
           height: Math.ceil(parseInt(player.height.split(" ")[0].replace(/\D/g, '')) / 3.2808 * 100 + parseInt(player.height.split(" ")[1].replace(/\D/g, '')) / 0.39370),

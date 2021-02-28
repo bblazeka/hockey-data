@@ -7,7 +7,7 @@ import Loader from '../../components/Loader/Loader';
 import { Map, NewsFeed, RosterGrid, SocialFeed } from '../../components';
 import { getLogo } from '../../util/assets';
 
-import { Checkbox, Header, Segment } from 'semantic-ui-react';
+import { Checkbox, Grid, Header, Segment } from 'semantic-ui-react';
 import { getNews, getTweets } from '../../services/news';
 import { geocode } from '../../services/util';
 import { getTeamSchedule } from '../../services/league';
@@ -20,13 +20,13 @@ class Team extends Component {
     this.state = {
       id: "0",
       teamQuery: "",
-      filterActive: false,
+      filterActive: true,
     }
     this.checkedChanged = this.checkedChanged.bind(this);
   }
-  
+
   checkedChanged(e, { checked }) {
-    this.setState({ filterActive: checked});
+    this.setState({ filterActive: checked });
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -44,7 +44,7 @@ class Team extends Component {
       props.getTweets(team.name);
       var today = new Date();
       var finish = new Date(today);
-      finish.setDate(finish.getDate() + 7);
+      finish.setDate(finish.getDate() + 14);
       var start = convertDateTimeToString(today);
       var end = convertDateTimeToString(finish);
       props.getTeamSchedule(team.id, start, end);
@@ -63,23 +63,27 @@ class Team extends Component {
     }
     return (
       <div>
-        <Header as='h1'><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`} />{team.name}</Header>
-        <Checkbox label='Show active players only' onChange={this.checkedChanged} />
+        <Header as='h1' className="team-header"><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`} />{team.name}</Header>
+        <p className="desc">{team.description}</p>
         <RosterGrid team={team} filterPlayers={filterActive} />
+        <Segment>
+          <Checkbox checked={filterActive} label='Show active players only' onChange={this.checkedChanged} />
+        </Segment>
         <TeamSchedule games={teamGames} />
-        <NewsFeed news={news}></NewsFeed>
-        <SocialFeed tweets={tweets}></SocialFeed>
+        <Grid columns={2}><Grid.Row>
+          <Grid.Column><NewsFeed news={news}></NewsFeed></Grid.Column>
+          <Grid.Column><SocialFeed tweets={tweets}></SocialFeed></Grid.Column>
+        </Grid.Row></Grid>
         {location &&
           <Segment className="mapComponent">
             <Map className="mapControl" points={[location]} center={location} zoom={8} />
             <div className="location-text">
               <Header as='h4'>{team.venue.name}
-              <Header.Subheader>{team.venue.city}</Header.Subheader>
+                <Header.Subheader>{team.venue.city}</Header.Subheader>
               </Header>
               <p>{team.venue.description}</p>
             </div>
           </Segment>}
-        <Segment>{team.description}</Segment>
       </div>);
   }
 }
@@ -98,7 +102,7 @@ const mapDispatchToProps = dispatch => ({
   geocode: (query) => dispatch(geocode(query)),
   getTweets: (query) => dispatch(getTweets(query)),
   getNews: (query) => dispatch(getNews(query)),
-  getTeamSchedule: (id, start, end ) => dispatch(getTeamSchedule(id, start, end)),
+  getTeamSchedule: (id, start, end) => dispatch(getTeamSchedule(id, start, end)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Team);

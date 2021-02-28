@@ -32,6 +32,7 @@ export function getTeam(id)
       goalies {
           id,
           fullName,
+          currentAge,
           jerseyNumber,
           active,
           alternateCaptain,
@@ -55,6 +56,7 @@ export function getTeam(id)
     defenders {
           id,
           fullName,
+          currentAge,
           jerseyNumber,
           active,
           alternateCaptain,
@@ -78,6 +80,7 @@ export function getTeam(id)
     forwards {
           id,
           fullName,
+          currentAge,
           jerseyNumber,
           active,
           alternateCaptain,

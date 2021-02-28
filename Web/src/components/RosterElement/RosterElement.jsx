@@ -17,6 +17,7 @@ function RosterElement(props) {
             <Table.HeaderCell>Num</Table.HeaderCell>
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Position</Table.HeaderCell>
+            <Table.HeaderCell>Age</Table.HeaderCell>
             <Table.HeaderCell>Birthdate</Table.HeaderCell>
             <Table.HeaderCell>Birthplace</Table.HeaderCell>
             <Table.HeaderCell>Nationality</Table.HeaderCell>
@@ -32,6 +33,7 @@ function RosterElement(props) {
                 <Table.Cell>{player.jerseyNumber}</Table.Cell>
                 <Table.Cell><Link to={routes.player + "/" + player.id}>{player.fullName}</Link></Table.Cell>
                 <Table.Cell>{player.primaryPosition.name}</Table.Cell>
+                <Table.Cell>{player.currentAge}</Table.Cell>
                 <Table.Cell>{player.birthDate}</Table.Cell>
                 <Table.Cell>{player.birthCity}</Table.Cell>
                 <Table.Cell><Flag name={generateSemanticUICountryId(player.nationality)} /> {player.nationality}</Table.Cell>
