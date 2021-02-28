@@ -10,11 +10,9 @@ import NewsFeed from '../../components/NewsFeed/NewsFeed';
 
 class Home extends Component {
 
-  constructor(props) {
-    super(props)
-
-    this.props.getNews("NHL")
-    this.props.getTweets("NHL")
+  componentDidMount() {
+    this.props.getNews("NHL");
+    this.props.getTweets("NHL");
   }
 
   render() {

@@ -12,10 +12,10 @@ import { getLogo } from '../../util/assets';
 import { Grid, Header, Segment, Table } from 'semantic-ui-react';
 
 class Standings extends Component {
-  constructor(props) {
-    super(props)
-    this.props.getStandings()
-    this.props.getTeamLocations()
+  
+  componentDidMount() {
+    this.props.getStandings();
+    this.props.getTeamLocations();
   }
 
   render() {

@@ -16,8 +16,9 @@ import { Icon, Label, Table } from 'semantic-ui-react';
 import { getLogo } from '../../util/assets';
 
 class Schedule extends Component {
+
   constructor(props) {
-    super(props)
+    super(props);
     var today = new Date();
     var finish = new Date(today);
     finish.setDate(finish.getDate() + 7);
@@ -25,7 +26,10 @@ class Schedule extends Component {
       start: today,
       end: finish,
     }
-    this.getScheduleForTimePeriod()
+  }
+
+  componentDidMount() {
+    this.getScheduleForTimePeriod();
   }
 
   handleStartChange(date) {

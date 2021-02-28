@@ -18,8 +18,10 @@ class PlayerList extends Component {
     this.onRemoveAll = this.onRemoveAll.bind(this);
     this.handleResultSelect = this.handleResultSelect.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
+  }
 
-    this.props.getSelectedPlayers()
+  componentDidMount() {
+    this.props.getSelectedPlayers();
   }
 
   onRemoveAll() {
