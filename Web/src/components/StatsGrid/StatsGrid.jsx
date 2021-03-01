@@ -135,8 +135,8 @@ function StatsGrid(props) {
           <HorizontalGridLines />
           <XAxis />
           <YAxis />
-          {lines.map((l)=>{
-            return (<LineSeries style={{ fill: 'none' }} data={l} />);
+          {lines.map((l, index)=>{
+            return (<LineSeries key={`line${index}`} style={{ fill: 'none' }} data={l} />);
           })}
         </XYPlot>}
         <Statistic.Group horizontal>

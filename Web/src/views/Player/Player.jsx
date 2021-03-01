@@ -85,10 +85,13 @@ class Player extends Component {
         />
         <Segment textAlign='center'>
           <Grid columns='equal'>
-            <Grid.Column key="colLogo">
-              <Image src={getLogo(player.currentTeam.id)} size="small"></Image>
+          <Grid.Column width={3}>
+              <Image src={getLogo(player.currentTeam.id)} size='medium'></Image>
             </Grid.Column>
-            <Grid.Column key="colName" floated="left">
+            <Grid.Column width={12}>
+            <Grid columns='equal'>
+            <Grid.Row>
+            <Grid.Column floated="left">
               <Header as="h2">{player.fullName}
                 <Header.Subheader>
                   <Flag name={generateSemanticUICountryId(player.nationality)} /> {player.nationality}
@@ -98,7 +101,7 @@ class Player extends Component {
             <Grid.Column key="colInfo" floated="right" width={8}>
               <List horizontal className="info-list">
                 <List.Item>
-                  <List.Icon name='user' />
+                  <List.Icon name='map marker' />
                   <List.Header>Position</List.Header>
                   <List.Content>{player.primaryPosition.name}</List.Content>
                 </List.Item>
@@ -106,6 +109,11 @@ class Player extends Component {
                   <List.Icon name='users' />
                   <List.Header>Team</List.Header>
                   <Link to={routes.teams + "/" + player.currentTeam.id}>{player.currentTeam.name}</Link>
+                </List.Item>                
+                <List.Item>
+                  <List.Icon name='user' />
+                  <List.Header>Age</List.Header>
+                  <List.Content>{player.currentAge}</List.Content>
                 </List.Item>
                 <List.Item>
                   <List.Icon name='birthday cake' />
@@ -113,18 +121,27 @@ class Player extends Component {
                   <List.Content>{player.birthDate}</List.Content>
                 </List.Item>
                 <List.Item>
-                  <List.Icon name='marker' />
+                  <List.Icon name='map pin' />
                   <List.Header>Birthplace</List.Header>
                   <List.Content>{player.birthCity}</List.Content>
                 </List.Item>
               </List>
             </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column className="player-desc">
+                {player.description}
+              </Grid.Column>
+            </Grid.Row>
+            </Grid>
+            </Grid.Column>
           </Grid>
         </Segment>
         <Tab panes={panes} />
-        <NewsFeed news={news}></NewsFeed>
-        <SocialFeed tweets={tweets}></SocialFeed>
-        <Segment>{player.description}</Segment>
+        <Grid columns={2}><Grid.Row>
+          <Grid.Column><NewsFeed news={news}></NewsFeed></Grid.Column>
+          <Grid.Column><SocialFeed tweets={tweets}></SocialFeed></Grid.Column>
+        </Grid.Row></Grid>
       </div>);
   }
 }

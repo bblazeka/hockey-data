@@ -26,7 +26,6 @@ async function getPlayer({ id }) {
   const query = { id };
   const options = {
     sort: { id: -1 },
-    projection: { _id: 0, id: 1, fullName: 1, jerseyNumber: 1, birthCity: 1, birthDate: 1, nationality: 1, currentTeam: 1, primaryPosition: 1 },
   };
   const player = await db.getCollection('players').findOne(query, options);
 
