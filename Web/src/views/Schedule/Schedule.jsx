@@ -10,7 +10,8 @@ import * as actions from '../../services/league';
 import './Schedule.scss';
 import Loader from '../../components/Loader/Loader';
 import routes from '../../routes';
-import { convertDateTimeToString, getDatesArray } from '../../util/converter';
+import { getDatesArray } from '../../util/converter';
+import { DateToServerFormat } from 'common';
 
 import { Icon, Label, Table } from 'semantic-ui-react';
 import { getLogo } from '../../util/assets';
@@ -45,8 +46,8 @@ class Schedule extends Component {
   };
 
   getScheduleForTimePeriod() {
-    var start = convertDateTimeToString(this.state.start);
-    var end = convertDateTimeToString(this.state.end);
+    var start = DateToServerFormat(this.state.start);
+    var end = DateToServerFormat(this.state.end);
     this.props.getSchedule(start, end)
   }
 
@@ -92,7 +93,7 @@ class Schedule extends Component {
                 </Table.HeaderCell>
             {dates.map((date) => {
               return (<Table.HeaderCell key={`date${date}`}>
-                {convertDateTimeToString(date)}
+                {DateToServerFormat(date)}
               </Table.HeaderCell>)
             })}
             <Table.HeaderCell>Games</Table.HeaderCell>
@@ -107,7 +108,7 @@ class Schedule extends Component {
                     <Link to={`${routes.teams}/${element.id}`}><img className="logo" src={getLogo(element.id)} alt={`img${element.id}`}></img></Link>
                   </Table.Cell>
                   {dates.map((date) => {
-                    var game = (element.games.filter(game => game.date && game.date === convertDateTimeToString(date)))[0]
+                    var game = (element.games.filter(game => game.date && game.date === DateToServerFormat(date)))[0]
                     try {
                       const logo = getLogo(game.opponent.team.id)
                       return (

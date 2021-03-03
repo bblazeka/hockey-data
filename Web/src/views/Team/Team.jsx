@@ -11,7 +11,7 @@ import { Checkbox, Grid, Header, Segment } from 'semantic-ui-react';
 import { getNews, getTweets } from '../../services/news';
 import { geocode } from '../../services/util';
 import { getTeamSchedule } from '../../services/league';
-import { convertDateTimeToString } from '../../util/converter';
+import { DateToServerFormat } from 'common';
 import TeamSchedule from '../../components/TeamSchedule/TeamSchedule';
 
 class Team extends Component {
@@ -45,8 +45,8 @@ class Team extends Component {
       var today = new Date();
       var finish = new Date(today);
       finish.setDate(finish.getDate() + 14);
-      var start = convertDateTimeToString(today);
-      var end = convertDateTimeToString(finish);
+      var start = DateToServerFormat(today);
+      var end = DateToServerFormat(finish);
       props.getTeamSchedule(team.id, start, end);
       return {
         teamQuery: team.name,

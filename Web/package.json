@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
+    "common": "file:../Common",
     "eslint-utils": "^1.4.3",
     "mapbox-gl": "^1.11.1",
     "node-sass": "^4.14.1",

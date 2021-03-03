@@ -9,7 +9,8 @@ import * as actions from '../../services/league';
 import { getLogo } from '../../util/assets';
 import { Loader } from '../../components';
 import { isNullOrUndefined, formatDecimals } from '../../util/common';
-import { convertDateTimeToString, dateTimeFilterTime } from '../../util/converter';
+import { DateToServerFormat } from 'common';
+import { dateTimeFilterTime } from '../../util/converter';
 import './Game.scss';
 
 class Game extends Component {
@@ -218,7 +219,7 @@ class Game extends Component {
                 </List.Item>
                 <List.Item>
                   <List.Icon name='calendar outline' />
-                  <List.Content>{convertDateTimeToString(game.gameDate)}</List.Content>
+                  <List.Content>{DateToServerFormat(game.gameDate)}</List.Content>
                 </List.Item>
                 <List.Item>
                   <List.Icon name='clock outline' />

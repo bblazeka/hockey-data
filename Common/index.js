@@ -1,4 +1,4 @@
-function DateToFormat(date) {
+function DateToServerFormat(date) {
   if (typeof(date)==="string")
   {
     date = new Date(date);
@@ -11,5 +11,5 @@ function DateToFormat(date) {
 }
 
 module.exports = {
-  DateToFormat
+  DateToServerFormat
 }
