@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Header, Statistic } from 'semantic-ui-react';
-import { DiscreteColorLegend, XYPlot, HorizontalGridLines, VerticalGridLines, XAxis, YAxis, LineSeries } from 'react-vis';
+import { DiscreteColorLegend, XYPlot, Hint, HorizontalGridLines, VerticalGridLines, XAxis, YAxis, LineMarkSeries } from 'react-vis';
 
 import { getLogo } from '../../util/assets';
 import { formatDecimals } from '../../util/common';
 import './StatsGrid.scss';
 
 function StatsGrid(props) {
+  
+  const [value, setValue] = useState(null);
+
   const { data, skater, detailed } = props;
   const { totalGames, totalGoals, totalAssists, totalPoints, totalGamesStarted, totalWins, goalsLine, assistsLine, stats, gamesStartedLine, winsLine } = data;
   var lineNames = (skater) ? ["goals", "assists"] : ["Games started", "Wins"];
   var lines = (skater) ? [ goalsLine, assistsLine ] : [ gamesStartedLine, winsLine ];
+
   return (
     <div className="grid">
       <Header as='h4'>Statistics</Header>
@@ -65,7 +69,7 @@ function StatsGrid(props) {
         <Table.Body>
           {stats.map((stat) => {
             const logo = getLogo(stat.team.id);
-            const key = `${stat.team.id}${stat.sequenceNumber}${stat.season}`;
+            const key = `${stat.team.id}${stat.team.name}${stat.sequenceNumber}${stat.season}`;
             return (<Table.Row key={`row${key}`}>
               <Table.Cell>{stat.season}</Table.Cell>
               <Table.Cell>{logo && <img className="small-logo" src={logo} alt={`img${key}`}></img>}</Table.Cell>
@@ -136,8 +140,15 @@ function StatsGrid(props) {
           <XAxis />
           <YAxis />
           {lines.map((l, index)=>{
-            return (<LineSeries key={`line${index}`} style={{ fill: 'none' }} data={l} />);
+            return (<LineMarkSeries 
+                      key={`line${index}`} 
+                      style={{ fill: 'none' }} 
+                      data={l} 
+                      onValueMouseOver={(v) => setValue(v)}
+                      onValueMouseOut={() => setValue(null)} 
+                    />);
           })}
+          {value ? <Hint value={value} /> : null}
         </XYPlot>}
         <Statistic.Group horizontal>
         {totalGames && <Statistic>

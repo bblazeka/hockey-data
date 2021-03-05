@@ -77,6 +77,7 @@ class Player extends Component {
     return (
       <div>
         <Search
+          className="search-box"
           loading={isLoading}
           onResultSelect={this.handleResultSelect}
           onSearchChange={this.handleSearchChange}
