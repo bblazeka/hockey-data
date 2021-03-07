@@ -92,7 +92,7 @@ export function getTeamSchedule(id, start, end) {
 };
 
 export function getStandings(season) {
-  return`
+  return `
   {
     standings(season: "${season}") { 
       division {
@@ -119,8 +119,8 @@ export function getStandings(season) {
   }`
 }
 
-export function getGamesBetweenTeams(homeId,awayId) {
-  return`{
+export function getGamesBetweenTeams(homeId, awayId) {
+  return `{
     gamesBetweenTeams(homeId: ${homeId}, awayId: ${awayId}){ 
         gamePk,
         gameDate
@@ -129,7 +129,7 @@ export function getGamesBetweenTeams(homeId,awayId) {
 }
 
 export function getGame(id) {
-  return`{
+  return `{
     game(gameId: ${id}){ 
         id,
         gameDate,
@@ -200,5 +200,33 @@ export function getGame(id) {
         }
       }
     }
+  }`
+}
+
+export function getTodaysGames() {
+  return `{
+    todaysGames  {
+      gamePk,
+      gameTime,
+      currentPeriod,
+      currentPeriodOrdinal,
+      currentPeriodTimeRemaining,
+  teams {
+      home {
+        team {
+          id, name
+        }
+        goals,
+        shotsOnGoal,
+      },
+    away {
+        team {
+          id, name
+        }
+        goals,
+        shotsOnGoal,
+    }
+    }
+}
   }`
 }

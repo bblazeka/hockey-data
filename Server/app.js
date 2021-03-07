@@ -43,6 +43,7 @@ var root = {
   standings: league.getStandings,
   gamesBetweenTeams: league.gamesBetweenTeams,
   game: league.getGame,
+  todaysGames: league.getTodaysGames,
   geocode: util.geocode,
 };
 

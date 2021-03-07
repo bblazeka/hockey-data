@@ -18,6 +18,19 @@ type BasicGame {
   opponent: Opponent
 }
 
+type LiveGame {
+  gamePk: Int
+  currentPeriod: Int
+  currentPeriodOrdinal: String
+  currentPeriodTimeRemaining: String
+  date: String
+  gameTime: String
+  gameDate: Date
+  season: String
+  powerPlayStrength: String
+  teams: GameTeams
+}
+
 type Opponent {
   score: Int
   rating: Float
@@ -74,6 +87,8 @@ type GameTeam {
   goalies: [GamePlayer]
   teamSkaterStats: TeamSkaterStats
   coaches: [Coach]
+  goals: Int
+  shotsOnGoal: Int
 }
 
 type GamePlayer {

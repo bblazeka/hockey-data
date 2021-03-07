@@ -1,5 +1,6 @@
 const { Database } = require("../../comm/dbhandler");
 const apicomm = require('../../comm/apihandler');
+const common = require('common');
 
 var db = new Database();
 
@@ -41,7 +42,6 @@ async function getSchedule({ start, end }) {
   return teams;
 }
 
-
 async function gamesBetweenTeams({ homeId, awayId }) {
   const items = await db.getCollection('games').find({ "home.team.id": homeId, "away.team.id": awayId }).toArray();
   return items;
@@ -63,10 +63,24 @@ async function getGame({ gameId }) {
   return result;
 }
 
+async function getTodaysGames() {
+  var games = (await db.getCollection('games').find({
+    "date": common.DateToServerFormat(new Date())
+  }).toArray()).sort((a, b) => (a.gameDate > b.gameDate) ? 1 : (a.gameDate < b.gameDate) ? -1 : 0);
+  console.log(games)
+  return games.map(async (game) => {
+    var result = await apicomm.nhlApiRequest(`/api/v1/game/${game.gamePk}/linescore`);
+    result.gameTime = common.DateToTimeOnly(game.gameDate);
+    result.gamePk = game.gamePk;
+    return result;
+  });
+}
+
 module.exports = {
   init,
   gamesBetweenTeams,
   getSchedule,
   getStandings,
   getGame,
+  getTodaysGames,
 }

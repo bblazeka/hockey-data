@@ -7,9 +7,16 @@ function DateToServerFormat(date) {
   var day = (date.getDate() + 0)
   // Get the month as a number (0-11)
   var month = (date.getMonth() + 1)
-  return date.getFullYear() + "-" + (month <= 9 ? "0" + month : month) + "-" + (day <= 9 ? "0" + day : day)
+  return date.getFullYear() + "-" + (month <= 9 ? "0" + month : month) + "-" + (day <= 9 ? "0" + day : day);
+}
+
+function DateToTimeOnly(date) {
+  var hours = date.getHours();
+  var mins = date.getMinutes();
+  return (hours <= 9 ? "0" + hours : hours) + ":" + (mins <= 9 ? "0" + mins : mins);
 }
 
 module.exports = {
-  DateToServerFormat
+  DateToServerFormat,
+  DateToTimeOnly
 }

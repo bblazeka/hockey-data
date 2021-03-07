@@ -5,6 +5,7 @@ const defaultAppState = {
   players: [],
   roster: [],
   prediction: [],
+  gamesToday: []
 }
 
 const leagueReducer = (state = defaultAppState, action) => {
@@ -46,10 +47,15 @@ const leagueReducer = (state = defaultAppState, action) => {
         loading: false
       }
     case actionTypes.TEAM_SCHEDULE_LOADED:
-        return {
-          ...state,
-          teamGames: action.payload
-        }
+      return {
+        ...state,
+        teamGames: action.payload
+      }
+    case actionTypes.GAMES_TODAY_LOADED:
+      return {
+        ...state,
+        gamesToday: action.payload
+      }
     default:
       return state
   }

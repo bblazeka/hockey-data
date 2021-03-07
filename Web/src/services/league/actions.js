@@ -73,3 +73,17 @@ export const getTeamSchedule = (id, start, end) => (dispatch) => {
       })
     });
 }
+
+export const getGamesToday = () => (dispatch) => {
+  dispatch({
+    type: actionTypes.GET_GAMES_TODAY,
+  });
+  axiosGraphQL
+  .post('', { query: querySchemas.getTodaysGames() })
+  .then(response => {
+    dispatch({
+      type: actionTypes.GAMES_TODAY_LOADED,
+      payload: response.data.data.todaysGames
+    })
+  });
+}
