@@ -1,6 +1,7 @@
 const { Database } = require("../../comm/dbhandler");
 const apicomm = require('../../comm/apihandler');
 const util = require('../util/index.js');
+const common = require('common');
 
 var db = new Database();
 
@@ -22,7 +23,7 @@ async function getTeam({id}) {
   };
   const team = await collection.findOne(query, options);
 
-  if (team != null)
+  if (!common.IsNullOrUndefined(team))
   {
     team.rosterResponse = await getPlayersFromTeam(id);
     team.goalies = team.rosterResponse.filter(p => p.primaryPosition.type == "Goalie")

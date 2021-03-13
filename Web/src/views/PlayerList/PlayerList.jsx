@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { IsNullOrUndefined } from 'common';
+
 import { CompareGrid, Loader } from '../../components';
 
 import * as actions from '../../services/player';
 import './PlayerList.scss';
 
 import { Button, Search } from 'semantic-ui-react';
-import { isNullOrUndefined } from '../../util/common';
 
 const initialState = { isLoading: false, results: [], value: '' }
 
@@ -57,7 +58,7 @@ class PlayerList extends Component {
   render() {
     const { selectedPlayers, suggestions } = this.props;
     const { isLoading, value } = this.state;
-    if (isNullOrUndefined(selectedPlayers) || selectedPlayers.length === 0)
+    if (IsNullOrUndefined(selectedPlayers) || selectedPlayers.length === 0)
     {
       return (<Loader />)
     }

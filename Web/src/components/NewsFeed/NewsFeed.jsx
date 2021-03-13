@@ -1,13 +1,13 @@
 import React from 'react';
 import { Header, Item } from 'semantic-ui-react';
+import { IsNullOrUndefined } from 'common';
 
 import './NewsFeed.scss';
 import Loader from '../Loader/Loader';
-import { isNullOrUndefined } from  '../../util/common';
 
 function NewsFeed(props) {
   const { news } = props;
-  if (isNullOrUndefined(news))
+  if (IsNullOrUndefined(news))
   {
     return (<Loader></Loader>)
   }

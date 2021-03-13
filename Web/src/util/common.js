@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { IsNullOrUndefined } from 'common';
 
 export const axiosGraphQL = axios.create({
   baseURL: 'http://localhost:4000/graphql',
@@ -23,11 +24,9 @@ export function generateSemanticUICountryId(countryName) {
 
 export function formatDecimals(number, decimalPlaces)
 {
-  if (!isNullOrUndefined(number) && !isNaN(number))
+  if (!IsNullOrUndefined(number) && !isNaN(number))
   {
     return number.toFixed(decimalPlaces)
   }
   return null;
 }
-
-export const isNullOrUndefined = (obj) => obj === null || obj === undefined;

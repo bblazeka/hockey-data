@@ -1,13 +1,13 @@
 import React from 'react';
 import { Feed, Header, Icon, Label } from 'semantic-ui-react';
+import { IsNullOrUndefined } from  'common';
 
 import './SocialFeed.scss';
 import Loader from '../Loader/Loader';
-import { isNullOrUndefined } from  '../../util/common';
 
 function SocialFeed(props) {
   const { tweets } = props;
-  if (isNullOrUndefined(tweets))
+  if (IsNullOrUndefined(tweets))
   {
     return (<Loader></Loader>)
   }

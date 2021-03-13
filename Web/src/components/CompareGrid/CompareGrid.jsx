@@ -1,15 +1,16 @@
 import React from 'react';
 import { Button, Table, Header } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { IsNullOrUndefined } from 'common';
 import routes from '../../routes';
 
-import { formatDecimals, isNullOrUndefined } from '../../util/common';
+import { formatDecimals } from '../../util/common';
 import { getLogo } from '../../util/assets';
 import './CompareGrid.scss';
 
 function CompareGrid(props) {
   const { players, skater, detailed, onDelete } = props;
-  if (isNullOrUndefined(players))
+  if (IsNullOrUndefined(players))
   {
     return(<div>Not found.</div>)
   }

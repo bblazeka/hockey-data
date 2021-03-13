@@ -16,7 +16,13 @@ function DateToTimeOnly(date) {
   return (hours <= 9 ? "0" + hours : hours) + ":" + (mins <= 9 ? "0" + mins : mins);
 }
 
+
+function IsNullOrUndefined (obj)  {
+  return obj === null || obj === undefined;
+} 
+
 module.exports = {
   DateToServerFormat,
-  DateToTimeOnly
+  DateToTimeOnly,
+  IsNullOrUndefined
 }

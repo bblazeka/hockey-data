@@ -1,14 +1,14 @@
 import React from 'react';
 import { Header, List, Image, Segment } from 'semantic-ui-react';
+import { IsNullOrUndefined } from  'common';
 
 import './TeamSchedule.scss';
 import Loader from '../Loader/Loader';
-import { isNullOrUndefined } from  '../../util/common';
 import { getLogo } from '../../util/assets';
 
 function TeamSchedule(props) {
   const { games } = props;
-  if (isNullOrUndefined(games))
+  if (IsNullOrUndefined(games))
   {
     return (<Loader></Loader>)
   }

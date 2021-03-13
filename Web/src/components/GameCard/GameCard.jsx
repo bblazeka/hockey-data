@@ -1,19 +1,19 @@
 import React from 'react';
 import { Card, Divider, Header } from 'semantic-ui-react';
+import { IsNullOrUndefined } from 'common';
 
 import './GameCard.scss';
 import Loader from '../Loader/Loader';
-import { isNullOrUndefined } from '../../util/common';
 import routes from '../../routes';
 import { getLogo } from '../../util/assets';
 
 function GameCard(props) {
   const { game } = props;
   const { home, away } = game.teams;
-  if (isNullOrUndefined(game)) {
+  if (IsNullOrUndefined(game)) {
     return (<Loader></Loader>)
   }
-  var generalGameInfo = (isNullOrUndefined(game.currentPeriodOrdinal)) ? game.gameTime :
+  var generalGameInfo = (IsNullOrUndefined(game.currentPeriodOrdinal)) ? game.gameTime :
    `${game.currentPeriodOrdinal} ${game.currentPeriodTimeRemaining}`;
   return (
     <Card key={game.gamePk} href={`${routes.game}/${game.gamePk}`}>

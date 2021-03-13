@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { IsNullOrUndefined } from  'common';
 
-//import * as actions from '../../services/league';
 import './Prediction.scss';
-import { isNullOrUndefined } from  '../../util/common';
 
 import Loader from '../../components/Loader/Loader';
 import { Image, List, Segment, Grid, Label, Header, Progress } from 'semantic-ui-react';
@@ -12,7 +11,7 @@ class Prediction extends Component {
 
     render() {
         const { prediction, teams } = this.props;
-        if (isNullOrUndefined(prediction)) {
+        if (IsNullOrUndefined(prediction)) {
             return (<div><Loader></Loader></div>)
         }
         return (

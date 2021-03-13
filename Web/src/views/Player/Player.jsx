@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Flag, Grid, Header, Image, List, Search, Segment, Tab } from 'semantic-ui-react';
+import { IsNullOrUndefined } from 'common';
 
 import * as actions from '../../services/player';
 import './Player.scss';
@@ -9,7 +10,7 @@ import Loader from '../../components/Loader/Loader';
 
 import routes from '../../routes';
 import { NewsFeed, SocialFeed, StatsGrid } from '../../components';
-import { generateSemanticUICountryId, isNullOrUndefined } from  '../../util/common';
+import { generateSemanticUICountryId } from  '../../util/common';
 import { getLogo } from '../../util/assets';
 import { getTweets, getNews } from '../../services/news';
 
@@ -30,7 +31,7 @@ class Player extends Component {
         id,
       }
     }
-    if ((player !== null && state.playerQuery !== player.fullName) || (!loadingTweets && isNullOrUndefined(tweets)))
+    if ((player !== null && state.playerQuery !== player.fullName) || (!loadingTweets && IsNullOrUndefined(tweets)))
     {
       props.getTweets(player.fullName);
       props.getNews(player.fullName);

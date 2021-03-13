@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { Button, Dropdown, Grid, Header, Image, List, Segment, Statistic, Table } from 'semantic-ui-react';
 import routes from '../../routes';
 import { Link } from 'react-router-dom';
+import { IsNullOrUndefined } from 'common';
 
 import * as actions from '../../services/league';
 
 import { getLogo } from '../../util/assets';
 import { Loader } from '../../components';
-import { isNullOrUndefined, formatDecimals } from '../../util/common';
+import { formatDecimals } from '../../util/common';
 import { DateToServerFormat } from 'common';
 import { dateTimeFilterTime } from '../../util/converter';
 import './Game.scss';
@@ -29,13 +30,13 @@ class Game extends Component {
 
   static getDerivedStateFromProps(props, state) {
     const { id } = props.match.params;
-    if (!isNullOrUndefined(props.game) && props.game.id !== state.id) {
+    if (!IsNullOrUndefined(props.game) && props.game.id !== state.id) {
       props.history.push(`/game/${props.game.id}`);
       return {
         id: props.game.id
       }
     }
-    if (isNullOrUndefined(props.game) && parseInt(id) !== 0) {
+    if (IsNullOrUndefined(props.game) && parseInt(id) !== 0) {
       props.getGame(id)
       return {
         id,
