@@ -26,6 +26,7 @@ async function getTweets({query})
   {
     tweets.push({
       id: status.id_str,
+      createdAt: status.created_at,
       text: status.full_text,
       user: {
         id: status.user.id,

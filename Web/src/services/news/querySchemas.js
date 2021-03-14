@@ -3,6 +3,7 @@ export function getTweets(query)
   return `{
     tweets(query: "${query}") { 
       id,
+      createdAt,
       text,
       favoriteCount,
       retweetCount,

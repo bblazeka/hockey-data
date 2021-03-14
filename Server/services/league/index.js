@@ -1,6 +1,7 @@
 const { Database } = require("../../comm/dbhandler");
 const apicomm = require('../../comm/apihandler');
 const common = require('common');
+const { DateTime } = require('luxon');
 
 var db = new Database();
 
@@ -67,10 +68,9 @@ async function getTodaysGames() {
   var games = (await db.getCollection('games').find({
     "date": common.DateToServerFormat(new Date())
   }).toArray()).sort((a, b) => (a.gameDate > b.gameDate) ? 1 : (a.gameDate < b.gameDate) ? -1 : 0);
-  console.log(games)
   return games.map(async (game) => {
     var result = await apicomm.nhlApiRequest(`/api/v1/game/${game.gamePk}/linescore`);
-    result.gameTime = common.DateToTimeOnly(game.gameDate);
+    result.gameTime = DateTime.fromJSDate(game.gameDate).toFormat("HH:mm");
     result.gamePk = game.gamePk;
     return result;
   });

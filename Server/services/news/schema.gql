@@ -19,6 +19,7 @@
 
   type Tweet {
     id: String
+    createdAt: String
     text: String
     favoriteCount: Int
     retweetCount: Int

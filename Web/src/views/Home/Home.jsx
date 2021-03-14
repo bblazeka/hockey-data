@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, Grid, Header } from 'semantic-ui-react';
+import { IsNullOrUndefined } from 'common';
 
 import './Home.scss';
 import * as leagueActions from '../../services/league';
@@ -24,7 +25,7 @@ class Home extends Component {
       <div>
         <Header as="h2">Today's NHL games</Header>
         <Card.Group>
-          {(!games || games.length===0) && <NotFound />}
+          {(IsNullOrUndefined(games) || games.length===0) && <NotFound text="No games found." />}
           {games.map((game)=> {
             return (<GameCard key={`gamecard${game.gamePk}`} game={game} />)
           })}

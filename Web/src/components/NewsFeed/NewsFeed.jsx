@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header, Item } from 'semantic-ui-react';
+import dayjs from 'dayjs';
 import { IsNullOrUndefined } from 'common';
 
 import './NewsFeed.scss';
@@ -24,7 +25,7 @@ function NewsFeed(props) {
                   <Item.Header>{article.title}</Item.Header>
                   <Item.Meta>{article.author} ({article.source.name})</Item.Meta>
                   <Item.Description>{article.description}</Item.Description>
-                  <Item.Extra>{article.publishedAt}</Item.Extra>
+                  <Item.Extra>{dayjs(article.publishedAt).toString()}</Item.Extra>
                 </Item.Content>
             </Item>);
           })}
