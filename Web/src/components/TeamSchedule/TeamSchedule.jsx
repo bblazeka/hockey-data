@@ -3,7 +3,7 @@ import { Header, List, Image, Segment } from 'semantic-ui-react';
 import { IsNullOrUndefined } from  'common';
 
 import './TeamSchedule.scss';
-import Loader from '../Loader/Loader';
+import { NotFound, Loader } from '..'; 
 import { getLogo } from '../../util/assets';
 
 function TeamSchedule(props) {
@@ -17,7 +17,7 @@ function TeamSchedule(props) {
       <Segment>
       <Header as='h3'>Games</Header>
       <List horizontal>
-        {games.length === 0 && <div>Nothing found.</div>}
+        {games.length === 0 && <NotFound />}
         {games.map((game) => {
           return (
             <List.Item key={game.gamePk}>

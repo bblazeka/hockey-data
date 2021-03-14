@@ -1,13 +1,13 @@
 import React from 'react';
+import { Dimmer, Loader as SemanticLoader } from 'semantic-ui-react';
 
-import logo from '../../logo.svg';
 import './Loader.scss';
 
-function Loader() {
+function Loader(props) {
     return (
-        <div className="loader">
-            <img src={logo} className="App-logo" alt="logo" />
-        </div>
+      <Dimmer active inverted>
+        <SemanticLoader>{props.text ? props.text : "Loading..."}</SemanticLoader>
+      </Dimmer>
     );
 }
 

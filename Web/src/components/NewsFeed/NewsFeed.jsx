@@ -4,6 +4,7 @@ import { IsNullOrUndefined } from 'common';
 
 import './NewsFeed.scss';
 import Loader from '../Loader/Loader';
+import NotFound from '../NotFound/NotFound';
 
 function NewsFeed(props) {
   const { news } = props;
@@ -14,7 +15,7 @@ function NewsFeed(props) {
   return (
     <div className="news-container">
       <Header as='h3'>News</Header>
-      {news.length === 0 && <div>Nothing found.</div>}
+      {news.length === 0 && <NotFound />}
       <Item.Group>
           {news.map((article, index) => {
             return (<Item key={index}>

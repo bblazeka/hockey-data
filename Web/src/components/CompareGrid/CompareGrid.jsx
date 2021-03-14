@@ -6,13 +6,14 @@ import routes from '../../routes';
 
 import { formatDecimals } from '../../util/common';
 import { getLogo } from '../../util/assets';
+import { NotFound } from '..';
 import './CompareGrid.scss';
 
 function CompareGrid(props) {
   const { players, skater, detailed, onDelete } = props;
   if (IsNullOrUndefined(players))
   {
-    return(<div>Not found.</div>)
+    return(<NotFound />)
   }
   return (
     <div className="grid">

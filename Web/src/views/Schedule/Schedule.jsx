@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import * as actions from '../../services/league';
 import './Schedule.scss';
-import Loader from '../../components/Loader/Loader';
+import { Loader } from '../../components';
 import routes from '../../routes';
 import { getDatesArray } from '../../util/converter';
 import { DateToServerFormat } from 'common';
@@ -56,7 +56,7 @@ class Schedule extends Component {
     const { schedule } = this.props;
     var dates = getDatesArray(start, end);
     if (!schedule) {
-      return (<div><Loader></Loader></div>)
+      return (<Loader></Loader>)
     }
     return (
       <div className="schedule-page">

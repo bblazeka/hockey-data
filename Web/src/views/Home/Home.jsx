@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import * as leagueActions from '../../services/league';
-import * as actions from '../../services/news';
-import Loader from '../../components/Loader/Loader';
 import { Card, Grid, Header } from 'semantic-ui-react';
 
 import './Home.scss';
-import { GameCard, SocialFeed } from '../../components';
-import NewsFeed from '../../components/NewsFeed/NewsFeed';
+import * as leagueActions from '../../services/league';
+import * as actions from '../../services/news';
+import { GameCard, Loader, NewsFeed, NotFound, SocialFeed } from '../../components';
 
 class Home extends Component {
 
@@ -27,6 +24,7 @@ class Home extends Component {
       <div>
         <Header as="h2">Today's NHL games</Header>
         <Card.Group>
+          {(!games || games.length===0) && <NotFound />}
           {games.map((game)=> {
             return (<GameCard key={`gamecard${game.gamePk}`} game={game} />)
           })}

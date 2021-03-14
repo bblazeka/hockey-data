@@ -6,10 +6,9 @@ import { IsNullOrUndefined } from 'common';
 
 import * as actions from '../../services/player';
 import './Player.scss';
-import Loader from '../../components/Loader/Loader';
 
 import routes from '../../routes';
-import { NewsFeed, SocialFeed, StatsGrid } from '../../components';
+import { Loader, NewsFeed, SocialFeed, StatsGrid } from '../../components';
 import { generateSemanticUICountryId } from  '../../util/common';
 import { getLogo } from '../../util/assets';
 import { getTweets, getNews } from '../../services/news';

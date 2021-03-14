@@ -3,7 +3,7 @@ import { Feed, Header, Icon, Label } from 'semantic-ui-react';
 import { IsNullOrUndefined } from  'common';
 
 import './SocialFeed.scss';
-import Loader from '../Loader/Loader';
+import { Loader, NotFound } from '..';
 
 function SocialFeed(props) {
   const { tweets } = props;
@@ -15,7 +15,7 @@ function SocialFeed(props) {
     <div className="news-container">
       <Header as='h3'>Feed</Header>
       <Feed>
-        {tweets.length === 0 && <div>Nothing found.</div>}
+        {tweets.length === 0 && <NotFound />}
         {tweets.map((start) => {
           return (
           <Feed.Event key={start.id}>
