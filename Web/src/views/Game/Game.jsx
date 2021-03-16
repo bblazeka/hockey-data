@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Dropdown, Grid, Header, Image, List, Segment, Statistic, Table } from 'semantic-ui-react';
 import routes from '../../routes';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 import { IsNullOrUndefined } from 'common';
 
 import * as actions from '../../services/league';
@@ -11,7 +12,6 @@ import { getLogo } from '../../util/assets';
 import { Loader } from '../../components';
 import { formatDecimals } from '../../util/common';
 import { DateToServerFormat } from 'common';
-import { dateTimeFilterTime } from '../../util/converter';
 import './Game.scss';
 
 class Game extends Component {
@@ -224,7 +224,7 @@ class Game extends Component {
                 </List.Item>
                 <List.Item>
                   <List.Icon name='clock outline' />
-                  <List.Content>{dateTimeFilterTime(game.gameDate)}</List.Content>
+                  <List.Content>{dayjs(game.gameDate).format("HH:mm")}</List.Content>
                 </List.Item>
                 <List.Item>
                   <List.Icon name='marker' />

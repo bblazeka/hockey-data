@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 
 const defaultAppState = {
-  loaded: false,
+  locationLoading: false,
   location: null
 }
 
@@ -10,11 +10,13 @@ const utilReducer = (state = defaultAppState, action) => {
     case actionTypes.GET_LOCATION:
       return {
         ...state,
+        locationLoading: true,
         location: null
       }
     case actionTypes.LOCATION_LOADED:
       return {
         ...state,
+        locationLoading: false,
         location: action.payload
       }
     default:

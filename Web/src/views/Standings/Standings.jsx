@@ -49,11 +49,11 @@ class Standings extends Component {
                     {entry.teamRecords.map((record) => {
                       return (
                         <Table.Row key={`row${record.team.id}`}>
-                          <Table.Cell>{record.divisionRank}</Table.Cell>
+                          <Table.Cell className="bold">{record.divisionRank}</Table.Cell>
                           <Table.Cell>
                             <Link to={`${routes.teams}/${record.team.id}`}><img className="logo" src={getLogo(record.team.id)} alt={`img${record.team.Id}`}></img></Link>
                           </Table.Cell>
-                          <Table.Cell>
+                          <Table.Cell className="standings-team-name">
                             <Link to={`${routes.teams}/${record.team.id}`}>{record.team.name}</Link>
                           </Table.Cell>
                           <Table.Cell>{record.gamesPlayed}</Table.Cell>

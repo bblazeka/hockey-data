@@ -18,6 +18,7 @@ export function generateSemanticUICountryId(countryName) {
     case "SVN": return "si";
     case "SVK": return "sk";
     case "AUT": return "at";
+    case "BLR": return "by";
     default: return countryName.substring(0, 2).toLowerCase()
   }
 }

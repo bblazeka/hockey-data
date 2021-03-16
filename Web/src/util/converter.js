@@ -1,14 +1,3 @@
-export function dateTimeFilterTime(date)
-{
-  if (typeof(date)==="string")
-  {
-    date = new Date(date);
-  }
-  var hours = (date.getHours() + 0)
-  var mins = (date.getMinutes() + 0)
-  return (hours <= 9 ? "0" + hours : hours) + ":" + (mins <= 9 ? "0" + mins : mins)
-}
-
 export function getDatesArray(startDate, stopDate) {
   var dateArray = [];
   var currentDate = new Date(startDate.getTime());
