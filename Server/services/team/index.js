@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 const { Database } = require("../../comm/dbhandler");
 const apicomm = require('../../comm/apihandler');
 const util = require('../util/index.js');
@@ -37,7 +39,7 @@ async function getTeam({id}) {
 
 async function getTeams() {
   var teams = await db.getCollection('teams').find({}).toArray();
-  return teams.filter(t => t.active).sort().sort((a, b) => (a.name > b.name) ? 1 : -1);
+  return _.sortBy(teams.filter(t => t.active), 'name');
 }
 
 async function getTeamLocations() {

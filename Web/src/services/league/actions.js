@@ -1,6 +1,7 @@
 import { axiosGraphQL } from '../../util/common';
 import * as actionTypes from './actionTypes';
 import * as querySchemas from './querySchemas';
+import { IsNullOrUndefined } from 'common';
 
 
 export const getSchedule = (start, end) => (dispatch) => {
@@ -38,11 +39,20 @@ export const findGame = (homeId, awayId) => (dispatch) => {
   axiosGraphQL
   .post('', { query: querySchemas.getGamesBetweenTeams(homeId, awayId) })
   .then(response => {
-    dispatch(getGame(response.data.data.gamesBetweenTeams[0].gamePk))
-    dispatch({
-      type: actionTypes.GAME_FOUND,
-      payload: response.data.data.gamesBetweenTeams[0]
-    })
+    if (IsNullOrUndefined(response.data.data.gamesBetweenTeams[0]))
+    {
+      dispatch({
+        type: actionTypes.GAME_NOT_FOUND,
+      })
+    }
+    else
+    {
+      dispatch(getGame(response.data.data.gamesBetweenTeams[0].gamePk))
+      dispatch({
+        type: actionTypes.GAME_FOUND,
+        payload: response.data.data.gamesBetweenTeams[0]
+      })
+    }
   });
 }
 

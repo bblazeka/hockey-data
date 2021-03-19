@@ -1,7 +1,9 @@
+const { DateTime } = require('luxon');
+var _ = require('lodash');
+
 const { Database } = require("../../comm/dbhandler");
 const apicomm = require('../../comm/apihandler');
 const common = require('common');
-const { DateTime } = require('luxon');
 
 var db = new Database();
 
@@ -21,14 +23,16 @@ async function getStandings({ season }) {
 }
 
 async function getSchedule({ start, end }) {
-  var teams = await (await db.getCollection('teams').find({ "active": true }).toArray()).sort((a, b) => (a.name > b.name) ? 1 : (a.name < b.name) ? -1 : 0);
+  var teams = await (await db.getCollection('teams').find({ "active": true }).toArray());
+  var sortedTeams = _.sortBy(teams, ['name']);
+  
   var games = await db.getCollection('games').find({
     "date": {
       $gte: `${start}`,
       $lte: `${end}`
     }
   }).toArray();
-  for (let team of teams) {
+  for (let team of sortedTeams) {
     team.scheduleScore = 0;
     team.games = JSON.parse(JSON.stringify(games)).filter(g => g.home.team.id === team.id || g.away.team.id === team.id).map(el => {
       el.opponent = (el.home.team.id === team.id) ? el.away : el.home;
@@ -40,7 +44,7 @@ async function getSchedule({ start, end }) {
     team.scheduleScore = Math.round((team.scheduleScore + Number.EPSILON) * 100) / 100;
     team.avgScheduleScore = Math.round((team.scheduleScore / team.games.length + Number.EPSILON) * 100) / 100;
   }
-  return teams;
+  return sortedTeams;
 }
 
 async function gamesBetweenTeams({ homeId, awayId }) {
@@ -67,7 +71,7 @@ async function getGame({ gameId }) {
 async function getTodaysGames() {
   var games = (await db.getCollection('games').find({
     "date": common.DateToServerFormat(new Date())
-  }).toArray()).sort((a, b) => (a.gameDate > b.gameDate) ? 1 : (a.gameDate < b.gameDate) ? -1 : 0);
+  }).toArray()).sort((a, b) => { return new Date(a.gameDate) - new Date(b.gameDate) });
   return games.map(async (game) => {
     var result = await apicomm.nhlApiRequest(`/api/v1/game/${game.gamePk}/linescore`);
     result.gameTime = DateTime.fromJSDate(game.gameDate).toFormat("HH:mm");

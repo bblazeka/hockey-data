@@ -1,3 +1,5 @@
+const { DateTime } = require('luxon');
+
 const { Database } = require("../../comm/dbhandler");
 const apicomm = require('../../comm/apihandler');
 const twtcomm = require('../../comm/twitterhandler');
@@ -12,7 +14,7 @@ function init(database)
 
 async function getArticles({query})
 {
-  var pastDate = new Date(Date.now() - 604800000);
+  var pastDate = DateTime.now().minus({ weeks: 1 }).endOf('day').toJSDate();
 
   var newsResponse = await apicomm.newsApiRequest(`/v2/everything?q=${query}&from=${common.DateToServerFormat(pastDate)}&language=en&sortBy=relevancy&pageSize=10&language=en`);
   return newsResponse.articles.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));

@@ -46,6 +46,11 @@ const leagueReducer = (state = defaultAppState, action) => {
         ...state,
         loading: false
       }
+    case actionTypes.GAME_NOT_FOUND:
+      return {
+        ...state,
+        loading: false
+      }
     case actionTypes.TEAM_SCHEDULE_LOADED:
       return {
         ...state,
