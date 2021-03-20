@@ -5,6 +5,7 @@ const cors = require('cors');
 var fs = require('fs');
 
 const { Database } = require('./comm/dbhandler.js');
+const game = require('./services/game/index.js');
 const team = require('./services/team/index.js');
 const news = require('./services/news/index.js');
 const league = require('./services/league/index.js');
@@ -12,12 +13,13 @@ const player = require('./services/player/index.js');
 const util = require('./services/util/index.js');
 
 var mainSchema = fs.readFileSync('schema.gql', "utf8");
+var gameSchema = fs.readFileSync('./services/game/schema.gql', "utf8");
 var leagueSchema = fs.readFileSync('./services/league/schema.gql', "utf8");
 var newsSchema = fs.readFileSync('./services/news/schema.gql', "utf8");
 var teamSchema = fs.readFileSync('./services/team/schema.gql', "utf8");
 var playerSchema = fs.readFileSync('./services/player/schema.gql', "utf8");
 var utilSchema = fs.readFileSync('./services/util/schema.gql', "utf8");
-var schemaDefinition = `${mainSchema} ${newsSchema} ${leagueSchema} ${teamSchema} ${playerSchema} ${utilSchema}`
+var schemaDefinition = `${mainSchema} ${newsSchema} ${gameSchema} ${leagueSchema} ${teamSchema} ${playerSchema} ${utilSchema}`
 
 let whitelist = ['http://localhost:3000', 'http://abc.com']
 
@@ -47,7 +49,7 @@ var root = {
   geocode: util.geocode,
 };
 
-const port = 4000
+const port = 4000;
 var app = express();
 
 app.use(cors({
@@ -72,6 +74,7 @@ app.use('/graphql', graphqlHTTP({
 app.listen(port, async () => {
   var database = new Database();
   await database.init();
+  game.init(database);
   team.init(database);
   player.init(database);
   news.init(database);

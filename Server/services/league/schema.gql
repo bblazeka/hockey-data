@@ -5,30 +5,7 @@ type ScheduleTeam {
   active: Boolean
   avgScheduleScore: Float
   scheduleScore: Float
-  games: [BasicGame]
-}
-
-type BasicGame {
-  gamePk: Int
-  date: String
-  gameDate: Date
-  season: String
-  home: Opponent
-  away: Opponent
-  opponent: Opponent
-}
-
-type LiveGame {
-  gamePk: Int
-  currentPeriod: Int
-  currentPeriodOrdinal: String
-  currentPeriodTimeRemaining: String
-  date: String
-  gameTime: String
-  gameDate: Date
-  season: String
-  powerPlayStrength: String
-  teams: GameTeams
+  games: [Game]
 }
 
 type Opponent {
@@ -67,6 +44,14 @@ type TeamRecord {
 }
 
 type Game {
+  gamePk: Int
+  currentPeriod: Int
+  currentPeriodOrdinal: String
+  currentPeriodTimeRemaining: String
+  percentage: Float
+  date: String
+  gameTime: String
+  powerPlayStrength: String
   id: Int
   gameDate: Date
   season: String
@@ -74,6 +59,10 @@ type Game {
   teams: GameTeams
   officials: [GameOfficial]
   linescore: Linescore
+  status: GameStatus
+  home: Opponent
+  away: Opponent
+  opponent: Opponent
 }
 
 type GameTeams {

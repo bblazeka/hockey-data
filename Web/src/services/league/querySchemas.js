@@ -123,7 +123,15 @@ export function getGamesBetweenTeams(homeId, awayId) {
   return `{
     gamesBetweenTeams(homeId: ${homeId}, awayId: ${awayId}){ 
         gamePk,
-        gameDate
+        gameDate,
+        home {
+          score,
+          team { id, name }
+        },
+        away { 
+          score,
+          team { id, name }
+        }
       }
   }`
 }
@@ -133,6 +141,7 @@ export function getGame(id) {
     game(gameId: ${id}){ 
         id,
         gameDate,
+        percentage,
         venue { id, name },
         season,
       teams {

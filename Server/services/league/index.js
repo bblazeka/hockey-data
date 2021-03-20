@@ -61,6 +61,7 @@ async function getGame({ gameId }) {
   result.id = gameId;
   result.linescore = linescore;
   result.venue = dbGame.venue;
+  result.percentage = result.linescore.currentPeriod * 33;
   result.teams.home.skaters = Object.values(result.teams.home.players).filter((player) => { return player.position.code !== 'G' && player.position.code !== 'N/A' && player.stats.skaterStats !== null })
   result.teams.home.goalies = Object.values(result.teams.home.players).filter((player) => { return player.position.code === 'G' && player.position.code !== 'N/A' && player.stats !== null })
   result.teams.away.skaters = Object.values(result.teams.away.players).filter((player) => { return player.position.code !== 'G' && player.position.code !== 'N/A' && player.stats.skaterStats !== null })

@@ -18,6 +18,7 @@ import {
     PlayerList,
     Prediction,
     Game,
+    GameList
 } from './views';
 import routes from './routes';
 import 'semantic-ui-css/semantic.min.css';
@@ -33,6 +34,7 @@ ReactDOM.render(
         <Switch>
           <Route exact path={routes.schedule} component={Schedule} />
           <Route exact path={`${routes.game}/:id`} component={Game} />
+          <Route exact path={routes.games} component={GameList} />
           <Route exact path={routes.standings} component={Standings} />
           <Route exact path={routes.prediction} component={Prediction} />
           <Route exact path={`${routes.teams}/:id`} component={Team} />

@@ -32,9 +32,9 @@ export const getStandings = () => (dispatch) => {
   });
 }
 
-export const findGame = (homeId, awayId) => (dispatch) => {
+export const findGames = (homeId, awayId) => (dispatch) => {
   dispatch({
-    type: actionTypes.FIND_GAME,
+    type: actionTypes.GET_GAMES,
   });
   axiosGraphQL
   .post('', { query: querySchemas.getGamesBetweenTeams(homeId, awayId) })
@@ -42,15 +42,14 @@ export const findGame = (homeId, awayId) => (dispatch) => {
     if (IsNullOrUndefined(response.data.data.gamesBetweenTeams[0]))
     {
       dispatch({
-        type: actionTypes.GAME_NOT_FOUND,
+        type: actionTypes.GAMES_NOT_FOUND,
       })
     }
     else
     {
-      dispatch(getGame(response.data.data.gamesBetweenTeams[0].gamePk))
       dispatch({
-        type: actionTypes.GAME_FOUND,
-        payload: response.data.data.gamesBetweenTeams[0]
+        type: actionTypes.GAMES_FOUND,
+        payload: response.data.data.gamesBetweenTeams
       })
     }
   });

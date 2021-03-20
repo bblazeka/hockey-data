@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Dropdown, Grid, Header, Image, List, Segment, Statistic, Table } from 'semantic-ui-react';
+import { Grid, Header, Image, List, Progress, Segment, Statistic, Table } from 'semantic-ui-react';
 import routes from '../../routes';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { IsNullOrUndefined } from 'common';
 
 import * as actions from '../../services/league';
 
@@ -25,19 +24,12 @@ class Game extends Component {
     }
     this.changeAway = this.changeAway.bind(this);
     this.changeHome = this.changeHome.bind(this);
-    this.fetch = this.fetch.bind(this);
   }
 
   static getDerivedStateFromProps(props, state) {
     const { id } = props.match.params;
-    if (!IsNullOrUndefined(props.game) && props.game.id !== state.id) {
-      props.history.push(`/game/${props.game.id}`);
-      return {
-        id: props.game.id
-      }
-    }
-    if (IsNullOrUndefined(props.game) && parseInt(id) !== 0) {
-      props.getGame(id)
+    if (id !== state.id) {
+      props.getGame(id);
       return {
         id,
       }
@@ -55,10 +47,6 @@ class Game extends Component {
     this.setState({
       away: data.value
     })
-  }
-
-  fetch() {
-    this.props.findGame(this.state.home, this.state.away)
   }
 
   TeamRender(team) {
@@ -169,19 +157,6 @@ class Game extends Component {
     }
     return (
       <div>
-        <Segment>
-          <Dropdown
-            placeholder='Home team'
-            onChange={this.changeHome}
-            options={dropdownTeams.map(el => { return { "key": el.id, "text": el.name, "value": el.id, "logo": { "avatar": true, "logo": getLogo(el.id) } } })
-            } />
-          <Dropdown
-            placeholder='Away team'
-            onChange={this.changeAway}
-            options={dropdownTeams.map(el => { return { "key": el.id, "text": el.name, "value": el.id, "logo": { "avatar": true, "logo": getLogo(el.id) } } })
-            } />
-          <Button onClick={this.fetch}>OK</Button>
-        </Segment>
         {game && <Segment>
           <Grid>
             <Grid.Column floated='left' width={6}>
@@ -263,7 +238,7 @@ class Game extends Component {
               </List>
             </Grid.Column>
           </Grid>
-
+          <Progress percent={game.percentage} />
         </Segment>}
         {game && <Grid columns={2}>
           <Grid.Column>
@@ -296,7 +271,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  findGame: (home, away) => dispatch(actions.findGame(home, away)),
   getGame: (id) => dispatch(actions.getGame(id)),
 })
 

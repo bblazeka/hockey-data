@@ -11,11 +11,11 @@ scalar Date
     tweets(query: String): [Tweet]
     twitterApiStatus: TwitterStats
     schedule(start: String, end: String): [ScheduleTeam]
-    scheduleByTeam(id: Int, start: String, end: String): [BasicGame]
+    scheduleByTeam(id: Int, start: String, end: String): [Game]
     standings(season: String): [Record]
-    gamesBetweenTeams(homeId: Int, awayId: Int): [BasicGame]
+    gamesBetweenTeams(homeId: Int, awayId: Int): [Game]
     game(gameId: Int): Game
-    todaysGames: [LiveGame]
+    todaysGames: [Game]
     geocode(query: String): [Location]
   }
 

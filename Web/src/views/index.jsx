@@ -6,3 +6,4 @@ export { default as Schedule } from './Schedule/Schedule';
 export { default as Standings } from './Standings/Standings';
 export { default as Team } from './Team/Team';
 export { default as Game } from './Game/Game';
+export { default as GameList } from './GameList/GameList';

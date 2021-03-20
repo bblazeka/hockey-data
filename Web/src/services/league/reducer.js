@@ -30,7 +30,7 @@ const leagueReducer = (state = defaultAppState, action) => {
         ...state,
         game: null
       }
-    case actionTypes.FIND_GAME:
+    case actionTypes.GET_GAMES:
       return {
         ...state,
         loading: true,
@@ -39,14 +39,16 @@ const leagueReducer = (state = defaultAppState, action) => {
     case actionTypes.GAME_LOADED:
       return {
         ...state,
-        game: action.payload
+        game: action.payload,
+        games: null
       }
-    case actionTypes.GAME_FOUND:
+    case actionTypes.GAMES_FOUND:
       return {
         ...state,
+        games: action.payload,
         loading: false
       }
-    case actionTypes.GAME_NOT_FOUND:
+    case actionTypes.GAMES_NOT_FOUND:
       return {
         ...state,
         loading: false

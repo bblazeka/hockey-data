@@ -1,0 +1,4 @@
+type GameStatus {
+  abstractGameState: String
+  statusCode: String
+}

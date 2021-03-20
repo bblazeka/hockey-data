@@ -29,8 +29,8 @@ class App extends Component {
             <NavLink className="App-link" to={routes.prediction}>
               Prediction
             </NavLink>
-            <NavLink className="App-link" to={`${routes.game}/0`}>
-              Game
+            <NavLink className="App-link" to={routes.games}>
+              Games
             </NavLink>
             <NavLink className="App-link" to={routes.standings}>
               Standings
