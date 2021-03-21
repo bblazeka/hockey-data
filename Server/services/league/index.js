@@ -1,9 +1,10 @@
-const { DateTime } = require('luxon');
+const { DateTime, Duration } = require('luxon');
 var _ = require('lodash');
 
 const { Database } = require("../../comm/dbhandler");
 const apicomm = require('../../comm/apihandler');
 const common = require('common');
+const { toInteger } = require('lodash');
 
 var db = new Database();
 
@@ -61,7 +62,14 @@ async function getGame({ gameId }) {
   result.id = gameId;
   result.linescore = linescore;
   result.venue = dbGame.venue;
-  result.percentage = result.linescore.currentPeriod * 33;
+
+  if (!common.IsNullOrUndefined(result.linescore.currentPeriodTimeRemaining))
+  {
+    var res = result.linescore.currentPeriodTimeRemaining.split(":");
+  
+    var time = (1200 - (toInteger(res[0]) * 60 + toInteger(res[1])))/1200 * 100;
+    result.percentage = result.linescore.currentPeriod * 0.34 * time;
+  }
   result.teams.home.skaters = Object.values(result.teams.home.players).filter((player) => { return player.position.code !== 'G' && player.position.code !== 'N/A' && player.stats.skaterStats !== null })
   result.teams.home.goalies = Object.values(result.teams.home.players).filter((player) => { return player.position.code === 'G' && player.position.code !== 'N/A' && player.stats !== null })
   result.teams.away.skaters = Object.values(result.teams.away.players).filter((player) => { return player.position.code !== 'G' && player.position.code !== 'N/A' && player.stats.skaterStats !== null })

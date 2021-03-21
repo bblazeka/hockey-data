@@ -107,6 +107,7 @@ type TeamSkaterStats {
 }
 
 type Linescore {
+  currentPeriodOrdinal: String
   currentPeriodTimeRemaining: String
   teams: LinescoreTeams
   periods: [Period]

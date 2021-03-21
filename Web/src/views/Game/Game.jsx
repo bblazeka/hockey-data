@@ -173,7 +173,7 @@ class Game extends Component {
                     {`${game.linescore.teams.home.goals}:${game.linescore.teams.away.goals}`}
                   </Statistic.Value>
                   <Statistic.Label>
-                    {game.linescore.currentPeriodTimeRemaining}<br />
+                    {game.linescore.currentPeriodOrdinal} {game.linescore.currentPeriodTimeRemaining}<br />
                     {game.linescore.teams.home.shotsOnGoal} SOG {game.linescore.teams.away.shotsOnGoal}
 
                   </Statistic.Label>
