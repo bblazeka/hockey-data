@@ -30,6 +30,7 @@ async function getTweets({query})
       id: status.id_str,
       createdAt: status.created_at,
       text: status.full_text,
+      url: `https://twitter.com/${status.user.screen_name}/status/${status.id_str}`,
       user: {
         id: status.user.id,
         name: status.user.name,

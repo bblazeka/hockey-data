@@ -23,6 +23,7 @@
     text: String
     favoriteCount: Int
     retweetCount: Int
+    url: String
     user: User
     entities: [Entity]
   }

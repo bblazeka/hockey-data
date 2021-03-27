@@ -5,6 +5,7 @@ export function getTweets(query)
       id,
       createdAt,
       text,
+      url,
       favoriteCount,
       retweetCount,
       user {

@@ -16,24 +16,24 @@ function SocialFeed(props) {
       <Header as='h3'>Feed</Header>
       <Feed>
         {tweets.length === 0 && <NotFound />}
-        {tweets.map((start) => {
+        {tweets.map((tweet) => {
           return (
-          <Feed.Event key={start.id}>
+          <Feed.Event key={tweet.id}>
             <Feed.Label>
               <Icon name="twitter"></Icon>
             </Feed.Label>
             <Feed.Content>
               <Feed.Summary>
-                <Feed.User>{start.user.name} (@{start.user.screenName})</Feed.User>
-                <Feed.Date>{start.createdAt}</Feed.Date>
+                <Feed.User href={tweet.url} target="_blank">{tweet.user.name} (@{tweet.user.screenName})</Feed.User>
+                <Feed.Date>{tweet.createdAt}</Feed.Date>
               </Feed.Summary>
               <Feed.Extra>
-                {start.text}
+                {tweet.text}
               </Feed.Extra>
               <Feed.Meta>
-                {start.entities.map((hashtag) => {
+                {tweet.entities.map((hashtag) => {
                   return (
-                    <Label key={`${start.user.id}${hashtag.text}`}>
+                    <Label key={`${tweet.user.id}${hashtag.text}`}>
                       {hashtag.text}
                     </Label>
                   )
