@@ -4,6 +4,7 @@ const { Database } = require("../../comm/dbhandler");
 const apicomm = require('../../comm/apihandler');
 const util = require('../util/index.js');
 const common = require('common');
+const scrapping = require('../../comm/scrapinghandler');
 
 var db = new Database();
 
@@ -34,6 +35,8 @@ async function getTeam({id}) {
     team.description = (await apicomm.wikiApiRequest(team.name)).extract;
     team.venue.description = (await apicomm.wikiApiAdvancedRequest(team.venue.name, team.venue.city)).extract;
   }
+
+  team.lines = scrapping.scrapLines(team.name);
   return team;
 }
 

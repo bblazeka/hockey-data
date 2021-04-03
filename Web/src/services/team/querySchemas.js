@@ -100,7 +100,12 @@ export function getTeam(id)
           shootsCatches,
           weight,
           nationality,
+        },
+        lines {
+          goalies { starter, backup },
+          lines { leftDefender, rightDefender, leftWing, center, rightWing },
+          ppLines { leftDefender, rightDefender, leftWing, center, rightWing }
         }
-  }
+    }
   }`
 };

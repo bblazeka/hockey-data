@@ -9,4 +9,24 @@ type DetailedTeam {
     goalies: [Player]
     defenders: [Player]
     forwards: [Player]
+    lines: Lines
   }
+
+type Lines {
+  goalies: Goalies
+  lines: [Line]
+  ppLines: [Line]
+}
+
+type Goalies {
+  starter: String
+  backup: String
+}
+
+type Line {
+  leftDefender: String
+  rightDefender: String
+  leftWing: String
+  center: String
+  rightWing: String
+}
