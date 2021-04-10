@@ -2,6 +2,7 @@ const { DateTime } = require('luxon');
 
 const apicomm = require('../comm/apihandler');
 const dbhandler = require('../comm/dbhandler.js');
+const scrapper = require('../comm/scrapinghandler.js');
 
 async function run() {
 
@@ -43,6 +44,7 @@ async function run() {
             rosterStatus: player.rosterStatus,
             currentTeam: player.currentTeam,
             primaryPosition: player.primaryPosition,
+            capHit: await scrapper.scrapPlayerCapHit(player.fullName),
             lastUpdate: new Date()
           },
         };

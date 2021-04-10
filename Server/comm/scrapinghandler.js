@@ -10,7 +10,17 @@ function playerName(dom, query) {
 async function scrapPlayerCapHit(fullName) {
   const formattedName = fullName.replace(/\s+/g, '-').toLowerCase();
   const url = `https://www.capfriendly.com/players/${formattedName}`;
+  const response = await fetch(url);
+  const text = await response.text();
+  const dom = new JSDOM(text);
 
+  const divs = dom.window.document.getElementsByTagName('div');
+  for (var i = 0; i < divs.length; i++) {
+    if (divs[i].textContent.startsWith('Cap Hit:')) {
+      let result = divs[i].textContent.split(': ')[1];
+      return result;
+    }
+  }
 }
 
 async function scrapLines(name) {

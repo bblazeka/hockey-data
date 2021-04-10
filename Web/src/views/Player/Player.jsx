@@ -126,6 +126,11 @@ class Player extends Component {
                   <List.Header>Birthplace</List.Header>
                   <List.Content>{player.birthCity}</List.Content>
                 </List.Item>
+                <List.Item>
+                  <List.Icon name='dollar' />
+                  <List.Header>Cap Hit</List.Header>
+                  <List.Content>{player.capHit}</List.Content>
+                </List.Item>
               </List>
             </Grid.Column>
             </Grid.Row>

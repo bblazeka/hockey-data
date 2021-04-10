@@ -45,6 +45,7 @@ export function getSkater(id) {
       nationality,
       birthCity,
       birthDate,
+      capHit,
       primaryPosition {
         code,
         name,
@@ -127,6 +128,7 @@ export function getGoalie(id) {
       description,
       birthCity,
       birthDate,
+      capHit,
       primaryPosition {
         code,
         name,

@@ -45,7 +45,7 @@ async function getPlayer({ id }) {
     stats: nhlStatsOnly
   };
   player.careerStats = { stats: result.stats[0].splits };
-  player.description = (await apicomm.wikiApiRequest(player.fullName)).extract;
+  player.description = (await apicomm.playerWikiRequest(player.fullName, `(ice hockey, born ${player.birthDate.split('-')[0]})`)).extract;
   return player;
 }
 

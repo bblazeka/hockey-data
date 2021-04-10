@@ -24,6 +24,7 @@ function RosterElement(props) {
             <Table.HeaderCell>Height</Table.HeaderCell>
             <Table.HeaderCell>Weight</Table.HeaderCell>
             <Table.HeaderCell>S/C</Table.HeaderCell>
+            <Table.HeaderCell>Cap hit</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -40,6 +41,7 @@ function RosterElement(props) {
                 <Table.Cell>{player.height}</Table.Cell>
                 <Table.Cell>{player.weight}</Table.Cell>
                 <Table.Cell>{player.shootsCatches}</Table.Cell>
+                <Table.Cell>{player.capHit}</Table.Cell>
               </Table.Row>
             )
           })}

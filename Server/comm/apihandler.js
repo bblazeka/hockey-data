@@ -23,6 +23,19 @@ async function wikiApiRequest(query) {
   return pages[Object.keys(pages)[0]];
 }
 
+async function playerWikiRequest(query, optionalQuery = '') {
+  var result = await wikiApiRequest(query);
+  if (result.extract.includes('may refer to') && optionalQuery.length > 0) {
+    result = await wikiApiRequest(`${query} (ice hockey)`);
+    console.log(result);
+    if (result.extract.includes('may refer to') || result.hasOwnProperty('missing'))
+    {
+      result = await wikiApiRequest(`${query} ${optionalQuery}`);
+    }
+  }
+  return result;
+}
+
 async function wikiApiAdvancedRequest(mainQuery, subQuery) {
   var res = await wikiApiRequest(`${mainQuery} ${subQuery}`);
   if (res === undefined || res.ns == 0)
@@ -37,5 +50,6 @@ module.exports = {
   newsApiRequest,
   mapboxApiRequest,
   wikiApiRequest,
+  playerWikiRequest,
   wikiApiAdvancedRequest,
 }

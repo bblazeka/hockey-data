@@ -67,9 +67,9 @@ function StatsGrid(props) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {stats.map((stat) => {
+          {stats.map((stat, index) => {
             const logo = getLogo(stat.team.id);
-            const key = `${stat.team.id}${stat.team.name}${stat.sequenceNumber}${stat.season}`;
+            const key = `${stat.team.id}${stat.team.name}${index}${stat.season}`;
             return (<Table.Row key={`row${key}`}>
               <Table.Cell>{stat.season}</Table.Cell>
               <Table.Cell>{logo && <img className="small-logo" src={logo} alt={`img${key}`}></img>}</Table.Cell>

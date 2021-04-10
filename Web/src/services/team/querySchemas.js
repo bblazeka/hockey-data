@@ -52,6 +52,7 @@ export function getTeam(id)
           shootsCatches,
           weight,
           nationality,
+          capHit,
     },
     defenders {
           id,
@@ -76,6 +77,7 @@ export function getTeam(id)
           shootsCatches,
           weight,
           nationality,
+          capHit,
   } ,
     forwards {
           id,
@@ -100,6 +102,7 @@ export function getTeam(id)
           shootsCatches,
           weight,
           nationality,
+          capHit,
         },
         lines {
           goalies { starter, backup },
