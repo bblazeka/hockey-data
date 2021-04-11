@@ -13,13 +13,13 @@ export const axiosGraphQL = axios.create({
 export function generateSemanticUICountryId(countryName) {
   switch (countryName)
   {
-    case "SWE": return "se";
-    case "DNK": return "dk";
-    case "SVN": return "si";
-    case "SVK": return "sk";
-    case "AUT": return "at";
-    case "BLR": return "by";
-    default: return countryName.substring(0, 2).toLowerCase()
+    case 'SWE': return 'se';
+    case 'DNK': return 'dk';
+    case 'SVN': return 'si';
+    case 'SVK': return 'sk';
+    case 'AUT': return 'at';
+    case 'BLR': return 'by';
+    default: return countryName.substring(0, 2).toLowerCase();
   }
 }
 
@@ -27,7 +27,7 @@ export function formatDecimals(number, decimalPlaces)
 {
   if (!IsNullOrUndefined(number) && !isNaN(number))
   {
-    return number.toFixed(decimalPlaces)
+    return number.toFixed(decimalPlaces);
   }
   return null;
 }

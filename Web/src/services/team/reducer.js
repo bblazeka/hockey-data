@@ -4,7 +4,7 @@ const defaultAppState = {
   loaded: false,
   players: [],
   roster: [],
-}
+};
 
 const teamReducer = (state = defaultAppState, action) => {
   switch (action.type) {
@@ -12,30 +12,30 @@ const teamReducer = (state = defaultAppState, action) => {
       return {
         ...state,
         team: null
-      }
+      };
     case actionTypes.TEAM_LOADED:
       return {
         ...state,
         team: action.payload
-      }
+      };
     case actionTypes.TEAMS_LOADED:
       return {
         ...state,
         teams: action.payload
-      }
+      };
       case actionTypes.TEAM_LOCATIONS_LOADED:
         return {
           ...state,
           locations: action.payload
-        }
+        };
     case actionTypes.DROPDOWN_TEAMS_LOADED:
       return {
         ...state,
         dropdownTeams: action.payload
-      }
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 export default teamReducer;

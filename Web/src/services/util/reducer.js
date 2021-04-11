@@ -3,7 +3,7 @@ import * as actionTypes from './actionTypes';
 const defaultAppState = {
   locationLoading: false,
   location: null
-}
+};
 
 const utilReducer = (state = defaultAppState, action) => {
   switch (action.type) {
@@ -12,16 +12,16 @@ const utilReducer = (state = defaultAppState, action) => {
         ...state,
         locationLoading: true,
         location: null
-      }
+      };
     case actionTypes.LOCATION_LOADED:
       return {
         ...state,
         locationLoading: false,
         location: action.payload
-      }
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 export default utilReducer;

@@ -12,22 +12,25 @@ const league = require('./services/league/index.js');
 const player = require('./services/player/index.js');
 const util = require('./services/util/index.js');
 
-var mainSchema = fs.readFileSync('schema.gql', "utf8");
-var gameSchema = fs.readFileSync('./services/game/schema.gql', "utf8");
-var leagueSchema = fs.readFileSync('./services/league/schema.gql', "utf8");
-var newsSchema = fs.readFileSync('./services/news/schema.gql', "utf8");
-var teamSchema = fs.readFileSync('./services/team/schema.gql', "utf8");
-var playerSchema = fs.readFileSync('./services/player/schema.gql', "utf8");
-var utilSchema = fs.readFileSync('./services/util/schema.gql', "utf8");
-var schemaDefinition = `${mainSchema} ${newsSchema} ${gameSchema} ${leagueSchema} ${teamSchema} ${playerSchema} ${utilSchema}`
+var mainSchema = fs.readFileSync('schema.gql', 'utf8');
+var gameSchema = fs.readFileSync('./services/game/schema.gql', 'utf8');
+var leagueSchema = fs.readFileSync('./services/league/schema.gql', 'utf8');
+var newsSchema = fs.readFileSync('./services/news/schema.gql', 'utf8');
+var teamSchema = fs.readFileSync('./services/team/schema.gql', 'utf8');
+var playerSchema = fs.readFileSync('./services/player/schema.gql', 'utf8');
+var utilSchema = fs.readFileSync('./services/util/schema.gql', 'utf8');
+var schemaDefinition = `${mainSchema} ${newsSchema} ${gameSchema} ${leagueSchema} ${teamSchema} ${playerSchema} ${utilSchema}`;
 
-let whitelist = ['http://localhost:3000', 'http://abc.com']
+let whitelist = ['http://localhost:3000', 'http://abc.com'];
 
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(schemaDefinition);
  
 // The root provides a resolver function for each API endpoint
 var root = {
+  game: game.getGame,
+  gamesBetweenTeams: game.gamesBetweenTeams,
+  todaysGames: game.getTodaysGames,
   team: team.getTeam,
   teams: team.getTeams,
   teamLocations: team.getTeamLocations,
@@ -43,9 +46,6 @@ var root = {
   schedule: league.getSchedule,
   scheduleByTeam: team.getTeamSchedule,
   standings: league.getStandings,
-  gamesBetweenTeams: league.gamesBetweenTeams,
-  game: league.getGame,
-  todaysGames: league.getTodaysGames,
   geocode: util.geocode,
 };
 
@@ -77,7 +77,6 @@ app.listen(port, async () => {
   game.init(database);
   team.init(database);
   player.init(database);
-  news.init(database);
   league.init(database);
-  console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`)
-})
+  console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`);
+});

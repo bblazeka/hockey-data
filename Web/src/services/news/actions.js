@@ -13,9 +13,9 @@ export const getTweets = (query) => (dispatch) => {
       dispatch({
         type: actionTypes.TWEETS_LOADED,
         payload: response.data.data.tweets
-      })
+      });
     });
-}
+};
 
 export const getNews = (query) => (dispatch) => {
   dispatch({
@@ -27,6 +27,6 @@ export const getNews = (query) => (dispatch) => {
       dispatch({
         type: actionTypes.NEWS_LOADED,
         payload: response.data.data.articles
-      })
+      });
     });
-}
+};

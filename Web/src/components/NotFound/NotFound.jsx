@@ -7,7 +7,7 @@ function NotFound(props) {
   return (
     <Header textAlign='center'>
       <Icon name='search' />
-      {props.text ? props.text : "Not found."}
+      {props.text ? props.text : 'Not found.'}
     </Header>);
 
 }

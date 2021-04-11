@@ -13,4 +13,4 @@ async function geocode({ query }) {
 
 module.exports = {
   geocode,
-}
+};

@@ -11,7 +11,7 @@ function GameCard(props) {
   const { game } = props;
   const { home, away } = game.teams;
   if (IsNullOrUndefined(game)) {
-    return (<Loader></Loader>)
+    return (<Loader></Loader>);
   }
   var generalGameInfo = (IsNullOrUndefined(game.currentPeriodOrdinal)) ? game.gameTime :
    `${game.currentPeriodOrdinal} ${game.currentPeriodTimeRemaining}`;

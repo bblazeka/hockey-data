@@ -13,9 +13,9 @@ export const getTeam = (id) => (dispatch) => {
       dispatch({
         type: actionTypes.TEAM_LOADED,
         payload: response.data.data.team
-      })
+      });
     });
-}
+};
 
 export const getTeamLocations = () => (dispatch) => {
   dispatch({
@@ -27,9 +27,9 @@ export const getTeamLocations = () => (dispatch) => {
       dispatch({
         type: actionTypes.TEAM_LOCATIONS_LOADED,
         payload: response.data.data.teamLocations
-      })
+      });
     });
-}
+};
 
 export const getTeams = () => (dispatch) => {
   dispatch({
@@ -41,9 +41,9 @@ export const getTeams = () => (dispatch) => {
       dispatch({
         type: actionTypes.TEAMS_LOADED,
         payload: response.data.data.teams
-      })
+      });
     });
-}
+};
 
 export const getDropdownTeams = () => (dispatch) => {
   dispatch({
@@ -55,6 +55,6 @@ export const getDropdownTeams = () => (dispatch) => {
       dispatch({
         type: actionTypes.DROPDOWN_TEAMS_LOADED,
         payload: response.data.data.teams
-      })
+      });
     });
-}
+};

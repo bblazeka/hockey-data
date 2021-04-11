@@ -21,6 +21,8 @@
     "react/prop-types": "off",
     "no-extra-semi": "warn",
     "no-case-declarations": "warn",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "quotes": ["warn", "single"],
+    "semi": ["warn", "always"]
   }
 }

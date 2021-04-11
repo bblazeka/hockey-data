@@ -7,7 +7,7 @@ export const getPlayer = (id) => async (dispatch) => {
     type: actionTypes.GET_PLAYER,
   });
   var player = (await axiosGraphQL.post('', { query: querySchemas.getBasicPlayer(id) })).data.data.player;
-  var queryString = (player.primaryPosition.code === "G") ? querySchemas.getGoalie(id)
+  var queryString = (player.primaryPosition.code === 'G') ? querySchemas.getGoalie(id)
     : querySchemas.getSkater(id);
   axiosGraphQL
     .post('', { query: queryString })
@@ -15,9 +15,9 @@ export const getPlayer = (id) => async (dispatch) => {
       dispatch({
         type: actionTypes.PLAYER_LOADED,
         payload: response.data.data.player
-      })
+      });
     });
-}
+};
 
 export const addPlayer = (id) => (dispatch) => {
   dispatch({
@@ -30,9 +30,9 @@ export const addPlayer = (id) => (dispatch) => {
       dispatch({
         type: actionTypes.SELECTED_PLAYERS_LOADED,
         payload: response.data.data.addSelectedPlayer
-      })
+      });
     });
-}
+};
 
 export const deletePlayer = (id) => (dispatch) => {
   dispatch({
@@ -44,9 +44,9 @@ export const deletePlayer = (id) => (dispatch) => {
       dispatch({
         type: actionTypes.SELECTED_PLAYERS_LOADED,
         payload: response.data.data.deleteSelectedPlayer
-      })
+      });
     });
-}
+};
 
 export const removeAllPlayers = () => (dispatch) => {
   dispatch({
@@ -58,9 +58,9 @@ export const removeAllPlayers = () => (dispatch) => {
       dispatch({
         type: actionTypes.SELECTED_PLAYERS_LOADED,
         payload: response.data.data.clearSelectedPlayers
-      })
+      });
     });
-}
+};
 
 export const searchBasicPlayer = (name) => (dispatch) => {
   dispatch({
@@ -72,16 +72,16 @@ export const searchBasicPlayer = (name) => (dispatch) => {
       dispatch({
         type: actionTypes.BASIC_PLAYER_LOADED,
         payload: response.data.data.searchPlayerByName
-      })
+      });
     });
-}
+};
 
 export const removePlayer = (id) => ({
   type: actionTypes.REMOVE_PLAYER,
   payload: {
     id,
   }
-})
+});
 
 export const getSelectedPlayers = () => (dispatch) => {
   dispatch({
@@ -93,6 +93,6 @@ export const getSelectedPlayers = () => (dispatch) => {
       dispatch({
         type: actionTypes.SELECTED_PLAYERS_LOADED,
         payload: response.data.data.selectedPlayers
-      })
+      });
     });
-}
+};

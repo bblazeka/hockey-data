@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Header, Image, List, Progress, Segment, Statistic, Table } from 'semantic-ui-react';
-import routes from '../../routes';
+
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import * as actions from '../../services/league';
-
+import routes from '../../routes';
 import { getLogo } from '../../util/assets';
 import { Loader } from '../../components';
 import { formatDecimals } from '../../util/common';
@@ -17,11 +17,11 @@ class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: "0",
+      id: '0',
       home: 1,
       away: 2,
       filterActive: true,
-    }
+    };
     this.changeAway = this.changeAway.bind(this);
     this.changeHome = this.changeHome.bind(this);
   }
@@ -32,21 +32,21 @@ class Game extends Component {
       props.getGame(id);
       return {
         id,
-      }
+      };
     }
-    return null
+    return null;
   }
 
   changeHome(event, data) {
     this.setState({
       home: data.value
-    })
+    });
   }
 
   changeAway(event, data) {
     this.setState({
       away: data.value
-    })
+    });
   }
 
   TeamRender(team) {
@@ -79,9 +79,9 @@ class Game extends Component {
             <Table.Body>
               {team.skaters.map((player) => {
                 return (<Table.Row key={player.person.fullName}>
-                  <Table.Cell><Link to={routes.player + "/" + player.person.id}><Header as="h4">{player.person.fullName}
+                  <Table.Cell><Link to={routes.player + '/' + player.person.id}><Header as="h4">{player.person.fullName}
                     <Header.Subheader>
-                      {'#' + player.jerseyNumber + " " + player.position.name}
+                      {'#' + player.jerseyNumber + ' ' + player.position.name}
                     </Header.Subheader></Header></Link></Table.Cell>
                   <Table.Cell>{player.stats.skaterStats.goals}</Table.Cell>
                   <Table.Cell>{player.stats.skaterStats.assists}</Table.Cell>
@@ -98,7 +98,7 @@ class Game extends Component {
                   <Table.Cell>{player.stats.skaterStats.timeOnIce}</Table.Cell>
                   <Table.Cell>{player.stats.skaterStats.powerPlayTimeOnIce}</Table.Cell>
                   <Table.Cell>{player.stats.skaterStats.shortHandedTimeOnIce}</Table.Cell>
-                </Table.Row>)
+                </Table.Row>);
               })}
             </Table.Body>
           </Table>
@@ -117,7 +117,7 @@ class Game extends Component {
           <Table.Body>
             {team.goalies.map((player) => {
               return (<Table.Row key={player.person.fullName}>
-                <Table.Cell><Link to={routes.player + "/" + player.person.id}><Header as="h4">{player.person.fullName}
+                <Table.Cell><Link to={routes.player + '/' + player.person.id}><Header as="h4">{player.person.fullName}
                   <Header.Subheader>
                     {`#${player.jerseyNumber} ${player.position.name}`}
                   </Header.Subheader></Header></Link></Table.Cell>
@@ -125,7 +125,7 @@ class Game extends Component {
                 <Table.Cell>{player.stats.goalieStats.shots}</Table.Cell>
                 <Table.Cell>{formatDecimals(player.stats.goalieStats.savePercentage, 2)}</Table.Cell>
                 <Table.Cell>{player.stats.goalieStats.timeOnIce}</Table.Cell>
-              </Table.Row>)
+              </Table.Row>);
             })}
           </Table.Body>
         </Table>
@@ -142,12 +142,12 @@ class Game extends Component {
               return (<Table.Row key={coach.person.fullName}>
                 <Table.Cell>{coach.person.fullName}</Table.Cell>
                 <Table.Cell>{coach.position.name}</Table.Cell>
-              </Table.Row>)
+              </Table.Row>);
             })}
           </Table.Body>
         </Table>
       </Segment>
-    )
+    );
   }
 
   render() {
@@ -193,11 +193,11 @@ class Game extends Component {
                 </List.Item>
                 <List.Item>
                   <List.Icon name='calendar outline' />
-                  <List.Content>{DateToServerFormat(game.gameDate)}</List.Content>
+                  <List.Content>{dayjs(DateToServerFormat(game.gameDate)).format('DD.MM.YYYY')}</List.Content>
                 </List.Item>
                 <List.Item>
                   <List.Icon name='clock outline' />
-                  <List.Content>{dayjs(game.gameDate).format("HH:mm")}</List.Content>
+                  <List.Content>{dayjs(game.gameDate).format('HH:mm')}</List.Content>
                 </List.Item>
                 <List.Item>
                   <List.Icon name='marker' />
@@ -266,10 +266,10 @@ class Game extends Component {
 const mapStateToProps = state => ({
   game: state.league.game,
   dropdownTeams: state.team.dropdownTeams,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   getGame: (id) => dispatch(actions.getGame(id)),
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

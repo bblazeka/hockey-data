@@ -21,7 +21,7 @@ class Standings extends Component {
   render() {
     const { locations, standings } = this.props;
     if (!standings) {
-      return (<Loader text="Loading standings..."></Loader>)
+      return (<Loader text="Loading standings..."></Loader>);
     }
     return (
       <div>
@@ -64,10 +64,10 @@ class Standings extends Component {
                           <Table.Cell>{record.goalsAgainst}</Table.Cell>
                           <Table.Cell>{record.points}</Table.Cell>
                         </Table.Row>
-                      )
+                      );
                     })}
                   </Table.Body>
-                </Table></Grid.Column>)
+                </Table></Grid.Column>);
           })}
         </Grid>
         <Segment>
@@ -81,11 +81,11 @@ class Standings extends Component {
 const mapStateToProps = state => ({
   standings: state.league.standings,
   locations: state.team.locations,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   getStandings: () => dispatch(actions.getStandings()),
   getTeamLocations: () => dispatch(teamActions.getTeamLocations()),
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Standings);

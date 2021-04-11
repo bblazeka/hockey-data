@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const jsdom = require("jsdom");
+const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
 function playerName(dom, query) {
@@ -42,7 +42,7 @@ async function scrapLines(name) {
       leftWing: playerName(dom, `LW${i}`),
       center: playerName(dom, `C${i}`),
       rightWing: playerName(dom, `RW${i}`),
-    }
+    };
   }
 
   for(let j = 1; j < 3; j++)
@@ -53,7 +53,7 @@ async function scrapLines(name) {
       leftWing: playerName(dom, `PPLW${j}`),
       center: playerName(dom, `PPC${j}`),
       rightWing: playerName(dom, `PPRW${j}`),
-    }
+    };
   }
   
   return {goalies, lines, ppLines};
@@ -62,4 +62,4 @@ async function scrapLines(name) {
 module.exports = {
   scrapLines,
   scrapPlayerCapHit,
-}
+};

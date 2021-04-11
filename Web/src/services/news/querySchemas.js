@@ -19,7 +19,7 @@ export function getTweets(query)
         text
       }
     }
-  }`
+  }`;
 }
 
 export function getNews(query)
@@ -36,5 +36,5 @@ export function getNews(query)
         name 
       }
     }
-  }`
+  }`;
 }

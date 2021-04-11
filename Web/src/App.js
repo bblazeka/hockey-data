@@ -7,12 +7,12 @@ import * as teamActions from './services/team/actions';
 import { getLogo } from './util/assets';
 
 import 'react-vis/dist/style.css';
-import { Grid, Icon } from 'semantic-ui-react'
+import { Grid, Icon } from 'semantic-ui-react';
 
 class App extends Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.props.getTeams();
     this.props.getDropdownTeams();
   }

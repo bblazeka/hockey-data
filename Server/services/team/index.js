@@ -1,6 +1,6 @@
 var _ = require('lodash');
 
-const { Database } = require("../../comm/dbhandler");
+const { Database } = require('../../comm/dbhandler');
 const apicomm = require('../../comm/apihandler');
 const util = require('../util/index.js');
 const common = require('common');
@@ -14,7 +14,7 @@ function init(database)
 }
 
 async function getPlayersFromTeam(teamId) {
-  const items = await db.getCollection('players').find({ "currentTeam.id": teamId }).toArray();
+  const items = await db.getCollection('players').find({ 'currentTeam.id': teamId }).toArray();
   return items;
 }
 
@@ -29,9 +29,9 @@ async function getTeam({id}) {
   if (!common.IsNullOrUndefined(team))
   {
     team.rosterResponse = await getPlayersFromTeam(id);
-    team.goalies = team.rosterResponse.filter(p => p.primaryPosition.type == "Goalie")
-    team.defenders = team.rosterResponse.filter(p => p.primaryPosition.type == "Defenseman")
-    team.forwards = team.rosterResponse.filter(p => p.primaryPosition.type == "Forward")
+    team.goalies = team.rosterResponse.filter(p => p.primaryPosition.type == 'Goalie');
+    team.defenders = team.rosterResponse.filter(p => p.primaryPosition.type == 'Defenseman');
+    team.forwards = team.rosterResponse.filter(p => p.primaryPosition.type == 'Forward');
     team.description = (await apicomm.wikiApiRequest(team.name)).extract;
     team.venue.description = (await apicomm.wikiApiAdvancedRequest(team.venue.name, team.venue.city)).extract;
   }
@@ -72,7 +72,7 @@ async function getTeamLocations() {
 
 async function getTeamSchedule({ id, start, end }) {
   var games = await db.getCollection('games').find({
-    "date": {
+    'date': {
       $gte: `${start}`,
       $lte: `${end}`
     }
@@ -90,4 +90,4 @@ module.exports = {
   getTeams,
   getTeamLocations,
   getTeamSchedule,
-}
+};

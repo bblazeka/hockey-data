@@ -27,7 +27,7 @@ async function playerWikiRequest(query, optionalQuery = '') {
   var result = await wikiApiRequest(query);
   if (result.extract.includes('may refer to') && optionalQuery.length > 0) {
     result = await wikiApiRequest(`${query} (ice hockey)`);
-    if (result.extract.includes('may refer to') || result.hasOwnProperty('missing'))
+    if (result.extract.includes('may refer to') || Object.prototype.hasOwnProperty.call(result,'missing'))
     {
       result = await wikiApiRequest(`${query} ${optionalQuery}`);
     }
@@ -51,4 +51,4 @@ module.exports = {
   wikiApiRequest,
   playerWikiRequest,
   wikiApiAdvancedRequest,
-}
+};

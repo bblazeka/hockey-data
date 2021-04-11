@@ -12,14 +12,14 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.getGamesToday();
-    this.props.getNews("NHL");
-    this.props.getTweets("NHL");
+    this.props.getNews('NHL');
+    this.props.getTweets('NHL');
   }
 
   render() {
     const { homeNews, tweets, games } = this.props;
     if (!homeNews) {
-      return (<div><Loader></Loader></div>)
+      return (<div><Loader></Loader></div>);
     }
     return (
       <div>
@@ -27,7 +27,7 @@ class Home extends Component {
         <Card.Group>
           {(IsNullOrUndefined(games) || games.length===0) && <NotFound text="No games found." />}
           {games.map((game)=> {
-            return (<GameCard key={`gamecard${game.gamePk}`} game={game} />)
+            return (<GameCard key={`gamecard${game.gamePk}`} game={game} />);
           })}
         </Card.Group>
         <div className="news-container">
@@ -45,12 +45,12 @@ const mapStateToProps = state => ({
   teams: state.team.teams,
   tweets: state.news.tweets,
   games: state.league.gamesToday
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   getNews: (query) => dispatch(actions.getNews(query)),
   getTweets: (query) => dispatch(actions.getTweets(query)),
   getGamesToday: () => dispatch(leagueActions.getGamesToday())
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

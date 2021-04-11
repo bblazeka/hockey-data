@@ -11,7 +11,7 @@ function NewsFeed(props) {
   const { news } = props;
   if (IsNullOrUndefined(news))
   {
-    return (<Loader></Loader>)
+    return (<Loader></Loader>);
   }
   return (
     <div className="news-container">

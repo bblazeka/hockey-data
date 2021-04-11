@@ -10,7 +10,7 @@ function TeamSchedule(props) {
   const { games } = props;
   if (IsNullOrUndefined(games))
   {
-    return (<Loader></Loader>)
+    return (<Loader></Loader>);
   }
   return (
     <div>

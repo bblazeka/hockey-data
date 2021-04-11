@@ -1,4 +1,4 @@
-const { Database } = require("../../comm/dbhandler");
+const { Database } = require('../../comm/dbhandler');
 const apicomm = require('../../comm/apihandler');
 const config = require('../../config.json');
 
@@ -11,10 +11,10 @@ function init(database) {
 function getGroup(array, propertyName) {
   var result = [];
   array.reduce(function (res, value) {
-    var key = `${value.season.substr(2, 2)}/${value.season.slice(-2)}`
+    var key = `${value.season.substr(2, 2)}/${value.season.slice(-2)}`;
     if (!res[key]) {
       res[key] = { x: key, y: 0 };
-      result.push(res[key])
+      result.push(res[key]);
     }
     res[key].y += value.stat[propertyName];
     return res;
@@ -29,7 +29,7 @@ async function getPlayer({ id }) {
   };
   const player = await db.getCollection('players').findOne(query, options);
 
-  var result = await apicomm.nhlApiRequest(`/api/v1/people/${id}/stats?stats=yearByYear`)
+  var result = await apicomm.nhlApiRequest(`/api/v1/people/${id}/stats?stats=yearByYear`);
   var nhlStatsOnly = result.stats[0].splits.filter(el => el.league.id === 133);
   player.nhlStats = {
     totalGames: nhlStatsOnly.reduce((accum, item) => accum + item.stat.games, 0),
@@ -50,13 +50,13 @@ async function getPlayer({ id }) {
 }
 
 async function getPlayerByName({ name }) {
-  const query = { fullName: new RegExp(name, "i") };
-  const players = await db.getCollection("players").find(query).toArray();
+  const query = { fullName: new RegExp(name, 'i') };
+  const players = await db.getCollection('players').find(query).toArray();
   return players;
 }
 
 async function getPlayersFromTeam(teamId) {
-  const items = await db.getCollection('players').find({ "currentTeam.id": parseInt(teamId) }).toArray();
+  const items = await db.getCollection('players').find({ 'currentTeam.id': parseInt(teamId) }).toArray();
 
   return items;
 }
@@ -91,19 +91,19 @@ async function getSelectedPlayers() {
   var profiles = await getProfiles();
   var skaters = [];
   var goalies = [];
-  for (playerId of profiles[0].selectedPlayers) {
+  for (let playerId of profiles[0].selectedPlayers) {
     var player = await apicomm.nhlApiRequest(`/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${config.currentSeason}`);
     player.player = await getPlayer({ id: playerId });
-    if (player.player.primaryPosition.code !== "G") {
-      skaters.push(player)
+    if (player.player.primaryPosition.code !== 'G') {
+      skaters.push(player);
     }
     else {
-      goalies.push(player)
+      goalies.push(player);
     }
   }
   return {
-    "skaters": skaters,
-    "goalies": goalies,
+    'skaters': skaters,
+    'goalies': goalies,
   };
 }
 
@@ -132,4 +132,4 @@ module.exports = {
   addSelectedPlayer,
   deleteSelectedPlayer,
   clearSelectedPlayers,
-}
+};

@@ -9,11 +9,11 @@ import './PlayerList.scss';
 
 import { Button, Search } from 'semantic-ui-react';
 
-const initialState = { isLoading: false, results: [], value: '' }
+const initialState = { isLoading: false, results: [], value: '' };
 
 class PlayerList extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = initialState;
     this.onRemove = this.onRemove.bind(this);
     this.onRemoveAll = this.onRemoveAll.bind(this);
@@ -60,7 +60,7 @@ class PlayerList extends Component {
     const { isLoading, value } = this.state;
     if (IsNullOrUndefined(selectedPlayers) || selectedPlayers.length === 0)
     {
-      return (<Loader />)
+      return (<Loader />);
     }
     return (
       <div>
@@ -93,7 +93,7 @@ class PlayerList extends Component {
 const mapStateToProps = state => ({
   selectedPlayers: state.player.selectedPlayers,
   suggestions: state.player.suggestions,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   getSelectedPlayers: () => dispatch(actions.getSelectedPlayers()),
@@ -102,6 +102,6 @@ const mapDispatchToProps = dispatch => ({
   searchBasicPlayer: (name) => dispatch(actions.searchBasicPlayer(name)),
   addPlayer: (id) => dispatch(actions.addPlayer(id)),
   deletePlayer: (id) => dispatch(actions.deletePlayer(id)),
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerList);

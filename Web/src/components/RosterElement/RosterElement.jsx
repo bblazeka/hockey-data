@@ -28,11 +28,11 @@ function RosterElement(props) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {players.filter(p => (filterPlayers && p.rosterStatus === "Y") || !filterPlayers).map((player) => {
+          {players.filter(p => (filterPlayers && p.rosterStatus === 'Y') || !filterPlayers).map((player) => {
             return (
               <Table.Row key={title + player.id}>
                 <Table.Cell>{player.jerseyNumber}</Table.Cell>
-                <Table.Cell><Link to={routes.player + "/" + player.id}>{player.fullName}</Link></Table.Cell>
+                <Table.Cell><Link to={`${routes.player}/${player.id}`}>{player.fullName}</Link></Table.Cell>
                 <Table.Cell>{player.primaryPosition.name}</Table.Cell>
                 <Table.Cell>{player.currentAge}</Table.Cell>
                 <Table.Cell>{player.birthDate}</Table.Cell>
@@ -43,7 +43,7 @@ function RosterElement(props) {
                 <Table.Cell>{player.shootsCatches}</Table.Cell>
                 <Table.Cell>{player.capHit}</Table.Cell>
               </Table.Row>
-            )
+            );
           })}
         </Table.Body></Table>
     </div>

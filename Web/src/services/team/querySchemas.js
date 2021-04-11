@@ -5,7 +5,7 @@ export function getTeams()
       id, 
       name 
     }
-  }`
+  }`;
 }
 
 export function getTeamLocations()
@@ -17,7 +17,7 @@ export function getTeamLocations()
       center,
       color
     }
-  }`
+  }`;
 }
 
 export function getTeam(id)
@@ -110,5 +110,5 @@ export function getTeam(id)
           ppLines { leftDefender, rightDefender, leftWing, center, rightWing }
         }
     }
-  }`
+  }`;
 }

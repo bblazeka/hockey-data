@@ -15,12 +15,12 @@ import TeamSchedule from '../../components/TeamSchedule/TeamSchedule';
 
 class Team extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      id: "0",
-      teamQuery: "",
+      id: '0',
+      teamQuery: '',
       filterActive: true,
-    }
+    };
     this.checkedChanged = this.checkedChanged.bind(this);
   }
 
@@ -35,10 +35,10 @@ class Team extends Component {
       props.getTeam(id);
       return {
         id,
-      }
+      };
     }
     if (team !== null && state.teamQuery !== team.name) {
-      props.geocode(`${team.venue.name} ${team.venue.city}`)
+      props.geocode(`${team.venue.name} ${team.venue.city}`);
       props.getNews(team.name);
       props.getTweets(team.name);
       var today = new Date();
@@ -49,16 +49,16 @@ class Team extends Component {
       props.getTeamSchedule(team.id, start, end);
       return {
         teamQuery: team.name,
-      }
+      };
     }
-    return null
+    return null;
   }
 
   render() {
     const { teamGames, team, tweets, news, location } = this.props;
     const { filterActive } = this.state;
     if (!team) {
-      return (<div><Loader></Loader></div>)
+      return (<div><Loader></Loader></div>);
     }
     return (
       <div>
@@ -94,7 +94,7 @@ const mapStateToProps = state => ({
   news: state.news.news,
   teamGames: state.league.teamGames,
   location: state.util.location
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   getTeam: (id) => dispatch(actions.getTeam(id)),
@@ -102,6 +102,6 @@ const mapDispatchToProps = dispatch => ({
   getTweets: (query) => dispatch(getTweets(query)),
   getNews: (query) => dispatch(getNews(query)),
   getTeamSchedule: (id, start, end) => dispatch(getTeamSchedule(id, start, end)),
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Team);

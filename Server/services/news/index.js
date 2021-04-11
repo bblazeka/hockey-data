@@ -1,16 +1,8 @@
 const { DateTime } = require('luxon');
 
-const { Database } = require("../../comm/dbhandler");
 const apicomm = require('../../comm/apihandler');
 const twtcomm = require('../../comm/twitterhandler');
 const common = require('common');
-
-var db = new Database();
-
-function init(database)
-{
-  db = database;
-}
 
 async function getArticles({query})
 {
@@ -22,7 +14,7 @@ async function getArticles({query})
 
 async function getTweets({query})
 {
-  var tweetsResponse = await twtcomm.searchTweets(query, 10, 'en', "popular");
+  var tweetsResponse = await twtcomm.searchTweets(query, 10, 'en', 'popular');
   var tweets = [];
   for(let status of tweetsResponse.statuses)
   {
@@ -41,9 +33,9 @@ async function getTweets({query})
       favoriteCount: status.favorite_count,
       retweetCount: status.retweet_count,
       entities: status.entities.hashtags.map(h => {
-        return { text: h.text }
+        return { text: h.text };
       })
-    })
+    });
   }
   return tweets;
 }
@@ -59,9 +51,8 @@ async function getTwitterApiStatus() {
 }
 
 module.exports = {
-  init,
   getArticles,
   getUserTweets,
   getTweets,
   getTwitterApiStatus,
-}
+};

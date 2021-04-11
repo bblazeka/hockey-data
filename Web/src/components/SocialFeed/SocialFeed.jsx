@@ -9,7 +9,7 @@ function SocialFeed(props) {
   const { tweets } = props;
   if (IsNullOrUndefined(tweets))
   {
-    return (<Loader></Loader>)
+    return (<Loader></Loader>);
   }
   return (
     <div className="news-container">
@@ -36,7 +36,7 @@ function SocialFeed(props) {
                     <Label key={`${tweet.user.id}${hashtag.text}`}>
                       {hashtag.text}
                     </Label>
-                  )
+                  );
                 })}
               </Feed.Meta>
             </Feed.Content>

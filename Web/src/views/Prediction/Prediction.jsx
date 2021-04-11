@@ -12,7 +12,7 @@ class Prediction extends Component {
   render() {
     const { prediction, teams } = this.props;
     if (IsNullOrUndefined(prediction)) {
-      return (<Loader />)
+      return (<Loader />);
     }
     return (
       <div>
@@ -23,10 +23,10 @@ class Prediction extends Component {
             const losses = home_record.losses / (home_record.losses + away_record.losses) * 100;
             const ot = home_record.ot / (home_record.ot + away_record.ot) * 100;
             const homeLogo = teams.filter((team) => {
-              return team.id === game.home["id"]
+              return team.id === game.home['id'];
             })[0].logo;
             const awayLogo = teams.filter((team) => {
-              return team.id === game.away["id"]
+              return team.id === game.away['id'];
             })[0].logo;
             return (
               <List.Item key={game.id}>
@@ -35,7 +35,7 @@ class Prediction extends Component {
                     <Grid.Row>
                       <Grid.Column>
                         <Header as="h4">HOME</Header>
-                        <Header as="h3">{game.home["name"]}</Header>
+                        <Header as="h3">{game.home['name']}</Header>
                         <Image src={homeLogo} centered size='small' />
                       </Grid.Column>
                       <Grid.Column>
@@ -48,14 +48,14 @@ class Prediction extends Component {
                       </Grid.Column>
                       <Grid.Column>
                         <Header as="h4">AWAY</Header>
-                        <Header as="h3">{game.away["name"]}</Header>
+                        <Header as="h3">{game.away['name']}</Header>
                         <Image src={awayLogo} centered size='small' />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
                 </Segment>
               </List.Item>
-            )
+            );
           })}
         </List>
       </div>);
@@ -65,9 +65,9 @@ class Prediction extends Component {
 const mapStateToProps = state => ({
   prediction: state.league.prediction,
   teams: state.team.teams,
-})
+});
 
 const mapDispatchToProps = () => ({
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Prediction);

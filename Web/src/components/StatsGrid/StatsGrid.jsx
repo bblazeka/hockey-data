@@ -12,7 +12,7 @@ function StatsGrid(props) {
 
   const { data, skater, detailed } = props;
   const { totalGames, totalGoals, totalAssists, totalPoints, totalGamesStarted, totalWins, goalsLine, assistsLine, stats, gamesStartedLine, winsLine } = data;
-  var lineNames = (skater) ? ["goals", "assists"] : ["Games started", "Wins"];
+  var lineNames = (skater) ? ['goals', 'assists'] : ['Games started', 'Wins'];
   var lines = (skater) ? [ goalsLine, assistsLine ] : [ gamesStartedLine, winsLine ];
 
   return (

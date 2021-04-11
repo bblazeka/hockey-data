@@ -45,7 +45,7 @@ export function getSchedule(start, end) {
       }
     }
   }
-  }`
+  }`;
 }
 
 export function getTeamSchedule(id, start, end) {
@@ -88,7 +88,7 @@ export function getTeamSchedule(id, start, end) {
         }
       }
     }
-  }`
+  }`;
 }
 
 export function getStandings(season) {
@@ -116,7 +116,7 @@ export function getStandings(season) {
         points
       } 
     }
-  }`
+  }`;
 }
 
 export function getGamesBetweenTeams(homeId, awayId) {
@@ -133,7 +133,7 @@ export function getGamesBetweenTeams(homeId, awayId) {
           team { id, name }
         }
       }
-  }`
+  }`;
 }
 
 export function getGame(id) {
@@ -210,7 +210,7 @@ export function getGame(id) {
         }
       }
     }
-  }`
+  }`;
 }
 
 export function getTodaysGames() {
@@ -238,5 +238,5 @@ export function getTodaysGames() {
     }
     }
 }
-  }`
+  }`;
 }

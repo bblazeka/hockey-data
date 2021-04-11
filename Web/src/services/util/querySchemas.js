@@ -6,5 +6,5 @@ export function geocode(query)
       placeName,
       center
     }
-  }`
+  }`;
 }

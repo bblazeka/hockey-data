@@ -14,23 +14,23 @@ export const getSchedule = (start, end) => (dispatch) => {
       dispatch({
         type: actionTypes.SCHEDULE_LOADED,
         payload: response.data.data.schedule
-      })
+      });
     });
-}
+};
 
 export const getStandings = () => (dispatch) => {
   dispatch({
     type: actionTypes.GET_STANDINGS,
   });
   axiosGraphQL
-  .post('', { query: querySchemas.getStandings("20202021") })
+  .post('', { query: querySchemas.getStandings('20202021') })
   .then(response => {
     dispatch({
       type: actionTypes.STANDINGS_LOADED,
       payload: response.data.data.standings
-    })
+    });
   });
-}
+};
 
 export const findGames = (homeId, awayId) => (dispatch) => {
   dispatch({
@@ -43,17 +43,17 @@ export const findGames = (homeId, awayId) => (dispatch) => {
     {
       dispatch({
         type: actionTypes.GAMES_NOT_FOUND,
-      })
+      });
     }
     else
     {
       dispatch({
         type: actionTypes.GAMES_FOUND,
         payload: response.data.data.gamesBetweenTeams
-      })
+      });
     }
   });
-}
+};
 
 export const getGame = (id) => (dispatch) => {
   dispatch({
@@ -65,9 +65,9 @@ export const getGame = (id) => (dispatch) => {
     dispatch({
       type: actionTypes.GAME_LOADED,
       payload: response.data.data.game
-    })
+    });
   });
-}
+};
 
 export const getTeamSchedule = (id, start, end) => (dispatch) => {
   dispatch({
@@ -79,9 +79,9 @@ export const getTeamSchedule = (id, start, end) => (dispatch) => {
       dispatch({
         type: actionTypes.TEAM_SCHEDULE_LOADED,
         payload: response.data.data.scheduleByTeam
-      })
+      });
     });
-}
+};
 
 export const getGamesToday = () => (dispatch) => {
   dispatch({
@@ -93,6 +93,6 @@ export const getGamesToday = () => (dispatch) => {
     dispatch({
       type: actionTypes.GAMES_TODAY_LOADED,
       payload: response.data.data.todaysGames
-    })
+    });
   });
-}
+};

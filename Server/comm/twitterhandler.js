@@ -10,7 +10,7 @@ var client = new Twitter({
 
 async function getLimitStatus() {
   var res = await client.get('application/rate_limit_status', {}).catch(err => {
-    console.log(err)
+    console.log(err);
   });
   return res;
 }
@@ -22,16 +22,16 @@ async function getTweets(accountScreenName) {
 }
 
 async function searchTweets(q, count, lang, result_type) {
-  var tweet_mode = "extended";
+  var tweet_mode = 'extended';
   var params = { q, count, lang, result_type, tweet_mode };
   try {
     var res = await client.get('search/tweets', params);
     return res;
   }
   catch (error) {
-    console.log("Error when trying to get tweets.", error);
+    console.log('Error when trying to get tweets.', error);
     return {
-      "statuses": []
+      'statuses': []
     };
   }
 }
@@ -40,4 +40,4 @@ module.exports = {
   getLimitStatus,
   getTweets,
   searchTweets,
-}
+};

@@ -6,7 +6,7 @@ const defaultAppState = {
   players: [],
   news: [],
   tweets: []
-}
+};
 
 const newsReducer = (state = defaultAppState, action) => {
   switch (action.type) {
@@ -15,28 +15,28 @@ const newsReducer = (state = defaultAppState, action) => {
         ...state,
         loadingNews: true,
         news: null
-      }
+      };
     case actionTypes.NEWS_LOADED:
       return {
         ...state,
         loadingNews: false,
         news: action.payload
-      }
+      };
     case actionTypes.GET_TWEETS:
       return {
         ...state,
         loadingTweets: true,
         tweets: null
-      }
+      };
     case actionTypes.TWEETS_LOADED:
       return {
         ...state,
         loadingTweets: false,
         tweets: action.payload
-      }
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 export default newsReducer;

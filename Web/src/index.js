@@ -4,7 +4,7 @@ import './index.scss';
 import App from './App';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './services/rootReducer';
@@ -26,7 +26,7 @@ import 'semantic-ui-css/semantic.min.css';
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
-)
+);
 ReactDOM.render(
     <Provider store={store}>
     <Router>

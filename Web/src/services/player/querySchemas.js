@@ -13,7 +13,7 @@ export function getBasicPlayer(id) {
           name
         }
       }
-  }`
+  }`;
 }
 
 export function getBasicPlayerByName(name) {
@@ -31,7 +31,7 @@ export function getBasicPlayerByName(name) {
           name
         }
       }
-  }`
+  }`;
 }
 
 export function getSkater(id) {
@@ -114,7 +114,7 @@ export function getSkater(id) {
         }
       }
     }
-  }`
+  }`;
 }
 
 export function getGoalie(id) {
@@ -195,7 +195,7 @@ export function getGoalie(id) {
         } 
       }
     }
-  }`
+  }`;
 }
 
 export function getSelectedPlayers() {

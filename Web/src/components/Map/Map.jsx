@@ -6,7 +6,7 @@ import keys from '../../util/keys.json';
 import './Map.scss';
 import { getLogo } from '../../util/assets';
 
-mapboxgl.accessToken = keys["mapbox-API"];
+mapboxgl.accessToken = keys['mapbox-API'];
 
 const Map = (props) => {
   const mapContainerRef = useRef(null);
@@ -32,7 +32,7 @@ const Map = (props) => {
         draggable: false,
         color: point.color
       }).setLngLat(point.center)
-        .setPopup(new mapboxgl.Popup({maxWidth: "100px"}).setHTML(`<div><img src="${getLogo(point.id)}" /><p>${point.text}</p></div>`))
+        .setPopup(new mapboxgl.Popup({maxWidth: '100px'}).setHTML(`<div><img src="${getLogo(point.id)}" /><p>${point.text}</p></div>`))
         .addTo(map);
     });
 

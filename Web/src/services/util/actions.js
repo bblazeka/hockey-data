@@ -13,6 +13,6 @@ export const geocode = (query) => (dispatch) => {
       dispatch({
         type: actionTypes.LOCATION_LOADED,
         payload: response.data.data.geocode[0]
-      })
+      });
     });
-}
+};
