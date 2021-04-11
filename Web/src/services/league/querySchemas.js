@@ -46,7 +46,7 @@ export function getSchedule(start, end) {
     }
   }
   }`
-};
+}
 
 export function getTeamSchedule(id, start, end) {
   return `{
@@ -89,7 +89,7 @@ export function getTeamSchedule(id, start, end) {
       }
     }
   }`
-};
+}
 
 export function getStandings(season) {
   return `

@@ -37,13 +37,13 @@ class Schedule extends Component {
     this.setState({
       start: date
     });
-  };
+  }
 
   handleEndChange(date) {
     this.setState({
       end: date
     });
-  };
+  }
 
   getScheduleForTimePeriod() {
     var start = DateToServerFormat(this.state.start);

@@ -20,7 +20,7 @@ export function getTweets(query)
       }
     }
   }`
-};
+}
 
 export function getNews(query)
 {
@@ -37,4 +37,4 @@ export function getNews(query)
       }
     }
   }`
-};
+}

@@ -115,7 +115,7 @@ export function getSkater(id) {
       }
     }
   }`
-};
+}
 
 export function getGoalie(id) {
   return `{
@@ -196,7 +196,7 @@ export function getGoalie(id) {
       }
     }
   }`
-};
+}
 
 export function getSelectedPlayers() {
   return `

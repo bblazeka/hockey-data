@@ -51,10 +51,10 @@ class Game extends Component {
 
   TeamRender(team) {
     return (
-      <Segment className="teamSegment">
+      <Segment>
         <Header as='h2'><img className="mid-logo" src={getLogo(team.team.id)} alt={`img${team.team.id}${team.team.name}`} /> {team.team.name}</Header>
         <Header as="h3">Roster</Header>
-        <div className="teamTable">
+        <div className="team-table">
           <Table celled>
             <Table.Header>
               <Table.Row>
@@ -163,7 +163,7 @@ class Game extends Component {
               <Statistic.Group>
                 <Statistic>
                   <Statistic.Value>
-                    <Image avatar className="mainImg" src={getLogo(game.teams.home.team.id)} />
+                    <Image avatar className="main-img" src={getLogo(game.teams.home.team.id)} />
                   </Statistic.Value>
                   <Statistic.Label>{game.teams.home.team.name}</Statistic.Label>
                 </Statistic>
@@ -173,21 +173,19 @@ class Game extends Component {
                     {`${game.linescore.teams.home.goals}:${game.linescore.teams.away.goals}`}
                   </Statistic.Value>
                   <Statistic.Label>
-                    {game.linescore.currentPeriodOrdinal} {game.linescore.currentPeriodTimeRemaining}<br />
                     {game.linescore.teams.home.shotsOnGoal} SOG {game.linescore.teams.away.shotsOnGoal}
-
                   </Statistic.Label>
                 </Statistic>
 
                 <Statistic>
                   <Statistic.Value>
-                    <Image avatar className="mainImg" src={getLogo(game.teams.away.team.id)} />
+                    <Image avatar className="main-img" src={getLogo(game.teams.away.team.id)} />
                   </Statistic.Value>
                   <Statistic.Label>{game.teams.away.team.name}</Statistic.Label>
                 </Statistic>
               </Statistic.Group>
             </Grid.Column>
-            <Grid.Column floated='right' width={1}>
+            <Grid.Column floated='right' width={3}>
               <List>
                 <List.Item>
                   <List.Icon name='trophy' />
@@ -238,7 +236,7 @@ class Game extends Component {
               </List>
             </Grid.Column>
           </Grid>
-          <Progress percent={game.percentage} />
+          <Progress className="game-progress" color='blue' percent={game.percentage}>{game.linescore.currentPeriodOrdinal} {game.linescore.currentPeriodTimeRemaining}</Progress>
         </Segment>}
         {game && <Grid columns={2}>
           <Grid.Column>

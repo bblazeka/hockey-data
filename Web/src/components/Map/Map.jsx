@@ -45,7 +45,7 @@ const Map = (props) => {
 
     // Clean up on unmount
     return () => map.remove();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={`${props.className}`}>

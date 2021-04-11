@@ -29,7 +29,7 @@ class Prediction extends Component {
               return team.id === game.away["id"]
             })[0].logo;
             return (
-              <List.Item>
+              <List.Item key={game.id}>
                 <Segment textAlign='center'>
                   <Grid columns={3} textAlign='center'>
                     <Grid.Row>
@@ -67,7 +67,7 @@ const mapStateToProps = state => ({
   teams: state.team.teams,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = () => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Prediction);

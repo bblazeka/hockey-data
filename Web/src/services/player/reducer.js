@@ -25,10 +25,9 @@ const playerReducer = (state = defaultAppState, action) => {
         ...state,
       }
     case actionTypes.REMOVE_PLAYER:
-      const newPlayers = state.players.filter(p => p.Id !== parseInt(action.payload.id))
       return {
         ...state,
-        players: newPlayers
+        players: state.players.filter(p => p.id !== parseInt(action.payload.id))
       }
     case actionTypes.PLAYER_LOADED:
       return {

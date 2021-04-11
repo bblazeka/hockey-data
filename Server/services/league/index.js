@@ -1,4 +1,4 @@
-const { DateTime, Duration } = require('luxon');
+const { DateTime } = require('luxon');
 var _ = require('lodash');
 
 const { Database } = require("../../comm/dbhandler");
@@ -66,9 +66,8 @@ async function getGame({ gameId }) {
   if (!common.IsNullOrUndefined(result.linescore.currentPeriodTimeRemaining))
   {
     var res = result.linescore.currentPeriodTimeRemaining.split(":");
-  
-    var time = (1200 - (toInteger(res[0]) * 60 + toInteger(res[1])))/1200 * 100;
-    result.percentage = result.linescore.currentPeriod * 0.34 * time;
+    var time = (1200 - (toInteger(res[0]) * 60 + toInteger(res[1])))/1200;
+    result.percentage = ((result.linescore.currentPeriod - 1) * 0.34 + time * 0.34) * 100;
   }
   result.teams.home.skaters = Object.values(result.teams.home.players).filter((player) => { return player.position.code !== 'G' && player.position.code !== 'N/A' && player.stats.skaterStats !== null })
   result.teams.home.goalies = Object.values(result.teams.home.players).filter((player) => { return player.position.code === 'G' && player.position.code !== 'N/A' && player.stats !== null })

@@ -23,7 +23,7 @@ class Home extends Component {
     }
     return (
       <div>
-        <Header as="h2">Today's NHL games</Header>
+        <Header as="h2">Today NHL games</Header>
         <Card.Group>
           {(IsNullOrUndefined(games) || games.length===0) && <NotFound text="No games found." />}
           {games.map((game)=> {

@@ -6,7 +6,7 @@ export function getTeams()
       name 
     }
   }`
-};
+}
 
 export function getTeamLocations()
 {
@@ -18,7 +18,7 @@ export function getTeamLocations()
       color
     }
   }`
-};
+}
 
 export function getTeam(id)
 {
@@ -111,4 +111,4 @@ export function getTeam(id)
         }
     }
   }`
-};
+}

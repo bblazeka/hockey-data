@@ -64,7 +64,7 @@ class GameList extends Component {
           <List>
             {games && games.map(game => {
               return (
-                <List.Item>
+                <List.Item key={game.gamePk}>
                   <List.Content floated='right'>
                     <Link to={`${routes.game}/${game.gamePk}`}><Button>Open</Button></Link>
                   </List.Content>
