@@ -1,17 +1,15 @@
-const db = require('../keys/db.json');
-// Replace the uri string with your MongoDB deployment's connection string.
 const dbhandler = require('../comm/dbhandler.js');
-const { fetchTeams } = require("./functions");
+const { fetchTeams } = require('./functions');
 
 async function run() {
 
   var db = new dbhandler.Database();
   await db.init();
 
-  var teams = await fetchTeams()
+  var teams = await fetchTeams();
   try {
 
-    const collection = db.getCollection("teams");
+    const collection = db.getCollection('teams');
 
     for (let team of teams) {
       const options = { upsert: true };
@@ -35,11 +33,11 @@ async function run() {
         const queryResult = await collection.updateOne(filter, updateDoc, options);
         console.log(`${queryResult.matchedCount} document(s) matched the filter, updated ${queryResult.modifiedCount} document(s): ${team.name}`);
       } catch (ex) {
-        console.log(ex)
+        console.log(ex);
       }
     }
 
-    const teamPlayerCollection = db.getCollection("players");
+    const teamPlayerCollection = db.getCollection('players');
 
     for (let team of teams) {
       if (team.roster == undefined)
@@ -63,14 +61,14 @@ async function run() {
           const queryResult = await teamPlayerCollection.updateOne(filter, updateDoc, options);
           console.log(`${queryResult.matchedCount} document(s) matched the filter, updated ${queryResult.modifiedCount} document(s): ${player.person.fullName}`);
         } catch (ex) {
-          console.log(ex)
+          console.log(ex);
         }
       }
 
     }
 
   } finally {
-    await db.closeClient()
+    await db.closeClient();
   }
 }
 

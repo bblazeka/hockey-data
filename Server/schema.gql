@@ -1,6 +1,7 @@
 scalar Date  
   
   type Query {
+    analysis: [TeamAnalysis]
     player(id: Int): Player
     searchPlayerByName(name: String): [Player]
     selectedPlayers: SelectedPlayers

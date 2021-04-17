@@ -1,0 +1,7 @@
+type TeamAnalysis {
+  team: Team
+  id: Int
+  leagueRank: Int
+  leagueL10Rank: Int
+  points: Int
+}

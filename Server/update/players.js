@@ -11,16 +11,15 @@ async function run() {
 
   try {
 
-    const playerCollection = db.getCollection("players");
+    const playerCollection = db.getCollection('players');
 
     var players = await playerCollection.find({ active: true }).toArray();
 
-    console.log(`updating ${players.length} players...`)
     for (let playerTemp of players) {
       var response = await apicomm.nhlApiRequest(`/api/v1/people/${playerTemp.id}`);
       var player = response.people[0];
 
-      if ((DateTime.fromJSDate(playerTemp.lastUpdate) < DateTime.now().minus({ weeks: 1 }).endOf('day'))) {
+      if ((DateTime.fromJSDate(playerTemp.lastUpdate) < DateTime.now().minus({ weeks: 1 }).endOf('day')) || playerTemp.lastUpdate === null) {
         const options = { upsert: true };
         const filter = { id: player.id };
         const updateDoc = {
@@ -32,7 +31,7 @@ async function run() {
             currentAge: player.currentAge,
             birthDate: player.birthDate,
             positon: player.position,
-            height: Math.ceil(parseInt(player.height.split(" ")[0].replace(/\D/g, '')) / 3.2808 * 100 + parseInt(player.height.split(" ")[1].replace(/\D/g, '')) / 0.39370),
+            height: Math.ceil(parseInt(player.height.split(' ')[0].replace(/\D/g, '')) / 3.2808 * 100 + parseInt(player.height.split(' ')[1].replace(/\D/g, '')) / 0.39370),
             weight: Math.floor(player.weight * 0.45359237),
             birthCity: player.birthStateProvince != undefined ? `${player.birthCity}, ${player.birthStateProvince}, ${player.birthCountry}` : `${player.birthCity}, ${player.birthCountry}`,
             nationality: player.nationality,
@@ -52,7 +51,7 @@ async function run() {
           const queryResult = await playerCollection.updateOne(filter, updateDoc, options);
           console.log(`${queryResult.matchedCount} document(s) matched the filter, updated ${queryResult.modifiedCount} document(s): ${player.fullName}`);
         } catch (ex) {
-          console.log(ex)
+          console.log(ex);
         }
       }
 
