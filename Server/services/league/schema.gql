@@ -48,6 +48,8 @@ type Game {
   currentPeriod: Int
   currentPeriodOrdinal: String
   currentPeriodTimeRemaining: String
+  ongoingGame: Boolean
+  finished: Boolean
   percentage: Float
   date: String
   gameTime: String

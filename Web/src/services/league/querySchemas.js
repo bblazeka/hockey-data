@@ -221,6 +221,8 @@ export function getTodaysGames() {
       currentPeriod,
       currentPeriodOrdinal,
       currentPeriodTimeRemaining,
+      ongoingGame,
+      finished,
   teams {
       home {
         team {

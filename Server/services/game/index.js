@@ -47,6 +47,8 @@ async function getTodaysGames() {
     var result = await apicomm.nhlApiRequest(`/api/v1/game/${game.gamePk}/linescore`);
     result.gameTime = DateTime.fromJSDate(game.gameDate).toFormat('HH:mm');
     result.gamePk = game.gamePk;
+    result.ongoingGame = !common.IsNullOrUndefined(result.currentPeriodTimeRemaining);
+    result.finished = result.ongoingGame && result.currentPeriodTimeRemaining === 'Final';
     return result;
   });
 }

@@ -13,10 +13,9 @@ function GameCard(props) {
   if (IsNullOrUndefined(game)) {
     return (<Loader></Loader>);
   }
-  var generalGameInfo = (IsNullOrUndefined(game.currentPeriodOrdinal)) ? game.gameTime :
-   `${game.currentPeriodOrdinal} ${game.currentPeriodTimeRemaining}`;
+  var generalGameInfo = game.ongoingGame ?  `${game.currentPeriodOrdinal} ${game.currentPeriodTimeRemaining}` : game.gameTime;
   return (
-    <Card key={game.gamePk} href={`${routes.game}/${game.gamePk}`}>
+    <Card key={game.gamePk} href={`${routes.game}/${game.gamePk}`} color={game.ongoingGame ? game.finished ? 'grey' : 'orange' : null}>
       <Card.Content>
         <Header as='h3' className="game-team-header">
           <img className='game-team-logo' src={getLogo(home.team.id)} alt={`game-img${home.team.id}`} />
