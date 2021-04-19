@@ -4,7 +4,6 @@ const defaultAppState = {
   loading: false,
   players: [],
   roster: [],
-  prediction: [],
   gamesToday: []
 };
 

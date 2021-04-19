@@ -10,12 +10,28 @@ function DateToServerFormat(date) {
   return date.getFullYear() + "-" + (month <= 9 ? "0" + month : month) + "-" + (day <= 9 ? "0" + day : day);
 }
 
+function GetNumberWithOrdinal(n) {
+  var s = ["th", "st", "nd", "rd"],
+      v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
 
 function IsNullOrUndefined (obj)  {
   return obj === null || obj === undefined;
-} 
+}
+
+function FormatDecimals(number, decimalPlaces)
+{
+  if (!IsNullOrUndefined(number) && !isNaN(number))
+  {
+    return number.toFixed(decimalPlaces);
+  }
+  return null;
+}
 
 module.exports = {
   DateToServerFormat,
-  IsNullOrUndefined
+  GetNumberWithOrdinal,
+  IsNullOrUndefined,
+  FormatDecimals
 }

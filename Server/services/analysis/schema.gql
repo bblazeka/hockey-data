@@ -2,6 +2,86 @@ type TeamAnalysis {
   team: Team
   id: Int
   leagueRank: Int
+  leagueHomeRank: Int
+  leagueRoadRank: Int
   leagueL10Rank: Int
+  ppLeagueRank: Int
+  divisionRank: Int
+  divisionHomeRank: Int
+  divisionRoadRank: Int
+  divisionL10Rank: Int
+  ppDivisionRank: Int
   points: Int
+  leagueRecord: LeagueRecord
+  stats: [TeamStatTableProperty]
+  regularSeasonStatRankings: RegularSeasonRankings
+  rankingsGraph: [GraphFloat]
+}
+
+type TeamStatTableProperty {
+  title: String
+  value: Float
+  description: String
+}
+
+type StatsSingleSeason {
+  gamesPlayed: Int
+  wins: Int
+  losses: Int
+  ot: Int
+  pts: Int
+  ptPctg: Float
+  goalsPerGame: Float
+  goalsAgainstPerGame: Float
+  evGGARatio: Float
+  powerPlayPercentage: Float
+  powerPlayGoals: Int
+  powerPlayGoalsAgainst: Int
+  powerPlayOpportunities: Int
+  penaltyKillPercentage: Float
+  shotsPerGame: Float
+  shotsAllowed: Float
+  winScoreFirst: Float
+  winOppScoreFirst: Float
+  winLeadFirstPer: Float
+  winLeadSecondPer: Float
+  winOutshootOpp: Float
+  winOutshotByOpp: Float
+  faceOffsTaken: Int
+  faceOffsWon: Int
+  faceOffsLost: Int
+  faceOffWinPercentage: Float
+  shootingPctg: Float
+  savePctg: Float
+}
+
+type RegularSeasonRankings {
+  gamesPlayed: Int
+  wins: Int
+  losses: Int
+  ot: Int
+  pts: Int
+  ptPctg: Int
+  goalsPerGame: Int
+  goalsAgainstPerGame: Int
+  evGGARatio: Int
+  powerPlayPercentage: Int
+  powerPlayGoals: Int
+  powerPlayGoalsAgainst: Int
+  powerPlayOpportunities: Int
+  penaltyKillPercentage: Int
+  shotsPerGame: Int
+  shotsAllowed: Int
+  winScoreFirst: Int
+  winOppScoreFirst: Int
+  winLeadFirstPer: Int
+  winLeadSecondPer: Int
+  winOutshootOpp: Int
+  winOutshotByOpp: Int
+  faceOffsTaken: Int
+  faceOffsWon: Int
+  faceOffsLost: Int
+  faceOffWinPercentage: Int
+  shootingPctg: Int
+  savePctg: Int
 }

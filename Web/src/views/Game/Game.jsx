@@ -9,8 +9,7 @@ import * as actions from '../../services/league';
 import routes from '../../routes';
 import { getLogo } from '../../util/assets';
 import { Loader } from '../../components';
-import { formatDecimals } from '../../util/common';
-import { DateToServerFormat } from 'common';
+import { DateToServerFormat, FormatDecimals } from 'common';
 import './Game.scss';
 
 class Game extends Component {
@@ -123,7 +122,7 @@ class Game extends Component {
                   </Header.Subheader></Header></Link></Table.Cell>
                 <Table.Cell>{player.stats.goalieStats.saves}</Table.Cell>
                 <Table.Cell>{player.stats.goalieStats.shots}</Table.Cell>
-                <Table.Cell>{formatDecimals(player.stats.goalieStats.savePercentage, 2)}</Table.Cell>
+                <Table.Cell>{FormatDecimals(player.stats.goalieStats.savePercentage, 2)}</Table.Cell>
                 <Table.Cell>{player.stats.goalieStats.timeOnIce}</Table.Cell>
               </Table.Row>);
             })}

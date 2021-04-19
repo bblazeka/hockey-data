@@ -16,7 +16,7 @@ import {
     Home,
     Player,
     PlayerList,
-    Prediction,
+    Analysis,
     Game,
     GameList
 } from './views';
@@ -36,7 +36,7 @@ ReactDOM.render(
           <Route exact path={`${routes.game}/:id`} component={Game} />
           <Route exact path={routes.games} component={GameList} />
           <Route exact path={routes.standings} component={Standings} />
-          <Route exact path={routes.prediction} component={Prediction} />
+          <Route exact path={routes.analysis} component={Analysis} />
           <Route exact path={`${routes.teams}/:id`} component={Team} />
           <Route exact path={routes.players} component={PlayerList} />
           <Route exact path={`${routes.player}/:id`} component={Player} />

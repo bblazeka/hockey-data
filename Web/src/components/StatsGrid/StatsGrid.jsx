@@ -3,7 +3,7 @@ import { Table, Header, Statistic } from 'semantic-ui-react';
 import { DiscreteColorLegend, XYPlot, Hint, HorizontalGridLines, VerticalGridLines, XAxis, YAxis, LineMarkSeries } from 'react-vis';
 
 import { getLogo } from '../../util/assets';
-import { formatDecimals } from '../../util/common';
+import { FormatDecimals } from 'common';
 import './StatsGrid.scss';
 
 function StatsGrid(props) {
@@ -96,8 +96,8 @@ function StatsGrid(props) {
               {skater && detailed && <Table.Cell>{stat.stat.shortHandedGoals}</Table.Cell>}
               {skater && detailed && <Table.Cell>{stat.stat.shortHandedPoints}</Table.Cell>}
               {!skater && detailed && <Table.Cell>{stat.stat.gamesStarted}</Table.Cell>}
-              {!skater && <Table.Cell>{formatDecimals(stat.stat.goalAgainstAverage, 2)}</Table.Cell>}
-              {!skater && <Table.Cell>{formatDecimals(stat.stat.savePercentage * 100, 1)}</Table.Cell>}
+              {!skater && <Table.Cell>{FormatDecimals(stat.stat.goalAgainstAverage, 2)}</Table.Cell>}
+              {!skater && <Table.Cell>{FormatDecimals(stat.stat.savePercentage * 100, 1)}</Table.Cell>}
               {!skater && <Table.Cell>{stat.stat.wins}</Table.Cell>}
               {!skater && <Table.Cell>{stat.stat.losses}</Table.Cell>}
               {!skater && <Table.Cell>{stat.stat.ot}</Table.Cell>}
@@ -109,9 +109,9 @@ function StatsGrid(props) {
               {!skater && detailed && <Table.Cell>{stat.stat.evenShots}</Table.Cell>}
               {!skater && detailed && <Table.Cell>{stat.stat.powerPlayShots}</Table.Cell>}
               {!skater && detailed && <Table.Cell>{stat.stat.shortHandedShots}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{formatDecimals(stat.stat.evenStrengthSavePercentage, 2)}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{formatDecimals(stat.stat.powerPlaySavePercentage, 2)}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{formatDecimals(stat.stat.shortHandedSavePercentage, 2)}</Table.Cell>}
+              {!skater && detailed && <Table.Cell>{FormatDecimals(stat.stat.evenStrengthSavePercentage, 2)}</Table.Cell>}
+              {!skater && detailed && <Table.Cell>{FormatDecimals(stat.stat.powerPlaySavePercentage, 2)}</Table.Cell>}
+              {!skater && detailed && <Table.Cell>{FormatDecimals(stat.stat.shortHandedSavePercentage, 2)}</Table.Cell>}
               {!skater && detailed && <Table.Cell>{stat.stat.shutouts}</Table.Cell>}
               {!skater && detailed && <Table.Cell>{stat.stat.timeOnIce}</Table.Cell>}
             </Table.Row>);

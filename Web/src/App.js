@@ -26,8 +26,8 @@ class App extends Component {
             <NavLink className="App-link" to={routes.home}>
               Home
             </NavLink>
-            <NavLink className="App-link" to={routes.prediction}>
-              Prediction
+            <NavLink className="App-link" to={routes.analysis}>
+              Analysis
             </NavLink>
             <NavLink className="App-link" to={routes.games}>
               Games
@@ -70,6 +70,7 @@ class App extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
+          NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2021. All Rights Reserved.
         </footer>
       </div>
     );

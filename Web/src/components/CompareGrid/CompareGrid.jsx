@@ -1,10 +1,9 @@
 import React from 'react';
 import { Button, Table, Header } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { IsNullOrUndefined } from 'common';
+import { IsNullOrUndefined, FormatDecimals } from 'common';
 import routes from '../../routes';
 
-import { formatDecimals } from '../../util/common';
 import { getLogo } from '../../util/assets';
 import { NotFound } from '..';
 import './CompareGrid.scss';
@@ -100,8 +99,8 @@ function CompareGrid(props) {
               {skater && detailed && <Table.Cell>{stats.shortHandedGoals}</Table.Cell>}
               {skater && detailed && <Table.Cell>{stats.shortHandedPoints}</Table.Cell>}
               {!skater && detailed && <Table.Cell>{stats.gamesStarted}</Table.Cell>}
-              {!skater && <Table.Cell>{formatDecimals(stats.goalAgainstAverage, 2)}</Table.Cell>}
-              {!skater && <Table.Cell>{formatDecimals(stats.savePercentage * 100, 1)}</Table.Cell>}
+              {!skater && <Table.Cell>{FormatDecimals(stats.goalAgainstAverage, 2)}</Table.Cell>}
+              {!skater && <Table.Cell>{FormatDecimals(stats.savePercentage * 100, 1)}</Table.Cell>}
               {!skater && <Table.Cell>{stats.wins}</Table.Cell>}
               {!skater && <Table.Cell>{stats.losses}</Table.Cell>}
               {!skater && <Table.Cell>{stats.ot}</Table.Cell>}
@@ -113,9 +112,9 @@ function CompareGrid(props) {
               {!skater && detailed && <Table.Cell>{stats.evenShots}</Table.Cell>}
               {!skater && detailed && <Table.Cell>{stats.powerPlayShots}</Table.Cell>}
               {!skater && detailed && <Table.Cell>{stats.shortHandedShots}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{formatDecimals(stats.evenStrengthSavePercentage, 2)}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{formatDecimals(stats.powerPlaySavePercentage, 2)}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{formatDecimals(stats.shortHandedSavePercentage, 2)}</Table.Cell>}
+              {!skater && detailed && <Table.Cell>{FormatDecimals(stats.evenStrengthSavePercentage, 2)}</Table.Cell>}
+              {!skater && detailed && <Table.Cell>{FormatDecimals(stats.powerPlaySavePercentage, 2)}</Table.Cell>}
+              {!skater && detailed && <Table.Cell>{FormatDecimals(stats.shortHandedSavePercentage, 2)}</Table.Cell>}
               {!skater && detailed && <Table.Cell>{stats.shutouts}</Table.Cell>}
               {!skater && detailed && <Table.Cell>{stats.timeOnIce}</Table.Cell>}
               <Table.Cell><Button onClick={() => onDelete(stat.player.id)}>X</Button></Table.Cell>
