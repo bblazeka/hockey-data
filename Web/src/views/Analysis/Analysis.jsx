@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetNumberWithOrdinal, IsNullOrUndefined } from 'common';
 import { Header, Image, Menu, Popup, Segment, Statistic, Tab, Table } from 'semantic-ui-react';
-import { VerticalBarSeries, VerticalGridLines, HorizontalGridLines, XYPlot, XAxis, YAxis } from 'react-vis';
+import { VerticalBarSeries, VerticalGridLines, HorizontalGridLines, RadialChart, XYPlot, XAxis, YAxis } from 'react-vis';
 import { getLogo } from '../../util/assets';
 
 import './Analysis.scss';
@@ -75,6 +75,14 @@ class Analysis extends Component {
               <YAxis />
               <VerticalBarSeries data={team.rankingsGraph}></VerticalBarSeries>
             </XYPlot>
+
+            <RadialChart
+              showLabels={true}
+              data={team.rosterStats}
+              margin={{left: 40, right: 40, top: 50, bottom: 50}}
+              width={500}
+              height={500} />
+
           </Tab.Pane>
       };
     });

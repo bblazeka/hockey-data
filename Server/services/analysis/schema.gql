@@ -16,6 +16,20 @@ type TeamAnalysis {
   stats: [TeamStatTableProperty]
   regularSeasonStatRankings: RegularSeasonRankings
   rankingsGraph: [GraphFloat]
+  rosterStats: [AnalysisRosterPlayer]
+}
+
+type AnalysisRosterPlayer {
+  id: Int
+  fullName: String
+  label: String
+  subLabel: String
+  angle: Int
+  stats: AnalysisPlayerStats
+}
+
+type AnalysisPlayerStats {
+  points: Int
 }
 
 type TeamStatTableProperty {

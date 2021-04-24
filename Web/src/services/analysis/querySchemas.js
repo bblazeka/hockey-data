@@ -17,6 +17,16 @@ export function getAnalysis() {
           regularSeasonStatRankings { wins, losses, ot, pts, ptPctg, goalsPerGame, goalsAgainstPerGame, evGGARatio, powerPlayPercentage, powerPlayGoals, powerPlayGoalsAgainst, powerPlayOpportunities },
           rankingsGraph { x, y }
           team { name }
+          rosterStats {
+            id,
+            fullName,
+            angle,
+            label,
+            subLabel,
+            stats {
+              points
+            }
+          }
         }
     }`;
   }

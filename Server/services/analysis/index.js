@@ -17,7 +17,16 @@ function calculatePercentile(rank) {
 
 async function getAnalysis() {
   var teams = await db.getCollection('analysis').find({}).toArray();
-  teams.forEach(function(team){ Object.assign(team, {
+
+  teams.forEach(function(team){ 
+    var formattedRoster = team.rosterStats.filter((p)=>{ return p.stats.points > 0; }).sort((a,b)=>{ return a.stats.points - b.stats.points; }).map((p)=>{
+      return Object.assign(p, {
+        label: p.fullName,
+        subLabel: p.stats.points,
+        angle: p.stats.points
+      });
+    });
+    Object.assign(team, {
     rankingsGraph: [
       {x: 'Wins', y: calculatePercentile(team.regularSeasonStatRankings.wins)},
       {x: 'Losses', y: calculatePercentile(team.regularSeasonStatRankings.losses)},
@@ -75,7 +84,8 @@ async function getAnalysis() {
       {title: 'FO%', value: team.statsSingleSeason.faceOffWinPercentage, description: 'Faceoff win percentage'},
       {title: 'S%', value: team.statsSingleSeason.shootingPctg, description: 'Shooting percentage'},
       {title: 'SVS%', value: team.statsSingleSeason.savePctg, description: 'Saves percentage'},
-    ]
+    ],
+    rosterStats: formattedRoster
   }); });
   return _.sortBy(teams, 'leagueRank');
 }

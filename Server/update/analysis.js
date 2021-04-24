@@ -9,12 +9,23 @@ async function run() {
   try {
     var response = await apicomm.nhlApiRequest('/api/v1/standings?season=20202021');
 
-    // https://statsapi.web.nhl.com/api/v1/teams/6?hydrate=roster(season=20202021,person(name,stats(splits=statsSingleSeason)))
-
     const teamAnalysisCollection = db.getCollection('analysis');
     
     var res = response.records.map(async (record)=>{
       record.teamRecords.map(async (teamRecord)=>{
+
+        var playerStats = await apicomm.nhlApiRequest(`/api/v1/teams/${teamRecord.team.id}?hydrate=roster(season=20202021,person(stats(splits=statsSingleSeason)))`);
+        var playersRoster = playerStats.teams[0].roster.roster;
+        var fmtRoster = playersRoster.filter((p) => {
+          return p.person.stats[0].splits != null && p.person.stats[0].splits.length > 0;
+        }).map((p) => {
+          return ({
+            id: p.person.id,
+            fullName: p.person.fullName,
+            stats: p.person.stats[0].splits[0].stat
+          });
+        });
+
         var teamStats = await apicomm.nhlApiRequest(`/api/v1/teams/${teamRecord.team.id}/stats`);
         const options = { upsert: true };
         const filter = { id: teamRecord.team.id };
@@ -45,6 +56,7 @@ async function run() {
             row: teamRecord.row,
             statsSingleSeason: teamStats.stats[0].splits[0].stat,
             regularSeasonStatRankings: rankings,
+            rosterStats: fmtRoster,
             lastUpdated: teamRecord.lastUpdated
           },
         };
