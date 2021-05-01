@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../services/team';
 import './Team.scss';
-import { Loader, Map, NewsFeed, RosterGrid, SocialFeed } from '../../components';
+import { Loader, Map, NewsFeed, RosterGrid, RosterStatsGrid, SocialFeed } from '../../components';
 import { getLogo } from '../../util/assets';
 
-import { Checkbox, Grid, Header, Segment } from 'semantic-ui-react';
+import { Checkbox, Grid, Header, Segment, Tab } from 'semantic-ui-react';
 import { getNews, getTweets } from '../../services/news';
 import { geocode } from '../../services/util';
 import { getTeamSchedule } from '../../services/league';
@@ -60,11 +60,23 @@ class Team extends Component {
     if (!team) {
       return (<div><Loader></Loader></div>);
     }
+    const panes = [
+      {
+        menuItem: 'Roster', render: () => <Tab.Pane>
+          <RosterGrid team={team} filterPlayers={filterActive} /></Tab.Pane>
+      },
+      {
+        menuItem: 'Stats', render: () => <Tab.Pane><RosterStatsGrid rosterStats={team.rosterStats} />
+          </Tab.Pane>
+      },
+    ];
     return (
       <div>
         <Header as='h1' className="team-header"><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`} />{team.name}</Header>
         <p className="desc">{team.description}</p>
-        <RosterGrid team={team} filterPlayers={filterActive} />
+        <Tab
+          panes={panes}
+        />
         <Segment>
           <Checkbox checked={filterActive} label='Show active players only' onChange={this.checkedChanged} />
         </Segment>

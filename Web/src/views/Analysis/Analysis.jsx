@@ -7,7 +7,7 @@ import { getLogo } from '../../util/assets';
 
 import './Analysis.scss';
 
-import { Loader } from '../../components';
+import { Lineup, Loader } from '../../components';
 import * as actions from '../../services/analysis';
 
 class Analysis extends Component {
@@ -82,7 +82,7 @@ class Analysis extends Component {
               margin={{left: 40, right: 40, top: 50, bottom: 50}}
               width={500}
               height={500} />
-
+            <Lineup lines={team.lines}></Lineup>
           </Tab.Pane>
       };
     });

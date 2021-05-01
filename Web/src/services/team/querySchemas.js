@@ -1,5 +1,4 @@
-export function getTeams()
-{
+export function getTeams() {
   return `{
     teams { 
       id, 
@@ -8,8 +7,7 @@ export function getTeams()
   }`;
 }
 
-export function getTeamLocations()
-{
+export function getTeamLocations() {
   return `{
     teamLocations {
       id,
@@ -20,8 +18,7 @@ export function getTeamLocations()
   }`;
 }
 
-export function getTeam(id)
-{
+export function getTeam(id) {
   return `{
     team(id: ${id}) { 
       id, 
@@ -78,7 +75,7 @@ export function getTeam(id)
           weight,
           nationality,
           capHit,
-  } ,
+    } ,
     forwards {
           id,
           fullName,
@@ -103,12 +100,24 @@ export function getTeam(id)
           weight,
           nationality,
           capHit,
-        },
-        lines {
-          goalies { starter, backup },
-          lines { leftDefender, rightDefender, leftWing, center, rightWing },
-          ppLines { leftDefender, rightDefender, leftWing, center, rightWing }
-        }
+    },
+    rosterStats {
+      id,
+      fullName,
+      stats {
+        games,
+        goals,
+        assists,
+        points,
+        plusMinus,
+        timeOnIce,
+        shots,
+        hits,
+        blocked,
+        powerPlayGoals,
+        powerPlayPoints
+      }
     }
-  }`;
+  }
+}`;
 }

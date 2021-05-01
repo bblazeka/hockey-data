@@ -1,5 +1,6 @@
 const apicomm = require('../comm/apihandler');
 const dbhandler = require('../comm/dbhandler.js');
+const scrapping = require('../comm/scrapinghandler');
 
 async function run() {
 
@@ -25,6 +26,8 @@ async function run() {
             stats: p.person.stats[0].splits[0].stat
           });
         });
+
+        var lines = await scrapping.scrapLines(teamRecord.team.name);
 
         var teamStats = await apicomm.nhlApiRequest(`/api/v1/teams/${teamRecord.team.id}/stats`);
         const options = { upsert: true };
@@ -57,6 +60,7 @@ async function run() {
             statsSingleSeason: teamStats.stats[0].splits[0].stat,
             regularSeasonStatRankings: rankings,
             rosterStats: fmtRoster,
+            lines: lines,
             lastUpdated: teamRecord.lastUpdated
           },
         };

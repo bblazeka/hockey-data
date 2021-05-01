@@ -4,7 +4,6 @@ const { Database } = require('../../comm/dbhandler');
 const apicomm = require('../../comm/apihandler');
 const util = require('../util/index.js');
 const common = require('common');
-const scrapping = require('../../comm/scrapinghandler');
 
 var db = new Database();
 
@@ -18,6 +17,11 @@ async function getPlayersFromTeam(teamId) {
   return items;
 }
 
+async function getTeamRosterStats(teamId) {
+  const stats = await db.getCollection('analysis').findOne({ 'team.id': teamId });
+  return stats.rosterStats;
+}
+
 async function getTeam({id}) {
   const collection = db.getCollection('teams');
   const query = { id: id };
@@ -28,15 +32,17 @@ async function getTeam({id}) {
 
   if (!common.IsNullOrUndefined(team))
   {
-    team.rosterResponse = await getPlayersFromTeam(id);
-    team.goalies = team.rosterResponse.filter(p => p.primaryPosition.type == 'Goalie');
-    team.defenders = team.rosterResponse.filter(p => p.primaryPosition.type == 'Defenseman');
-    team.forwards = team.rosterResponse.filter(p => p.primaryPosition.type == 'Forward');
+
+    var rosterResponse = await getPlayersFromTeam(id);
+    var rosterStats = await getTeamRosterStats(id);
+    team.goalies = rosterResponse.filter(p => p.primaryPosition.type == 'Goalie');
+    team.defenders = rosterResponse.filter(p => p.primaryPosition.type == 'Defenseman');
+    team.forwards = rosterResponse.filter(p => p.primaryPosition.type == 'Forward');
+    team.rosterStats = rosterStats;
     team.description = (await apicomm.wikiApiRequest(team.name)).extract;
     team.venue.description = (await apicomm.wikiApiAdvancedRequest(team.venue.name, team.venue.city)).extract;
   }
 
-  team.lines = scrapping.scrapLines(team.name);
   return team;
 }
 

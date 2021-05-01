@@ -9,8 +9,22 @@ type DetailedTeam {
     goalies: [Player]
     defenders: [Player]
     forwards: [Player]
-    lines: Lines
+  rosterStats: [AnalysisRosterPlayer]
   }
+
+type AnalysisRosterPlayerStats {
+  id: Int
+  fullName: String
+  label: String
+  subLabel: String
+  angle: Int
+  stats: [RosterPlayerStat]
+}
+
+type RosterPlayerStat {
+  name: String
+  value: String
+}
 
 type Lines {
   goalies: Goalies
