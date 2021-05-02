@@ -241,75 +241,67 @@ export function addSelectedPlayer(id) {
 function getSelectedSkaterQuery() {
   return `
   skaters { 
-    player { 
-      id, 
+      id,
       fullName,
       currentTeam { id },
       primaryPosition { abbreviation }
-    }
-    stats {
-      splits {
-        stat {
-          games,
-          goals,
-          assists,
-          points,
-          pim,
-          plusMinus,
-          faceOffPct,
-          shots,
-          hits,
-          blocked,
-          timeOnIce,
-          evenTimeOnIce,
-          powerPlayTimeOnIce,
-          shortHandedTimeOnIce,
-          shotPct,
-          gameWinningGoals,
-          powerPlayGoals,
-          powerPlayPoints,
-          shortHandedGoals,
-          shortHandedPoints
-        }
-      }
-    }
+      stats {
+        games,
+        goals,
+        assists,
+        points,
+        pim,
+        plusMinus,
+        faceOffPct,
+        shots,
+        hits,
+        blocked,
+        timeOnIce,
+        evenTimeOnIce,
+        evenTimeOnIceMinutes,
+        powerPlayTimeOnIce,
+        powerPlayTimeOnIceMinutes,
+        shortHandedTimeOnIce,
+        shortHandedTimeOnIceMinutes,
+        shotPct,
+        gameWinningGoals,
+        powerPlayGoals,
+        powerPlayPoints,
+        shortHandedGoals,
+        shortHandedPoints
+  }
+    
   }`;
 }
 
   function getSelectedGoalieQuery() {
     return `
     goalies {  
-      player { 
         id, 
         fullName,
         currentTeam { id },
         primaryPosition { abbreviation }
-      }
-      stats {
-        splits {
-          stat {
-            games,
-            gamesStarted,
-            goalAgainstAverage,
-            savePercentage,
-            wins,
-            losses,
-            ot,
-            saves,
-            evenSaves,
-            powerPlaySaves,
-            shortHandedSaves,
-            shotsAgainst,
-            evenShots,
-            powerPlayShots,
-            shortHandedShots,
-            evenStrengthSavePercentage,
-            powerPlaySavePercentage,
-            shortHandedSavePercentage,
-            shutouts,
-            timeOnIce
-          }
-        }
+        stats {
+          games,
+          gamesStarted,
+          goalAgainstAverage,
+          savePercentage,
+          wins,
+          losses,
+          ot,
+          saves,
+          evenSaves,
+          powerPlaySaves,
+          shortHandedSaves,
+          shotsAgainst,
+          evenShots,
+          powerPlayShots,
+          shortHandedShots,
+          evenStrengthSavePercentage,
+          powerPlaySavePercentage,
+          shortHandedSavePercentage,
+          shutouts,
+          timeOnIce
       }
     }`;
   }

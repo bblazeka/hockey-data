@@ -92,12 +92,22 @@ async function getSelectedPlayers() {
   var skaters = [];
   var goalies = [];
   for (let playerId of profiles[0].selectedPlayers) {
-    var player = await apicomm.nhlApiRequest(`/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${config.currentSeason}`);
-    player.player = await getPlayer({ id: playerId });
-    if (player.player.primaryPosition.code !== 'G') {
+    var playerStats = (await apicomm.nhlApiRequest(`/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${config.currentSeason}`)).stats[0].splits[0].stat;
+    const query = { id: playerId };
+    const options = {
+      sort: { id: -1 },
+    };
+    var player = await db.getCollection('players').findOne(query, options);
+    if (player.primaryPosition.code !== 'G') {
+      player.stats = Object.assign(playerStats, {
+        evenTimeOnIceMinutes: parseInt(playerStats.evenTimeOnIce.split(':')[0]),
+        powerPlayTimeOnIceMinutes: parseInt(playerStats.powerPlayTimeOnIce.split(':')[0]),
+        shortHandedTimeOnIceMinutes: parseInt(playerStats.shortHandedTimeOnIce.split(':')[0])
+      });
       skaters.push(player);
     }
     else {
+      player.stats = playerStats;
       goalies.push(player);
     }
   }
