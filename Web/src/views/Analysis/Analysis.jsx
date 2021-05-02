@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetNumberWithOrdinal, IsNullOrUndefined } from 'common';
 import { Header, Image, Menu, Popup, Segment, Statistic, Tab, Table } from 'semantic-ui-react';
-import { VerticalBarSeries, VerticalGridLines, HorizontalGridLines, RadialChart, XYPlot, XAxis, YAxis } from 'react-vis';
+import { LabelSeries, MarkSeries, VerticalBarSeries, VerticalGridLines, HorizontalGridLines, RadialChart, XYPlot, XAxis, YAxis } from 'react-vis';
 import { getLogo } from '../../util/assets';
 
 import './Analysis.scss';
@@ -30,6 +30,32 @@ class Analysis extends Component {
       return (<Loader />);
     }
     const panes = analysis.map((team, index) => {
+      var maxValue = 0;
+      var teamPie = team.rosterStats.filter((p) => { return p.stats.points > 0; }).sort((a,b)=>{ return a.stats.points - b.stats.points; }).map((ps) => {
+        if (ps.stats.points > maxValue)
+        {
+          maxValue = ps.stats.points;
+        }
+        return {
+          'label': ps.fullName,
+          'subLabel': ps.stats.points,
+          'angle': ps.stats.points
+        };
+      });
+      var goalieGraph = team.rosterStats.filter((p) => { return p.stats.points == null; }).sort((a,b)=>{ return a.stats.wins - b.stats.wins; }).map((ps) => {
+        return {
+          'label': ps.fullName,
+          'subLabel': ps.stats.wins,
+          'angle': ps.stats.wins
+        };
+      });
+      var teamGraph = team.rosterStats.filter((p) => { return p.stats.points > 0; }).map((ps) => {
+        return {
+          'label': ps.fullName,
+          'x': ps.stats.games,
+          'y': ps.stats.points 
+        };
+      });
       return {
         menuItem: (
           <Menu.Item key={team.id}>
@@ -75,14 +101,35 @@ class Analysis extends Component {
               <YAxis />
               <VerticalBarSeries data={team.rankingsGraph}></VerticalBarSeries>
             </XYPlot>
+            <div className='graph-container'>
+              <RadialChart
+                showLabels
+                data={teamPie}
+                colorType={'category'}
+                width={500}
+                radius={200}
+                height={500} />
+              <XYPlot yDomain={[0, maxValue+5]} xDomain={[0, 60]} width={600} height={500}>
+                <XAxis title='Games' />
+                <YAxis title='Points' />
+                <MarkSeries
+                  data={teamGraph}
+                  opacity={0.5}
+                  size={5}
+                />
+                <LabelSeries animation allowOffsetToBeReversed data={teamGraph} />
+              </XYPlot>
+              <RadialChart
+                showLabels={true}
+                data={goalieGraph}
+                width={300}
+                radius={100}
+                height={300} />
+            </div>
 
-            <RadialChart
-              showLabels={true}
-              data={team.rosterStats}
-              margin={{left: 40, right: 40, top: 50, bottom: 50}}
-              width={500}
-              height={500} />
-            <Lineup lines={team.lines}></Lineup>
+            <div className='lineup-container'>
+              <Lineup lines={team.lines}></Lineup>
+            </div>
           </Tab.Pane>
       };
     });

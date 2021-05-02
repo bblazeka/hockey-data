@@ -25,10 +25,12 @@ export function getAnalysis() {
           rosterStats {
             id,
             fullName,
-            angle,
-            label,
-            subLabel,
             stats {
+              games,
+              wins,
+              shutouts,
+              goals,
+              assists,
               points
             }
           }

@@ -23,9 +23,6 @@ type TeamAnalysis {
 type AnalysisRosterPlayer {
   id: Int
   fullName: String
-  label: String
-  subLabel: String
-  angle: Int
   stats: Stats
 }
 

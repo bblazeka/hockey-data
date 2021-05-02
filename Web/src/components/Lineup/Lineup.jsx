@@ -41,6 +41,9 @@ function Lineup(props) {
           <Grid.Column>
             {lines.goalies.backup}
           </Grid.Column>
+          <Grid.Column></Grid.Column>
+          <Grid.Column></Grid.Column>
+          <Grid.Column></Grid.Column>
         </Grid.Row>
       </Grid>
     </div>);
