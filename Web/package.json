@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.21.1",
+    "color-scheme": "^1.0.1",
     "common": "file:../Common",
     "dayjs": "^1.10.4",
     "eslint-utils": "^1.4.3",

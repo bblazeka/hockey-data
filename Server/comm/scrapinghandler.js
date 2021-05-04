@@ -17,14 +17,18 @@ async function scrapPlayerCapHit(fullName) {
   const divs = dom.window.document.getElementsByTagName('div');
   for (var i = 0; i < divs.length; i++) {
     if (divs[i].textContent.startsWith('Cap Hit:')) {
-      let result = divs[i].textContent.split(': ')[1];
-      return result;
+      let result = divs[i].textContent.split(': ')[1].replace(/[^A-Z0-9]+/ig, '');
+      return parseInt(result);
     }
   }
 }
 
 async function scrapLines(name) {
-  const formattedName = name.replace(/\s+/g, '-').toLowerCase();
+  if (name == 'Montréal Canadiens')
+  {
+    name = 'montreal canadiens';
+  }
+  const formattedName = name.replace(/\./g, '').replace(/\s+/g, '-').toLowerCase();
   const url = `https://www.dailyfaceoff.com/teams/${formattedName}/line-combinations/`;
   const response = await fetch(url);
   const text = await response.text();

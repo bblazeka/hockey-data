@@ -5,3 +5,12 @@
 .graph-container {
   display:flex;
 }
+
+.filter-container {
+  margin-right: -6em;
+  z-index: 20;
+}
+
+.radial-graph {
+  z-index: 0;
+}
