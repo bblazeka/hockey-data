@@ -21,9 +21,6 @@ async function getAnalysis() {
   teams.forEach(function(team){ 
     var formattedRoster = team.rosterStats.map((p)=>{
       return Object.assign(p, {
-        label: p.fullName,
-        subLabel: p.stats.points,
-        angle: p.stats.points,
         stats: p.stats
       });
     });

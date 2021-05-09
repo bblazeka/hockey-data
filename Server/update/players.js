@@ -1,4 +1,5 @@
 const { DateTime } = require('luxon');
+const { IsNullOrUndefined } = require('../../Web/node_modules/common');
 
 const apicomm = require('../comm/apihandler');
 const dbhandler = require('../comm/dbhandler.js');
@@ -19,18 +20,25 @@ async function run() {
       var response = await apicomm.nhlApiRequest(`/api/v1/people/${playerTemp.id}`);
       var player = response.people[0];
 
-      if ((DateTime.fromJSDate(playerTemp.lastUpdate) < DateTime.now().minus({ weeks: 1 }).endOf('day')) || playerTemp.lastUpdate === null) {
+      if (playerTemp.active && ((DateTime.fromJSDate(playerTemp.lastUpdate) < DateTime.now().minus({ weeks: 1 }).endOf('day')) || playerTemp.lastUpdate === null)) {
         const options = { upsert: true };
         const filter = { id: player.id };
+
+        var capHit = await scrapper.scrapPlayerCapHit(playerTemp.fullName);
+        if (IsNullOrUndefined(capHit) && !IsNullOrUndefined(playerTemp.altName))
+        {
+          capHit = await scrapper.scrapPlayerCapHit(playerTemp.altName);
+        }
+
         const updateDoc = {
           $set: {
             fullName: player.fullName,
+            altName: playerTemp.altName,
             firstName: player.firstName,
             lastName: player.lastName,
             primaryNumber: parseInt(player.primaryNumber),
             currentAge: player.currentAge,
             birthDate: player.birthDate,
-            positon: player.position,
             height: Math.ceil(parseInt(player.height.split(' ')[0].replace(/\D/g, '')) / 3.2808 * 100 + parseInt(player.height.split(' ')[1].replace(/\D/g, '')) / 0.39370),
             weight: Math.floor(player.weight * 0.45359237),
             birthCity: player.birthStateProvince != undefined ? `${player.birthCity}, ${player.birthStateProvince}, ${player.birthCountry}` : `${player.birthCity}, ${player.birthCountry}`,
@@ -43,7 +51,7 @@ async function run() {
             rosterStatus: player.rosterStatus,
             currentTeam: player.currentTeam,
             primaryPosition: player.primaryPosition,
-            capHit: await scrapper.scrapPlayerCapHit(player.fullName),
+            capHit,
             lastUpdate: new Date()
           },
         };

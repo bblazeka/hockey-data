@@ -1,3 +1,8 @@
+var formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+});
+
 function DateToServerFormat(date) {
   if (typeof(date)==="string")
   {
@@ -29,9 +34,15 @@ function FormatDecimals(number, decimalPlaces)
   return null;
 }
 
+function FormatNumberToCurrency(number)
+{
+  return formatter.format(number);
+}
+
 module.exports = {
   DateToServerFormat,
   GetNumberWithOrdinal,
   IsNullOrUndefined,
-  FormatDecimals
+  FormatDecimals,
+  FormatNumberToCurrency
 }

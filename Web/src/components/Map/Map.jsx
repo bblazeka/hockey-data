@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import keys from '../../util/keys.json';
 import './Map.scss';
 import { getLogo } from '../../util/assets';
+import { IsNullOrUndefined } from 'common';
 
 mapboxgl.accessToken = keys['mapbox-API'];
 
@@ -28,6 +29,9 @@ const Map = (props) => {
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
     props.points.forEach((point) => {
+      if (IsNullOrUndefined(point)) {
+        return;
+      }
       new mapboxgl.Marker({
         draggable: false,
         color: point.color

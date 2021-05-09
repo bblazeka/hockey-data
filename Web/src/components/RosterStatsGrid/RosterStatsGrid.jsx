@@ -34,9 +34,9 @@ function RosterStatsGrid(props) {
                 <Table.Cell>{stat.stats.assists}</Table.Cell>
                 <Table.Cell>{stat.stats.points}</Table.Cell>
                 <Table.Cell>{stat.stats.plusMinus}</Table.Cell>
+                <Table.Cell>{stat.stats.timeOnIce}</Table.Cell>
                 <Table.Cell>{stat.stats.powerPlayGoals}</Table.Cell>
                 <Table.Cell>{stat.stats.powerPlayPoints}</Table.Cell>
-                <Table.Cell>{stat.stats.timeOnIce}</Table.Cell>
                 <Table.Cell>{stat.stats.shots}</Table.Cell>
                 <Table.Cell>{stat.stats.hits}</Table.Cell>
                 <Table.Cell>{stat.stats.blocked}</Table.Cell>

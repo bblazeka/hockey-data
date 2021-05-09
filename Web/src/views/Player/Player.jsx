@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Flag, Grid, Header, Image, List, Search, Segment, Tab } from 'semantic-ui-react';
-import { IsNullOrUndefined } from 'common';
+import { FormatNumberToCurrency, IsNullOrUndefined } from 'common';
 import dayjs from 'dayjs';
 
 import * as actions from '../../services/player';
@@ -135,7 +135,7 @@ class Player extends Component {
                       <List.Item>
                         <List.Icon name='dollar' />
                         <List.Header>Cap Hit</List.Header>
-                        <List.Content>{player.capHit}</List.Content>
+                        <List.Content>{FormatNumberToCurrency(player.capHit)}</List.Content>
                       </List.Item>
                     </List>
                   </Grid.Column>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetNumberWithOrdinal, IsNullOrUndefined } from 'common';
 import { Dropdown, Header, Image, Menu, Popup, Segment, Statistic, Tab, Table } from 'semantic-ui-react';
-import { LabelSeries, MarkSeries, VerticalBarSeries, FlexibleXYPlot, VerticalGridLines, HorizontalGridLines, RadialChart, XAxis, YAxis } from 'react-vis';
+import { LabelSeries, LineSeries, MarkSeries, VerticalBarSeries, FlexibleXYPlot, VerticalGridLines, HorizontalGridLines, RadialChart, XAxis, YAxis } from 'react-vis';
 import ColorScheme from 'color-scheme';
 
 import { getLogo } from '../../util/assets';
@@ -46,6 +46,7 @@ class Analysis extends Component {
     if (IsNullOrUndefined(analysis)) {
       return (<Loader />);
     }
+    var seasonGames = 56;
     var scheme = new ColorScheme();
     scheme.from_hue(20).scheme('mono').variation('soft');
     const panes = analysis.map((team, index) => {
@@ -61,7 +62,7 @@ class Analysis extends Component {
           'angle': ps.stats[category]
         };
       });
-      teamPieConverted.reduce(function(res, value) {
+      teamPieConverted.reduce(function (res, value) {
         var id = value.angle < maxValue / parseFloat(5) ? '' : value.label;
         if (!res[id]) {
           res[id] = { label: id, subLabel: 0, angle: 0 };
@@ -83,7 +84,27 @@ class Analysis extends Component {
           'label': ps.fullName,
           'x': ps.stats.games,
           'y': ps.stats[category],
-          'rotation': 10
+          'rotation': 10,
+          'xOffset': -5
+        };
+      });
+      var maxPlusMinus = 0;
+      var minPlusMinus = 0;
+      var plusMinusGraph = team.rosterStats.filter((p) => { return p.stats.points !== null; }).map((ps) => {
+        if (ps.stats.plusMinus < minPlusMinus)
+        {
+          minPlusMinus = ps.stats.plusMinus;
+        }
+        if (ps.stats.plusMinus > maxPlusMinus)
+        {
+          maxPlusMinus = ps.stats.plusMinus;
+        }
+        return {
+          'label': ps.fullName,
+          'x': ps.stats.games,
+          'y': ps.stats.plusMinus,
+          'rotation': 10,
+          'xOffset': -5
         };
       });
       return {
@@ -125,23 +146,23 @@ class Analysis extends Component {
               </Table.Body>
             </Table>
             <div>
-            <FlexibleXYPlot height={300} xType="ordinal" yDomain={[0, 100]}>
-              <VerticalGridLines />
-              <HorizontalGridLines />
-              <XAxis />
-              <YAxis />
-              <VerticalBarSeries data={team.rankingsGraph}></VerticalBarSeries>
-            </FlexibleXYPlot>
+              <FlexibleXYPlot height={300} xType="ordinal" yDomain={[0, 100]}>
+                <VerticalGridLines />
+                <HorizontalGridLines />
+                <XAxis />
+                <YAxis />
+                <VerticalBarSeries data={team.rankingsGraph}></VerticalBarSeries>
+              </FlexibleXYPlot>
             </div>
             <div className='graph-container'>
               <div className='filter-container'>
-              <h4>Distribution among players:</h4>
-              <Dropdown
-                placeholder='Category'
-                selection
-                onChange={this.onCategoryChange}
-                options={[{key: 'points', text: 'Points', value: 'points'}, {key: 'goals', text: 'Goals', value: 'goals'}, {key: 'assists', text: 'Assists', value: 'assists'}]}
-              />
+                <h4>Distribution among players:</h4>
+                <Dropdown
+                  placeholder='Category'
+                  selection
+                  onChange={this.onCategoryChange}
+                  options={[{ key: 'points', text: 'Points', value: 'points' }, { key: 'goals', text: 'Goals', value: 'goals' }, { key: 'assists', text: 'Assists', value: 'assists' }]}
+                />
               </div>
               <RadialChart
                 animation
@@ -150,15 +171,15 @@ class Analysis extends Component {
                 showLabels
                 data={teamPie}
                 colorType={'category'}
-                colorRange={scheme.colors().map((color)=>{
+                colorRange={scheme.colors().map((color) => {
                   return `#${color}`;
                 })}
-                width={500}
-                radius={200}
-                height={500} />
-              <FlexibleXYPlot  yDomain={[0, maxValue + 5]} xDomain={[0, 60]} height={500}>
+                width={520}
+                radius={220}
+                height={520} />
+              <FlexibleXYPlot yDomain={[0, maxValue + 5]} xDomain={[0, seasonGames]} height={500}>
                 <XAxis title='Games' />
-                <YAxis title='Points' />
+                <YAxis title={category} />
                 <MarkSeries
                   data={teamGraph}
                   opacity={0.5}
@@ -167,12 +188,25 @@ class Analysis extends Component {
                 <LabelSeries labelAnchorX='end' labelAnchorY='middle' animation allowOffsetToBeReversed data={teamGraph} />
               </FlexibleXYPlot >
             </div>
-            <RadialChart
+            <div className='graph-container'>
+              <RadialChart
                 showLabels={true}
                 data={goalieGraph}
                 width={300}
                 radius={100}
                 height={300} />
+              <FlexibleXYPlot yDomain={[minPlusMinus - 2, maxPlusMinus + 5]} xDomain={[0, seasonGames]} height={300}>
+                <XAxis title='Games' />
+                <YAxis title='+/-' />
+                <MarkSeries
+                  data={plusMinusGraph}
+                  opacity={0.5}
+                  size={5}
+                />
+                <LineSeries stroke='#e6e6e9' strokeStyle='dashed' data={[{x: 0, y: 0}, {x: seasonGames, y: 0}]}/>
+                <LabelSeries labelAnchorX='end' labelAnchorY='middle' animation allowOffsetToBeReversed data={plusMinusGraph} />
+              </FlexibleXYPlot >
+            </div>
             <div className='lineup-container'>
               <Lineup lines={team.lines}></Lineup>
             </div>

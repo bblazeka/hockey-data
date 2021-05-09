@@ -7,13 +7,13 @@ import { FormatDecimals } from 'common';
 import './StatsGrid.scss';
 
 function StatsGrid(props) {
-  
+
   const [value, setValue] = useState(null);
 
   const { data, skater, detailed } = props;
   const { totalGames, totalGoals, totalAssists, totalPoints, totalGamesStarted, totalWins, goalsLine, assistsLine, stats, gamesStartedLine, winsLine } = data;
   var lineNames = (skater) ? ['goals', 'assists'] : ['Games started', 'Wins'];
-  var lines = (skater) ? [ goalsLine, assistsLine ] : [ gamesStartedLine, winsLine ];
+  var lines = (skater) ? [goalsLine, assistsLine] : [gamesStartedLine, winsLine];
 
   return (
     <div className="grid">
@@ -139,19 +139,19 @@ function StatsGrid(props) {
           <HorizontalGridLines />
           <XAxis />
           <YAxis />
-          {lines.map((l, index)=>{
-            return (<LineMarkSeries 
-                      key={`line${index}`} 
-                      style={{ fill: 'none' }} 
-                      data={l} 
-                      onValueMouseOver={(v) => setValue(v)}
-                      onValueMouseOut={() => setValue(null)} 
-                    />);
+          {lines.map((l, index) => {
+            return (<LineMarkSeries
+              key={`line${index}`}
+              style={{ fill: 'none' }}
+              data={l}
+              onValueMouseOver={(v) => setValue(v)}
+              onValueMouseOut={() => setValue(null)}
+            />);
           })}
           {value ? <Hint value={value} /> : null}
         </XYPlot>}
         <Statistic.Group horizontal>
-        {totalGames && <Statistic>
+          {totalGames && <Statistic>
             <Statistic.Value>
               {totalGames}
             </Statistic.Value>

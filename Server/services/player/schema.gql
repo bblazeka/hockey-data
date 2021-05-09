@@ -57,7 +57,7 @@ type Stats {
   points: Int
   pim: Int
   penaltyMinutes: Int
-  plusMinus: String
+  plusMinus: Int
   shots: Int
   hits: Int
   blocked: Int

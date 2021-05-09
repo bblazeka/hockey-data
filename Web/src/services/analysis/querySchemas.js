@@ -31,7 +31,8 @@ export function getAnalysis() {
               shutouts,
               goals,
               assists,
-              points
+              points,
+              plusMinus
             }
           }
         }

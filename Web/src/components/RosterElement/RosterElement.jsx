@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import routes from '../../routes';
 import './RosterElement.scss';
+import { FormatNumberToCurrency } from 'common';
 
 function RosterElement(props) {
   const { filterPlayers, players, title } = props;
@@ -41,7 +42,7 @@ function RosterElement(props) {
                 <Table.Cell>{player.height}</Table.Cell>
                 <Table.Cell>{player.weight}</Table.Cell>
                 <Table.Cell>{player.shootsCatches}</Table.Cell>
-                <Table.Cell>{player.capHit}</Table.Cell>
+                <Table.Cell>{FormatNumberToCurrency(player.capHit)}</Table.Cell>
               </Table.Row>
             );
           })}
