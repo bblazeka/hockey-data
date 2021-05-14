@@ -7,7 +7,7 @@ scalar Date
     selectedPlayers: SelectedPlayers
     team(id: Int): DetailedTeam
     teams: [Team]
-    teamLocations: [Location]
+    teamLocations: TeamLocations
     articles(query: String): [Article]
     tweets(query: String): [Tweet]
     twitterApiStatus: TwitterStats

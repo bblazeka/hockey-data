@@ -10,10 +10,9 @@ export function getTeams() {
 export function getTeamLocations() {
   return `{
     teamLocations {
-      id,
-      text,
-      center,
-      color
+      teamLocations { id, text, center, color },
+      seasonDescription,
+      divisions { key, value }
     }
   }`;
 }

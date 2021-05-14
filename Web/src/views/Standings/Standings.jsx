@@ -9,7 +9,7 @@ import { Loader, Map } from '../../components';
 import routes from '../../routes';
 import { getLogo } from '../../util/assets';
 
-import { Grid, Header, Segment, Table } from 'semantic-ui-react';
+import { Grid, Header, Label, Segment, Table } from 'semantic-ui-react';
 
 class Standings extends Component {
 
@@ -71,7 +71,19 @@ class Standings extends Component {
           })}
         </Grid>
         <Segment>
-          {locations && <Map className="standingsMapControl" center={{ center: [-102.131087, 39.509726] }} points={locations} zoom={3} />}
+          <Grid columns={2} stackable>
+            <Grid.Row>
+              <Grid.Column>
+              {locations && <Map className="standingsMapControl" center={{ center: [-97.131087, 42.509726] }} points={locations.teamLocations} zoom={3} />}
+              </Grid.Column>
+              <Grid.Column>
+                {locations.seasonDescription}
+                {locations.divisions.map((marker,index)=> {
+                  return (<div key={marker.key+index}><Label color={marker.value}>{marker.key}</Label></div>);
+                })}
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Segment>
       </div>
     );

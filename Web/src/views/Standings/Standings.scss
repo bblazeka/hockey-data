@@ -6,13 +6,20 @@
 
 .standingsMapControl {
   width: 100%;
-  height: 80vh;
+  height: 55vh;
+}
+
+.map-container {
+  width: 50%;
+}
+
+.map-description {
+  display: flex;
 }
 
 .standings-team-name {
   font-size: 1.5em;
 }
-
 
 td {
   padding: .4em .4em !important;

@@ -3,7 +3,6 @@ var _ = require('lodash');
 const { Database } = require('../../comm/dbhandler');
 const apicomm = require('../../comm/apihandler');
 const util = require('../util/index.js');
-const common = require('common');
 
 var db = new Database();
 
@@ -30,7 +29,7 @@ async function getTeam({id}) {
   };
   const team = await collection.findOne(query, options);
 
-  if (!common.IsNullOrUndefined(team))
+  if (!_.isNil(team))
   {
 
     var rosterResponse = await getPlayersFromTeam(id);
@@ -53,27 +52,29 @@ async function getTeams() {
 
 async function getTeamLocations() {
   var teams = await getTeams();
+  var season = await apicomm.wikiApiRequest('2020–21 NHL season');
+  var divisions = [{ key: 'Scotia North', value: 'red'}, 
+  { key: 'MassMutual East', value: 'green'}, 
+  { key: 'Discover Central', value: 'orange'}, 
+  { key: 'Honda West', value: 'blue'}];
   var response = await teams.map(async (team) => {
-    var location = await util.geocode({query:`${team.venue.name} ${team.venue.city}`});
-    switch(team.division.name) {
-      case 'Scotia North':
-        location[0].color = 'red';
-        break;
-      case 'MassMutual East':
-        location[0].color = 'green';
-        break;
-      case 'Discover Central':
-        location[0].color = 'orange';
-        break;
-      case 'Honda West':
-        location[0].color = 'blue';
-        break;
+    var location = await util.geocode(_.isNil(team.venue) ? { query: team.locationName } : {query:`${team.venue.name} ${team.venue.city}`});
+    if (!_.isNil(team.division)) {
+      var division = divisions.find((el)=>{ return el.key === team.division.name;});
+      if (division != null)
+      {
+        location[0].color = division.value;
+      }
     }
     location[0].text = team.name;
     location[0].id = team.id;
     return location[0];
   });
-  return response;
+  return {
+    teamLocations: response,
+    seasonDescription: season.extract,
+    divisions
+  };
 }
 
 async function getTeamSchedule({ id, start, end }) {

@@ -1,5 +1,5 @@
 const { DateTime } = require('luxon');
-const { IsNullOrUndefined } = require('../../Web/node_modules/common');
+const _ = require('lodash');
 
 const apicomm = require('../comm/apihandler');
 const dbhandler = require('../comm/dbhandler.js');
@@ -25,7 +25,7 @@ async function run() {
         const filter = { id: player.id };
 
         var capHit = await scrapper.scrapPlayerCapHit(playerTemp.fullName);
-        if (IsNullOrUndefined(capHit) && !IsNullOrUndefined(playerTemp.altName))
+        if (_.isNil(capHit) && !_.isNil(playerTemp.altName))
         {
           capHit = await scrapper.scrapPlayerCapHit(playerTemp.altName);
         }

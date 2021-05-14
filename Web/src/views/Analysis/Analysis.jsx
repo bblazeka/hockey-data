@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { GetNumberWithOrdinal, IsNullOrUndefined } from 'common';
-import { Dropdown, Header, Image, Menu, Popup, Segment, Statistic, Tab, Table } from 'semantic-ui-react';
+import { Dropdown, Header, Image, Menu, Segment, Statistic, Tab, Table } from 'semantic-ui-react';
 import { LabelSeries, LineSeries, MarkSeries, VerticalBarSeries, FlexibleXYPlot, VerticalGridLines, HorizontalGridLines, RadialChart, XAxis, YAxis } from 'react-vis';
 import ColorScheme from 'color-scheme';
 
 import { getLogo } from '../../util/assets';
-
-import './Analysis.scss';
-
 import { Lineup, Loader } from '../../components';
 import * as actions from '../../services/analysis';
+import './Analysis.scss';
 
 class Analysis extends Component {
 
@@ -91,12 +89,10 @@ class Analysis extends Component {
       var maxPlusMinus = 0;
       var minPlusMinus = 0;
       var plusMinusGraph = team.rosterStats.filter((p) => { return p.stats.points !== null; }).map((ps) => {
-        if (ps.stats.plusMinus < minPlusMinus)
-        {
+        if (ps.stats.plusMinus < minPlusMinus) {
           minPlusMinus = ps.stats.plusMinus;
         }
-        if (ps.stats.plusMinus > maxPlusMinus)
-        {
+        if (ps.stats.plusMinus > maxPlusMinus) {
           maxPlusMinus = ps.stats.plusMinus;
         }
         return {
@@ -129,24 +125,26 @@ class Analysis extends Component {
               {this.createStatistic('Division Last 10', GetNumberWithOrdinal(team.divisionL10Rank))}
               {this.createStatistic('Division Powerplay', GetNumberWithOrdinal(team.ppDivisionRank))}
             </Statistic.Group>
-            <Table>
-              <Table.Header>
-                <Table.Row>
-                  {team.stats.map((stat) => {
-                    return (<Popup content={stat.description} key={stat.title} trigger={<Table.HeaderCell key={stat.title + team.id}>{stat.title}</Table.HeaderCell>}></Popup>);
-                  })}
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                <Table.Row>
-                  {team.stats.map((stat) => {
-                    return (<Table.Cell key={stat.title + team.id}>{stat.value}</Table.Cell>);
-                  })}
-                </Table.Row>
-              </Table.Body>
-            </Table>
+            <div className='team-stats-table'>
+              <Table>
+                <Table.Header>
+                  <Table.Row>
+                    {team.stats.map((stat) => {
+                      return (<Table.HeaderCell key={stat.title + team.id}>{stat.title}</Table.HeaderCell>);
+                    })}
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  <Table.Row>
+                    {team.stats.map((stat) => {
+                      return (<Table.Cell key={stat.title + team.id}>{stat.value}</Table.Cell>);
+                    })}
+                  </Table.Row>
+                </Table.Body>
+              </Table>
+            </div>
             <div>
-              <FlexibleXYPlot height={300} xType="ordinal" yDomain={[0, 100]}>
+              <FlexibleXYPlot height={200} xType="ordinal" yDomain={[0, 100]}>
                 <VerticalGridLines />
                 <HorizontalGridLines />
                 <XAxis />
@@ -203,7 +201,7 @@ class Analysis extends Component {
                   opacity={0.5}
                   size={5}
                 />
-                <LineSeries stroke='#e6e6e9' strokeStyle='dashed' data={[{x: 0, y: 0}, {x: seasonGames, y: 0}]}/>
+                <LineSeries stroke='#e6e6e9' strokeStyle='dashed' data={[{ x: 0, y: 0 }, { x: seasonGames, y: 0 }]} />
                 <LabelSeries labelAnchorX='end' labelAnchorY='middle' animation allowOffsetToBeReversed data={plusMinusGraph} />
               </FlexibleXYPlot >
             </div>

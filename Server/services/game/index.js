@@ -1,4 +1,4 @@
-const { toInteger } = require('lodash');
+var _ = require('lodash');
 const { DateTime } = require('luxon');
 
 const { Database } = require('../../comm/dbhandler');
@@ -26,10 +26,10 @@ async function getGame({ gameId }) {
   result.linescore = linescore;
   result.venue = dbGame.venue;
 
-  if (!common.IsNullOrUndefined(result.linescore.currentPeriodTimeRemaining))
+  if (!_.isNil(result.linescore.currentPeriodTimeRemaining))
   {
     var res = result.linescore.currentPeriodTimeRemaining.split(':');
-    var time = (1200 - (toInteger(res[0]) * 60 + toInteger(res[1])))/1200;
+    var time = (1200 - (_.toInteger(res[0]) * 60 + _.toInteger(res[1])))/1200;
     result.percentage = ((result.linescore.currentPeriod - 1) * 0.34 + time * 0.34) * 100;
   }
   result.teams.home.skaters = Object.values(result.teams.home.players).filter((player) => { return player.position.code !== 'G' && player.position.code !== 'N/A' && player.stats.skaterStats !== null; });
@@ -47,7 +47,7 @@ async function getTodaysGames() {
     var result = await apicomm.nhlApiRequest(`/api/v1/game/${game.gamePk}/linescore`);
     result.gameTime = DateTime.fromJSDate(game.gameDate).toFormat('HH:mm');
     result.gamePk = game.gamePk;
-    result.ongoingGame = !common.IsNullOrUndefined(result.currentPeriodTimeRemaining);
+    result.ongoingGame = !_.isNil(result.currentPeriodTimeRemaining);
     result.finished = result.ongoingGame && result.currentPeriodTimeRemaining === 'Final';
     return result;
   });

@@ -156,7 +156,7 @@ function CompareGrid(props) {
             {!skater && detailed && <Table.HeaderCell>SV%-SH</Table.HeaderCell>}
             {!skater && detailed && <Table.HeaderCell>SO</Table.HeaderCell>}
             {!skater && detailed && <Table.HeaderCell>TOI</Table.HeaderCell>}
-            <Table.HeaderCell>Del</Table.HeaderCell>
+            <Table.HeaderCell>Delete</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
