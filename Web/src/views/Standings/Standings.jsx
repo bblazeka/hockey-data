@@ -71,19 +71,20 @@ class Standings extends Component {
           })}
         </Grid>
         <Segment>
-          <Grid columns={2} stackable>
-            <Grid.Row>
-              <Grid.Column>
-              {locations && <Map className="standingsMapControl" center={{ center: [-97.131087, 42.509726] }} points={locations.teamLocations} zoom={3} />}
-              </Grid.Column>
-              <Grid.Column>
-                {locations.seasonDescription}
-                {locations.divisions.map((marker,index)=> {
-                  return (<div key={marker.key+index}><Label color={marker.value}>{marker.key}</Label></div>);
-                })}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+          {locations &&
+            <Grid columns={2} stackable>
+              <Grid.Row>
+                <Grid.Column>
+                  <Map className="standingsMapControl" center={{ center: [-97.131087, 42.509726] }} points={locations.teamLocations} zoom={3} />
+                </Grid.Column>
+                <Grid.Column>
+                  {locations.seasonDescription}
+                  {locations.divisions.map((marker, index) => {
+                    return (<div key={marker.key + index}><Label color={marker.value}>{marker.key}</Label></div>);
+                  })}
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>}
         </Segment>
       </div>
     );

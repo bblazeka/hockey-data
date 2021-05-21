@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Table, Header } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { IsNullOrUndefined, FormatDecimals } from 'common';
 import { CircularGridLines, DiscreteColorLegend, RadarChart } from 'react-vis';
 
 import routes from '../../routes';
+import { IsNullOrUndefined, FormatDecimals } from '../../util/common';
 import { getLogo } from '../../util/assets';
 import { NotFound } from '..';
 import './CompareGrid.scss';

@@ -9,7 +9,7 @@ import * as actions from '../../services/league';
 import routes from '../../routes';
 import { getLogo } from '../../util/assets';
 import { Loader } from '../../components';
-import { DateToServerFormat, FormatDecimals } from 'common';
+import { DateToServerFormat, FormatDecimals } from '../../util/common';
 import './Game.scss';
 
 class Game extends Component {

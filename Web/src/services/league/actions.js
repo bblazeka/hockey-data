@@ -1,7 +1,6 @@
-import { axiosGraphQL } from '../../util/common';
+import { axiosGraphQL, IsNullOrUndefined } from '../../util/common';
 import * as actionTypes from './actionTypes';
 import * as querySchemas from './querySchemas';
-import { IsNullOrUndefined } from 'common';
 
 
 export const getSchedule = (start, end) => (dispatch) => {

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Header, Item } from 'semantic-ui-react';
 import dayjs from 'dayjs';
-import { IsNullOrUndefined } from 'common';
 
 import './NewsFeed.scss';
 import Loader from '../Loader/Loader';
 import NotFound from '../NotFound/NotFound';
+import { IsNullOrUndefined } from '../../util/common';
 
 function NewsFeed(props) {
   const { news } = props;

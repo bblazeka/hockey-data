@@ -12,7 +12,7 @@ import './Schedule.scss';
 import { Loader } from '../../components';
 import routes from '../../routes';
 import { getDatesArray } from '../../util/converter';
-import { DateToServerFormat } from 'common';
+import { DateToServerFormat } from '../../util/common';
 import { getLogo } from '../../util/assets';
 
 class Schedule extends Component {

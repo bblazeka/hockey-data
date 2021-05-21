@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GetNumberWithOrdinal, IsNullOrUndefined } from 'common';
 import { Dropdown, Header, Image, Menu, Segment, Statistic, Tab, Table } from 'semantic-ui-react';
 import { LabelSeries, LineSeries, MarkSeries, VerticalBarSeries, FlexibleXYPlot, VerticalGridLines, HorizontalGridLines, RadialChart, XAxis, YAxis } from 'react-vis';
 import ColorScheme from 'color-scheme';
 
 import { getLogo } from '../../util/assets';
+import { GetNumberWithOrdinal, IsNullOrUndefined } from '../../util/common';
 import { Lineup, Loader } from '../../components';
 import * as actions from '../../services/analysis';
 import './Analysis.scss';

@@ -5,7 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import keys from '../../util/keys.json';
 import './Map.scss';
 import { getLogo } from '../../util/assets';
-import { IsNullOrUndefined } from 'common';
+import { IsNullOrUndefined } from '../../util/common';
 
 mapboxgl.accessToken = keys['mapbox-API'];
 

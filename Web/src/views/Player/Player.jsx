@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Flag, Grid, Header, Image, List, Search, Segment, Tab } from 'semantic-ui-react';
-import { FormatNumberToCurrency, IsNullOrUndefined } from 'common';
 import dayjs from 'dayjs';
 
 import * as actions from '../../services/player';
@@ -10,7 +9,7 @@ import './Player.scss';
 
 import routes from '../../routes';
 import { Loader, NewsFeed, SocialFeed, StatsGrid } from '../../components';
-import { generateSemanticUICountryId } from '../../util/common';
+import { IsNullOrUndefined, generateSemanticUICountryId, FormatNumberToCurrency } from '../../util/common';
 import { getLogo } from '../../util/assets';
 import { getTweets, getNews } from '../../services/news';
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, Grid, Header } from 'semantic-ui-react';
-import { IsNullOrUndefined } from 'common';
+import { IsNullOrUndefined } from '../../util/common';
 
 import './Home.scss';
 import * as leagueActions from '../../services/league';

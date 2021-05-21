@@ -1,11 +1,10 @@
 import React from 'react';
-import { generateSemanticUICountryId } from  '../../util/common';
 import { Flag, Header, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import routes from '../../routes';
+import { generateSemanticUICountryId, FormatNumberToCurrency } from  '../../util/common';
 import './RosterElement.scss';
-import { FormatNumberToCurrency } from 'common';
 
 function RosterElement(props) {
   const { filterPlayers, players, title } = props;

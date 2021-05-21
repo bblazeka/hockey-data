@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card, Divider, Header } from 'semantic-ui-react';
-import { IsNullOrUndefined } from 'common';
 
 import './GameCard.scss';
 import Loader from '../Loader/Loader';
 import routes from '../../routes';
 import { getLogo } from '../../util/assets';
+import { IsNullOrUndefined } from '../../util/common';
 
 function GameCard(props) {
   const { game } = props;

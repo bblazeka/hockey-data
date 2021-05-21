@@ -1,9 +1,9 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react';
-import { IsNullOrUndefined } from 'common';
 
 import './Lineup.scss';
 import { NotFound } from '..';
+import { IsNullOrUndefined } from '../../util/common';
 
 function Lineup(props) {
   const { lines } = props;

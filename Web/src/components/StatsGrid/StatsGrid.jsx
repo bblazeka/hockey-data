@@ -3,7 +3,7 @@ import { Table, Header, Statistic } from 'semantic-ui-react';
 import { DiscreteColorLegend, XYPlot, Hint, HorizontalGridLines, VerticalGridLines, XAxis, YAxis, LineMarkSeries } from 'react-vis';
 
 import { getLogo } from '../../util/assets';
-import { FormatDecimals } from 'common';
+import { FormatDecimals } from '../../util/common';
 import './StatsGrid.scss';
 
 function StatsGrid(props) {

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { IsNullOrUndefined } from 'common';
 
+import { IsNullOrUndefined } from '../../util/common';
 import { CompareGrid, Loader } from '../../components';
-
 import * as actions from '../../services/player';
 import './PlayerList.scss';
 

@@ -10,7 +10,7 @@ import { Checkbox, Grid, Header, Segment, Tab } from 'semantic-ui-react';
 import { getNews, getTweets } from '../../services/news';
 import { geocode } from '../../services/util';
 import { getTeamSchedule } from '../../services/league';
-import { DateToServerFormat } from 'common';
+import { DateToServerFormat } from '../../util/common';
 import TeamSchedule from '../../components/TeamSchedule/TeamSchedule';
 
 class Team extends Component {

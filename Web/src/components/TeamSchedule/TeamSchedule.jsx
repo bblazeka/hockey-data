@@ -1,10 +1,10 @@
 import React from 'react';
 import { Header, List, Image, Segment } from 'semantic-ui-react';
-import { IsNullOrUndefined } from  'common';
 
 import './TeamSchedule.scss';
 import { NotFound, Loader } from '..'; 
 import { getLogo } from '../../util/assets';
+import { IsNullOrUndefined } from  '../../util/common';
 
 function TeamSchedule(props) {
   const { games } = props;
