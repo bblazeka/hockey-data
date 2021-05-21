@@ -1,5 +1,4 @@
 var _ = require('lodash');
-const common = require('common');
 
 
 const { Database } = require('../../comm/dbhandler');

@@ -3,7 +3,6 @@ const { DateTime } = require('luxon');
 
 const { Database } = require('../../comm/dbhandler');
 const apicomm = require('../../comm/apihandler');
-const common = require('common');
 
 var db = new Database();
 
@@ -41,7 +40,7 @@ async function getGame({ gameId }) {
 
 async function getTodaysGames() {
   var games = (await db.getCollection('games').find({
-    'date': common.DateToServerFormat(new Date())
+    'date': DateTime.now().toISODate()
   }).toArray()).sort((a, b) => { return new Date(a.gameDate) - new Date(b.gameDate); });
   return games.map(async (game) => {
     var result = await apicomm.nhlApiRequest(`/api/v1/game/${game.gamePk}/linescore`);
