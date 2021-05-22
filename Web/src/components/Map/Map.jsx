@@ -2,12 +2,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 
-//import keys from '../../util/keys.json';
+import keys from '../../util/keys.json';
 import './Map.scss';
 import { getLogo } from '../../util/assets';
 import { IsNullOrUndefined } from '../../util/common';
 
-mapboxgl.accessToken = 'Test'; //keys['mapbox-API'];
+mapboxgl.accessToken = keys['mapbox-API'];
 
 const Map = (props) => {
   const mapContainerRef = useRef(null);
