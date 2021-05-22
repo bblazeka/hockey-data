@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
 
 import './Lineup.scss';
 import { NotFound } from '..';
@@ -12,7 +12,12 @@ function Lineup(props) {
   }
   return (
     <div>
-      <h3>Current lineup:</h3>
+      <Header as='h3'>
+        Current lineup:
+        <Header.Subheader>
+          Fetched from <a href="https://www.dailyfaceoff.com/">DailyFaceoff</a>.
+        </Header.Subheader>
+      </Header>
       <Grid columns='equal'>
         {lines.lines.map((line, index) => {
           return (

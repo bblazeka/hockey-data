@@ -75,7 +75,7 @@ class Standings extends Component {
             <Grid columns={2} stackable>
               <Grid.Row>
                 <Grid.Column>
-                  <Map className="standingsMapControl" center={{ center: [-97.131087, 42.509726] }} points={locations.teamLocations} zoom={3} />
+                  <Map className="standingsMapControl" center={{ center: [-97.131087, 42.509726] }} points={locations.teamLocations} zoom={2.5} />
                 </Grid.Column>
                 <Grid.Column>
                   {locations.seasonDescription}

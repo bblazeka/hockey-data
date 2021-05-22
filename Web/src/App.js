@@ -53,10 +53,15 @@ class App extends Component {
         </header>
         <div className="App-container">{this.props.children}</div>
         <footer className="footer">
+        NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2021. All Rights Reserved.
           <Grid columns='equal'>
             <Grid.Row>
               <Grid.Column>
-              <div><a href="https://github.com/bblazeka/hockey-data.git" target="_blank" rel="noopener noreferrer"><Icon name="github" /></a></div>
+                <div>This is a DEMO project only.</div>
+                <div>Contact: blazekab@gmail.com</div>
+              </Grid.Column>
+              <Grid.Column>
+                <div><a href="https://github.com/bblazeka/hockey-data.git" target="_blank" rel="noopener noreferrer"><Icon name="github" /></a></div>
                 <div><Icon name="node" /> <Icon name="react" /> GraphQL, MongoDB
                 </div>
               </Grid.Column>
@@ -70,7 +75,6 @@ class App extends Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2021. All Rights Reserved.
         </footer>
       </div>
     );
