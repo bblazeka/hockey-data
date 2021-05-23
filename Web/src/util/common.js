@@ -8,12 +8,14 @@ var formatter = new Intl.NumberFormat('en-US', {
 });
 
 export const axiosGraphQL = axios.create({
-  baseURL: 'http://localhost:4000/graphql',
-  /*headers: {
-    Authorization: `bearer ${
+  baseURL: 'https://p0lyp4hfwc.execute-api.us-east-1.amazonaws.com/dev/graphql',
+  headers: {
+    'Accept': '*/*',
+    'Content-Type': 'application/json',
+    /*Authorization: `bearer ${
       process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
-    }`,
-  },*/
+    }`*/
+  },
 });
 
 export function generateSemanticUICountryId(countryName) {
