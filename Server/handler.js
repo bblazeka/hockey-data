@@ -1,4 +1,8 @@
-const express = require('express');
+const serverless = require("serverless-http");
+const express = require("express");
+const bodyParser = require("body-parser-graphql");
+const app = express();
+
 const { graphqlHTTP } = require('express-graphql');
 const { buildSchema } = require('graphql');
 const cors = require('cors');
@@ -53,7 +57,6 @@ var root = {
 };
 
 const port = 4000;
-var app = express();
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -67,14 +70,16 @@ app.use(cors({
     return callback(null, true);
   }
 }));
+app.use(bodyParser.graphql());
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   rootValue: root,
   graphiql: true,
 }));
 
-
-app.listen(port, async () => {
+async function init() {
+  console.log('Initializing database...');
+  
   var database = new Database();
   await database.init();
   analysis.init(database);
@@ -82,5 +87,20 @@ app.listen(port, async () => {
   team.init(database);
   player.init(database);
   league.init(database);
+}
+
+app.listen(port, async () => {
+  await init();
+
   console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`);
 });
+
+const handle = serverless(app);
+
+module.exports.handler = async (event, context) => {
+  await init();
+  const res = await handle(event, context);
+  return res;
+};
+
+// Handler
