@@ -17,6 +17,8 @@ functions:
       - http:
           path: /
           method: ANY
+          cors: true
       - http:
           path: /graphql
-          method: ANY
+          method: POST
+          cors: true
