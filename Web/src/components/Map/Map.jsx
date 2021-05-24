@@ -4,9 +4,9 @@ import mapboxgl from 'mapbox-gl';
 
 import './Map.scss';
 import { getLogo } from '../../util/assets';
-import { IsNullOrUndefined } from '../../util/common';
+import { IsNullOrUndefined, GetMapboxApi } from '../../util/common';
 
-mapboxgl.accessToken = process.env.REACT_APP_MAP_API;
+mapboxgl.accessToken = GetMapboxApi();
 
 const Map = (props) => {
   const mapContainerRef = useRef(null);

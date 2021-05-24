@@ -8,7 +8,8 @@ var formatter = new Intl.NumberFormat('en-US', {
 });
 
 export const axiosGraphQL = axios.create({
-  baseURL: 'https://p0lyp4hfwc.execute-api.us-east-1.amazonaws.com/dev/graphql',
+  // eslint-disable-next-line no-undef
+  baseURL: process.env.REACT_APP_BACKEND_API,
   headers: {
     'Accept': '*/*',
     'Content-Type': 'application/json',
@@ -65,4 +66,10 @@ export function DateToServerFormat(date) {
   // Get the month as a number (0-11)
   var month = (date.getMonth() + 1);
   return date.getFullYear() + '-' + (month <= 9 ? '0' + month : month) + '-' + (day <= 9 ? '0' + day : day);
+}
+
+export function GetMapboxApi()
+{
+  // eslint-disable-next-line no-undef
+  return process.env.REACT_APP_MAP_API;
 }
