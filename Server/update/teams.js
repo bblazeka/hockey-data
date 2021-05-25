@@ -1,3 +1,6 @@
+var _ = require('lodash');
+
+const apicomm = require('../comm/apihandler');
 const dbhandler = require('../comm/dbhandler.js');
 const { fetchTeams } = require('./functions');
 
@@ -12,6 +15,8 @@ async function run() {
     const collection = db.getCollection('teams');
 
     for (let team of teams) {
+      var location = await apicomm.mapboxApiRequest(_.isNil(team.venue) ? team.locationName : `${team.venue.name} ${team.venue.city}`);
+
       const options = { upsert: true };
       const filter = { id: team.id };
 
@@ -26,6 +31,13 @@ async function run() {
           division: team.division,
           conference: team.conference,
           venue: team.venue,
+          location: location.features.map(el => {
+            return ({
+              text: el.text,
+              placeName: el.place_name,
+              center: el.center,
+            });
+          })[0],
           lastUpdate: new Date()
         },
       };
