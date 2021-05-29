@@ -7,7 +7,7 @@ import * as teamActions from './services/team/actions';
 import { getLogo } from './util/assets';
 
 import 'react-vis/dist/style.css';
-import { Grid, Icon } from 'semantic-ui-react';
+import { Grid, Icon, Menu } from 'semantic-ui-react';
 
 class App extends Component {
 
@@ -15,41 +15,44 @@ class App extends Component {
     super(props);
     this.props.getTeams();
     this.props.getDropdownTeams();
+    this.state = {
+      'activeItem': 'home'
+    };
+    this.handleItemClick = this.handleItemClick.bind(this);
+  }
+
+  handleItemClick(e, { name }) {
+    this.setState({ activeItem: name });
+      this.props.history.push(routes[name]);
   }
 
   render() {
+    const { activeItem } = this.state;
     const { teams } = this.props;
+    var headerButtons = ['home', 'analysis', 'games', 'standings', 'schedule', 'players'];
     return (
       <div className="App">
-        <header className="App-header">
-          <div className="App-menu">
-            <NavLink className="App-link" to={routes.home}>
-              Home
-            </NavLink>
-            <NavLink className="App-link" to={routes.analysis}>
-              Analysis
-            </NavLink>
-            <NavLink className="App-link" to={routes.games}>
-              Games
-            </NavLink>
-            <NavLink className="App-link" to={routes.standings}>
-              Standings
-            </NavLink>
-            <NavLink className="App-link" to={routes.schedule}>
-              Schedule
-            </NavLink>
-            <NavLink className="App-link" to={routes.players}>
-              Players
-            </NavLink>
-          </div>
-          <div className="App-menu">
-            {teams && teams.map(team => {
-              return (
-                <NavLink className="App-link" to={`${routes.teams}/${team.id}`} key={`link${team.id}`}>
-                  <img className="small-logo" src={getLogo(team.id)} alt={`img${team.id}`} />
-                </NavLink>);
-            })}
-          </div>
+        <header>
+          <Menu inverted stackable>
+            {headerButtons.map((button)=> {
+              return (            
+              <Menu.Item
+                key={button}
+                name={button}
+                active={activeItem === button}
+                onClick={this.handleItemClick}
+              />);
+            })};
+            <Menu.Item
+              name='teams'>
+              {teams && teams.map(team => {
+                return (
+                  <NavLink className="App-link" to={`${routes.teams}/${team.id}`} key={`link${team.id}`}>
+                    <img className="small-logo" src={getLogo(team.id)} alt={`img${team.id}`} />
+                  </NavLink>);
+              })}
+            </Menu.Item>
+          </Menu>
         </header>
         <div className="App-container">{this.props.children}</div>
         <footer className="footer">
@@ -61,6 +64,7 @@ class App extends Component {
               </Grid.Column>
               <Grid.Column>
                 <div>This is a DEMO project only.</div>
+                <div>I do not data or graphics on this page.</div>
                 <div>Contact: blazekab@gmail.com</div>
               </Grid.Column>
               <Grid.Column>
