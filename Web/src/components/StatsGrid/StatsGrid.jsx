@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Table, Header, Statistic } from 'semantic-ui-react';
 import { DiscreteColorLegend, XYPlot, Hint, HorizontalGridLines, VerticalGridLines, XAxis, YAxis, LineMarkSeries } from 'react-vis';
 
+import config from '../../util/config.json';
 import { getLogo } from '../../util/assets';
 import { FormatDecimals } from '../../util/common';
 import './StatsGrid.scss';
@@ -15,6 +16,11 @@ function StatsGrid(props) {
   var lineNames = (skater) ? ['goals', 'assists'] : ['Games started', 'Wins'];
   var lines = (skater) ? [goalsLine, assistsLine] : [gamesStartedLine, winsLine];
 
+  var exampleObject = stats[stats.length-1].stat;
+  var displayedCategories = config.categories.filter((cat) => {
+    return (cat.name in exampleObject);
+  });
+
   return (
     <div className="grid">
       <Header as='h4'>Statistics</Header>
@@ -25,45 +31,9 @@ function StatsGrid(props) {
             <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell>Team</Table.HeaderCell>
             {!detailed && <Table.HeaderCell>League</Table.HeaderCell>}
-            <Table.HeaderCell>GP</Table.HeaderCell>
-            {skater && <Table.HeaderCell>Goals</Table.HeaderCell>}
-            {skater && <Table.HeaderCell>Assists</Table.HeaderCell>}
-            {skater && <Table.HeaderCell>Points</Table.HeaderCell>}
-            {skater && <Table.HeaderCell>PIM</Table.HeaderCell>}
-            {skater && <Table.HeaderCell>+/-</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>FO</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>SOG</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>HIT</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>BLK</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>TOI</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>TOI-ES</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>TOI-PP</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>TOI-SH</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>SOG%</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>GWG</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>PPG</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>PPP</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>SHG</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>SHP</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>GS</Table.HeaderCell>}
-            {!skater && <Table.HeaderCell>GAA</Table.HeaderCell>}
-            {!skater && <Table.HeaderCell>SV%</Table.HeaderCell>}
-            {!skater && <Table.HeaderCell>W</Table.HeaderCell>}
-            {!skater && <Table.HeaderCell>L</Table.HeaderCell>}
-            {!skater && <Table.HeaderCell>OT</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV-ES</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV-PP</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV-SH</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SA</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SA-ES</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SA-PP</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SA-SH</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV%-ES</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV%-PP</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV%-SH</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SO</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>TOI</Table.HeaderCell>}
+            {displayedCategories.map((cat, index) => {
+              return (<Table.HeaderCell key={'headercol' + index}>{cat.abbr}</Table.HeaderCell>);
+            })}
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -75,45 +45,18 @@ function StatsGrid(props) {
               <Table.Cell>{logo && <img className="small-logo" src={logo} alt={`img${key}`}></img>}</Table.Cell>
               <Table.Cell>{stat.team.name}</Table.Cell>
               {!detailed && <Table.Cell>{stat.league.name}</Table.Cell>}
-              <Table.Cell>{stat.stat.games}</Table.Cell>
-              {skater && <Table.Cell>{stat.stat.goals}</Table.Cell>}
-              {skater && <Table.Cell>{stat.stat.assists}</Table.Cell>}
-              {skater && <Table.Cell><strong>{stat.stat.points}</strong></Table.Cell>}
-              {skater && <Table.Cell>{stat.stat.pim}</Table.Cell>}
-              {skater && <Table.Cell>{stat.stat.plusMinus}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.faceOffPct}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.shots}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.hits}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.blocked}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.timeOnIce}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.evenTimeOnIce}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.powerPlayTimeOnIce}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.shortHandedTimeOnIce}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.shotPct}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.gameWinningGoals}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.powerPlayGoals}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.powerPlayPoints}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.shortHandedGoals}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stat.stat.shortHandedPoints}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stat.stat.gamesStarted}</Table.Cell>}
-              {!skater && <Table.Cell>{FormatDecimals(stat.stat.goalAgainstAverage, 2)}</Table.Cell>}
-              {!skater && <Table.Cell>{FormatDecimals(stat.stat.savePercentage * 100, 1)}</Table.Cell>}
-              {!skater && <Table.Cell>{stat.stat.wins}</Table.Cell>}
-              {!skater && <Table.Cell>{stat.stat.losses}</Table.Cell>}
-              {!skater && <Table.Cell>{stat.stat.ot}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stat.stat.saves}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stat.stat.evenSaves}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stat.stat.powerPlaySaves}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stat.stat.shortHandedSaves}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stat.stat.shotsAgainst}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stat.stat.evenShots}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stat.stat.powerPlayShots}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stat.stat.shortHandedShots}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{FormatDecimals(stat.stat.evenStrengthSavePercentage, 2)}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{FormatDecimals(stat.stat.powerPlaySavePercentage, 2)}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{FormatDecimals(stat.stat.shortHandedSavePercentage, 2)}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stat.stat.shutouts}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stat.stat.timeOnIce}</Table.Cell>}
+              {displayedCategories.map((cat, i) => {
+                  var value = stat.stat[cat.name];
+                  if (cat.name === 'savePercentage')
+                  {
+                    value = FormatDecimals(value * 100, 1);
+                  }
+                  else if (['goalAgainstAverage', 'evenStrengthSavePercentage', 'powerPlaySavePercentage', 'shortHandedSavePercentage'].includes(cat.name))
+                  {
+                    value = FormatDecimals(value, 2);
+                  }
+                  return (<Table.Cell key={'col' + i}>{value}</Table.Cell>);
+                })}
             </Table.Row>);
           })}
         </Table.Body>

@@ -1,0 +1,199 @@
+{
+    "categories": [
+        {
+            "name": "games",
+            "abbr": "GP",
+            "description": "Games played"
+        },
+        {
+            "name": "gamesStarted",
+            "abbr": "GS",
+            "description": "games started"
+        },
+        {
+            "name": "goals",
+            "abbr": "G",
+            "description": "Goals"
+        },
+        {
+            "name": "assists",
+            "abbr": "A",
+            "description": "Assists"
+        },
+        {
+            "name": "points",
+            "abbr": "P",
+            "description": "Points"
+        },
+        {
+            "name": "plusMinus",
+            "abbr": "+/-",
+            "description": "Plus minus score"
+        },
+        {
+            "name": "timeOnIce",
+            "abbr": "TOI",
+            "description": "Time on ice"
+        },
+        {
+            "name": "powerPlayGoals",
+            "abbr": "PPG",
+            "description": "Power play goals"
+        },
+        {
+            "name": "powerPlayPoints",
+            "abbr": "PPP",
+            "description": "Power play points"
+        },
+        {
+            "name": "shots",
+            "abbr": "SOG",
+            "description": "Shots on goal"
+        },
+        {
+            "name": "hits",
+            "abbr": "HIT",
+            "description": "Hits"
+        },
+        {
+            "name": "blocked",
+            "abbr": "BLK",
+            "description": "Blocks"
+        },
+        {
+            "name": "faceOffPct",
+            "abbr": "FO%",
+            "description": "Faceoff percentage"
+        },
+        {
+            "name": "evenTimeOnIce",
+            "abbr": "TOI-ES",
+            "description": "Even strength time on ice"
+        },
+        {
+            "name": "powerPlayTimeOnIce",
+            "abbr": "TOI-PP",
+            "description": "Powerplay time on ice"
+        },
+        {
+            "name": "shortHandedTimeOnIce",
+            "abbr": "TOI-SH",
+            "description": "Shorthanded time on ice"
+        },
+        {
+            "name": "shotPct",
+            "abbr": "SOG%",
+            "description": "Short percentage"
+        },
+        {
+            "name": "gameWinningGoals",
+            "abbr": "GWG",
+            "description": "Game winning goals"
+        },
+        {
+            "name": "powerPlayGoals",
+            "abbr": "PPG",
+            "description": "Powerplay goals"
+        },
+        {
+            "name": "powerPlayPoints",
+            "abbr": "PPP",
+            "description": "Powerplay points"
+        },
+        {
+            "name": "shortHandedGoals",
+            "abbr": "SHG",
+            "description": "Shorthanded goals"
+        },
+        {
+            "name": "shortHandedPoints",
+            "abbr": "SHP",
+            "description": "Shorthanded points"
+        },
+        {
+            "name": "goalAgainstAverage",
+            "abbr": "GAA",
+            "description": "Goals against average"
+        },
+        {
+            "name": "savePercentage",
+            "abbr": "SVS%",
+            "description": "Save percentage"
+        },
+        {
+            "name": "wins",
+            "abbr": "W",
+            "description": "Wins"
+        },
+        {
+            "name": "losses",
+            "abbr": "L",
+            "description": "Losses"
+        },
+        {
+            "name": "ot",
+            "abbr": "OT",
+            "description": "Overtime"
+        },
+        {
+            "name": "saves",
+            "abbr": "SV",
+            "description": "Saves"
+        },
+        {
+            "name": "evenSaves",
+            "abbr": "SV-ES",
+            "description": "Even strength saves"
+        },
+        {
+            "name": "powerPlaySaves",
+            "abbr": "SV-PP",
+            "description": "Powerplay saves"
+        },
+        {
+            "name": "shortHandedSaves",
+            "abbr": "SV-SH",
+            "description": "Shorthanded saves"
+        },
+        {
+            "name": "shotsAgainst",
+            "abbr": "SA",
+            "description": "Shots against"
+        },
+        {
+            "name": "evenShots",
+            "abbr": "SA-ES",
+            "description": "Even strength Shots against"
+        },
+        {
+            "name": "powerPlayShots",
+            "abbr": "SA-PP",
+            "description": "Power play shots against"
+        },
+        {
+            "name": "shortHandedShots",
+            "abbr": "SA-SH",
+            "description": "Short handed shots against"
+        },
+        {
+            "name": "evenStrengthSavePercentage",
+            "abbr": "SV%-ES",
+            "description": "Even strength save percentage"
+        },
+        {
+            "name": "powerPlaySavePercentage",
+            "abbr": "SV%-PP",
+            "description": "Powerplay save percentage"
+        },
+        {
+            "name": "shortHandedSavePercentage",
+            "abbr": "SV%-SH",
+            "description": "Shorthanded save percentage"
+        },
+        {
+            "name": "shutouts",
+            "abbr": "SO",
+            "description": "Shutouts"
+        }
+    ]
+}

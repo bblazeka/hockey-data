@@ -75,14 +75,12 @@ class PlayerList extends Component {
         <Button className="clear-button" onClick={this.onRemoveAll}>Clear list</Button>
         <CompareGrid
           players={selectedPlayers.skaters} 
-          skater={true} 
-          detailed={true} 
+          skater={true}
           onDelete={(id) => this.props.deletePlayer(id)}
         />
         <CompareGrid 
           players={selectedPlayers.goalies} 
-          skater={false} 
-          detailed={true} 
+          skater={false}
           onDelete={(id) => this.props.deletePlayer(id)}
         />
       </div>);

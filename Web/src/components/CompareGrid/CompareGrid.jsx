@@ -7,14 +7,19 @@ import routes from '../../routes';
 import { IsNullOrUndefined, FormatDecimals } from '../../util/common';
 import { getLogo } from '../../util/assets';
 import { NotFound } from '..';
+import config from '../../util/config.json';
 import './CompareGrid.scss';
 
 function CompareGrid(props) {
-  const { players, skater, detailed, onDelete } = props;
+  const { players, skater, onDelete } = props;
   if (IsNullOrUndefined(players))
   {
     return(<NotFound />);
   }
+  var exampleObject = players[0].stats;
+  var displayedCategories = config.categories.filter((cat) => {
+    return (cat.name in exampleObject);
+  });
   var chartData = players.map((p)=> {
     return Object.assign(p.stats, {
       'label': p.fullName
@@ -117,45 +122,9 @@ function CompareGrid(props) {
           <Table.Row>
             <Table.HeaderCell>Player</Table.HeaderCell>
             <Table.HeaderCell>Position</Table.HeaderCell>
-            <Table.HeaderCell>GP</Table.HeaderCell>
-            {skater && <Table.HeaderCell>Goals</Table.HeaderCell>}
-            {skater && <Table.HeaderCell>Assists</Table.HeaderCell>}
-            {skater && <Table.HeaderCell>Points</Table.HeaderCell>}
-            {skater && <Table.HeaderCell>PIM</Table.HeaderCell>}
-            {skater && <Table.HeaderCell>+/-</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>FO</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>SOG</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>HIT</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>BLK</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>TOI</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>TOI-ES</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>TOI-PP</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>TOI-SH</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>SOG%</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>GWG</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>PPG</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>PPP</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>SHG</Table.HeaderCell>}
-            {skater && detailed && <Table.HeaderCell>SHP</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>GS</Table.HeaderCell>}
-            {!skater && <Table.HeaderCell>GAA</Table.HeaderCell>}
-            {!skater && <Table.HeaderCell>SV%</Table.HeaderCell>}
-            {!skater && <Table.HeaderCell>W</Table.HeaderCell>}
-            {!skater && <Table.HeaderCell>L</Table.HeaderCell>}
-            {!skater && <Table.HeaderCell>OT</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV-ES</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV-PP</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV-SH</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SA</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SA-ES</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SA-PP</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SA-SH</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV%-ES</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV%-PP</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SV%-SH</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>SO</Table.HeaderCell>}
-            {!skater && detailed && <Table.HeaderCell>TOI</Table.HeaderCell>}
+            {displayedCategories.map((cat, index) => {
+              return (<Table.HeaderCell key={'headercol' + index}>{cat.abbr}</Table.HeaderCell>);
+            })}
             <Table.HeaderCell>Delete</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -173,45 +142,18 @@ function CompareGrid(props) {
             return (<Table.Row key={`row${key}`}>
               <Table.Cell><img className="small-logo" src={getLogo(player.currentTeam.id)} alt={`imglogo${player.id}`} /> <Link to={routes.player + '/' + player.id}>{player.fullName}</Link></Table.Cell>
               <Table.Cell>{player.primaryPosition.abbreviation}</Table.Cell>
-              <Table.Cell>{stats.games}</Table.Cell>
-              {skater && <Table.Cell>{stats.goals}</Table.Cell>}
-              {skater && <Table.Cell>{stats.assists}</Table.Cell>}
-              {skater && <Table.Cell><strong>{stats.points}</strong></Table.Cell>}
-              {skater && <Table.Cell>{stats.pim}</Table.Cell>}
-              {skater && <Table.Cell>{stats.plusMinus}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.faceOffPct}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.shots}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.hits}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.blocked}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.timeOnIce}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.evenTimeOnIce}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.powerPlayTimeOnIce}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.shortHandedTimeOnIce}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.shotPct}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.gameWinningGoals}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.powerPlayGoals}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.powerPlayPoints}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.shortHandedGoals}</Table.Cell>}
-              {skater && detailed && <Table.Cell>{stats.shortHandedPoints}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stats.gamesStarted}</Table.Cell>}
-              {!skater && <Table.Cell>{FormatDecimals(stats.goalAgainstAverage, 2)}</Table.Cell>}
-              {!skater && <Table.Cell>{FormatDecimals(stats.savePercentage * 100, 1)}</Table.Cell>}
-              {!skater && <Table.Cell>{stats.wins}</Table.Cell>}
-              {!skater && <Table.Cell>{stats.losses}</Table.Cell>}
-              {!skater && <Table.Cell>{stats.ot}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stats.saves}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stats.evenSaves}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stats.powerPlaySaves}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stats.shortHandedSaves}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stats.shotsAgainst}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stats.evenShots}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stats.powerPlayShots}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stats.shortHandedShots}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{FormatDecimals(stats.evenStrengthSavePercentage, 2)}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{FormatDecimals(stats.powerPlaySavePercentage, 2)}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{FormatDecimals(stats.shortHandedSavePercentage, 2)}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stats.shutouts}</Table.Cell>}
-              {!skater && detailed && <Table.Cell>{stats.timeOnIce}</Table.Cell>}
+                {displayedCategories.map((cat, i) => {
+                  var value = stats[cat.name];
+                  if (cat.name === 'savePercentage')
+                  {
+                    value = FormatDecimals(stats[cat.name] * 100, 1);
+                  }
+                  else if (['goalAgainstAverage', 'evenStrengthSavePercentage', 'powerPlaySavePercentage', 'shortHandedSavePercentage'].includes(cat.name))
+                  {
+                    value = FormatDecimals(stats[cat.name], 2);
+                  }
+                  return (<Table.Cell key={'col' + i}>{value}</Table.Cell>);
+                })}
               <Table.Cell><Button onClick={() => onDelete(player.id)}>X</Button></Table.Cell>
             </Table.Row>);
           })}
