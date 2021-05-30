@@ -44,7 +44,7 @@ function StatsGrid(props) {
               <Table.Cell>{stat.season}</Table.Cell>
               <Table.Cell>{logo && <img className="small-logo" src={logo} alt={`img${key}`}></img>}</Table.Cell>
               <Table.Cell>{stat.team.name}</Table.Cell>
-              {!detailed && <Table.Cell>{stat.league.name}</Table.Cell>}
+              {!detailed && <Table.Cell>{stat.league ? stat.league.name : ''}</Table.Cell>}
               {displayedCategories.map((cat, i) => {
                   var value = stat.stat[cat.name];
                   if (cat.name === 'savePercentage')

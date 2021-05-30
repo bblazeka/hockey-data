@@ -71,7 +71,7 @@ export function getSkater(id) {
             goals,
             assists,
             points,
-            pim,
+            penaltyMinutes,
             plusMinus,
           }
         }
@@ -94,7 +94,7 @@ export function getSkater(id) {
             goals,
             assists,
             points,
-            pim,
+            penaltyMinutes,
             plusMinus,
             timeOnIce,
             faceOffPct,

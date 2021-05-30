@@ -6,10 +6,8 @@ import './RosterStatsGrid.scss';
 
 function RosterStatsGrid(props) {
   var exampleObject = props.rosterStats[2].stats;
-  var displayedCategories = config.categories.map((cat) => {
-    if (cat.name in exampleObject) {
-      return (cat);
-    }
+  var displayedCategories = config.categories.filter((cat) => {
+    return (cat.name in exampleObject);
   });
   return (
     <div>
