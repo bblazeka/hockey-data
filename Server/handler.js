@@ -1,12 +1,11 @@
 const serverless = require("serverless-http");
 const express = require("express");
 const bodyParser = require("body-parser-graphql");
-const app = express();
 
 const { graphqlHTTP } = require('express-graphql');
-const { buildSchema } = require('graphql');
+const { loadSchemaSync } = require('@graphql-tools/load');
+const { GraphQLFileLoader } = require('@graphql-tools/graphql-file-loader');
 const cors = require('cors');
-var fs = require('fs');
 
 const { Database } = require('./comm/dbhandler.js');
 const analysis = require('./services/analysis/index.js');
@@ -16,21 +15,15 @@ const news = require('./services/news/index.js');
 const league = require('./services/league/index.js');
 const player = require('./services/player/index.js');
 const util = require('./services/util/index.js');
-
-var mainSchema = fs.readFileSync('schema.gql', 'utf8');
-var analysisSchema = fs.readFileSync('./services/analysis/schema.gql', 'utf8');
-var gameSchema = fs.readFileSync('./services/game/schema.gql', 'utf8');
-var leagueSchema = fs.readFileSync('./services/league/schema.gql', 'utf8');
-var newsSchema = fs.readFileSync('./services/news/schema.gql', 'utf8');
-var teamSchema = fs.readFileSync('./services/team/schema.gql', 'utf8');
-var playerSchema = fs.readFileSync('./services/player/schema.gql', 'utf8');
-var utilSchema = fs.readFileSync('./services/util/schema.gql', 'utf8');
-var schemaDefinition = `${analysisSchema} ${mainSchema} ${newsSchema} ${gameSchema} ${leagueSchema} ${teamSchema} ${playerSchema} ${utilSchema}`;
-
 let whitelist = ['http://localhost:3000', 'http://abc.com'];
+const app = express();
 
 // Construct a schema, using GraphQL schema language
-var schema = buildSchema(schemaDefinition);
+const schema = loadSchemaSync('./services/**/*.gql', { // load from multiple files using glob
+  loaders: [
+      new GraphQLFileLoader()
+  ]
+});
  
 // The root provides a resolver function for each API endpoint
 var root = {
@@ -95,6 +88,7 @@ app.listen(port, async () => {
   console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`);
 });
 
+// Handler
 const handle = serverless(app);
 
 module.exports.handler = async (event, context) => {
@@ -102,5 +96,3 @@ module.exports.handler = async (event, context) => {
   const res = await handle(event, context);
   return res;
 };
-
-// Handler

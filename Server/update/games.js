@@ -24,10 +24,8 @@ async function run() {
     const database = client.db("hockey-data", { useUnifiedTopology: true });
     const collection = database.collection("games");
     for (let date of dates) {
-      for (let game of date.games)
-      {
-        if (game.status.statusCode === '7')
-        {
+      for (let game of date.games) {
+        if (game.status.statusCode === '7') {
           continue;
         }
         const options = { upsert: true };

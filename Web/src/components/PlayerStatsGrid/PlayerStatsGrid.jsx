@@ -5,7 +5,7 @@ import { DiscreteColorLegend, XYPlot, Hint, HorizontalGridLines, VerticalGridLin
 import config from '../../util/config.json';
 import { getLogo } from '../../util/assets';
 import { FormatDecimals } from '../../util/common';
-import './StatsGrid.scss';
+import './PlayerStatsGrid.scss';
 
 function StatsGrid(props) {
 

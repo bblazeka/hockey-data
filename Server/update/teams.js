@@ -52,8 +52,7 @@ async function run() {
     const teamPlayerCollection = db.getCollection('players');
 
     for (let team of teams) {
-      if (team.roster == undefined)
-      {
+      if (team.roster == undefined) {
         continue;
       }
       var roster = team.roster.roster;
