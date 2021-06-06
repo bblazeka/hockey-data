@@ -36,7 +36,6 @@ async function run() {
             season: game.season,
             date: date.date,
             gameDate: new Date(game.gameDate),
-            teams: null,
             home: game.teams.home,
             away: game.teams.away,
             status: game.status,

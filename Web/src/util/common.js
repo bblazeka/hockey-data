@@ -73,3 +73,12 @@ export function GetMapboxApi()
   // eslint-disable-next-line no-undef
   return process.env.REACT_APP_MAP_API;
 }
+
+export function GetCompetitionStageFullName(shortcut) {
+  switch (shortcut)
+  {
+    case 'R': return 'Regular season';
+    case 'P': return 'Playoffs';
+    default: return shortcut;
+  }
+}

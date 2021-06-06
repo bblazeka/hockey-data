@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Header, Image, List, Progress, Segment, Statistic, Table } from 'semantic-ui-react';
-
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
-import * as actions from '../../services/league';
+import * as actions from '../../services/game';
 import routes from '../../routes';
 import { getLogo } from '../../util/assets';
 import { Loader } from '../../components';
-import { DateToServerFormat, FormatDecimals } from '../../util/common';
+import { DateToServerFormat, FormatDecimals, GetCompetitionStageFullName } from '../../util/common';
 import './Game.scss';
 
 class Game extends Component {
@@ -150,8 +149,8 @@ class Game extends Component {
   }
 
   render() {
-    const { game, dropdownTeams } = this.props;
-    if (!dropdownTeams) {
+    const { game, loading } = this.props;
+    if (loading) {
       return (<Loader></Loader>);
     }
     return (
@@ -188,7 +187,7 @@ class Game extends Component {
               <List>
                 <List.Item>
                   <List.Icon name='trophy' />
-                  <List.Content>{game.season}</List.Content>
+                  <List.Content>{GetCompetitionStageFullName(game.gameType)} {game.season}</List.Content>
                 </List.Item>
                 <List.Item>
                   <List.Icon name='calendar outline' />
@@ -247,6 +246,9 @@ class Game extends Component {
         </Grid>}
         {game && <Segment>
           <List horizontal>
+            <List.Item>
+              <Header as='h5'>Game officials:</Header>
+            </List.Item>
             {game.officials && game.officials.map(official => {
               return (<List.Item key={official.official.id}>
                 <List.Icon name='user' />
@@ -263,7 +265,8 @@ class Game extends Component {
 }
 
 const mapStateToProps = state => ({
-  game: state.league.game,
+  game: state.game.game,
+  loading: state.game.loading,
   dropdownTeams: state.team.dropdownTeams,
 });
 

@@ -28,7 +28,8 @@ async function getSchedule({ start, end }) {
     'date': {
       $gte: `${start}`,
       $lte: `${end}`
-    }
+    },
+    'gameType': 'R'
   }).toArray();
   for (let team of sortedTeams) {
     team.scheduleScore = 0;

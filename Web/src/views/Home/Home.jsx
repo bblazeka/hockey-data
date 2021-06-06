@@ -4,7 +4,7 @@ import { Card, Grid, Header } from 'semantic-ui-react';
 import { IsNullOrUndefined } from '../../util/common';
 
 import './Home.scss';
-import * as leagueActions from '../../services/league';
+import * as gameActions from '../../services/game';
 import * as actions from '../../services/news';
 import { GameCard, Loader, NewsFeed, NotFound, SocialFeed } from '../../components';
 
@@ -17,8 +17,8 @@ class Home extends Component {
   }
 
   render() {
-    const { homeNews, tweets, games } = this.props;
-    if (!homeNews) {
+    const { homeNews, tweets, games, loadingNews, loadingTweets } = this.props;
+    if (loadingNews && loadingTweets) {
       return (<div><Loader></Loader></div>);
     }
     return (
@@ -42,15 +42,17 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   homeNews: state.news.news,
+  loadingNews: state.news.loadingNews,
   teams: state.team.teams,
   tweets: state.news.tweets,
-  games: state.league.gamesToday
+  loadingTweets: state.news.loadingTweets,
+  games: state.game.gamesToday
 });
 
 const mapDispatchToProps = dispatch => ({
   getNews: (query) => dispatch(actions.getNews(query)),
   getTweets: (query) => dispatch(actions.getTweets(query)),
-  getGamesToday: () => dispatch(leagueActions.getGamesToday())
+  getGamesToday: () => dispatch(gameActions.getGamesToday())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
