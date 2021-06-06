@@ -11,8 +11,22 @@ function init(database) {
 }
 
 async function gamesBetweenTeams({ homeId, awayId }) {
-  const items = await db.getCollection('games').find({ 'home.team.id': homeId, 'away.team.id': awayId }).toArray();
-  return items;
+  const games = await db.getCollection('games').find({ 'home.team.id': homeId, 'away.team.id': awayId }).toArray();
+  const homeGoals = games.map(g => g.home.score);
+  const awayGoals = games.map(g => g.away.score);
+  const homeWins = games.filter(d => d.home.score > d.away.score).length;
+  const awayWins = games.length - homeWins;
+  return {
+    score: {
+      homeWins,
+      awayWins,
+      homeGoals,
+      awayGoals
+    },
+    games: _.sortBy(games, function(game) {
+      return new Date(game.gameDate);
+    })
+  }
 }
 
 async function getGame({ gameId }) {
@@ -20,6 +34,7 @@ async function getGame({ gameId }) {
   var result = await apicomm.nhlApiRequest(`/api/v1/game/${gameId}/boxscore`);
   var dbGame = (await db.getCollection('games').find({ 'gamePk': gameId }).toArray())[0];
   result.gameDate = dbGame.gameDate;
+  result.gameType = dbGame.gameType;
   result.season = dbGame.season;
   result.id = gameId;
   result.linescore = linescore;

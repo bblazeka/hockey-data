@@ -8,7 +8,7 @@ import * as actions from '../../services/player';
 import './Player.scss';
 
 import routes from '../../routes';
-import { Loader, NewsFeed, SocialFeed, StatsGrid } from '../../components';
+import { Loader, NewsFeed, SocialFeed, PlayerStatsGrid } from '../../components';
 import { IsNullOrUndefined, generateSemanticUICountryId, FormatNumberToCurrency } from '../../util/common';
 import { getLogo } from '../../util/assets';
 import { getTweets, getNews } from '../../services/news';
@@ -72,11 +72,11 @@ class Player extends Component {
     const panes = [
       {
         menuItem: 'NHL stats', render: () => <Tab.Pane>
-          <StatsGrid data={player.nhlStats} skater={player.primaryPosition.code !== 'G'} detailed={true}></StatsGrid></Tab.Pane>
+          <PlayerStatsGrid data={player.nhlStats} skater={player.primaryPosition.code !== 'G'} detailed={true}></PlayerStatsGrid></Tab.Pane>
       },
       {
         menuItem: 'Career stats', render: () => <Tab.Pane>
-          <StatsGrid data={player.careerStats} skater={player.primaryPosition.code !== 'G'} detailed={false}></StatsGrid></Tab.Pane>
+          <PlayerStatsGrid data={player.careerStats} skater={player.primaryPosition.code !== 'G'} detailed={false}></PlayerStatsGrid></Tab.Pane>
       },
     ];
     return (

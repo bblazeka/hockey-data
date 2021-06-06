@@ -8,7 +8,7 @@ function playerName(dom, query) {
 }
 
 async function scrapPlayerCapHit(fullName) {
-  const formattedName = fullName.replace(/\s+/g, '-').toLowerCase();
+  const formattedName = fullName.replace(/'+/g,'').replace(/\s+/g, '-').toLowerCase();
   const url = `https://www.capfriendly.com/players/${formattedName}`;
   const response = await fetch(url);
   const text = await response.text();

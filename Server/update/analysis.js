@@ -11,9 +11,9 @@ async function run() {
     var response = await apicomm.nhlApiRequest('/api/v1/standings?season=20202021');
 
     const teamAnalysisCollection = db.getCollection('analysis');
-    
-    var res = response.records.map(async (record)=>{
-      record.teamRecords.map(async (teamRecord)=>{
+
+    var res = response.records.map(async (record) => {
+      record.teamRecords.map(async (teamRecord) => {
 
         var playerStats = await apicomm.nhlApiRequest(`/api/v1/teams/${teamRecord.team.id}?hydrate=roster(season=20202021,person(stats(splits=statsSingleSeason)))`);
         var playersRoster = playerStats.teams[0].roster.roster;
@@ -33,7 +33,7 @@ async function run() {
         const options = { upsert: true };
         const filter = { id: teamRecord.team.id };
         var rankings = teamStats.stats[1].splits[0].stat;
-        Object.keys(rankings).forEach(function(key){ rankings[key] = parseInt(rankings[key]); });
+        Object.keys(rankings).forEach(function (key) { rankings[key] = parseInt(rankings[key]); });
         const updateDoc = {
           $set: {
             id: teamRecord.team.id,

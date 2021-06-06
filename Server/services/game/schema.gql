@@ -1,4 +1,82 @@
+type Game {
+  gamePk: Int
+  currentPeriod: Int
+  currentPeriodOrdinal: String
+  currentPeriodTimeRemaining: String
+  ongoingGame: Boolean
+  finished: Boolean
+  percentage: Float
+  date: String
+  gameTime: String
+  powerPlayStrength: String
+  id: Int
+  gameDate: Date
+  gameType: String
+  season: String
+  venue: Venue
+  teams: GameTeams
+  officials: [GameOfficial]
+  linescore: Linescore
+  status: GameStatus
+  home: Opponent
+  away: Opponent
+  opponent: Opponent
+}
+
+type GameTeams {
+  home: GameTeam
+  away: GameTeam
+}
+
+type GameTeam {
+  team: Team
+  skaters: [GamePlayer]
+  goalies: [GamePlayer]
+  teamSkaterStats: TeamSkaterStats
+  coaches: [Coach]
+  goals: Int
+  shotsOnGoal: Int
+}
+
+type GamePlayer {
+  person: Player
+  jerseyNumber: Int
+  position: Position
+  stats: GamePlayerStats
+}
+
+type GamePlayerStats {
+  skaterStats: Stats
+  goalieStats: Stats
+}
+
+type TeamSkaterStats {
+  goals: Int,
+  pim: Int,
+  shots: Int,
+  powerPlayPercentage: String,
+  powerPlayGoals: Int,
+  powerPlayOpportunities: Int,
+  faceOffWinPercentage: String,
+  blocked: Int,
+  takeaways: Int,
+  giveaways: Int,
+  hits: Int
+}
+
 type GameStatus {
   abstractGameState: String
   statusCode: String
+}
+
+type GamesBetweenTeams {
+  score: ScoreBetweenTeams
+  games: [Game]
+}
+
+type ScoreBetweenTeams {
+  homeWins: Int
+  homeGoals: [Int]
+  awayWins: Int
+  awayGoals: [Int]
 }

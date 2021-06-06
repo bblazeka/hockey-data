@@ -17,17 +17,23 @@ async function run() {
     var players = await playerCollection.find({ active: true }).toArray();
 
     for (let playerTemp of players) {
-      var response = await apicomm.nhlApiRequest(`/api/v1/people/${playerTemp.id}`);
-      var player = response.people[0];
 
       if (playerTemp.active && ((DateTime.fromJSDate(playerTemp.lastUpdate) < DateTime.now().minus({ weeks: 1 }).endOf('day')) || playerTemp.lastUpdate === null)) {
+
+        var response = await apicomm.nhlApiRequest(`/api/v1/people/${playerTemp.id}`);
+        var player = response.people[0];
+
         const options = { upsert: true };
         const filter = { id: player.id };
 
         var capHit = await scrapper.scrapPlayerCapHit(playerTemp.fullName);
-        if (_.isNil(capHit) && !_.isNil(playerTemp.altName))
-        {
-          capHit = await scrapper.scrapPlayerCapHit(playerTemp.altName);
+        if (_.isNil(capHit)) {
+          if (!_.isNil(playerTemp.altName)) {
+            capHit = await scrapper.scrapPlayerCapHit(playerTemp.altName);
+          }
+          else {
+            capHit = await scrapper.scrapPlayerCapHit(`${playerTemp.fullName}1`);
+          }
         }
 
         const updateDoc = {

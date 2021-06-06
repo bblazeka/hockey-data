@@ -14,7 +14,7 @@ scalar Date
     schedule(start: String, end: String): [ScheduleTeam]
     scheduleByTeam(id: Int, start: String, end: String): [Game]
     standings(season: String): [Record]
-    gamesBetweenTeams(homeId: Int, awayId: Int): [Game]
+    gamesBetweenTeams(homeId: Int, awayId: Int): GamesBetweenTeams
     game(gameId: Int): Game
     todaysGames: [Game]
     geocode(query: String): [Location]

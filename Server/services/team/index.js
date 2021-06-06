@@ -57,21 +57,20 @@ async function getTeamLocations() {
   { key: 'MassMutual East', value: 'green'}, 
   { key: 'Discover Central', value: 'orange'}, 
   { key: 'Honda West', value: 'blue'}];
-  var response = await teams.map(async (team) => {
-    var location = await util.geocode(_.isNil(team.venue) ? { query: team.locationName } : {query:`${team.venue.name} ${team.venue.city}`});
+  var teamLocations = teams.map((team) => {
     if (!_.isNil(team.division)) {
       var division = divisions.find((el)=>{ return el.key === team.division.name;});
       if (division != null)
       {
-        location[0].color = division.value;
+        team.location.color = division.value;
       }
     }
-    location[0].text = team.name;
-    location[0].id = team.id;
-    return location[0];
+    team.location.text = team.name;
+    team.location.id = team.id;
+    return team.location;
   });
   return {
-    teamLocations: response,
+    teamLocations,
     seasonDescription: season.extract,
     divisions
   };
