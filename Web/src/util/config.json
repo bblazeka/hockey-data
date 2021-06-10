@@ -171,12 +171,22 @@
             "description": "Even strength Shots against"
         },
         {
+            "name": "evenShotsAgainst",
+            "abbr": "SA-ES",
+            "description": "Even strength Shots against"
+        },
+        {
             "name": "powerPlayShots",
             "abbr": "SA-PP",
             "description": "Power play shots against"
         },
         {
             "name": "shortHandedShots",
+            "abbr": "SA-SH",
+            "description": "Short handed shots against"
+        },
+        {
+            "name": "shortHandedShotsAgainst",
             "abbr": "SA-SH",
             "description": "Short handed shots against"
         },

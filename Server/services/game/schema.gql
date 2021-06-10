@@ -32,7 +32,6 @@ type GameTeam {
   team: Team
   skaters: [GamePlayer]
   goalies: [GamePlayer]
-  teamSkaterStats: TeamSkaterStats
   coaches: [Coach]
   goals: Int
   shotsOnGoal: Int
@@ -42,26 +41,7 @@ type GamePlayer {
   person: Player
   jerseyNumber: Int
   position: Position
-  stats: GamePlayerStats
-}
-
-type GamePlayerStats {
-  skaterStats: Stats
-  goalieStats: Stats
-}
-
-type TeamSkaterStats {
-  goals: Int,
-  pim: Int,
-  shots: Int,
-  powerPlayPercentage: String,
-  powerPlayGoals: Int,
-  powerPlayOpportunities: Int,
-  faceOffWinPercentage: String,
-  blocked: Int,
-  takeaways: Int,
-  giveaways: Int,
-  hits: Int
+  stats: Stats
 }
 
 type GameStatus {

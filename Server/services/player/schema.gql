@@ -93,6 +93,8 @@ type Stats {
   evenShots: Int
   powerPlayShots: Int
   shortHandedShots: Int
+  shortHandedShotsAgainst: Int
+  evenShotsAgainst: Int
   evenStrengthSavePercentage: Float
   powerPlaySavePercentage: Float
   shortHandedSavePercentage: Float

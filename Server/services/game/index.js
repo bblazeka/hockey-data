@@ -23,7 +23,7 @@ async function gamesBetweenTeams({ homeId, awayId }) {
       homeGoals,
       awayGoals
     },
-    games: _.sortBy(games, function(game) {
+    games: _.sortBy(games, function (game) {
       return new Date(game.gameDate);
     })
   }
@@ -40,16 +40,23 @@ async function getGame({ gameId }) {
   result.linescore = linescore;
   result.venue = dbGame.venue;
 
-  if (!_.isNil(result.linescore.currentPeriodTimeRemaining))
-  {
+  if (!_.isNil(result.linescore.currentPeriodTimeRemaining)) {
     var res = result.linescore.currentPeriodTimeRemaining.split(':');
-    var time = (1200 - (_.toInteger(res[0]) * 60 + _.toInteger(res[1])))/1200;
+    var time = (1200 - (_.toInteger(res[0]) * 60 + _.toInteger(res[1]))) / 1200;
     result.percentage = ((result.linescore.currentPeriod - 1) * 0.34 + time * 0.34) * 100;
   }
-  result.teams.home.skaters = Object.values(result.teams.home.players).filter((player) => { return player.position.code !== 'G' && player.position.code !== 'N/A' && player.stats.skaterStats !== null; });
-  result.teams.home.goalies = Object.values(result.teams.home.players).filter((player) => { return player.position.code === 'G' && player.position.code !== 'N/A' && player.stats !== null; });
-  result.teams.away.skaters = Object.values(result.teams.away.players).filter((player) => { return player.position.code !== 'G' && player.position.code !== 'N/A' && player.stats.skaterStats !== null; });
-  result.teams.away.goalies = Object.values(result.teams.away.players).filter((player) => { return player.position.code === 'G' && player.position.code !== 'N/A' && player.stats !== null; });
+  result.teams.home.skaters = Object.values(result.teams.home.players)
+    .filter((player) => { return player.position.code !== 'G' && player.position.code !== 'N/A' && player.stats.skaterStats !== null; })
+    .map((player) => { return Object.assign(player, { stats: player.stats.skaterStats }) });
+  result.teams.home.goalies = Object.values(result.teams.home.players)
+    .filter((player) => { return player.position.code === 'G' && player.position.code !== 'N/A' && player.stats !== null; })
+    .map((player) => { return Object.assign(player, { stats: player.stats.goalieStats }) });
+  result.teams.away.skaters = Object.values(result.teams.away.players)
+    .filter((player) => { return player.position.code !== 'G' && player.position.code !== 'N/A' && player.stats.skaterStats !== null; })
+    .map((player) => { return Object.assign(player, { stats: player.stats.skaterStats }) });
+  result.teams.away.goalies = Object.values(result.teams.away.players)
+    .filter((player) => { return player.position.code === 'G' && player.position.code !== 'N/A' && player.stats !== null; })
+    .map((player) => { return Object.assign(player, { stats: player.stats.goalieStats }) });
   return result;
 }
 

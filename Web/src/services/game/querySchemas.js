@@ -37,17 +37,13 @@ export function getGame(id) {
             jerseyNumber,
             person { id, fullName },
             position { code, name }
-            stats {
-              skaterStats { timeOnIce, assists, goals, points, shots, hits, blocked, plusMinus, penaltyMinutes, faceOffWins, faceoffTaken, powerPlayGoals, powerPlayAssists, shortHandedGoals, shortHandedAssists, shortHandedTimeOnIce, powerPlayTimeOnIce }
-            }
+            stats { timeOnIce, assists, goals, points, shots, hits, blocked, plusMinus, penaltyMinutes, faceOffWins, faceoffTaken, faceOffPct, powerPlayGoals, powerPlayAssists, shortHandedGoals, shortHandedAssists, shortHandedTimeOnIce, powerPlayTimeOnIce }
           },
           goalies {
             jerseyNumber,
             person { id, fullName },
             position { code, name }
-            stats { 
-              goalieStats  { timeOnIce, shots, saves, savePercentage }
-            }
+            stats { timeOnIce, shots, saves, savePercentage, powerPlaySaves, shortHandedSaves, evenSaves, shortHandedShotsAgainst, evenShotsAgainst, savePercentage, powerPlaySavePercentage, shortHandedSavePercentage, evenStrengthSavePercentage }
           },
           team { id, name },
           coaches {
@@ -60,17 +56,13 @@ export function getGame(id) {
             jerseyNumber,
             person { id, fullName },
             position { code, name }
-            stats {
-              skaterStats { timeOnIce, assists, goals, points, shots, hits, blocked, plusMinus, penaltyMinutes, faceOffWins, faceoffTaken, powerPlayGoals, powerPlayAssists, shortHandedGoals, shortHandedAssists, shortHandedTimeOnIce, powerPlayTimeOnIce }
-            }
+            stats { timeOnIce, assists, goals, points, shots, hits, blocked, plusMinus, penaltyMinutes, faceOffWins, faceoffTaken, faceOffPct, powerPlayGoals, powerPlayAssists, shortHandedGoals, shortHandedAssists, shortHandedTimeOnIce, powerPlayTimeOnIce }
           },
           goalies {
             jerseyNumber,
             person { id, fullName },
             position { code, name }
-            stats { 
-              goalieStats  { timeOnIce, shots, saves, savePercentage }
-            }
+            stats { timeOnIce, shots, saves, savePercentage, powerPlaySaves, shortHandedSaves, evenSaves, shortHandedShotsAgainst, evenShotsAgainst, savePercentage, powerPlaySavePercentage, shortHandedSavePercentage, evenStrengthSavePercentage }
           },
           team { id, name },
           coaches {
