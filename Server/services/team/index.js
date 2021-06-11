@@ -6,8 +6,7 @@ const util = require('../util/index.js');
 
 var db = new Database();
 
-function init(database)
-{
+function init(database) {
   db = database;
 }
 
@@ -21,7 +20,7 @@ async function getTeamRosterStats(teamId) {
   return stats.rosterStats;
 }
 
-async function getTeam({id}) {
+async function getTeam({ id }) {
   const collection = db.getCollection('teams');
   const query = { id: id };
   const options = {
@@ -29,9 +28,7 @@ async function getTeam({id}) {
   };
   const team = await collection.findOne(query, options);
 
-  if (!_.isNil(team))
-  {
-
+  if (!_.isNil(team)) {
     var rosterResponse = await getPlayersFromTeam(id);
     var rosterStats = await getTeamRosterStats(id);
     team.goalies = rosterResponse.filter(p => p.primaryPosition.type == 'Goalie');
@@ -53,15 +50,14 @@ async function getTeams() {
 async function getTeamLocations() {
   var teams = await getTeams();
   var season = await apicomm.wikiApiRequest('2020–21 NHL season');
-  var divisions = [{ key: 'Scotia North', value: 'red'}, 
-  { key: 'MassMutual East', value: 'green'}, 
-  { key: 'Discover Central', value: 'orange'}, 
-  { key: 'Honda West', value: 'blue'}];
+  var divisions = [{ key: 'Scotia North', value: 'red' },
+  { key: 'MassMutual East', value: 'green' },
+  { key: 'Discover Central', value: 'orange' },
+  { key: 'Honda West', value: 'blue' }];
   var teamLocations = teams.map((team) => {
     if (!_.isNil(team.division)) {
-      var division = divisions.find((el)=>{ return el.key === team.division.name;});
-      if (division != null)
-      {
+      var division = divisions.find((el) => { return el.key === team.division.name; });
+      if (division != null) {
         team.location.color = division.value;
       }
     }

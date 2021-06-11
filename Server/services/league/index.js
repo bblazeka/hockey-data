@@ -9,10 +9,9 @@ function init(database) {
   db = database;
 }
 
-function calculateGameScore(opponent)
-{
+function calculateGameScore(opponent) {
   var totalGames = opponent.leagueRecord.wins + opponent.leagueRecord.ot + opponent.leagueRecord.losses;
-  return (opponent.leagueRecord.wins*2 + opponent.leagueRecord.ot) / (2*totalGames);
+  return (opponent.leagueRecord.wins * 2 + opponent.leagueRecord.ot) / (2 * totalGames);
 }
 
 async function getStandings({ season }) {
@@ -23,7 +22,7 @@ async function getStandings({ season }) {
 async function getSchedule({ start, end }) {
   var teams = await (await db.getCollection('teams').find({ 'active': true }).toArray());
   var sortedTeams = _.sortBy(teams, ['name']);
-  
+
   var games = await db.getCollection('games').find({
     'date': {
       $gte: `${start}`,

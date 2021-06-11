@@ -33,10 +33,10 @@ function GameTeamStats(props) {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
-              
-            {displayedCategories.map((cat, index) => {
-              return (<Table.HeaderCell key={'headercol' + index}>{cat.abbr}</Table.HeaderCell>);
-            })}
+
+              {displayedCategories.map((cat, index) => {
+                return (<Table.HeaderCell key={'headercol' + index}>{cat.abbr}</Table.HeaderCell>);
+              })}
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -72,18 +72,16 @@ function GameTeamStats(props) {
                 <Header.Subheader>
                   {`#${player.jerseyNumber} ${player.position.name}`}
                 </Header.Subheader></Header></Link></Table.Cell>
-                {goalieCategories.map((cat, i) => {
-                  var value = player.stats[cat.name];
-                  if (cat.name === 'savePercentage')
-                  {
-                    value = FormatDecimals(value, 1);
-                  }
-                  else if (['goalAgainstAverage', 'evenStrengthSavePercentage', 'powerPlaySavePercentage', 'shortHandedSavePercentage'].includes(cat.name))
-                  {
-                    value = FormatDecimals(value, 2);
-                  }
-                  return (<Table.Cell key={'col' + i}>{value}</Table.Cell>);
-                })}
+              {goalieCategories.map((cat, i) => {
+                var value = player.stats[cat.name];
+                if (cat.name === 'savePercentage') {
+                  value = FormatDecimals(value, 1);
+                }
+                else if (['goalAgainstAverage', 'evenStrengthSavePercentage', 'powerPlaySavePercentage', 'shortHandedSavePercentage'].includes(cat.name)) {
+                  value = FormatDecimals(value, 2);
+                }
+                return (<Table.Cell key={'col' + i}>{value}</Table.Cell>);
+              })}
             </Table.Row>);
           })}
         </Table.Body>
