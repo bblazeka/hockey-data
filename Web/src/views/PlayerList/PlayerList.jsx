@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button, Search } from 'semantic-ui-react';
 
+import './PlayerList.scss';
 import { IsNullOrUndefined } from '../../util/common';
 import { CompareGrid, Loader } from '../../components';
 import * as actions from '../../services/player';
-import './PlayerList.scss';
-
-import { Button, Search } from 'semantic-ui-react';
 
 const initialState = { isLoading: false, results: [], value: '' };
 
@@ -72,7 +71,6 @@ class PlayerList extends Component {
           size="large"
           value={value}
         />
-        <Button className="clear-button" onClick={this.onRemoveAll}>Clear list</Button>
         <CompareGrid
           players={selectedPlayers.skaters} 
           skater={true}
@@ -83,6 +81,7 @@ class PlayerList extends Component {
           skater={false}
           onDelete={(id) => this.props.deletePlayer(id)}
         />
+        <Button className="clear-button" onClick={this.onRemoveAll}>Clear skaters and goalies</Button>
       </div>);
   }
 }

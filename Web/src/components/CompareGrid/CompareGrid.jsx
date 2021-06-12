@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Table, Header } from 'semantic-ui-react';
+import { Button, Header, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { CircularGridLines, DiscreteColorLegend, RadarChart } from 'react-vis';
 
@@ -19,6 +19,10 @@ function CompareGrid(props) {
   var displayedCategories = config.categories.filter((cat) => {
     return (cat.name in exampleObject);
   });
+  displayedCategories.forEach(cat => {
+    return Object.assign(cat, { topVal: (cat.reverse) ? Math.min.apply(Math, players.map(function (o) { return o.stats[cat.name]; })) : Math.max.apply(Math, players.map(function (o) { return o.stats[cat.name]; })) });
+  });
+
   var chartData = players.map((p) => {
     return Object.assign(p.stats, {
       'label': p.fullName
@@ -124,6 +128,7 @@ function CompareGrid(props) {
             {displayedCategories.map((cat, index) => {
               return (<Table.HeaderCell key={'headercol' + index}>{cat.abbr}</Table.HeaderCell>);
             })}
+            <Table.HeaderCell>Points</Table.HeaderCell>
             <Table.HeaderCell>Delete</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -131,6 +136,7 @@ function CompareGrid(props) {
           {players.map((player) => {
             const key = `${player.id}`;
             const stats = player.stats;
+            var countTopValues = 0;
             if (IsNullOrUndefined(stats)) {
               return (<Table.Row key={`row${key}`}>
                 <Table.Cell><img className="small-logo" src={getLogo(player.currentTeam.id)} alt={`imglogo${player.id}`} /> <Link to={routes.player + '/' + player.id}>{player.fullName}</Link></Table.Cell>
@@ -148,9 +154,16 @@ function CompareGrid(props) {
                 else if (['goalAgainstAverage', 'evenStrengthSavePercentage', 'powerPlaySavePercentage', 'shortHandedSavePercentage'].includes(cat.name)) {
                   value = FormatDecimals(stats[cat.name], 2);
                 }
-                return (<Table.Cell key={'col' + i}>{value}</Table.Cell>);
+                countTopValues += (value === cat.topVal) ? 1 : 0;
+                return (<Table.Cell positive={value === cat.topVal} key={'col' + i}>{value}</Table.Cell>);
               })}
-              <Table.Cell><Button onClick={() => onDelete(player.id)}>X</Button></Table.Cell>
+              <Table.Cell>          
+                <Header as='h3' textAlign='center'>
+                  {countTopValues}
+                </Header>
+              </Table.Cell>
+              <Table.Cell><Button size='mini' circular onClick={() => onDelete(player.id)}>
+                X</Button></Table.Cell>
             </Table.Row>);
           })}
         </Table.Body>

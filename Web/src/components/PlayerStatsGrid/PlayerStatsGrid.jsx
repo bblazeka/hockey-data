@@ -61,7 +61,7 @@ function StatsGrid(props) {
       </Table>
       <div className="stat-bar">
         {stats.length === 0 && <div>No stats to show.</div>}
-        {stats.length > 0 && <XYPlot height={300} width={1200} xType="ordinal">
+        {stats.length > 0 && <XYPlot height={300} width={1200} xType="ordinal" yDomain={[0, 80]}>
           <DiscreteColorLegend
             style={{ position: 'relative', left: '50px', top: '-295px' }}
             orientation="horizontal"

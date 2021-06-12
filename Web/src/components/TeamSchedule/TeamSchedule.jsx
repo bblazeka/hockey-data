@@ -15,8 +15,8 @@ function TeamSchedule(props) {
     <div>
       <Segment>
         <Header as='h3'>Games</Header>
+        {games.length === 0 && <NotFound text={'No upcoming games.'} />}
         <List horizontal>
-          {games.length === 0 && <NotFound />}
           {games.map((game) => {
             return (
               <List.Item key={game.gamePk}>

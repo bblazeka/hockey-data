@@ -64,7 +64,7 @@ class App extends Component {
               </Grid.Column>
               <Grid.Column>
                 <div>This is a DEMO project only.</div>
-                <div>I do not data or graphics on this page.</div>
+                <div>I do not own data or graphics on this page.</div>
                 <div>Contact: blazekab@gmail.com</div>
               </Grid.Column>
               <Grid.Column>

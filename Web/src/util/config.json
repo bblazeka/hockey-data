@@ -133,7 +133,8 @@
         {
             "name": "losses",
             "abbr": "L",
-            "description": "Losses"
+            "description": "Losses",
+            "reverse": true
         },
         {
             "name": "ot",
