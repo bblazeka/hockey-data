@@ -8,7 +8,7 @@ export const getTeam = (id) => (dispatch) => {
     type: actionTypes.GET_TEAM,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getTeam(id) })
+    .post('', { query: querySchemas.getTeam, variables: { id } })
     .then(response => {
       dispatch({
         type: actionTypes.TEAM_LOADED,
@@ -22,7 +22,7 @@ export const getTeamLocations = () => (dispatch) => {
     type: actionTypes.GET_TEAM_LOCATIONS,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getTeamLocations() })
+    .post('', { query: querySchemas.getTeamLocations })
     .then(response => {
       dispatch({
         type: actionTypes.TEAM_LOCATIONS_LOADED,
@@ -36,7 +36,7 @@ export const getTeams = () => (dispatch) => {
     type: actionTypes.GET_TEAMS,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getTeams() })
+    .post('', { query: querySchemas.getTeams })
     .then(response => {
       dispatch({
         type: actionTypes.TEAMS_LOADED,
@@ -50,7 +50,7 @@ export const getDropdownTeams = () => (dispatch) => {
     type: actionTypes.GET_DROPDOWN_TEAMS,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getTeams() })
+    .post('', { query: querySchemas.getTeams })
     .then(response => {
       dispatch({
         type: actionTypes.DROPDOWN_TEAMS_LOADED,

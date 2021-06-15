@@ -8,7 +8,7 @@ export const findGames = (homeId, awayId) => (dispatch) => {
     type: actionTypes.GET_GAMES,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getGamesBetweenTeams(homeId, awayId) })
+    .post('', { query: querySchemas.getGamesBetweenTeams, variables: { homeId, awayId } })
     .then(response => {
       if (IsNullOrUndefined(response.data.data.gamesBetweenTeams.games[0])) {
         dispatch({
@@ -24,12 +24,12 @@ export const findGames = (homeId, awayId) => (dispatch) => {
     });
 };
 
-export const getGame = (id) => (dispatch) => {
+export const getGame = (gameId) => (dispatch) => {
   dispatch({
     type: actionTypes.GET_GAME,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getGame(id) })
+    .post('', { query: querySchemas.getGame, variables: { gameId } })
     .then(response => {
       dispatch({
         type: actionTypes.GAME_LOADED,
@@ -43,7 +43,7 @@ export const getGamesToday = () => (dispatch) => {
     type: actionTypes.GET_GAMES_TODAY,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getTodaysGames() })
+    .post('', { query: querySchemas.getTodaysGames })
     .then(response => {
       dispatch({
         type: actionTypes.GAMES_TODAY_LOADED,

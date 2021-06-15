@@ -1,6 +1,6 @@
-export function getSchedule(start, end) {
-  return `{
-    schedule(start: "${start}", end: "${end}") {
+export const getSchedule = /* GraphQL */`
+  query game($start: String, $end: String){
+    schedule(start: $start, end: $end) {
     id,
     abbreviation,
     avgScheduleScore,
@@ -46,11 +46,10 @@ export function getSchedule(start, end) {
     }
   }
   }`;
-}
 
-export function getTeamSchedule(id, start, end) {
-  return `{
-    scheduleByTeam(id: ${id}, start: "${start}", end: "${end}") {
+export const getTeamSchedule = /* GraphQL */`
+  query scheduleByTeam(id: Int, start: String, end: String){
+    scheduleByTeam(id: $id, start: $start, end: $end) {
       gamePk,
       date,
       home { 
@@ -89,12 +88,11 @@ export function getTeamSchedule(id, start, end) {
       }
     }
   }`;
-}
 
-export function getStandings(season) {
-  return `
+export const getStandings = /* GraphQL */`
+query standings($season: String)
   {
-    standings(season: "${season}") { 
+    standings(season: $season) { 
       division {
         id,
         name
@@ -117,4 +115,3 @@ export function getStandings(season) {
       } 
     }
   }`;
-}

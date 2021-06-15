@@ -1,25 +1,23 @@
-export function getTeams() {
-  return `{
+export const getTeams = /* GraphQL */ `
+  query teams {
     teams { 
       id, 
       name 
     }
   }`;
-}
 
-export function getTeamLocations() {
-  return `{
+export const getTeamLocations = /* GraphQL */ `
+  query teamLocations {
     teamLocations {
       teamLocations { id, text, center, color },
       seasonDescription,
       divisions { key, value }
     }
   }`;
-}
 
-export function getTeam(id) {
-  return `{
-    team(id: ${id}) {
+export const getTeam = /* GraphQL */ `
+  query team($id: Int) {
+    team(id: $id) {
           id, 
           name,
           description,
@@ -159,4 +157,3 @@ export function getTeam(id) {
         }
       }
     }`;
-}

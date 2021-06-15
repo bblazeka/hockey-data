@@ -8,7 +8,7 @@ export const getAnalysis = () => (dispatch) => {
     type: actionTypes.GET_ANALYSIS,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getAnalysis() })
+    .post('', { query: querySchemas.getAnalysis })
     .then(response => {
       dispatch({
         type: actionTypes.ANALYSIS_LOADED,

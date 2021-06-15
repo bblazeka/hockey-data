@@ -8,7 +8,7 @@ export const geocode = (query) => (dispatch) => {
     type: actionTypes.GET_LOCATION,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.geocode(query) })
+    .post('', { query: querySchemas.geocode, variables: { query } })
     .then(response => {
       dispatch({
         type: actionTypes.LOCATION_LOADED,

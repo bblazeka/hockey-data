@@ -8,7 +8,7 @@ export const getSchedule = (start, end) => (dispatch) => {
     type: actionTypes.GET_SCHEDULE,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getSchedule(start, end) })
+    .post('', { query: querySchemas.getSchedule, variables: { start, end } })
     .then(response => {
       dispatch({
         type: actionTypes.SCHEDULE_LOADED,
@@ -22,7 +22,7 @@ export const getStandings = () => (dispatch) => {
     type: actionTypes.GET_STANDINGS,
   });
   axiosGraphQL
-  .post('', { query: querySchemas.getStandings('20202021') })
+  .post('', { query: querySchemas.getStandings, variables: { season: '20202021' } })
   .then(response => {
     dispatch({
       type: actionTypes.STANDINGS_LOADED,
@@ -36,7 +36,7 @@ export const getTeamSchedule = (id, start, end) => (dispatch) => {
     type: actionTypes.GET_TEAM_SCHEDULE,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getTeamSchedule(id, start, end) })
+    .post('', { query: querySchemas.getTeamSchedule, variables: { id, start, end } })
     .then(response => {
       dispatch({
         type: actionTypes.TEAM_SCHEDULE_LOADED,
