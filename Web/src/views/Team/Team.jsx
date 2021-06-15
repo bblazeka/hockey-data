@@ -65,8 +65,10 @@ class Team extends Component {
           <RosterGrid team={team} filterPlayers={filterActive} /></Tab.Pane>
       },
       {
-        menuItem: 'Stats', render: () => <Tab.Pane><RosterStatsGrid rosterStats={team.rosterStats} />
-          </Tab.Pane>
+        menuItem: 'Stats', render: () => <Tab.Pane>
+          <RosterStatsGrid rosterStats={team.skaterStats} title="Skaters" />
+          <RosterStatsGrid rosterStats={team.goalieStats} title="Goalies" />
+        </Tab.Pane>
       },
     ];
     return (

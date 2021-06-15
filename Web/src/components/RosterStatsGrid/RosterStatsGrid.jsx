@@ -1,16 +1,21 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Header, Table } from 'semantic-ui-react';
 
-import config from '../../util/config.json';
 import './RosterStatsGrid.scss';
+import config from '../../util/config.json';
+import routes from '../../routes';
+import { FormatDecimals } from '../../util/common';
 
 function RosterStatsGrid(props) {
-  var exampleObject = props.rosterStats[2].stats;
+  const { rosterStats, title } = props;
+  var exampleObject = rosterStats[0].stats;
   var displayedCategories = config.categories.filter((cat) => {
     return (cat.name in exampleObject);
   });
   return (
-    <div>
+    <div className="roster-stats">
+      <Header as='h4'>{title}</Header>
       <Table>
         <Table.Header>
           <Table.Row>
@@ -21,12 +26,19 @@ function RosterStatsGrid(props) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {props.rosterStats.map((stat, index) => {
+          {rosterStats.map((stat, index) => {
             return (
               <Table.Row key={stat + index}>
-                <Table.Cell>{stat.fullName}</Table.Cell>
+                <Table.Cell><Link to={`${routes.player}/${stat.id}`}>{stat.fullName}</Link></Table.Cell>
                 {displayedCategories.map((cat, i) => {
-                  return (<Table.Cell key={index + 'col' + i}>{stat.stats[cat.name]}</Table.Cell>);
+                var value = stat.stats[cat.name];
+                if (cat.name === 'savePercentage') {
+                  value = FormatDecimals(value * 100, 1);
+                }
+                else if (['goalAgainstAverage', 'evenStrengthSavePercentage', 'powerPlaySavePercentage', 'shortHandedSavePercentage'].includes(cat.name)) {
+                  value = FormatDecimals(value, 2);
+                }
+                return (<Table.Cell key={'col' + i}>{value}</Table.Cell>);
                 })}
               </Table.Row>);
           })}

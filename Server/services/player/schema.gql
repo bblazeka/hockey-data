@@ -69,6 +69,7 @@ type Stats {
   powerPlayTimeOnIce: String
   powerPlayTimeOnIceMinutes: Int
   shotPct: String
+  overTimeGoals: Int
   gameWinningGoals: Int
   powerPlayGoals: Int
   powerPlayAssists: Int
@@ -78,6 +79,7 @@ type Stats {
   shortHandedPoints: Int
   shortHandedTimeOnIce: String
   shortHandedTimeOnIceMinutes: Int
+  shifts: Int
   # goalie props
   gamesStarted: Int
   goalAgainstAverage: Float
@@ -87,6 +89,7 @@ type Stats {
   ot: Int
   saves: Int
   evenSaves: Int
+  goalsAgainst: Int
   powerPlaySaves: Int
   shortHandedSaves: Int
   shotsAgainst: Int
@@ -99,6 +102,11 @@ type Stats {
   powerPlaySavePercentage: Float
   shortHandedSavePercentage: Float
   shutouts: Int
+  # (semi)common
+  timeOnIcePerGame: String
+  evenTimeOnIcePerGame: String
+  shortHandedTimeOnIcePerGame: String
+  powerPlayTimeOnIcePerGame: String
 }
 
 type League {

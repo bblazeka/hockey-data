@@ -31,10 +31,14 @@ async function getTeam({ id }) {
   if (!_.isNil(team)) {
     var rosterResponse = await getPlayersFromTeam(id);
     var rosterStats = await getTeamRosterStats(id);
+    
     team.goalies = rosterResponse.filter(p => p.primaryPosition.type == 'Goalie');
     team.defenders = rosterResponse.filter(p => p.primaryPosition.type == 'Defenseman');
     team.forwards = rosterResponse.filter(p => p.primaryPosition.type == 'Forward');
-    team.rosterStats = rosterStats;
+    team.skaterStats = rosterStats.filter(s => 'shifts' in s.stats);
+    team.skaterStats.sort((p1, p2) => p2.stats.points - p1.stats.points);
+    team.goalieStats = rosterStats.filter(s => 'saves' in s.stats);
+    team.goalieStats.sort((p1, p2) => p2.stats.wins - p1.stats.wins);
     team.description = (await apicomm.wikiApiRequest(team.name)).extract;
     team.venue.description = (await apicomm.wikiApiAdvancedRequest(team.venue.name, team.venue.city)).extract;
   }
