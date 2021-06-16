@@ -16,7 +16,7 @@ function StatsGrid(props) {
   var lineNames = (skater) ? ['goals', 'assists'] : ['Games started', 'Wins'];
   var lines = (skater) ? [goalsLine, assistsLine] : [gamesStartedLine, winsLine];
 
-  var exampleObject = stats[stats.length-1].stat;
+  var exampleObject = stats[stats.length - 1].stat;
   var displayedCategories = config.categories.filter((cat) => {
     return (cat.name in exampleObject);
   });
@@ -46,24 +46,22 @@ function StatsGrid(props) {
               <Table.Cell>{stat.team.name}</Table.Cell>
               {!detailed && <Table.Cell>{stat.league ? stat.league.name : ''}</Table.Cell>}
               {displayedCategories.map((cat, i) => {
-                  var value = stat.stat[cat.name];
-                  if (cat.name === 'savePercentage')
-                  {
-                    value = FormatDecimals(value * 100, 1);
-                  }
-                  else if (['goalAgainstAverage', 'evenStrengthSavePercentage', 'powerPlaySavePercentage', 'shortHandedSavePercentage'].includes(cat.name))
-                  {
-                    value = FormatDecimals(value, 2);
-                  }
-                  return (<Table.Cell key={'col' + i}>{value}</Table.Cell>);
-                })}
+                var value = stat.stat[cat.name];
+                if (cat.name === 'savePercentage') {
+                  value = FormatDecimals(value * 100, 1);
+                }
+                else if (['goalAgainstAverage', 'evenStrengthSavePercentage', 'powerPlaySavePercentage', 'shortHandedSavePercentage'].includes(cat.name)) {
+                  value = FormatDecimals(value, 2);
+                }
+                return (<Table.Cell key={'col' + i}>{value}</Table.Cell>);
+              })}
             </Table.Row>);
           })}
         </Table.Body>
       </Table>
       <div className="stat-bar">
         {stats.length === 0 && <div>No stats to show.</div>}
-        {stats.length > 0 && <XYPlot height={300} width={1200} xType="ordinal">
+        {stats.length > 0 && <XYPlot height={300} width={1200} xType="ordinal" yDomain={[0, 80]}>
           <DiscreteColorLegend
             style={{ position: 'relative', left: '50px', top: '-295px' }}
             orientation="horizontal"

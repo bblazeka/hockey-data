@@ -9,7 +9,8 @@ type DetailedTeam {
     goalies: [Player]
     defenders: [Player]
     forwards: [Player]
-  rosterStats: [AnalysisRosterPlayer]
+    skaterStats: [AnalysisRosterPlayer]
+    goalieStats: [AnalysisRosterPlayer]
   }
 
 type AnalysisRosterPlayerStats {

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Grid, Header, Label, Segment, Table } from 'semantic-ui-react';
 
+import './Standings.scss';
 import * as actions from '../../services/league';
 import * as teamActions from '../../services/team';
-import './Standings.scss';
 import { Loader, Map } from '../../components';
 import routes from '../../routes';
 import { getLogo } from '../../util/assets';
-
-import { Grid, Header, Label, Segment, Table } from 'semantic-ui-react';
 
 class Standings extends Component {
 

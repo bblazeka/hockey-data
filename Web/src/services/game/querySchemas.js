@@ -1,6 +1,6 @@
-export function getGamesBetweenTeams(homeId, awayId) {
-  return `{
-    gamesBetweenTeams(homeId: ${homeId}, awayId: ${awayId}){
+export const getGamesBetweenTeams = /* GraphQL */`
+  query gamesBetweenTeams($homeId: Int, $awayId: Int) {
+    gamesBetweenTeams(homeId: $homeId, awayId: $awayId){
       score { homeWins, homeGoals, awayWins, awayGoals },
       games {
         gamePk,
@@ -20,11 +20,10 @@ export function getGamesBetweenTeams(homeId, awayId) {
       }
     }
   }`;
-}
 
-export function getGame(id) {
-  return `{
-    game(gameId: ${id}){ 
+export const getGame = /* GraphQL */`
+  query game($gameId: Int){
+    game(gameId: $id){ 
         id,
         gameDate,
         gameType,
@@ -37,17 +36,13 @@ export function getGame(id) {
             jerseyNumber,
             person { id, fullName },
             position { code, name }
-            stats {
-              skaterStats { timeOnIce, assists, goals, points, shots, hits, blocked, plusMinus, penaltyMinutes, faceOffWins, faceoffTaken, powerPlayGoals, powerPlayAssists, shortHandedGoals, shortHandedAssists, shortHandedTimeOnIce, powerPlayTimeOnIce }
-            }
+            stats { timeOnIce, assists, goals, points, shots, hits, blocked, plusMinus, penaltyMinutes, faceOffWins, faceoffTaken, faceOffPct, powerPlayGoals, powerPlayAssists, shortHandedGoals, shortHandedAssists, shortHandedTimeOnIce, powerPlayTimeOnIce }
           },
           goalies {
             jerseyNumber,
             person { id, fullName },
             position { code, name }
-            stats { 
-              goalieStats  { timeOnIce, shots, saves, savePercentage }
-            }
+            stats { timeOnIce, shots, saves, savePercentage, powerPlaySaves, shortHandedSaves, evenSaves, shortHandedShotsAgainst, evenShotsAgainst, savePercentage, powerPlaySavePercentage, shortHandedSavePercentage, evenStrengthSavePercentage }
           },
           team { id, name },
           coaches {
@@ -60,17 +55,13 @@ export function getGame(id) {
             jerseyNumber,
             person { id, fullName },
             position { code, name }
-            stats {
-              skaterStats { timeOnIce, assists, goals, points, shots, hits, blocked, plusMinus, penaltyMinutes, faceOffWins, faceoffTaken, powerPlayGoals, powerPlayAssists, shortHandedGoals, shortHandedAssists, shortHandedTimeOnIce, powerPlayTimeOnIce }
-            }
+            stats { timeOnIce, assists, goals, points, shots, hits, blocked, plusMinus, penaltyMinutes, faceOffWins, faceoffTaken, faceOffPct, powerPlayGoals, powerPlayAssists, shortHandedGoals, shortHandedAssists, shortHandedTimeOnIce, powerPlayTimeOnIce }
           },
           goalies {
             jerseyNumber,
             person { id, fullName },
             position { code, name }
-            stats { 
-              goalieStats  { timeOnIce, shots, saves, savePercentage }
-            }
+            stats { timeOnIce, shots, saves, savePercentage, powerPlaySaves, shortHandedSaves, evenSaves, shortHandedShotsAgainst, evenShotsAgainst, savePercentage, powerPlaySavePercentage, shortHandedSavePercentage, evenStrengthSavePercentage }
           },
           team { id, name },
           coaches {
@@ -98,34 +89,35 @@ export function getGame(id) {
       }
     }
   }`;
-}
 
-export function getTodaysGames() {
-  return `{
-    todaysGames  {
-      gamePk,
-      gameTime,
-      currentPeriod,
-      currentPeriodOrdinal,
-      currentPeriodTimeRemaining,
-      ongoingGame,
-      finished,
-  teams {
-      home {
-        team {
-          id, name
+export const getTodaysGames = /* GraphQL */`
+  query todaysGames {
+    todaysGames {
+      gamePk
+      gameTime
+      currentPeriod
+      currentPeriodOrdinal
+      currentPeriodTimeRemaining
+      ongoingGame
+      finished
+      teams {
+        home {
+          team {
+            id
+            name
+          }
+          goals
+          shotsOnGoal
         }
-        goals,
-        shotsOnGoal,
-      },
-    away {
-        team {
-          id, name
+        away {
+          team {
+            id
+            name
+          }
+          goals
+          shotsOnGoal
         }
-        goals,
-        shotsOnGoal,
+      }
     }
-    }
-}
-  }`;
-}
+  }
+`;

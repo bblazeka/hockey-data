@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Checkbox, Grid, Header, Segment, Tab } from 'semantic-ui-react';
 
-import * as actions from '../../services/team';
 import './Team.scss';
+import * as actions from '../../services/team';
 import { Loader, Map, NewsFeed, RosterGrid, RosterStatsGrid, SocialFeed } from '../../components';
 import { getLogo } from '../../util/assets';
-
-import { Checkbox, Grid, Header, Segment, Tab } from 'semantic-ui-react';
 import { getNews, getTweets } from '../../services/news';
 import { geocode } from '../../services/util';
 import { getTeamSchedule } from '../../services/league';
@@ -66,8 +65,10 @@ class Team extends Component {
           <RosterGrid team={team} filterPlayers={filterActive} /></Tab.Pane>
       },
       {
-        menuItem: 'Stats', render: () => <Tab.Pane><RosterStatsGrid rosterStats={team.rosterStats} />
-          </Tab.Pane>
+        menuItem: 'Stats', render: () => <Tab.Pane>
+          <RosterStatsGrid rosterStats={team.skaterStats} title="Skaters" />
+          <RosterStatsGrid rosterStats={team.goalieStats} title="Goalies" />
+        </Tab.Pane>
       },
     ];
     return (

@@ -27,8 +27,7 @@ async function playerWikiRequest(query, optionalQuery = '') {
   var result = await wikiApiRequest(query);
   if (result.extract.includes('may refer to') && optionalQuery.length > 0) {
     result = await wikiApiRequest(`${query} (ice hockey)`);
-    if (result.extract.includes('may refer to') || Object.prototype.hasOwnProperty.call(result,'missing'))
-    {
+    if (result.extract.includes('may refer to') || Object.prototype.hasOwnProperty.call(result, 'missing')) {
       result = await wikiApiRequest(`${query} ${optionalQuery}`);
     }
   }
@@ -37,8 +36,7 @@ async function playerWikiRequest(query, optionalQuery = '') {
 
 async function wikiApiAdvancedRequest(mainQuery, subQuery) {
   var res = await wikiApiRequest(`${mainQuery} ${subQuery}`);
-  if (res === undefined || res.ns == 0)
-  {
+  if (res === undefined || res.ns == 0) {
     res = await wikiApiRequest(`${mainQuery}`);
   }
   return res;

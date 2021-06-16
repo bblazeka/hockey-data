@@ -10,3 +10,4 @@ export { default as NotFound } from './NotFound/NotFound';
 export { default as Map } from './Map/Map';
 export { default as TeamSchedule } from './TeamSchedule/TeamSchedule';
 export { default as GameCard } from './GameCard/GameCard';
+export { default as GameTeamStats } from './GameTeamStats/GameTeamStats';

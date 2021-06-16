@@ -8,7 +8,7 @@ export const getTweets = (query) => (dispatch) => {
     type: actionTypes.GET_TWEETS,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getTweets(query) })
+    .post('', { query: querySchemas.getTweets, variables: { query } })
     .then(response => {
       dispatch({
         type: actionTypes.TWEETS_LOADED,
@@ -22,7 +22,7 @@ export const getNews = (query) => (dispatch) => {
     type: actionTypes.GET_NEWS,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getNews(query) })
+    .post('', { query: querySchemas.getNews, variables: { query } })
     .then(response => {
       dispatch({
         type: actionTypes.NEWS_LOADED,

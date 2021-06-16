@@ -1,7 +1,6 @@
-export function getTweets(query)
-{
-  return `{
-    tweets(query: "${query}") { 
+export const getTweets = /* GraphQL */`
+ query tweets($query: String){
+    tweets(query: $query) { 
       id,
       createdAt,
       text,
@@ -20,12 +19,10 @@ export function getTweets(query)
       }
     }
   }`;
-}
 
-export function getNews(query)
-{
-  return `{
-    articles(query: "${query}") { 
+export const getNews = /* GraphQL */`
+  query articles($query: String){
+    articles(query: $query) { 
       title,
       description,
       publishedAt,
@@ -37,4 +34,3 @@ export function getNews(query)
       }
     }
   }`;
-}

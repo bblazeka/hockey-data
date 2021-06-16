@@ -41,6 +41,11 @@
             "description": "Time on ice"
         },
         {
+            "name": "overTimeGoals",
+            "abbr": "OTG",
+            "description": "Overtime goals"
+        },
+        {
             "name": "powerPlayGoals",
             "abbr": "PPG",
             "description": "Power play goals"
@@ -69,6 +74,11 @@
             "name": "faceOffPct",
             "abbr": "FO%",
             "description": "Faceoff percentage"
+        },
+        {
+            "name": "shifts",
+            "abbr": "SHF",
+            "description": "Shifts"
         },
         {
             "name": "evenTimeOnIce",
@@ -133,7 +143,8 @@
         {
             "name": "losses",
             "abbr": "L",
-            "description": "Losses"
+            "description": "Losses",
+            "reverse": true
         },
         {
             "name": "ot",
@@ -166,7 +177,17 @@
             "description": "Shots against"
         },
         {
+            "name": "goalsAgainst",
+            "abbr": "GA",
+            "description": "Goals against"
+        },
+        {
             "name": "evenShots",
+            "abbr": "SA-ES",
+            "description": "Even strength Shots against"
+        },
+        {
+            "name": "evenShotsAgainst",
             "abbr": "SA-ES",
             "description": "Even strength Shots against"
         },
@@ -177,6 +198,11 @@
         },
         {
             "name": "shortHandedShots",
+            "abbr": "SA-SH",
+            "description": "Short handed shots against"
+        },
+        {
+            "name": "shortHandedShotsAgainst",
             "abbr": "SA-SH",
             "description": "Short handed shots against"
         },
@@ -199,6 +225,26 @@
             "name": "shutouts",
             "abbr": "SO",
             "description": "Shutouts"
+        },
+        {
+            "name": "timeOnIcePerGame",
+            "abbr": "TOI-PG",
+            "description": "Time on ice per game"
+        },
+        {
+            "name": "evenTimeOnIcePerGame",
+            "abbr": "TOI-ESPG",
+            "description": "Even strength time on ice per game"
+        },
+        {
+            "name": "shortHandedTimeOnIcePerGame",
+            "abbr": "TOI-SHPG",
+            "description": "Short handed time on ice per game"
+        },
+        {
+            "name": "powerPlayTimeOnIcePerGame",
+            "abbr": "TOI-PPPG",
+            "description": "Power play time on ice per game"
         }
     ]
 }

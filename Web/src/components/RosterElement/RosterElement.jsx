@@ -3,7 +3,7 @@ import { Flag, Header, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import routes from '../../routes';
-import { generateSemanticUICountryId, FormatNumberToCurrency } from  '../../util/common';
+import { generateSemanticUICountryId, FormatNumberToCurrency } from '../../util/common';
 import './RosterElement.scss';
 
 function RosterElement(props) {

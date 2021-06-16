@@ -59,7 +59,6 @@ class GameList extends Component {
     if (!IsNullOrUndefined(gamesBetweenTeams)) {
       var winsGraph = [{ 'label': homeName, 'angle': gamesBetweenTeams.score.homeWins }, { 'label': awayName, 'angle': gamesBetweenTeams.score.awayWins }];
     }
-    console.log(gamesBetweenTeams);
     return (
       <div>
         <Segment className='game-list-filter'>

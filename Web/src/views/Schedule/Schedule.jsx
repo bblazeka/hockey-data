@@ -7,8 +7,8 @@ import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-import * as actions from '../../services/league';
 import './Schedule.scss';
+import * as actions from '../../services/league';
 import { Loader } from '../../components';
 import routes from '../../routes';
 import { getDatesArray } from '../../util/converter';

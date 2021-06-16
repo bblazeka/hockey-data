@@ -1,5 +1,5 @@
-export function getAnalysis() {
-    return `{
+export const getAnalysis = /* GraphQL */ `
+    query analysis {
         analysis { 
           id,
           leagueRank,
@@ -36,5 +36,5 @@ export function getAnalysis() {
             }
           }
         }
-    }`;
-  }
+    }
+  `;
