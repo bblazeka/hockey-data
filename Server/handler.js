@@ -17,6 +17,8 @@ const player = require('./services/player/index.js');
 const util = require('./services/util/index.js');
 const app = express();
 
+var databaseInitialized = false;
+
 // Construct a schema, using GraphQL schema language
 const schema = loadSchemaSync('./services/**/*.gql', { // load from multiple files using glob
   loaders: [
@@ -63,13 +65,17 @@ app.use('/graphql', graphqlHTTP({
 async function init() {
   console.log('Initializing database...');
   
-  var database = new Database();
-  await database.init();
-  analysis.init(database);
-  game.init(database);
-  team.init(database);
-  player.init(database);
-  league.init(database);
+  if (!databaseInitialized) {
+    var database = new Database();
+    await database.init();
+    analysis.init(database);
+    game.init(database);
+    team.init(database);
+    player.init(database);
+    league.init(database);
+    
+    databaseInitialized = true;
+  }
 }
 
 app.listen(port, async () => {
