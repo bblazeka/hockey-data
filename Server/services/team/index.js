@@ -27,11 +27,11 @@ async function getTeam({ id }) {
     sort: { id: -1 },
   };
   const team = await collection.findOne(query, options);
-
+  
   if (!_.isNil(team)) {
     var rosterResponse = await getPlayersFromTeam(id);
     var rosterStats = await getTeamRosterStats(id);
-    
+
     team.goalies = rosterResponse.filter(p => p.primaryPosition.type == 'Goalie');
     team.defenders = rosterResponse.filter(p => p.primaryPosition.type == 'Defenseman');
     team.forwards = rosterResponse.filter(p => p.primaryPosition.type == 'Forward');
@@ -46,13 +46,13 @@ async function getTeam({ id }) {
   return team;
 }
 
-async function getTeams() {
+async function getActiveTeams() {
   var teams = await db.getCollection('teams').find({}).toArray();
   return _.sortBy(teams.filter(t => t.active), 'name');
 }
 
 async function getTeamLocations() {
-  var teams = await getTeams();
+  var teams = await getActiveTeams();
   var season = await apicomm.wikiApiRequest('2020–21 NHL season');
   var divisions = [{ key: 'Scotia North', value: 'red' },
   { key: 'MassMutual East', value: 'green' },
@@ -93,7 +93,7 @@ async function getTeamSchedule({ id, start, end }) {
 module.exports = {
   init,
   getTeam,
-  getTeams,
+  getActiveTeams,
   getTeamLocations,
   getTeamSchedule,
 };

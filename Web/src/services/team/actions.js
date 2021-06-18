@@ -8,7 +8,7 @@ export const getTeam = (id) => (dispatch) => {
     type: actionTypes.GET_TEAM,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getTeam, variables: { id } })
+    .post('', { query: querySchemas.getTeam, variables: { id: parseInt(id) } })
     .then(response => {
       dispatch({
         type: actionTypes.TEAM_LOADED,

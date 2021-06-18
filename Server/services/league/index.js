@@ -2,6 +2,7 @@ var _ = require('lodash');
 
 const { Database } = require('../../comm/dbhandler');
 const apicomm = require('../../comm/apihandler');
+const team = require('../team');
 
 var db = new Database();
 
@@ -20,7 +21,7 @@ async function getStandings({ season }) {
 }
 
 async function getSchedule({ start, end }) {
-  var teams = await (await db.getCollection('teams').find({ 'active': true }).toArray());
+  var teams = await team.getActiveTeams();
   var sortedTeams = _.sortBy(teams, ['name']);
 
   var games = await db.getCollection('games').find({
@@ -45,8 +46,25 @@ async function getSchedule({ start, end }) {
   return sortedTeams;
 }
 
+async function divisionsWithTeams() {
+  var teams = await team.getActiveTeams();
+
+  const divisions = teams.map(i => i.division);
+  const uniqueDivisions = _.uniqBy(divisions, 'id');
+  const divisionExtended = uniqueDivisions.map(d => {
+    return Object.assign(d, { teams: [] });
+  });
+
+  teams.forEach(t => {
+    divisionExtended.find(div => div.name === t.division.name).teams.push(t);
+  });
+  return divisionExtended;
+}
+
+
 module.exports = {
   init,
   getSchedule,
   getStandings,
+  divisionsWithTeams,
 };

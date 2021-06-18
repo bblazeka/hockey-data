@@ -36,11 +36,25 @@ export const getTeamSchedule = (id, start, end) => (dispatch) => {
     type: actionTypes.GET_TEAM_SCHEDULE,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getTeamSchedule, variables: { id, start, end } })
+    .post('', { query: querySchemas.getTeamSchedule, variables: { id: parseInt(id), start, end } })
     .then(response => {
       dispatch({
         type: actionTypes.TEAM_SCHEDULE_LOADED,
         payload: response.data.data.scheduleByTeam
+      });
+    });
+};
+
+export const getDivisionsWithTeams = () => (dispatch) => {
+  dispatch({
+    type: actionTypes.GET_DIVISIONS,
+  });
+  axiosGraphQL
+    .post('', { query: querySchemas.getDivisionsWithTeams })
+    .then(response => {
+      dispatch({
+        type: actionTypes.DIVISIONS_LOADED,
+        payload: response.data.data.divisionsWithTeams
       });
     });
 };

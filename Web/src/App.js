@@ -3,18 +3,17 @@ import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.scss';
 import routes from './routes';
-import * as teamActions from './services/team/actions';
+import * as leagueActions from './services/league/actions';
 import { getLogo } from './util/assets';
 
 import 'react-vis/dist/style.css';
-import { Grid, Icon, Menu } from 'semantic-ui-react';
+import { Dropdown, Grid, Icon, Menu } from 'semantic-ui-react';
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.props.getTeams();
-    this.props.getDropdownTeams();
+    this.props.getDivisionsWithTeams();
     this.state = {
       'activeItem': 'home'
     };
@@ -23,35 +22,44 @@ class App extends Component {
 
   handleItemClick(e, { name }) {
     this.setState({ activeItem: name });
-      this.props.history.push(routes[name]);
+    this.props.history.push(routes[name]);
   }
 
   render() {
     const { activeItem } = this.state;
-    const { teams } = this.props;
+    const { divisionsWithTeams } = this.props;
     var headerButtons = ['home', 'analysis', 'games', 'standings', 'schedule', 'players'];
     return (
       <div className="App">
         <header>
           <Menu inverted stackable>
-            {headerButtons.map((button)=> {
-              return (            
-              <Menu.Item
-                key={button}
-                name={button}
-                active={activeItem === button}
-                onClick={this.handleItemClick}
-              />);
+            {headerButtons.map((button) => {
+              return (
+                <Menu.Item
+                  key={button}
+                  name={button}
+                  active={activeItem === button}
+                  onClick={this.handleItemClick}
+                />);
             })};
-            <Menu.Item
-              name='teams'>
-              {teams && teams.map(team => {
-                return (
-                  <NavLink className="App-link" to={`${routes.teams}/${team.id}`} key={`link${team.id}`}>
-                    <img className="small-logo" src={getLogo(team.id)} alt={`img${team.id}`} />
-                  </NavLink>);
-              })}
-            </Menu.Item>
+            <Dropdown pointing text='Teams' className='link item'>
+              <Dropdown.Menu>
+                {divisionsWithTeams && divisionsWithTeams.map(division => {
+                  return ([
+                    <Dropdown.Header key={`divheader${division.id}`} className="dropdown-division-name">{division.name}</Dropdown.Header>,
+                    <Dropdown.Item key={`divitems${division.id}`}>
+                      {
+                        division.teams.map(team => {
+                          return (
+                          <NavLink className="App-link" to={`${routes.teams}/${team.id}`} key={`link${team.id}`}>
+                            <img className="small-logo" src={getLogo(team.id)} alt={`img${team.id}`} />
+                          </NavLink>);
+                        })}</Dropdown.Item>
+                      ]);
+                }
+                )}
+              </Dropdown.Menu>
+            </Dropdown>
           </Menu>
         </header>
         <div className="App-container">{this.props.children}</div>
@@ -89,12 +97,12 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  teams: state.team.teams
+  teams: state.team.teams,
+  divisionsWithTeams: state.league.divisionsWithTeams
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getTeams: () => dispatch(teamActions.getTeams()),
-  getDropdownTeams: () => dispatch(teamActions.getDropdownTeams())
+  getDivisionsWithTeams: () => dispatch(leagueActions.getDivisionsWithTeams())
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

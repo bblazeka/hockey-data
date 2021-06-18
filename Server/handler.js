@@ -33,7 +33,7 @@ var root = {
   gamesBetweenTeams: game.gamesBetweenTeams,
   todaysGames: game.getTodaysGames,
   team: team.getTeam,
-  teams: team.getTeams,
+  teams: team.getActiveTeams,
   teamLocations: team.getTeamLocations,
   player: player.getPlayer,
   searchPlayerByName: player.getPlayerByName,
@@ -47,6 +47,7 @@ var root = {
   schedule: league.getSchedule,
   scheduleByTeam: team.getTeamSchedule,
   standings: league.getStandings,
+  divisionsWithTeams: league.divisionsWithTeams,
   geocode: util.geocode,
 };
 

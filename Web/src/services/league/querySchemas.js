@@ -48,7 +48,7 @@ export const getSchedule = /* GraphQL */`
   }`;
 
 export const getTeamSchedule = /* GraphQL */`
-  query scheduleByTeam(id: Int, start: String, end: String){
+  query scheduleByTeam($id: Int, $start: String, $end: String){
     scheduleByTeam(id: $id, start: $start, end: $end) {
       gamePk,
       date,
@@ -115,3 +115,13 @@ query standings($season: String)
       } 
     }
   }`;
+
+export const getDivisionsWithTeams = /* GraphQL */`
+query divisionsWithTeams
+{
+    divisionsWithTeams { 
+      id, 
+      name,
+      teams { id, abbreviation, name }
+    }
+}`;

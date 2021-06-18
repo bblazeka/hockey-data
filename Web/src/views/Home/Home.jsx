@@ -25,16 +25,18 @@ class Home extends Component {
       <div>
         <Header as="h2">Today NHL games</Header>
         <Card.Group>
-          {(IsNullOrUndefined(games) || games.length===0) && <NotFound text="No games found." />}
-          {games.map((game)=> {
+          {(IsNullOrUndefined(games) || games.length === 0) && <NotFound text="No games found." />}
+          {games.map((game) => {
             return (<GameCard key={`gamecard${game.gamePk}`} game={game} />);
           })}
         </Card.Group>
         <div className="news-container">
-          <Grid columns={2}><Grid.Row>
-            <Grid.Column><NewsFeed news={homeNews}></NewsFeed></Grid.Column>
-            <Grid.Column><SocialFeed tweets={tweets}></SocialFeed></Grid.Column>
-          </Grid.Row></Grid>
+          <Grid columns={2} stackable>
+            <Grid.Row>
+              <Grid.Column><NewsFeed news={homeNews}></NewsFeed></Grid.Column>
+              <Grid.Column><SocialFeed tweets={tweets}></SocialFeed></Grid.Column>
+            </Grid.Row>
+          </Grid>
         </div>
       </div>);
   }

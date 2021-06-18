@@ -29,6 +29,16 @@ const leagueReducer = (state = defaultAppState, action) => {
         ...state,
         teamGames: action.payload
       };
+    case actionTypes.GET_DIVISIONS:
+      return {
+        ...state,
+        divisionsWithTeams: action.payload
+      };
+    case actionTypes.DIVISIONS_LOADED:
+      return {
+        ...state,
+        divisionsWithTeams: action.payload
+      };
     default:
       return state;
   }
