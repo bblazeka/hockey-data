@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Dropdown, Image, List, Segment, Statistic } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { DiscreteColorLegend, FlexibleXYPlot, LineMarkSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis } from 'react-vis';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import routes from '../../routes';
 import * as actions from '../../services/game';
@@ -86,34 +86,31 @@ class GameList extends Component {
                   <Statistic.Label>{`${awayTeam} wins`}</Statistic.Label>
                 </Statistic>
               </Statistic.Group>
-              <FlexibleXYPlot yDomain={[0, 10]} xDomain={[0, gamesBetweenTeams.games.length + 1]} height={200}>
-                <DiscreteColorLegend
-                  style={{ position: 'relative', left: '60px', top: '-200px' }}
-                  orientation="horizontal"
-                  items={[
-                    {
-                      title: homeTeam,
-                      color: '#12939A'
-                    },
-                    {
-                      title: awayTeam,
-                      color: '#79C7E3'
-                    }
-                  ]}
-                />
-                <VerticalGridLines />
-                <HorizontalGridLines />
-                <XAxis title="X" tickValues={[0, 1, 2, 3, 4, 5, 6, 7]} tickFormat={v => (v > 0) ? `Game ${v}` : ''} />
-                <YAxis title="Goals" />
-                <LineMarkSeries
-                  style={{ fill: 'none' }}
-                  data={gamesBetweenTeams.score.homeGoals.map((el, index) => ({ 'x': index + 1, 'y': el }))}
-                />
-                <LineMarkSeries
-                  style={{ fill: 'none' }}
-                  data={gamesBetweenTeams.score.awayGoals.map((el, index) => ({ 'x': index + 1, 'y': el }))}
-                />
-              </FlexibleXYPlot>
+              <div style={{ height: '10em', width: '180em'}}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  width={500}
+                  height={300}
+                  data={gamesBetweenTeams.score.gameScores}
+
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="homeGoals" stroke="#8884d8" activeDot={{ r: 2 }} />
+                  <Line type="monotone" dataKey="awayGoals" stroke="#82ca9d" activeDot={{ r: 2 }} />
+                </LineChart>
+              </ResponsiveContainer>
+              </div>
+              
             </div>
           }
           <List>

@@ -12,16 +12,14 @@ function init(database) {
 
 async function gamesBetweenTeams({ homeId, awayId }) {
   const games = await db.getCollection('games').find({ 'home.team.id': homeId, 'away.team.id': awayId }).toArray();
-  const homeGoals = games.map(g => g.home.score);
-  const awayGoals = games.map(g => g.away.score);
+  const gameScores = games.map((g, i) => { return { 'name': `Game ${i+1}` , 'homeGoals': g.home.score, 'awayGoals': g.away.score } } );
   const homeWins = games.filter(d => d.home.score > d.away.score).length;
   const awayWins = games.length - homeWins;
   return {
     score: {
       homeWins,
       awayWins,
-      homeGoals,
-      awayGoals
+      gameScores
     },
     games: _.sortBy(games, function (game) {
       return new Date(game.gameDate);

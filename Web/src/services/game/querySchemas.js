@@ -1,7 +1,11 @@
 export const getGamesBetweenTeams = /* GraphQL */`
   query gamesBetweenTeams($homeId: Int, $awayId: Int) {
     gamesBetweenTeams(homeId: $homeId, awayId: $awayId){
-      score { homeWins, homeGoals, awayWins, awayGoals },
+      score { 
+        homeWins, 
+        awayWins,
+        gameScores { name, homeGoals, awayGoals }
+      },
       games {
         gamePk,
         gameDate,

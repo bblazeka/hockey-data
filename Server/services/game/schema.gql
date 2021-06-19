@@ -56,7 +56,12 @@ type GamesBetweenTeams {
 
 type ScoreBetweenTeams {
   homeWins: Int
-  homeGoals: [Int]
   awayWins: Int
-  awayGoals: [Int]
+  gameScores: [GameScore]
+}
+
+type GameScore {
+  name: String
+  homeGoals: Int
+  awayGoals: Int
 }
