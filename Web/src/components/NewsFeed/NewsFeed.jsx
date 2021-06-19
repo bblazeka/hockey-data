@@ -22,9 +22,9 @@ function NewsFeed(props) {
             return (<Item key={index}>
                 <Item.Image src={article.urlToImage} className="mid-logo" alt={article.urlToImage} />
                 <Item.Content>
-                  <Item.Header>{article.title}</Item.Header>
+                  <Item.Header href={article.url} target="_blank">{article.title}</Item.Header>
                   <Item.Meta>{article.author} ({article.source.name})</Item.Meta>
-                  <Item.Description>{article.description}</Item.Description>
+                  <Item.Description>{article.content}</Item.Description>
                   <Item.Extra>{dayjs(article.publishedAt).toString()}</Item.Extra>
                 </Item.Content>
             </Item>);

@@ -14,6 +14,12 @@ async function getTweets({ query }) {
   var tweetsResponse = await twtcomm.searchTweets(query, 10, 'en', 'popular');
   var tweets = [];
   for (let status of tweetsResponse.statuses) {
+    var users = status.entities.user_mentions.map(u => {
+      return { text: u.name };
+    });
+    var hashtags = status.entities.hashtags.map(h => {
+      return { text: h.text };
+    });
     tweets.push({
       id: status.id_str,
       createdAt: status.created_at,
@@ -28,9 +34,7 @@ async function getTweets({ query }) {
       },
       favoriteCount: status.favorite_count,
       retweetCount: status.retweet_count,
-      entities: status.entities.hashtags.map(h => {
-        return { text: h.text };
-      })
+      entities: users.concat(hashtags)
     });
   }
   return tweets;
