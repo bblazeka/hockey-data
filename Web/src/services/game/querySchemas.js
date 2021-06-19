@@ -23,7 +23,7 @@ export const getGamesBetweenTeams = /* GraphQL */`
 
 export const getGame = /* GraphQL */`
   query game($gameId: Int){
-    game(gameId: $id){ 
+    game(gameId: $gameId){ 
         id,
         gameDate,
         gameType,

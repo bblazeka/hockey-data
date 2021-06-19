@@ -64,7 +64,7 @@ class App extends Component {
         </header>
         <div className="App-container">{this.props.children}</div>
         <footer className="footer">
-          <Grid columns='equal'>
+          <Grid columns='equal' stackable>
             <Grid.Row>
               <Grid.Column>
                 <img className="tiny-logo" src={'/favicon.ico'} alt={'imgapplogo'} />

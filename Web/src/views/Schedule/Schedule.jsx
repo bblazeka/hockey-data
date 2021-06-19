@@ -64,10 +64,12 @@ class Schedule extends Component {
             <DatePicker
               selected={start}
               onChange={date => this.handleStartChange(date)}
+              dateFormat="dd.MM.yyyy"
             />
             <DatePicker
               selected={end}
               onChange={date => this.handleEndChange(date)}
+              dateFormat="dd.MM.yyyy"
             />
             <Label
               className="refresh-button"

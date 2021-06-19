@@ -29,7 +29,7 @@ export const getGame = (gameId) => (dispatch) => {
     type: actionTypes.GET_GAME,
   });
   axiosGraphQL
-    .post('', { query: querySchemas.getGame, variables: { gameId } })
+    .post('', { query: querySchemas.getGame, variables: { gameId: parseInt(gameId) } })
     .then(response => {
       dispatch({
         type: actionTypes.GAME_LOADED,
