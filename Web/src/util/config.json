@@ -3,27 +3,42 @@
         {
             "name": "games",
             "abbr": "GP",
-            "description": "Games played"
+            "description": "Games played",
+            "compare": false,
+            "skaterCategory": true,
+            "goalieCategory": true
         },
         {
             "name": "gamesStarted",
             "abbr": "GS",
-            "description": "games started"
+            "description": "games started",
+            "compare": true,
+            "skaterCategory": false,
+            "goalieCategory": true
         },
         {
             "name": "goals",
             "abbr": "G",
-            "description": "Goals"
+            "description": "Goals",
+            "compare": true,
+            "skaterCategory": true,
+            "goalieCategory": false
         },
         {
             "name": "assists",
             "abbr": "A",
-            "description": "Assists"
+            "description": "Assists",
+            "compare": true,
+            "skaterCategory": true,
+            "goalieCategory": false
         },
         {
             "name": "points",
             "abbr": "P",
-            "description": "Points"
+            "description": "Points",
+            "compare": true,
+            "skaterCategory": true,
+            "goalieCategory": false
         },
         {
             "name": "plusMinus",
@@ -58,17 +73,26 @@
         {
             "name": "shots",
             "abbr": "SOG",
-            "description": "Shots on goal"
+            "description": "Shots on goal",
+            "compare": true,
+            "skaterCategory": true,
+            "goalieCategory": false
         },
         {
             "name": "hits",
             "abbr": "HIT",
-            "description": "Hits"
+            "description": "Hits",
+            "compare": true,
+            "skaterCategory": true,
+            "goalieCategory": false
         },
         {
             "name": "blocked",
             "abbr": "BLK",
-            "description": "Blocks"
+            "description": "Blocks",
+            "compare": true,
+            "skaterCategory": true,
+            "goalieCategory": false
         },
         {
             "name": "faceOffPct",
@@ -133,18 +157,24 @@
         {
             "name": "savePercentage",
             "abbr": "SVS%",
-            "description": "Save percentage"
+            "description": "Save percentage",
+            "compare": true
         },
         {
             "name": "wins",
             "abbr": "W",
-            "description": "Wins"
+            "description": "Wins",
+            "compare": true,
+            "skaterCategory": false,
+            "goalieCategory": true
         },
         {
             "name": "losses",
             "abbr": "L",
             "description": "Losses",
-            "reverse": true
+            "compare": true,
+            "skaterCategory": false,
+            "goalieCategory": true
         },
         {
             "name": "ot",
@@ -154,7 +184,10 @@
         {
             "name": "saves",
             "abbr": "SV",
-            "description": "Saves"
+            "description": "Saves",
+            "compare": true,
+            "skaterCategory": false,
+            "goalieCategory": true
         },
         {
             "name": "evenSaves",
@@ -224,7 +257,10 @@
         {
             "name": "shutouts",
             "abbr": "SO",
-            "description": "Shutouts"
+            "description": "Shutouts",
+            "compare": true,
+            "skaterCategory": false,
+            "goalieCategory": true
         },
         {
             "name": "timeOnIcePerGame",

@@ -1,14 +1,16 @@
 import React from 'react';
 import { Button, Header, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { CircularGridLines, DiscreteColorLegend, RadarChart } from 'react-vis';
+import { Radar, Legend, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
+import { scaleOrdinal } from 'd3-scale';
+import { schemeCategory10} from 'd3-scale-chromatic';
 
+import './CompareGrid.scss';
 import routes from '../../routes';
 import { IsNullOrUndefined, FormatDecimals } from '../../util/common';
 import { getLogo } from '../../util/assets';
 import { NotFound } from '..';
 import config from '../../util/config.json';
-import './CompareGrid.scss';
 
 function CompareGrid(props) {
   const { players, skater, onDelete } = props;
@@ -20,106 +22,41 @@ function CompareGrid(props) {
     return (cat.name in exampleObject);
   });
   displayedCategories.forEach(cat => {
-    return Object.assign(cat, { topVal: (cat.reverse) ? Math.min.apply(Math, players.map(function (o) { return o.stats[cat.name]; })) : Math.max.apply(Math, players.map(function (o) { return o.stats[cat.name]; })) });
-  });
-
-  var chartData = players.map((p) => {
-    return Object.assign(p.stats, {
-      'label': p.fullName
+    return Object.assign(cat, { 
+      topVal: (cat.reverse) ? Math.min.apply(Math, players.map(function (o) { return o.stats[cat.name]; })) 
+      : Math.max.apply(Math, players.map(function (o) { return o.stats[cat.name]; })) 
     });
   });
-  var legend = players.map((p) => {
-    return p.fullName;
+
+  var playerNames = players.map(p => p.fullName);
+  var categories = config.categories.filter((cat) => {
+    return (cat.compare && ((skater && cat.skaterCategory) || (!skater && cat.goalieCategory)));
+  });
+
+  var chartData = categories.map((cat) => {
+    var playerScores = {};
+    players.forEach((player) => {
+      playerScores[player.fullName] = player.stats[cat.name] / cat.topVal * 1.0;
+    });
+    return Object.assign(cat, playerScores);
   });
   return (
     <div className="grid">
       <Header as='h4'>{skater ? 'Skaters' : 'Goalies'}</Header>
-      <RadarChart
-        animation
-        data={chartData}
-        domains={skater ? [
-          { name: 'G', domain: [0, 50], getValue: d => d.goals },
-          { name: 'A', domain: [0, 50], getValue: d => d.assists },
-          { name: 'P', domain: [0, 80], getValue: d => d.points },
-          { name: 'FO', domain: [0, 100], getValue: d => d.faceOffPct },
-          { name: 'SOG', domain: [0, 200], getValue: d => d.shots },
-          { name: 'HIT', domain: [0, 200], getValue: d => d.hits },
-          { name: 'BLK', domain: [0, 200], getValue: d => d.blocked },
-        ] : [
-          { name: 'GP', domain: [0, 60], getValue: d => d.games },
-          { name: 'W', domain: [0, 30], getValue: d => d.wins },
-          { name: 'SHO', domain: [0, 10], getValue: d => d.shutouts },
-          { name: 'SV', domain: [0, 1500], getValue: d => d.saves },
-          { name: 'SV%', domain: [70, 100], getValue: d => FormatDecimals(d.savePercentage * 100, 1) }
-        ]}
-        style={{
-          polygons: {
-            fillOpacity: 0,
-            strokeWidth: 3
-          },
-          axes: {
-            text: {
-              opacity: 1
-            }
-          },
-          labels: {
-            textAnchor: 'middle'
-          }
-        }}
-        margin={{
-          left: 50,
-          top: 50,
-          bottom: 40,
-          right: 50
-        }}
-        width={450}
-        height={400} >
-        <DiscreteColorLegend
-          style={{ position: 'relative', left: '420px', top: '-380px' }}
-          items={legend}
-        />
-        <CircularGridLines tickValues={[...new Array(10)].map((v, i) => i / 10 - 1)} />
-      </RadarChart>
-      <RadarChart
-        animation
-        data={chartData}
-        domains={skater ? [
-          { name: 'EV-TOI', domain: [0, 1200], getValue: d => d.evenTimeOnIceMinutes },
-          { name: 'PP-TOI', domain: [0, 250], getValue: d => d.powerPlayTimeOnIceMinutes },
-          { name: 'SH-TOI', domain: [0, 250], getValue: d => d.shortHandedTimeOnIceMinutes },
-        ] : [
-          { name: 'EV-SVS%', domain: [70, 100], getValue: d => d.evenStrengthSavePercentage },
-          { name: 'PP-SVS%', domain: [70, 100], getValue: d => d.powerPlaySavePercentage },
-          { name: 'SH-SVS%', domain: [70, 100], getValue: d => d.shortHandedSavePercentage }
-        ]}
-        style={{
-          polygons: {
-            fillOpacity: 0,
-            strokeWidth: 3
-          },
-          axes: {
-            text: {
-              opacity: 1
-            }
-          },
-          labels: {
-            textAnchor: 'middle'
-          }
-        }}
-        margin={{
-          left: 80,
-          top: 50,
-          bottom: 40,
-          right: 50
-        }}
-        width={450}
-        height={400} >
-        <DiscreteColorLegend
-          style={{ position: 'relative', left: '400px', top: '-380px' }}
-          items={legend}
-        />
-        <CircularGridLines tickValues={[...new Array(10)].map((v, i) => i / 10 - 1)} />
-      </RadarChart>
+      <div style={{ width: '40vw', height: '30vh' }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <RadarChart cx="50%" cy="50%" outerRadius="80%" data={chartData}>
+            <PolarGrid />
+            <PolarAngleAxis dataKey="description" />
+            <PolarRadiusAxis angle={30} domain={[0, 1]} />
+            <Legend />
+            {playerNames && playerNames.map((pn, i) => {
+              return (<Radar key={'radar' + i} name={pn} dataKey={pn} stroke={scaleOrdinal(schemeCategory10).range()[i%10]} fill={scaleOrdinal(schemeCategory10).range()[i%10]} fillOpacity={0.6} />);
+            })}
+
+          </RadarChart>
+        </ResponsiveContainer>
+      </div>
       <Table>
         <Table.Header>
           <Table.Row>
@@ -144,7 +81,10 @@ function CompareGrid(props) {
               </Table.Row>);
             }
             return (<Table.Row key={`row${key}`}>
-              <Table.Cell><img className="small-logo" src={getLogo(player.currentTeam.id)} alt={`imglogo${player.id}`} /> <Link to={routes.player + '/' + player.id}>{player.fullName}</Link></Table.Cell>
+              <Table.Cell>
+                <img className="small-logo" src={getLogo(player.currentTeam.id)} alt={`imglogo${player.id}`} /> 
+                <Link to={routes.player + '/' + player.id}>{player.fullName}</Link>
+              </Table.Cell>
               <Table.Cell>{player.primaryPosition.abbreviation}</Table.Cell>
               {displayedCategories.map((cat, i) => {
                 var value = stats[cat.name];
@@ -157,7 +97,7 @@ function CompareGrid(props) {
                 countTopValues += (value === cat.topVal) ? 1 : 0;
                 return (<Table.Cell positive={value === cat.topVal} key={'col' + i}>{value}</Table.Cell>);
               })}
-              <Table.Cell>          
+              <Table.Cell>
                 <Header as='h3' textAlign='center'>
                   {countTopValues}
                 </Header>

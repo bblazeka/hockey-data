@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Dropdown, Grid, Icon, Menu } from 'semantic-ui-react';
+
 import './App.scss';
 import routes from './routes';
 import * as leagueActions from './services/league/actions';
 import { getLogo } from './util/assets';
-
-import 'react-vis/dist/style.css';
-import { Dropdown, Grid, Icon, Menu } from 'semantic-ui-react';
 
 class App extends Component {
 

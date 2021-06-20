@@ -8,15 +8,26 @@ function init(database) {
   db = database;
 }
 
-function getGroup(array, propertyName) {
+function getGroup(array) {
+  const sumObjectsByKey = (...objs) => {
+    const res = objs.reduce((a, b) => {
+       for (let k in b) {
+          if (b.hasOwnProperty(k))
+          a[k] = (a[k] || 0) + b[k];
+       }
+       return a;
+    }, {});
+    return res;
+ }
+
   var result = [];
   array.reduce(function (res, value) {
     var key = `${value.season.substr(2, 2)}/${value.season.slice(-2)}`;
     if (!res[key]) {
-      res[key] = { x: key, y: 0 };
+      res[key] = Object.assign(value.stat, { season: key });
       result.push(res[key]);
     }
-    res[key].y += value.stat[propertyName];
+    res[key] = sumObjectsByKey(res[key], value);
     return res;
   }, {});
   return result;
@@ -38,10 +49,7 @@ async function getPlayer({ id }) {
     totalGoals: nhlStatsOnly.reduce((accum, item) => accum + item.stat.goals, 0),
     totalAssists: nhlStatsOnly.reduce((accum, item) => accum + item.stat.assists, 0),
     totalPoints: nhlStatsOnly.reduce((accum, item) => accum + item.stat.points, 0),
-    goalsLine: getGroup(nhlStatsOnly, 'goals'),
-    assistsLine: getGroup(nhlStatsOnly, 'assists'),
-    gamesStartedLine: getGroup(nhlStatsOnly, 'gamesStarted'),
-    winsLine: getGroup(nhlStatsOnly, 'wins'),
+    seasonSums: getGroup(nhlStatsOnly),
     stats: nhlStatsOnly
   };
   player.careerStats = { stats: result.stats[0].splits };

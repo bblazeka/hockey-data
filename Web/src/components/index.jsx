@@ -11,3 +11,5 @@ export { default as Map } from './Map/Map';
 export { default as TeamSchedule } from './TeamSchedule/TeamSchedule';
 export { default as GameCard } from './GameCard/GameCard';
 export { default as GameTeamStats } from './GameTeamStats/GameTeamStats';
+export { default as StatsPieChart } from './StatsPieChart/StatsPieChart';
+export { default as StatsScatterChart } from './StatsScatterChart/StatsScatterChart';

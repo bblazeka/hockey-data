@@ -2,6 +2,7 @@ var _ = require('lodash');
 
 
 const { Database } = require('../../comm/dbhandler');
+const { getActiveTeams } = require('../team/resolvers');
 
 var db = new Database();
 
@@ -15,9 +16,11 @@ function calculatePercentile(rank) {
 }
 
 async function getAnalysis() {
+  var activeTeams = await getActiveTeams();
   var teams = await db.getCollection('analysis').find({}).toArray();
 
   teams.forEach(function (team) {
+    team.team = activeTeams.filter(t => t.id === team.team.id)[0];
     var formattedRoster = team.rosterStats.map((p) => {
       return Object.assign(p, {
         stats: p.stats
@@ -25,33 +28,33 @@ async function getAnalysis() {
     });
     Object.assign(team, {
       rankingsGraph: [
-        { x: 'Wins', y: calculatePercentile(team.regularSeasonStatRankings.wins) },
-        { x: 'Losses', y: calculatePercentile(team.regularSeasonStatRankings.losses) },
-        { x: 'OT', y: calculatePercentile(team.regularSeasonStatRankings.ot) },
-        { x: 'PTS', y: calculatePercentile(team.regularSeasonStatRankings.pts) },
-        { x: 'PTS%', y: calculatePercentile(team.regularSeasonStatRankings.ptPctg) },
-        { x: 'GFPG', y: calculatePercentile(team.regularSeasonStatRankings.goalsPerGame) },
-        { x: 'GAPG', y: calculatePercentile(team.regularSeasonStatRankings.goalsAgainstPerGame) },
-        { x: 'EGR', y: calculatePercentile(team.regularSeasonStatRankings.evGGARatio) },
-        { x: 'PPGF', y: calculatePercentile(team.regularSeasonStatRankings.powerPlayGoals) },
-        { x: 'PPGA', y: calculatePercentile(team.regularSeasonStatRankings.powerPlayGoalsAgainst) },
-        { x: 'PPO', y: calculatePercentile(team.regularSeasonStatRankings.powerPlayOpportunities) },
-        { x: 'PP%', y: calculatePercentile(team.regularSeasonStatRankings.powerPlayPercentage) },
-        { x: 'PK%', y: calculatePercentile(team.regularSeasonStatRankings.penaltyKillPercentage) },
-        { x: 'SFPG', y: calculatePercentile(team.regularSeasonStatRankings.shotsPerGame) },
-        { x: 'SAPG', y: calculatePercentile(team.regularSeasonStatRankings.shotsAllowed) },
-        { x: 'WSF', y: calculatePercentile(team.regularSeasonStatRankings.winScoreFirst) },
-        { x: 'WOSF', y: calculatePercentile(team.regularSeasonStatRankings.winOppScoreFirst) },
-        { x: 'WL1', y: calculatePercentile(team.regularSeasonStatRankings.winLeadFirstPer) },
-        { x: 'WL2', y: calculatePercentile(team.regularSeasonStatRankings.winLeadSecondPer) },
-        { x: 'WOS', y: calculatePercentile(team.regularSeasonStatRankings.winOutshootOpp) },
-        { x: 'WOP', y: calculatePercentile(team.regularSeasonStatRankings.winOutshotByOpp) },
-        { x: 'FO', y: calculatePercentile(team.regularSeasonStatRankings.faceOffsTaken) },
-        { x: 'FOW', y: calculatePercentile(team.regularSeasonStatRankings.faceOffsWon) },
-        { x: 'FOL', y: calculatePercentile(team.regularSeasonStatRankings.faceOffsLost) },
-        { x: 'FO%', y: calculatePercentile(team.regularSeasonStatRankings.faceOffWinPercentage) },
-        { x: 'S%', y: calculatePercentile(team.regularSeasonStatRankings.shootingPctRank) },
-        { x: 'SVS%', y: calculatePercentile(team.regularSeasonStatRankings.savePctRank) },
+        { x: 'Wins', y: (team.regularSeasonStatRankings.wins) },
+        { x: 'Losses', y: (team.regularSeasonStatRankings.losses) },
+        { x: 'OT', y: (team.regularSeasonStatRankings.ot) },
+        { x: 'PTS', y: (team.regularSeasonStatRankings.pts) },
+        { x: 'PTS%', y: (team.regularSeasonStatRankings.ptPctg) },
+        { x: 'GFPG', y: (team.regularSeasonStatRankings.goalsPerGame) },
+        { x: 'GAPG', y: (team.regularSeasonStatRankings.goalsAgainstPerGame) },
+        { x: 'EGR', y: (team.regularSeasonStatRankings.evGGARatio) },
+        { x: 'PPGF', y: (team.regularSeasonStatRankings.powerPlayGoals) },
+        { x: 'PPGA', y: (team.regularSeasonStatRankings.powerPlayGoalsAgainst) },
+        { x: 'PPO', y: (team.regularSeasonStatRankings.powerPlayOpportunities) },
+        { x: 'PP%', y: (team.regularSeasonStatRankings.powerPlayPercentage) },
+        { x: 'PK%', y: (team.regularSeasonStatRankings.penaltyKillPercentage) },
+        { x: 'SFPG', y: (team.regularSeasonStatRankings.shotsPerGame) },
+        { x: 'SAPG', y: (team.regularSeasonStatRankings.shotsAllowed) },
+        { x: 'WSF', y: (team.regularSeasonStatRankings.winScoreFirst) },
+        { x: 'WOSF', y: (team.regularSeasonStatRankings.winOppScoreFirst) },
+        { x: 'WL1', y: (team.regularSeasonStatRankings.winLeadFirstPer) },
+        { x: 'WL2', y: (team.regularSeasonStatRankings.winLeadSecondPer) },
+        { x: 'WOS', y: (team.regularSeasonStatRankings.winOutshootOpp) },
+        { x: 'WOP', y: (team.regularSeasonStatRankings.winOutshotByOpp) },
+        { x: 'FO', y: (team.regularSeasonStatRankings.faceOffsTaken) },
+        { x: 'FOW', y: (team.regularSeasonStatRankings.faceOffsWon) },
+        { x: 'FOL', y: (team.regularSeasonStatRankings.faceOffsLost) },
+        { x: 'FO%', y: (team.regularSeasonStatRankings.faceOffWinPercentage) },
+        { x: 'S%', y: (team.regularSeasonStatRankings.shootingPctRank) },
+        { x: 'SVS%', y: (team.regularSeasonStatRankings.savePctRank) },
       ],
       stats: [
         { title: 'W', value: team.statsSingleSeason.wins, description: 'Wins' },

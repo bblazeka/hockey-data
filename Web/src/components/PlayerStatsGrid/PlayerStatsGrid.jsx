@@ -1,26 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Table, Header, Statistic } from 'semantic-ui-react';
-import { DiscreteColorLegend, XYPlot, Hint, HorizontalGridLines, VerticalGridLines, XAxis, YAxis, LineMarkSeries } from 'react-vis';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
+import './PlayerStatsGrid.scss';
 import config from '../../util/config.json';
 import { getLogo } from '../../util/assets';
 import { FormatDecimals } from '../../util/common';
-import './PlayerStatsGrid.scss';
 
-function StatsGrid(props) {
-
-  const [value, setValue] = useState(null);
+function PlayerStatsGrid(props) {
 
   const { data, skater, detailed } = props;
-  const { totalGames, totalGoals, totalAssists, totalPoints, totalGamesStarted, totalWins, goalsLine, assistsLine, stats, gamesStartedLine, winsLine } = data;
-  var lineNames = (skater) ? ['goals', 'assists'] : ['Games started', 'Wins'];
-  var lines = (skater) ? [goalsLine, assistsLine] : [gamesStartedLine, winsLine];
+  const { totalGames, totalGoals, totalAssists, totalPoints, totalGamesStarted, totalWins, stats, seasonSums } = data;
 
   var exampleObject = stats[stats.length - 1].stat;
   var displayedCategories = config.categories.filter((cat) => {
     return (cat.name in exampleObject);
   });
-
   return (
     <div className="grid">
       <Header as='h4'>Statistics</Header>
@@ -61,36 +56,32 @@ function StatsGrid(props) {
       </Table>
       <div className="stat-bar">
         {stats.length === 0 && <div>No stats to show.</div>}
-        {stats.length > 0 && <XYPlot height={300} width={1200} xType="ordinal" yDomain={[0, 80]}>
-          <DiscreteColorLegend
-            style={{ position: 'relative', left: '50px', top: '-295px' }}
-            orientation="horizontal"
-            items={[
-              {
-                title: lineNames[0],
-                color: '#12939A'
-              },
-              {
-                title: lineNames[1],
-                color: '#79C7E3'
-              }
-            ]}
-          />
-          <VerticalGridLines />
-          <HorizontalGridLines />
-          <XAxis />
-          <YAxis />
-          {lines.map((l, index) => {
-            return (<LineMarkSeries
-              key={`line${index}`}
-              style={{ fill: 'none' }}
-              data={l}
-              onValueMouseOver={(v) => setValue(v)}
-              onValueMouseOut={() => setValue(null)}
-            />);
-          })}
-          {value ? <Hint value={value} /> : null}
-        </XYPlot>}
+        {stats.length > 0 && <div style={{ width: '100em', height: '20em' }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              width={500}
+              height={300}
+              data={seasonSums}
+
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="season" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              {skater && <Line type="monotone" dataKey="goals" stroke="#8884d8" activeDot={{ r: 2 }} />}
+              {skater && <Line type="monotone" dataKey="assists" stroke="#82ca9d" activeDot={{ r: 2 }} />}
+              {!skater && <Line type="monotone" dataKey="games" stroke="#8884d8" activeDot={{ r: 2 }} />}
+              {!skater && <Line type="monotone" dataKey="wins" stroke="#82ca9d" activeDot={{ r: 2 }} />}
+            </LineChart>
+          </ResponsiveContainer>
+        </div>}
         <Statistic.Group horizontal>
           {totalGames && <Statistic>
             <Statistic.Value>
@@ -135,4 +126,4 @@ function StatsGrid(props) {
 
 }
 
-export default StatsGrid;
+export default PlayerStatsGrid;

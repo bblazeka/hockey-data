@@ -23,7 +23,6 @@ function GameTeamStats(props) {
   var goalieCategories = config.categories.filter((cat) => {
     return (cat.name in goalieObject);
   });
-  console.log(displayedCategories);
   return (
     <Segment>
       <Header as='h2'><img className="mid-logo" src={getLogo(team.team.id)} alt={`img${team.team.id}${team.team.name}`} /> {team.team.name}</Header>
