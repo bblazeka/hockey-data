@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Header, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { Radar, Legend, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
+import { Radar, Legend, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10} from 'd3-scale-chromatic';
 
@@ -17,7 +17,8 @@ function CompareGrid(props) {
   if (IsNullOrUndefined(players)) {
     return (<NotFound />);
   }
-  var exampleObject = players[0].stats;
+
+  var exampleObject = (players.length > 0) ? players[0].stats : {};
   var displayedCategories = config.categories.filter((cat) => {
     return (cat.name in exampleObject);
   });
@@ -48,7 +49,6 @@ function CompareGrid(props) {
           <RadarChart cx="50%" cy="50%" outerRadius="80%" data={chartData}>
             <PolarGrid />
             <PolarAngleAxis dataKey="description" />
-            <PolarRadiusAxis angle={30} domain={[0, 1]} />
             <Legend />
             {playerNames && playerNames.map((pn, i) => {
               return (<Radar key={'radar' + i} name={pn} dataKey={pn} stroke={scaleOrdinal(schemeCategory10).range()[i%10]} fill={scaleOrdinal(schemeCategory10).range()[i%10]} fillOpacity={0.6} />);

@@ -86,7 +86,7 @@ class GameList extends Component {
                   <Statistic.Label>{`${awayTeam} wins`}</Statistic.Label>
                 </Statistic>
               </Statistic.Group>
-              <div style={{ height: '10em', width: '180em'}}>
+              <div style={{ height: '13em', width: '180em'}}>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   width={500}

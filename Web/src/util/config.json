@@ -158,7 +158,9 @@
             "name": "savePercentage",
             "abbr": "SVS%",
             "description": "Save percentage",
-            "compare": true
+            "compare": false,
+            "skaterCategory": false,
+            "goalieCategory": true
         },
         {
             "name": "wins",
@@ -207,7 +209,10 @@
         {
             "name": "shotsAgainst",
             "abbr": "SA",
-            "description": "Shots against"
+            "description": "Shots against",
+            "compare": true,
+            "skaterCategory": false,
+            "goalieCategory": true
         },
         {
             "name": "goalsAgainst",

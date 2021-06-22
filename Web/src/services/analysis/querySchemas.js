@@ -24,6 +24,7 @@ export const getAnalysis = /* GraphQL */ `
               },
           rosterStats {
             id,
+            abbrName,
             fullName,
             stats {
               games,

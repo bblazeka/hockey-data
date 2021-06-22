@@ -8,6 +8,19 @@ import { IsNullOrUndefined } from '../../util/common';
 function StatsScatterChart(props) {
   const { color, values, xAxisName, yAxisName, xKey, yKey, height, width } = props;
 
+  const renderCustomizedLabel = (props) => {
+    const { x, y, width, value } = props;
+    const radius = 10;
+  
+    return (
+      <g>
+        <text x={x + width / 2} y={y - radius} textAnchor="middle" dominantBaseline="middle">
+          {value}
+        </text>
+      </g>
+    );
+  };
+
   var renderTooltip = (props) => {
     const { active, payload } = props;
 
@@ -24,7 +37,7 @@ function StatsScatterChart(props) {
           }}
         >
           <p>{data.fullName}</p>
-          <p>
+          <p style={{color: color}}>
             <span>{yAxisName}: </span>
             {data.stats[key]}
           </p>
@@ -59,7 +72,7 @@ function StatsScatterChart(props) {
         </YAxis>
         <Tooltip cursor={{ strokeDasharray: '3 3' }} wrapperStyle={{ zIndex: 100 }} content={renderTooltip} />
         <Scatter name="Values" data={values} fill={color || '#8884d8'} >
-          <LabelList dataKey="fullName" position="top" />
+          <LabelList dataKey="abbrName" position="top" content={renderCustomizedLabel} />
         </Scatter>
       </ScatterChart>
     </ResponsiveContainer>);

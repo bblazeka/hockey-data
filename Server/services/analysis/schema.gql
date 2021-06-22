@@ -17,7 +17,7 @@ type TeamAnalysis {
   regularSeasonStatRankings: RegularSeasonRankings
   rankingsGraph: [GraphFloat]
   lines: Lines
-  rosterStats: [AnalysisRosterPlayer]
+  rosterStats: [Player]
 }
 
 type AnalysisRosterPlayer {

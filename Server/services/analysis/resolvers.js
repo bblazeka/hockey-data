@@ -10,11 +10,6 @@ function init(database) {
   db = database;
 }
 
-function calculatePercentile(rank) {
-  var numOfTeams = 31;
-  return ((numOfTeams + 1 - rank) / numOfTeams) * 100;
-}
-
 async function getAnalysis() {
   var activeTeams = await getActiveTeams();
   var teams = await db.getCollection('analysis').find({}).toArray();

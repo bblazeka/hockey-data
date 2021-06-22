@@ -1,6 +1,7 @@
 type Player {
     id: Int
     description: String
+    abbrName: String
     fullName: String
     currentAge: Int
     jerseyNumber: Int
