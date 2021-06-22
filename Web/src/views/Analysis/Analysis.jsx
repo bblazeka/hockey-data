@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dropdown, Header, Image, Menu, Segment, Statistic, Tab, Table } from 'semantic-ui-react';
-import { LabelSeries, LineSeries, MarkSeries, VerticalBarSeries, FlexibleXYPlot, VerticalGridLines, HorizontalGridLines, RadialChart, XAxis, YAxis } from 'react-vis';
-import ColorScheme from 'color-scheme';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-import { getLogo } from '../../util/assets';
-import { GetNumberWithOrdinal, IsNullOrUndefined } from '../../util/common';
-import { Lineup, Loader } from '../../components';
-import * as actions from '../../services/analysis';
 import './Analysis.scss';
+import { getLogo } from '../../util/assets';
+import { getColorScheme, GetNumberWithOrdinal, IsNullOrUndefined } from '../../util/common';
+import { Lineup, Loader, StatsPieChart, StatsScatterChart } from '../../components';
+import * as actions from '../../services/analysis';
+
+const dropdownOptions = [{ key: 'points', text: 'Points', value: 'points' }, { key: 'goals', text: 'Goals', value: 'goals' }, { key: 'assists', text: 'Assists', value: 'assists' }];
 
 class Analysis extends Component {
 
@@ -30,6 +31,31 @@ class Analysis extends Component {
     });
   }
 
+  createSortedList(players, category) {
+    var result = [];
+    var sortedPlayers = players
+      .sort((a, b) => { return b.stats[category] - a.stats[category]; })
+      .map((ps) => {
+        return {
+          'label': ps.fullName,
+          'subLabel': ps.stats[category],
+          'angle': ps.stats[category]
+        };
+      });
+
+      sortedPlayers.reduce(function (res, value, index) {
+      var id = index > 7 ? '' : value.label;
+      if (!res[id]) {
+        res[id] = { label: id, subLabel: 0, angle: 0 };
+        result.push(res[id]);
+      }
+      res[id].angle += value.angle;
+      res[id].subLabel += value.subLabel;
+      return res;
+    }, {});
+    return result;
+  }
+
   createStatistic(text, value) {
     return (
       <Statistic>
@@ -44,65 +70,13 @@ class Analysis extends Component {
     if (IsNullOrUndefined(analysis)) {
       return (<Loader />);
     }
-    var seasonGames = 56;
-    var scheme = new ColorScheme();
-    scheme.from_hue(20).scheme('mono').variation('soft');
+
     const panes = analysis.map((team, index) => {
-      var maxValue = 0;
-      var teamPie = [];
-      var teamPieConverted = team.rosterStats.filter((p) => { return p.stats.points > 0; }).sort((a, b) => { return a.stats[category] - b.stats[category]; }).map((ps) => {
-        if (ps.stats[category] > maxValue) {
-          maxValue = ps.stats[category];
-        }
-        return {
-          'label': ps.fullName,
-          'subLabel': ps.stats[category],
-          'angle': ps.stats[category]
-        };
-      });
-      teamPieConverted.reduce(function (res, value) {
-        var id = value.angle < maxValue / parseFloat(5) ? '' : value.label;
-        if (!res[id]) {
-          res[id] = { label: id, subLabel: 0, angle: 0 };
-          teamPie.push(res[id]);
-        }
-        res[id].angle += value.angle;
-        res[id].subLabel += value.subLabel;
-        return res;
-      }, {});
-      var goalieGraph = team.rosterStats.filter((p) => { return p.stats.points == null; }).sort((a, b) => { return a.stats.wins - b.stats.wins; }).map((ps) => {
-        return {
-          'label': ps.fullName,
-          'subLabel': ps.stats.wins,
-          'angle': ps.stats.wins,
-        };
-      });
-      var teamGraph = team.rosterStats.filter((p) => { return p.stats.points !== null; }).map((ps) => {
-        return {
-          'label': ps.fullName,
-          'x': ps.stats.games,
-          'y': ps.stats[category],
-          'rotation': 10,
-          'xOffset': -5
-        };
-      });
-      var maxPlusMinus = 0;
-      var minPlusMinus = 0;
-      var plusMinusGraph = team.rosterStats.filter((p) => { return p.stats.points !== null; }).map((ps) => {
-        if (ps.stats.plusMinus < minPlusMinus) {
-          minPlusMinus = ps.stats.plusMinus;
-        }
-        if (ps.stats.plusMinus > maxPlusMinus) {
-          maxPlusMinus = ps.stats.plusMinus;
-        }
-        return {
-          'label': ps.fullName,
-          'x': ps.stats.games,
-          'y': ps.stats.plusMinus,
-          'rotation': 10,
-          'xOffset': -5
-        };
-      });
+      const colors = getColorScheme(team.team.colorScheme);
+      var skaterPie = this.createSortedList(team.rosterStats.filter((p) => { return p.stats.points > 0; }), category);
+      var goalieGraph = this.createSortedList(team.rosterStats.filter((p) => { return p.stats.points == null; }), 'wins');
+
+      var skaters = team.rosterStats.filter((p) => { return p.stats.points !== null; });
       return {
         menuItem: (
           <Menu.Item key={team.id}>
@@ -110,7 +84,9 @@ class Analysis extends Component {
           </Menu.Item>
         ), render: () =>
           <Tab.Pane>
-            <Header as='h1' className="team-header"><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.team.name}`} />{team.team.name}</Header>
+            <Header as='h1' className="team-header">
+              <img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.team.name}`} />{team.team.name}
+            </Header>
             <Statistic.Group widths='5'>
               {this.createStatistic('League', GetNumberWithOrdinal(team.leagueRank))}
               {this.createStatistic('League Home', GetNumberWithOrdinal(team.leagueHomeRank))}
@@ -143,67 +119,67 @@ class Analysis extends Component {
                 </Table.Body>
               </Table>
             </div>
-            <div>
-              <FlexibleXYPlot height={200} xType="ordinal" yDomain={[0, 100]}>
-                <VerticalGridLines />
-                <HorizontalGridLines />
-                <XAxis />
-                <YAxis />
-                <VerticalBarSeries data={team.rankingsGraph}></VerticalBarSeries>
-              </FlexibleXYPlot>
+            <div style={{ width: '70vw', height: '20vh' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={team.rankingsGraph}
+                  margin={{
+                    top: 15,
+                    right: 10,
+                    left: 10,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="4 4" />
+                  <XAxis dataKey="x" />
+                  <YAxis name="Rank" reversed />
+                  <Tooltip />
+                  <Legend />
+                  <Line dataKey="y" name="Rank" fill={colors[0]} stroke={colors[0]} />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
             <div className='graph-container'>
               <div className='filter-container'>
-                <h4>Distribution among players:</h4>
-                <Dropdown
-                  placeholder='Category'
-                  selection
-                  onChange={this.onCategoryChange}
-                  options={[{ key: 'points', text: 'Points', value: 'points' }, { key: 'goals', text: 'Goals', value: 'goals' }, { key: 'assists', text: 'Assists', value: 'assists' }]}
-                />
+                <Header as='h4'>
+                  <Header.Content>
+                    Player{' '}
+                    <Dropdown
+                      header='Category'
+                      inline
+                      onChange={this.onCategoryChange}
+                      defaultValue={dropdownOptions[0].value}
+                      options={dropdownOptions}
+                    />{' '}
+                  </Header.Content>
+                </Header>
               </div>
-              <RadialChart
-                animation
-                className='radial-graph'
-                labelsRadiusMultiplier={0.99}
-                showLabels
-                data={teamPie}
-                colorType={'category'}
-                colorRange={scheme.colors().map((color) => {
-                  return `#${color}`;
-                })}
-                width={520}
-                radius={220}
-                height={520} />
-              <FlexibleXYPlot yDomain={[0, maxValue + 5]} xDomain={[0, seasonGames]} height={500}>
-                <XAxis title='Games' />
-                <YAxis title={category} />
-                <MarkSeries
-                  data={teamGraph}
-                  opacity={0.5}
-                  size={5}
-                />
-                <LabelSeries labelAnchorX='end' labelAnchorY='middle' animation allowOffsetToBeReversed data={teamGraph} />
-              </FlexibleXYPlot >
+              <div style={{ width: '40vw', height: '30vh', overflow: 'visible' }}>
+                <h4>{/*empty space*/}</h4>
+                <StatsPieChart values={skaterPie} colorScheme={colors} />
+              </div>
+              <div style={{ width: '40vw', height: '30vh' }}>
+                <h4 className='pie-chart-header'>Goalie wins:</h4>
+                <StatsPieChart values={goalieGraph} colorScheme={colors} />
+              </div>
             </div>
             <div className='graph-container'>
-              <RadialChart
-                showLabels={true}
-                data={goalieGraph}
-                width={300}
-                radius={100}
-                height={300} />
-              <FlexibleXYPlot yDomain={[minPlusMinus - 2, maxPlusMinus + 5]} xDomain={[0, seasonGames]} height={300}>
-                <XAxis title='Games' />
-                <YAxis title='+/-' />
-                <MarkSeries
-                  data={plusMinusGraph}
-                  opacity={0.5}
-                  size={5}
+              <div style={{ width: '70vw', height: '40vh' }}>
+                <StatsScatterChart
+                  values={skaters}
+                  xAxisName="Games"
+                  xKey="stats.games"
+                  yAxisName={category}
+                  yKey={`stats.${category}`}
+                  color={colors[0]}
                 />
-                <LineSeries stroke='#e6e6e9' strokeStyle='dashed' data={[{ x: 0, y: 0 }, { x: seasonGames, y: 0 }]} />
-                <LabelSeries labelAnchorX='end' labelAnchorY='middle' animation allowOffsetToBeReversed data={plusMinusGraph} />
-              </FlexibleXYPlot >
+              </div>
+            </div>
+            <div className='graph-container'>
+              <div style={{ width: '70vw', height: '40vh' }}>
+                <StatsScatterChart values={skaters}
+                  xAxisName="Games" xKey="stats.games" yAxisName="+/-" yKey="stats.plusMinus" height={400} width={400} color={colors[0]} />
+              </div>
             </div>
             <div className='lineup-container'>
               <Lineup lines={team.lines}></Lineup>

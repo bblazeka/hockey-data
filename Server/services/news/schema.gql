@@ -6,6 +6,7 @@
     source: Source
     title: String
     description: String
+    content: String
     publishedAt: String
     url: String
     author: String

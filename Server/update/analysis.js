@@ -2,6 +2,13 @@ const apicomm = require('../comm/apihandler');
 const dbhandler = require('../comm/dbhandler.js');
 const scrapping = require('../comm/scrapinghandler');
 
+function abbreviateName(name) {
+  if (name.includes('.')) {
+    return name;
+  }
+  return name.split(' ').map(p => `${p[0]}.`).join(' ');
+}
+
 async function run() {
 
   var db = new dbhandler.Database();
@@ -22,7 +29,9 @@ async function run() {
         }).map((p) => {
           return ({
             id: p.person.id,
+            abbrName: `${abbreviateName(p.person.firstName)} ${p.person.lastName}`,
             fullName: p.person.fullName,
+            currentAge: p.person.currentAge,
             stats: p.person.stats[0].splits[0].stat
           });
         });

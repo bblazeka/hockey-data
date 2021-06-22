@@ -16,7 +16,7 @@ export const getAnalysis = /* GraphQL */ `
           stats { title, value, description },
           regularSeasonStatRankings { wins, losses, ot, pts, ptPctg, goalsPerGame, goalsAgainstPerGame, evGGARatio, powerPlayPercentage, powerPlayGoals, powerPlayGoalsAgainst, powerPlayOpportunities },
           rankingsGraph { x, y }
-          team { name },
+          team { name, colorScheme },
           lines {
                 goalies { starter, backup },
                 lines { leftDefender, rightDefender, leftWing, center, rightWing },
@@ -24,6 +24,7 @@ export const getAnalysis = /* GraphQL */ `
               },
           rosterStats {
             id,
+            abbrName,
             fullName,
             stats {
               games,

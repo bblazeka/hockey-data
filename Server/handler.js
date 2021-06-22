@@ -1,20 +1,20 @@
 const serverless = require("serverless-http");
 const express = require("express");
 const bodyParser = require("body-parser-graphql");
-
 const { graphqlHTTP } = require('express-graphql');
 const { loadSchemaSync } = require('@graphql-tools/load');
 const { GraphQLFileLoader } = require('@graphql-tools/graphql-file-loader');
 const cors = require('cors');
 
 const { Database } = require('./comm/dbhandler.js');
-const analysis = require('./services/analysis/index.js');
-const game = require('./services/game/index.js');
-const team = require('./services/team/index.js');
-const news = require('./services/news/index.js');
-const league = require('./services/league/index.js');
-const player = require('./services/player/index.js');
-const util = require('./services/util/index.js');
+const analysis = require('./services/analysis');
+const game = require('./services/game');
+const team = require('./services/team');
+const news = require('./services/news');
+const league = require('./services/league');
+const player = require('./services/player');
+const util = require('./services/util');
+
 const app = express();
 
 var databaseInitialized = false;
@@ -33,7 +33,7 @@ var root = {
   gamesBetweenTeams: game.gamesBetweenTeams,
   todaysGames: game.getTodaysGames,
   team: team.getTeam,
-  teams: team.getTeams,
+  teams: team.getActiveTeams,
   teamLocations: team.getTeamLocations,
   player: player.getPlayer,
   searchPlayerByName: player.getPlayerByName,
@@ -47,6 +47,7 @@ var root = {
   schedule: league.getSchedule,
   scheduleByTeam: team.getTeamSchedule,
   standings: league.getStandings,
+  divisionsWithTeams: league.divisionsWithTeams,
   geocode: util.geocode,
 };
 

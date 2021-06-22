@@ -1,6 +1,7 @@
 type Player {
     id: Int
     description: String
+    abbrName: String
     fullName: String
     currentAge: Int
     jerseyNumber: Int
@@ -33,11 +34,7 @@ type StatsCollection {
   totalPoints: Int
   totalGamesStarted: Int
   totalWins: Int
-  gamesLine: [LineInt]
-  gamesStartedLine: [LineInt]
-  winsLine: [LineInt]
-  goalsLine: [LineInt]
-  assistsLine: [LineInt]
+  seasonSums: [SeasonSum]
   stats: [SeasonStats]
 }
 
@@ -107,6 +104,14 @@ type Stats {
   evenTimeOnIcePerGame: String
   shortHandedTimeOnIcePerGame: String
   powerPlayTimeOnIcePerGame: String
+}
+
+type SeasonSum {
+  season: String
+  games: Int
+  wins: Int
+  goals: Int
+  assists: Int
 }
 
 type League {

@@ -24,7 +24,7 @@ class Standings extends Component {
     }
     return (
       <div>
-        <Grid columns={2}>
+        <Grid columns={2} stackable>
           {standings && standings.map((entry) => {
             return (
               <Grid.Column className="standings" key={entry.division.id}>

@@ -30,7 +30,8 @@ type Record {
 
 type Division {
   id: Int
-  name: String
+  name: String,
+  teams: [Team]
 }
 
 type TeamRecord {

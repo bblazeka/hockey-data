@@ -81,8 +81,7 @@ export function getSkater(id) {
         totalGoals,
         totalAssists,
         totalPoints,
-        goalsLine { x, y },
-        assistsLine { x, y },
+        seasonSums { season, goals, assists },
         stats { 
           season,
           team {
@@ -163,8 +162,7 @@ export function getGoalie(id) {
         totalGames,
         totalGamesStarted,
         totalWins,
-        gamesStartedLine { x, y },
-        winsLine { x, y },
+        seasonSums { season, games, wins },
         stats {
           season,
           team {

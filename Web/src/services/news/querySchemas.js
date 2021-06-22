@@ -24,6 +24,7 @@ export const getNews = /* GraphQL */`
   query articles($query: String){
     articles(query: $query) { 
       title,
+      content,
       description,
       publishedAt,
       url,

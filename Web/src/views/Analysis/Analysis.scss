@@ -1,5 +1,5 @@
 .lineup-container {
-  margin-top: 2em;
+  margin-top: 1vh;
 }
 
 .graph-container {
@@ -7,7 +7,7 @@
 }
 
 .filter-container {
-  margin-right: -6em;
+  margin-right: -8vw;
   z-index: 20;
 }
 
@@ -17,5 +17,9 @@
 
 .team-stats-table {
   overflow-x: scroll;
-  margin-top: 1em;
+  margin-top: 1vh;
+}
+
+.pie-chart-header {
+  margin-bottom: 0vh;
 }

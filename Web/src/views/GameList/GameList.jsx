@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Dropdown, Image, List, Segment } from 'semantic-ui-react';
+import { Button, Dropdown, Image, List, Segment, Statistic } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { RadialChart, DiscreteColorLegend, FlexibleXYPlot, LineMarkSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis } from 'react-vis';
-import ColorScheme from 'color-scheme';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import routes from '../../routes';
 import * as actions from '../../services/game';
+import * as teamActions from '../../services/team';
 import { getLogo } from '../../util/assets';
 import { Loader } from '../../components';
 import './GameList.scss';
@@ -16,19 +16,20 @@ import { GetCompetitionStageFullName, IsNullOrUndefined } from '../../util/commo
 class GameList extends Component {
   constructor(props) {
     super(props);
-    var scheme = new ColorScheme();
-    scheme.from_hue(20).scheme('mono').variation('soft');
     this.state = {
       id: '0',
       home: 1,
       homeName: 'Home team',
       away: 2,
       awayName: 'Away team',
-      scheme,
     };
     this.changeAway = this.changeAway.bind(this);
     this.changeHome = this.changeHome.bind(this);
     this.fetch = this.fetch.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getDropdownTeams();
   }
 
   changeHome(event, data) {
@@ -52,13 +53,11 @@ class GameList extends Component {
 
   render() {
     const { gamesBetweenTeams, dropdownTeams, loading, loadingTeams } = this.props;
-    const { awayName, homeName, scheme } = this.state;
-    if (loading || loadingTeams) {
+    if (loading || loadingTeams || IsNullOrUndefined(dropdownTeams)) {
       return (<div><Loader></Loader></div>);
     }
-    if (!IsNullOrUndefined(gamesBetweenTeams)) {
-      var winsGraph = [{ 'label': homeName, 'angle': gamesBetweenTeams.score.homeWins }, { 'label': awayName, 'angle': gamesBetweenTeams.score.awayWins }];
-    }
+    const homeTeam = (!IsNullOrUndefined(gamesBetweenTeams) && gamesBetweenTeams.games.length > 0) ? gamesBetweenTeams.games[0].home.team.name : 'Home team';
+    const awayTeam = (!IsNullOrUndefined(gamesBetweenTeams) && gamesBetweenTeams.games.length > 0) ? gamesBetweenTeams.games[0].away.team.name : 'Away team';
     return (
       <div>
         <Segment className='game-list-filter'>
@@ -75,50 +74,45 @@ class GameList extends Component {
           <Button onClick={this.fetch}>Search</Button>
         </Segment>
         <Segment>
-          {gamesBetweenTeams && winsGraph &&
+          {gamesBetweenTeams &&
             <div style={{ display: 'flex' }}>
-              <RadialChart
-              animation
-              labelsRadiusMultiplier={0.8}
-              showLabels
-              data={winsGraph}
-              colorType={'category'}
-              colorRange={scheme.colors().map((color) => {
-                return `#${color}`;
-              })}
-              width={200}
-              radius={90}
-              height={200} />
-<FlexibleXYPlot yDomain={[0, 8]} xDomain={[0, gamesBetweenTeams.games.length + 1]} height={200}>
-            <DiscreteColorLegend
-              style={{ position: 'relative', left: '50px', top: '-200px' }}
-              orientation="horizontal"
-              items={[
-                {
-                  title: homeName,
-                  color: '#12939A'
-                },
-                {
-                  title: awayName,
-                  color: '#79C7E3'
-                }
-              ]}
-            />
-            <VerticalGridLines />
-            <HorizontalGridLines />
-            <XAxis title="X" tickValues={[0, 1, 2, 3, 4, 5, 6, 7]} tickFormat={v => (v > 0) ? `Game ${v}` : ''} />
-            <YAxis />
-            <LineMarkSeries
-              style={{ fill: 'none' }}
-              data={gamesBetweenTeams.score.homeGoals.map((el, index) => ({ 'x': index + 1, 'y': el }))}
-            />
-            <LineMarkSeries
-              style={{ fill: 'none' }}
-              data={gamesBetweenTeams.score.awayGoals.map((el, index) => ({ 'x': index + 1, 'y': el }))}
-            />
-          </FlexibleXYPlot>
+              <Statistic.Group horizontal>
+                <Statistic>
+                  <Statistic.Value>{gamesBetweenTeams.score.homeWins}</Statistic.Value>
+                  <Statistic.Label>{`${homeTeam} wins`}</Statistic.Label>
+                </Statistic>
+                <Statistic>
+                  <Statistic.Value>{gamesBetweenTeams.score.awayWins}</Statistic.Value>
+                  <Statistic.Label>{`${awayTeam} wins`}</Statistic.Label>
+                </Statistic>
+              </Statistic.Group>
+              <div style={{ height: '13em', width: '180em'}}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  width={500}
+                  height={300}
+                  data={gamesBetweenTeams.score.gameScores}
+
+                  margin={{
+                    top: 5,
+                    right: 30,
+                    left: 20,
+                    bottom: 5,
+                  }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="homeGoals" stroke="#8884d8" activeDot={{ r: 2 }} />
+                  <Line type="monotone" dataKey="awayGoals" stroke="#82ca9d" activeDot={{ r: 2 }} />
+                </LineChart>
+              </ResponsiveContainer>
+              </div>
+              
             </div>
-            }
+          }
           <List>
             {gamesBetweenTeams && gamesBetweenTeams.games.map(game => {
               return (
@@ -174,6 +168,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   findGames: (home, away) => dispatch(actions.findGames(home, away)),
+  getDropdownTeams: () => dispatch(teamActions.getDropdownTeams())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameList);

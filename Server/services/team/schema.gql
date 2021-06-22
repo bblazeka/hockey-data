@@ -1,10 +1,11 @@
-type DetailedTeam {
+type Team {
     id: Int
     abbreviation: String
     name: String
     description: String
     active: Boolean
     venue: Venue
+    colorScheme: String
     rosterResponse: [Player]
     goalies: [Player]
     defenders: [Player]
