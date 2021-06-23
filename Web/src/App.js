@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Dropdown, Grid, Icon, Menu } from 'semantic-ui-react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import './App.scss';
 import routes from './routes';
 import * as leagueActions from './services/league/actions';
 import { getLogo } from './util/assets';
+import { ErrorFallback } from './components';
 
 class App extends Component {
 
@@ -30,6 +32,7 @@ class App extends Component {
     var headerButtons = ['home', 'analysis', 'games', 'standings', 'schedule', 'players'];
     return (
       <div className="App">
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
         <header>
           <Menu inverted stackable>
             {headerButtons.map((button) => {
@@ -90,6 +93,7 @@ class App extends Component {
           </Grid>
           NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2021. All Rights Reserved.
         </footer>
+        </ErrorBoundary>
       </div>
     );
   }
