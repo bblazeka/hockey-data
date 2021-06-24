@@ -29,7 +29,7 @@ function RosterStatsGrid(props) {
           {rosterStats.map((stat, index) => {
             return (
               <Table.Row key={stat + index}>
-                <Table.Cell><Link to={`${routes.player}/${stat.id}`}>{stat.fullName}</Link></Table.Cell>
+                <Table.Cell className='name-cell'><Link to={`${routes.player}/${stat.id}`}>{stat.fullName}</Link></Table.Cell>
                 {displayedCategories.map((cat, i) => {
                 var value = stat.stats[cat.name];
                 if (cat.name === 'savePercentage') {

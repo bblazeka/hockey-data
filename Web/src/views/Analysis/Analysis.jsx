@@ -25,7 +25,7 @@ class Analysis extends Component {
     this.props.getAnalysis();
   }
 
-  onCategoryChange(event, data) {
+  onCategoryChange(_, data) {
     this.setState({
       category: data.value
     });
@@ -154,11 +154,11 @@ class Analysis extends Component {
                   </Header.Content>
                 </Header>
               </div>
-              <div style={{ width: '40vw', height: '30vh', overflow: 'visible' }}>
+              <div style={{ width: '45vw', height: '40vh', overflow: 'visible' }}>
                 <h4>{/*empty space*/}</h4>
                 <StatsPieChart values={skaterPie} colorScheme={colors} />
               </div>
-              <div style={{ width: '40vw', height: '30vh' }}>
+              <div style={{ width: '40vw', height: '40vh' }}>
                 <h4 className='pie-chart-header'>Goalie wins:</h4>
                 <StatsPieChart values={goalieGraph} colorScheme={colors} />
               </div>

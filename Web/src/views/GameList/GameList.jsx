@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Dropdown, Image, List, Segment, Statistic } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import routes from '../../routes';
 import * as actions from '../../services/game';
@@ -86,31 +86,30 @@ class GameList extends Component {
                   <Statistic.Label>{`${awayTeam} wins`}</Statistic.Label>
                 </Statistic>
               </Statistic.Group>
-              <div style={{ height: '13em', width: '180em'}}>
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  width={500}
-                  height={300}
-                  data={gamesBetweenTeams.score.gameScores}
-
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="homeGoals" stroke="#8884d8" activeDot={{ r: 2 }} />
-                  <Line type="monotone" dataKey="awayGoals" stroke="#82ca9d" activeDot={{ r: 2 }} />
-                </LineChart>
-              </ResponsiveContainer>
+              <div style={{ height: '13em', width: '180em' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart
+                    width={500}
+                    height={300}
+                    data={gamesBetweenTeams.score.gameScores}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="homeGoals" name={homeTeam} fill="#8884d8" />
+                    <Bar dataKey="awayGoals" name={awayTeam} fill="#82ca9d" />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
-              
+
             </div>
           }
           <List>
