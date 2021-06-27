@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 const { Database } = require('../../comm/dbhandler');
 const apicomm = require('../../comm/apihandler');
 const config = require('../../config.json');
@@ -106,12 +108,26 @@ async function getSelectedPlayers() {
       sort: { id: -1 },
     };
     var player = await db.getCollection('players').findOne(query, options);
+    
     if (player.primaryPosition.code !== 'G') {
       player.stats = Object.assign(playerStats, {
         evenTimeOnIceMinutes: parseInt(playerStats.evenTimeOnIce.split(':')[0]),
         powerPlayTimeOnIceMinutes: parseInt(playerStats.powerPlayTimeOnIce.split(':')[0]),
         shortHandedTimeOnIceMinutes: parseInt(playerStats.shortHandedTimeOnIce.split(':')[0])
       });
+      player.averageStats = {
+        goals: _.round(playerStats.goals / playerStats.games, 2),
+        assists: _.round(playerStats.assists / playerStats.games, 2),
+        points: _.round(playerStats.points / playerStats.games, 2),
+        shots: _.round(playerStats.shots / playerStats.games, 2),
+        hits: _.round(playerStats.hits / playerStats.games, 2),
+        blocked: _.round(playerStats.blocked / playerStats.games, 2),
+        powerPlayGoals: _.round(playerStats.powerPlayGoals / playerStats.games, 2),
+        powerPlayPoints: _.round(playerStats.powerPlayPoints / playerStats.games, 2),
+        shortHandedGoals: _.round(playerStats.shortHandedGoals / playerStats.games, 2),
+        shortHandedPoints: _.round(playerStats.shortHandedPoints / playerStats.games, 2),
+        gameWinningGoals: _.round(playerStats.gameWinningGoals / playerStats.games, 2)
+      }
       skaters.push(player);
     }
     else {

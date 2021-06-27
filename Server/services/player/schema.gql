@@ -23,6 +23,7 @@ type Player {
     nationality: String
     capHit: String
     stats: Stats
+    averageStats: AverageStats
     nhlStats: StatsCollection
     careerStats: StatsCollection
 }
@@ -99,6 +100,65 @@ type Stats {
   powerPlaySavePercentage: Float
   shortHandedSavePercentage: Float
   shutouts: Int
+  # (semi)common
+  timeOnIcePerGame: String
+  evenTimeOnIcePerGame: String
+  shortHandedTimeOnIcePerGame: String
+  powerPlayTimeOnIcePerGame: String
+}
+
+type AverageStats {
+  timeOnIce: String
+  # skater props
+  goals: Float
+  assists: Float
+  points: Float
+  pim: Float
+  penaltyMinutes: Float
+  plusMinus: Float
+  shots: Float
+  hits: Float
+  blocked: Float
+  faceOffPct: String
+  faceOffWins: Float
+  faceoffTaken: Float
+  evenTimeOnIce: String
+  evenTimeOnIceMinutes: Float
+  powerPlayTimeOnIce: String
+  powerPlayTimeOnIceMinutes: Float
+  shotPct: String
+  overTimeGoals: Float
+  gameWinningGoals: Float
+  powerPlayGoals: Float
+  powerPlayAssists: Float
+  powerPlayPoints: Float
+  shortHandedGoals: Float
+  shortHandedAssists: Float
+  shortHandedPoints: Float
+  shortHandedTimeOnIce: String
+  shortHandedTimeOnIceMinutes: Float
+  shifts: Int
+  # goalie props
+  goalAgainstAverage: Float
+  savePercentage: Float
+  wins: Float
+  losses: Float
+  ot: Float
+  saves: Float
+  evenSaves: Float
+  goalsAgainst: Float
+  powerPlaySaves: Float
+  shortHandedSaves: Float
+  shotsAgainst: Float
+  evenShots: Float
+  powerPlayShots: Float
+  shortHandedShots: Float
+  shortHandedShotsAgainst: Float
+  evenShotsAgainst: Float
+  evenStrengthSavePercentage: Float
+  powerPlaySavePercentage: Float
+  shortHandedSavePercentage: Float
+  shutouts: Float
   # (semi)common
   timeOnIcePerGame: String
   evenTimeOnIcePerGame: String

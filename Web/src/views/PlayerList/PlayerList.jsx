@@ -1,103 +1,104 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Button, Search } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { Button, Checkbox, Search } from 'semantic-ui-react';
 
 import './PlayerList.scss';
 import { IsNullOrUndefined } from '../../util/common';
-import { CompareGrid, Loader } from '../../components';
+import { CompareGrid, Loader, QuestionModal } from '../../components';
 import * as actions from '../../services/player';
 
-const initialState = { isLoading: false, results: [], value: '' };
+export default function PlayerList() {
 
-class PlayerList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = initialState;
-    this.onRemove = this.onRemove.bind(this);
-    this.onRemoveAll = this.onRemoveAll.bind(this);
-    this.handleResultSelect = this.handleResultSelect.bind(this);
-    this.handleSearchChange = this.handleSearchChange.bind(this);
-  }
+  const [isLoading, setLoading] = useState(false);
+  const [statsMode, setStatsMode] = useState('stats');
+  const [value, setValue] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
 
-  componentDidMount() {
-    this.props.getSelectedPlayers();
-  }
+  const { selectedPlayers, suggestions } = useSelector(state => ({
+    selectedPlayers: state.player.selectedPlayers,
+    suggestions: state.player.suggestions,
+  }), shallowEqual);
 
-  onRemoveAll() {
-    this.props.removeAll();
-  }
+  const dispatch = useDispatch();
 
-  onRemove(e) {
-    e.preventDefault();
-    this.props.removePlayer(e.target.value);
-  }
+  useEffect(() => {
+    dispatch(actions.getSelectedPlayers());
+  }, [dispatch]);
 
-  handleSearchChange (e, { value }) {
-    this.setState({ isLoading: true, value });
+  const onRemoveAll = () => {
+    dispatch(actions.removeAllPlayers());
+  };
 
-    if (this.state.value.length < 1 && value.length < 1) {
-      return this.setState(initialState);
+  const checkedChanged = (e, { checked }) => {
+    setStatsMode(checked ? 'averageStats' : 'stats');
+  };
+
+  const handleSearchChange = (e, { value }) => {
+    setLoading(true);
+    setValue(value);
+
+    if (value.length < 1 && value.length < 1) {
+      setLoading(false);
+      setValue('');
     }
 
     if (value.length > 2) {
-      this.props.searchBasicPlayer(value);
+      dispatch(actions.searchBasicPlayer(value));
     }
-    else
-    {
-      this.setState({ isLoading: false });
+    else {
+      setLoading(false);
     }
-  }
+  };
 
-  handleResultSelect(e, { result }) {
-    this.setState({ value: '', isLoading: false });
-    this.props.addPlayer(result.id);
-  }
+  const handleResultSelect = (e, { result }) => {
+    setValue('');
+    setLoading(false);
+    dispatch(actions.addPlayer(result.id));
+  };
 
-  render() {
-    const { selectedPlayers, suggestions } = this.props;
-    const { isLoading, value } = this.state;
-    if (IsNullOrUndefined(selectedPlayers) || selectedPlayers.length === 0)
-    {
-      return (<Loader />);
-    }
-    return (
-      <div>
+  if (IsNullOrUndefined(selectedPlayers) || selectedPlayers.length === 0) {
+    return (<Loader />);
+  }
+  return (
+    <div>
+      <div className='head-options-container'>
         <Search
           className="search-box"
           loading={isLoading}
-          onResultSelect={this.handleResultSelect}
-          onSearchChange={this.handleSearchChange}
+          onResultSelect={handleResultSelect}
+          onSearchChange={handleSearchChange}
           results={suggestions}
           size="large"
           value={value}
         />
-        <CompareGrid
-          players={selectedPlayers.skaters} 
-          skater={true}
-          onDelete={(id) => this.props.deletePlayer(id)}
+        <QuestionModal
+          onOpen={() => {
+            setModalOpen(true);
+          }
+          }
+          onClose={(e, status) => {
+            if (status) {
+              onRemoveAll();
+            }
+            setModalOpen(false);
+          }
+          }
+          open={modalOpen}
+          trigger={<Button className="clear-button">Clear players</Button>}
         />
-        <CompareGrid 
-          players={selectedPlayers.goalies} 
-          skater={false}
-          onDelete={(id) => this.props.deletePlayer(id)}
-        />
-        <Button className="clear-button" onClick={this.onRemoveAll}>Clear skaters and goalies</Button>
-      </div>);
-  }
+        <Checkbox className='player-list-checkbox' toggle label='Average stats' onChange={checkedChanged} />
+      </div>
+      {selectedPlayers.skaters.length > 0 && <CompareGrid
+        players={selectedPlayers.skaters}
+        skater={true}
+        statsSelector={statsMode}
+        onDelete={(id) => dispatch(actions.deletePlayer(id))}
+      />}
+      {selectedPlayers.goalies.length > 0 && <CompareGrid
+        players={selectedPlayers.goalies}
+        skater={false}
+        statsSelector="stats"
+        onDelete={(id) => dispatch(actions.deletePlayer(id))}
+      />}
+    </div>);
 }
-
-const mapStateToProps = state => ({
-  selectedPlayers: state.player.selectedPlayers,
-  suggestions: state.player.suggestions,
-});
-
-const mapDispatchToProps = dispatch => ({
-  getSelectedPlayers: () => dispatch(actions.getSelectedPlayers()),
-  removePlayer: (id) => dispatch(actions.removePlayer(id)),
-  removeAll: () => dispatch(actions.removeAllPlayers()),
-  searchBasicPlayer: (name) => dispatch(actions.searchBasicPlayer(name)),
-  addPlayer: (id) => dispatch(actions.addPlayer(id)),
-  deletePlayer: (id) => dispatch(actions.deletePlayer(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlayerList);

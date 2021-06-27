@@ -14,3 +14,4 @@ export { default as GameTeamStats } from './GameTeamStats/GameTeamStats';
 export { default as StatsPieChart } from './StatsPieChart/StatsPieChart';
 export { default as StatsScatterChart } from './StatsScatterChart/StatsScatterChart';
 export { default as ErrorFallback } from './ErrorFallback/ErrorFallback';
+export { default as QuestionModal } from './QuestionModal/QuestionModal';
