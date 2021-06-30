@@ -6,7 +6,7 @@ import { NotFound, Loader } from '..';
 import { getLogo } from '../../util/assets';
 import { IsNullOrUndefined } from '../../util/common';
 
-function TeamSchedule(props) {
+export default function TeamSchedule(props) {
   const { games } = props;
   if (IsNullOrUndefined(games)) {
     return (<Loader></Loader>);
@@ -33,5 +33,3 @@ function TeamSchedule(props) {
     </div>);
 
 }
-
-export default TeamSchedule;

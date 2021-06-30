@@ -24,5 +24,16 @@
     "no-unused-vars": "warn",
     "quotes": ["warn", "single"],
     "semi": ["warn", "always"]
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.test.js",
+        "**/*.test.jsx"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 }

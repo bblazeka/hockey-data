@@ -2,11 +2,14 @@ import React from 'react';
 import { Grid, Header } from 'semantic-ui-react';
 
 import './Lineup.scss';
-import { NotFound } from '..';
+import { NotFound, Loader } from '..';
 import { IsNullOrUndefined } from '../../util/common';
 
 function Lineup(props) {
   const { lines } = props;
+  if (IsNullOrUndefined(lines)) {
+    return (<Loader></Loader>);
+  }
   if (IsNullOrUndefined(lines.lines)) {
     return (<NotFound></NotFound>);
   }

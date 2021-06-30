@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { scaleOrdinal } from 'd3-scale';
-import { schemeBlues, schemeGreens, schemeGreys, schemeOranges, schemeReds } from 'd3-scale-chromatic';
 
 var formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -21,8 +19,20 @@ export const axiosGraphQL = axios.create({
   },
 });
 
+export function getDatesArray(startDate, stopDate) {
+  var dateArray = [];
+  var currentDate = new Date(startDate.getTime());
+  var modifiedStopDate = new Date(stopDate.getTime());
+  modifiedStopDate.setSeconds(modifiedStopDate.getSeconds() + 50);
+  while (currentDate <= modifiedStopDate) {
+    dateArray.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  return dateArray;
+}
+
 export function generateSemanticUICountryId(countryName) {
-  switch (countryName)
+  switch (countryName.toUpperCase())
   {
     case 'SWE': return 'se';
     case 'DNK': return 'dk';
@@ -82,22 +92,5 @@ export function GetCompetitionStageFullName(shortcut) {
     case 'R': return 'Regular season';
     case 'P': return 'Playoffs';
     default: return shortcut;
-  }
-}
-
-const blueScheme = scaleOrdinal(schemeBlues[9]).range().reverse();
-const greenScheme = scaleOrdinal(schemeGreens[9]).range().reverse();
-const redScheme = scaleOrdinal(schemeReds[9]).range().reverse();
-const orangeScheme = scaleOrdinal(schemeOranges[9]).range().reverse();
-const greyScheme = scaleOrdinal(schemeGreys[9]).range().reverse();
-
-export function getColorScheme(activeScheme) {
-  switch (activeScheme)
-  {
-    case 'blue': return blueScheme;
-    case 'green': return greenScheme;
-    case 'red': return redScheme;
-    case 'orange': return orangeScheme;
-    default: return greyScheme;
   }
 }

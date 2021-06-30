@@ -3,7 +3,8 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 
 import './StatsPieChart.scss';
 import { Loader } from '..';
-import { IsNullOrUndefined, getColorScheme } from '../../util/common';
+import { IsNullOrUndefined } from '../../util/common';
+import { getColorScheme } from '../../util/shared';
 
 function StatsPieChart(props) {
   const { colorScheme, values, radius } = props;

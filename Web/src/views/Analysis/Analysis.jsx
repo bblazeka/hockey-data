@@ -5,7 +5,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 import './Analysis.scss';
 import { getLogo } from '../../util/assets';
-import { getColorScheme, GetNumberWithOrdinal, IsNullOrUndefined } from '../../util/common';
+import { getColorScheme } from '../../util/shared';
+import { GetNumberWithOrdinal, IsNullOrUndefined } from '../../util/common';
 import { Lineup, Loader, StatsPieChart, StatsScatterChart } from '../../components';
 import * as actions from '../../services/analysis';
 

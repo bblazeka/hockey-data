@@ -3,7 +3,7 @@ import { Header, Icon } from 'semantic-ui-react';
 
 import './NotFound.scss';
 
-function NotFound(props) {
+export default function NotFound(props) {
   return (
     <Header textAlign='center'>
       <Icon name='search' />
@@ -11,5 +11,3 @@ function NotFound(props) {
     </Header>);
 
 }
-
-export default NotFound;

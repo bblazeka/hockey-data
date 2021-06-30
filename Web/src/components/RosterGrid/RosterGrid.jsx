@@ -1,9 +1,15 @@
 import React from 'react';
+
 import './RosterGrid.scss';
 import RosterElement from '../RosterElement/RosterElement';
+import { IsNullOrUndefined } from '../../util/common';
+import { Loader } from '..';
 
 function RosterGrid(props) {
   const { filterPlayers, team } = props;
+  if (IsNullOrUndefined(team)) {
+    return (<Loader></Loader>);
+  }
   return (
     <div>
       <div className="roster">

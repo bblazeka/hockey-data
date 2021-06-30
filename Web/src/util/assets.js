@@ -31,7 +31,7 @@ var ariLogo = '/assets/logos/ari.webp';
 var vgkLogo = '/assets/logos/vgk.webp';
 var seaLogo = '/assets/logos/sea.webp';
 
-function getLogo(teamId) {
+export function getLogo(teamId) {
   switch (teamId) {
     case 1:
       return njdLogo;
@@ -101,5 +101,3 @@ function getLogo(teamId) {
       return null;
   }
 }
-
-export { getLogo };

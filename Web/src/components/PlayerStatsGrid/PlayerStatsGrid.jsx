@@ -6,10 +6,15 @@ import './PlayerStatsGrid.scss';
 import config from '../../util/config.json';
 import { getLogo } from '../../util/assets';
 import { FormatDecimals } from '../../util/common';
+import { IsNullOrUndefined } from '../../util/common';
+import { Loader } from '..';
 
 function PlayerStatsGrid(props) {
 
   const { data, skater, detailed } = props;
+  if (IsNullOrUndefined(data)) {
+    return (<Loader></Loader>);
+  }
   const { totalGames, totalGoals, totalAssists, totalPoints, totalGamesStarted, totalWins, stats, seasonSums } = data;
 
   var exampleObject = stats[stats.length - 1].stat;
