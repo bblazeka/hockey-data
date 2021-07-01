@@ -3,11 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import { Provider } from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from './services/rootReducer';
+import 'semantic-ui-css/semantic.min.css';
+
 import * as serviceWorker from './serviceWorker';
 import {
     Schedule,
@@ -19,14 +17,11 @@ import {
     Analysis,
     Game,
     GameList
-} from './views';
+} from './pages';
 import routes from './routes';
-import 'semantic-ui-css/semantic.min.css';
+import configureStore from './store';
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
+const store = configureStore();
 ReactDOM.render(
     <Provider store={store}>
     <Router>

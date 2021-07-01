@@ -27,6 +27,7 @@ export default function Standings() {
   if (!standings) {
     return (<Loader text="Loading standings..."></Loader>);
   }
+
   return (
     <div>
       <Grid columns={2} stackable>
