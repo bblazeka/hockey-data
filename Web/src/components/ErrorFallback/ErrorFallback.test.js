@@ -5,28 +5,30 @@ import { screen } from '@testing-library/react';
 
 import ErrorFallback from './ErrorFallback';
 
-let container = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement('div');
-  document.body.appendChild(container);
-});
-
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
-
-it('renders error given as parameter', () => {
-  var testErrorMessage = 'This is a funny error';
-  act(() => {
-    render(<ErrorFallback error={{'message': testErrorMessage}} />, container);
+describe('ErrorFallback component', () => {
+  let container = null;
+  beforeEach(() => {
+    // setup a DOM element as a render target
+    container = document.createElement('div');
+    document.body.appendChild(container);
   });
 
-  const defaultErrorText = screen.getByText(/Oops, there was an error:/i);
-  const testErrorText = screen.getByText(testErrorMessage);
-  expect(defaultErrorText).toBeInTheDocument();
-  expect(testErrorText).toBeInTheDocument();
+  afterEach(() => {
+    // cleanup on exiting
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+  });
+
+  it('renders error given as parameter', () => {
+    var testErrorMessage = 'This is a funny error';
+    act(() => {
+      render(<ErrorFallback error={{ 'message': testErrorMessage }} />, container);
+    });
+
+    const defaultErrorText = screen.getByText(/Oops, there was an error:/i);
+    const testErrorText = screen.getByText(testErrorMessage);
+    expect(defaultErrorText).toBeInTheDocument();
+    expect(testErrorText).toBeInTheDocument();
+  });
 });

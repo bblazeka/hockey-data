@@ -5,28 +5,31 @@ import { act } from 'react-dom/test-utils';
 
 import TeamSchedule from './TeamSchedule';
 
-let container = null;
+describe('TeamSchedule component', () => {
 
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement('div');
-  document.body.appendChild(container);
-});
+  let container = null;
 
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
+  beforeEach(() => {
+    // setup a DOM element as a render target
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  });
 
-it('renders loading when games parameter is not given', () => {
-  act(() => { render(<TeamSchedule />, container); });
-  expect(container.textContent).toBe('Loading...');
-});
+  afterEach(() => {
+    // cleanup on exiting
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+  });
 
-it('renders no upcoming games when games parameter is empty', () => {
-  act(() => { render(<TeamSchedule games={[]} />, container); });
-  const linkElement = screen.getByText(/No upcoming games./i);
-  expect(linkElement).toBeInTheDocument();
+  it('renders loading when games parameter is not given', () => {
+    act(() => { render(<TeamSchedule />, container); });
+    expect(container.textContent).toBe('Loading...');
+  });
+
+  it('renders no upcoming games when games parameter is empty', () => {
+    act(() => { render(<TeamSchedule games={[]} />, container); });
+    const linkElement = screen.getByText(/No upcoming games./i);
+    expect(linkElement).toBeInTheDocument();
+  });
 });

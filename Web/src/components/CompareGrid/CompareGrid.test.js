@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils';
 
 import CompareGrid from './CompareGrid';
 
-fdescribe('CompareGrid component', () => {
+describe('CompareGrid component', () => {
   let container = null;
   beforeEach(() => {
     // setup a DOM element as a render target

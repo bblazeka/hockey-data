@@ -5,29 +5,31 @@ import { screen } from '@testing-library/react';
 
 import QuestionModal from './QuestionModal';
 
-let container = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement('div');
-  document.body.appendChild(container);
-});
+describe('QuestionModal component', () => {
+  let container = null;
+  beforeEach(() => {
+    // setup a DOM element as a render target
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  });
 
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
+  afterEach(() => {
+    // cleanup on exiting
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+  });
 
-it('does not render without open prop', () => {
-  act(() => { render(<QuestionModal />, container); });
+  it('does not render without open prop', () => {
+    act(() => { render(<QuestionModal />, container); });
 
-  expect(container.textContent).toBe('');
-});
+    expect(container.textContent).toBe('');
+  });
 
-it('renders modal when open is true', () => {
-  act(() => { render(<QuestionModal open={true} />, container); });
+  it('renders modal when open is true', () => {
+    act(() => { render(<QuestionModal open={true} />, container); });
 
-  const mainText = screen.getByText(/Are you sure/i);
-  expect(mainText).toBeInTheDocument();
+    const mainText = screen.getByText(/Are you sure/i);
+    expect(mainText).toBeInTheDocument();
+  });
 });

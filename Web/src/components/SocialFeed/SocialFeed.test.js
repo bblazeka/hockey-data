@@ -4,6 +4,7 @@ import { act } from 'react-dom/test-utils';
 
 import SocialFeed from './SocialFeed';
 
+describe('SocialFeed component', () => {
 let container = null;
 beforeEach(() => {
   // setup a DOM element as a render target
@@ -22,4 +23,5 @@ it('renders loading without parameters', () => {
   act(() => { render(<SocialFeed />, container); });
 
   expect(container.textContent).toBe('Loading...');
+});
 });

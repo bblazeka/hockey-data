@@ -7,6 +7,16 @@ import { renderWithState } from '../../testUtils';
 const testedDivision = 'Honda West';
 const testedTeam = 'Tested Team';
 
+describe('Standings', () => {
+  it('should display standings', async () => {
+    renderWithState(<Standings />, { });
+
+    const teamName = await screen.findByText(testedTeam);
+
+    expect(teamName).toBeTruthy();
+  });
+});
+
 jest.mock('../../services/league/actions', () => ({
   getStandings: () => ({
     type: 'STANDINGS_LOADED',
@@ -33,13 +43,3 @@ jest.mock('../../services/league/actions', () => ({
     }] 
   })
 }));
-
-describe('Standings', () => {
-  it('should display standings', async () => {
-    renderWithState(<Standings />, { });
-
-    const teamName = await screen.findByText(testedTeam);
-
-    expect(teamName).toBeTruthy();
-  });
-});

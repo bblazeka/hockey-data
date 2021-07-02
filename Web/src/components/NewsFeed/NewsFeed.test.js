@@ -4,22 +4,25 @@ import { act } from 'react-dom/test-utils';
 
 import NewsFeed from './NewsFeed';
 
-let container = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement('div');
-  document.body.appendChild(container);
-});
+describe('NewsFeed component', () => {
 
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
+  let container = null;
+  beforeEach(() => {
+    // setup a DOM element as a render target
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  });
 
-it('renders loading without data', () => {
-  act(() => { render(<NewsFeed />, container); });
+  afterEach(() => {
+    // cleanup on exiting
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+  });
 
-  expect(container.textContent).toBe('Loading...');
+  it('renders loading without data', () => {
+    act(() => { render(<NewsFeed />, container); });
+
+    expect(container.textContent).toBe('Loading...');
+  });
 });

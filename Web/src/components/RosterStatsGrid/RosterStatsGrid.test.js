@@ -4,22 +4,24 @@ import { act } from 'react-dom/test-utils';
 
 import RosterStatsGrid from './RosterStatsGrid';
 
-let container = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement('div');
-  document.body.appendChild(container);
-});
+describe('RosterStatsGrid component', () => {
+  let container = null;
+  beforeEach(() => {
+    // setup a DOM element as a render target
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  });
 
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
+  afterEach(() => {
+    // cleanup on exiting
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+  });
 
-it('renders loading without parameters', () => {
-  act(() => { render(<RosterStatsGrid />, container); });
+  it('renders loading without parameters', () => {
+    act(() => { render(<RosterStatsGrid />, container); });
 
-  expect(container.textContent).toBe('Loading...');
+    expect(container.textContent).toBe('Loading...');
+  });
 });

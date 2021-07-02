@@ -4,22 +4,25 @@ import { act } from 'react-dom/test-utils';
 
 import StatsScatterChart from './StatsScatterChart';
 
-let container = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement('div');
-  document.body.appendChild(container);
-});
+describe('StatsScatterChart component', () => {
 
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
+  let container = null;
+  beforeEach(() => {
+    // setup a DOM element as a render target
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  });
 
-it('renders loading without parameters', () => {
-  act(() => { render(<StatsScatterChart />, container); });
+  afterEach(() => {
+    // cleanup on exiting
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+  });
 
-  expect(container.textContent).toBe('Loading...');
+  it('renders loading without parameters', () => {
+    act(() => { render(<StatsScatterChart />, container); });
+
+    expect(container.textContent).toBe('Loading...');
+  });
 });

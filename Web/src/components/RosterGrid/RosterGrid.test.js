@@ -4,6 +4,7 @@ import { act } from 'react-dom/test-utils';
 
 import RosterGrid from './RosterGrid';
 
+describe('RosterGrid component', () => {
 let container = null;
 beforeEach(() => {
   // setup a DOM element as a render target
@@ -22,4 +23,5 @@ it('renders loading without parameters', () => {
   act(() => { render(<RosterGrid />, container); });
 
   expect(container.textContent).toBe('Loading...');
+});
 });

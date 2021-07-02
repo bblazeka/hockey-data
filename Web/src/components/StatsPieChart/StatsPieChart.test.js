@@ -4,22 +4,24 @@ import { act } from 'react-dom/test-utils';
 
 import StatsPieChart from './StatsPieChart';
 
-let container = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement('div');
-  document.body.appendChild(container);
-});
+describe('StatsPieChart component', () => {
+  let container = null;
+  beforeEach(() => {
+    // setup a DOM element as a render target
+    container = document.createElement('div');
+    document.body.appendChild(container);
+  });
 
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
+  afterEach(() => {
+    // cleanup on exiting
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+  });
 
-it('renders loading without parameters', () => {
-  act(() => { render(<StatsPieChart />, container); });
+  it('renders loading without parameters', () => {
+    act(() => { render(<StatsPieChart />, container); });
 
-  expect(container.textContent).toBe('Loading...');
+    expect(container.textContent).toBe('Loading...');
+  });
 });

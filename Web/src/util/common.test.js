@@ -1,5 +1,6 @@
 import { GetNumberWithOrdinal, IsNullOrUndefined, generateSemanticUICountryId, FormatNumberToCurrency, FormatDecimals, DateToServerFormat, getDatesArray } from './common';
 
+describe('Common methods', () => {
 it('generates semantic ui country identifier', () => {
   let mockGenerateSemanticUICountryId = jest.fn().mockImplementation(generateSemanticUICountryId);
   mockGenerateSemanticUICountryId('CAN');
@@ -81,4 +82,5 @@ it('generates the array of dates between dates', () => {
 
   const result = mockDatesArrayGenerator.mock.results.map(r => r.value);
   expect(result).toEqual([expectedOutput]);
+});
 });
