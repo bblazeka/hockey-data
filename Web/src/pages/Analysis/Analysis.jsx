@@ -120,7 +120,7 @@ class Analysis extends Component {
                 </Table.Body>
               </Table>
             </div>
-            <div style={{ width: '100%', height: '20vh' }}>
+            <div className='line-chart-container'>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={team.rankingsGraph}
@@ -155,17 +155,17 @@ class Analysis extends Component {
                   </Header.Content>
                 </Header>
               </div>
-              <div style={{ width: '50%', height: '40vh', overflow: 'visible', minWidth: '480px' }}>
+              <div className='pie-chart-container'>
                 <h4>{/*empty space*/}</h4>
                 <StatsPieChart values={skaterPie} colorScheme={colors} />
               </div>
-              <div style={{ width: '50%', height: '40vh', minWidth: '480px' }}>
+              <div className='pie-chart-container'>
                 <h4 className='pie-chart-header'>Goalie wins:</h4>
                 <StatsPieChart values={goalieGraph} colorScheme={colors} />
               </div>
             </div>
             <div className='graph-container'>
-              <div style={{ width: '100%', height: '40vh' }}>
+              <div className='scatter-chart-container'>
                 <StatsScatterChart
                   values={skaters}
                   xAxisName="Games"
@@ -177,7 +177,7 @@ class Analysis extends Component {
               </div>
             </div>
             <div className='graph-container'>
-              <div style={{ width: '100%', height: '40vh' }}>
+              <div className='scatter-chart-container'>
                 <StatsScatterChart values={skaters}
                   xAxisName="Games" xKey="stats.games" yAxisName="+/-" yKey="stats.plusMinus" height={400} width={400} color={colors[0]} />
               </div>
