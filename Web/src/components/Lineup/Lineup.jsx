@@ -14,7 +14,7 @@ function Lineup(props) {
     return (<NotFound></NotFound>);
   }
   return (
-    <div>
+    <>
       <Header as='h3'>
         Current lineup:
         <Header.Subheader>
@@ -54,7 +54,7 @@ function Lineup(props) {
           <Grid.Column></Grid.Column>
         </Grid.Row>
       </Grid>
-    </div>);
+    </>);
 
 }
 

@@ -59,7 +59,7 @@ class GameList extends Component {
     const homeTeam = (!IsNullOrUndefined(gamesBetweenTeams) && gamesBetweenTeams.games.length > 0) ? gamesBetweenTeams.games[0].home.team.name : 'Home team';
     const awayTeam = (!IsNullOrUndefined(gamesBetweenTeams) && gamesBetweenTeams.games.length > 0) ? gamesBetweenTeams.games[0].away.team.name : 'Away team';
     return (
-      <div>
+      <>
         <Segment className='game-list-filter'>
           <Dropdown
             placeholder='Home team'
@@ -154,7 +154,7 @@ class GameList extends Component {
             })}
           </List>
         </Segment>
-      </div>);
+      </>);
   }
 }
 

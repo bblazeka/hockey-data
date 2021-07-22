@@ -30,7 +30,7 @@ export default function Home() {
     return (<div><Loader></Loader></div>);
   }
   return (
-    <div>
+    <>
       <Header as="h2">Today NHL games</Header>
       <Card.Group>
         {(IsNullOrUndefined(games) || games.length === 0) && <NotFound text="No games found." />}
@@ -46,5 +46,5 @@ export default function Home() {
           </Grid.Row>
         </Grid>
       </div>
-    </div>);
+    </>);
 }

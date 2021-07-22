@@ -72,7 +72,7 @@ class Team extends Component {
       },
     ];
     return (
-      <div>
+      <>
         <Header as='h1' className="team-header"><img className="mid-logo" src={getLogo(team.id)} alt={`img${team.id}${team.name}`} />{team.name}</Header>
         <p className="desc">{team.description}</p>
         <Tab
@@ -96,7 +96,7 @@ class Team extends Component {
               <p>{team.venue.description}</p>
             </div>
           </Segment>}
-      </div>);
+      </>);
   }
 }
 

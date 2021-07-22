@@ -60,7 +60,7 @@ export default function PlayerList() {
     return (<Loader />);
   }
   return (
-    <div>
+    <>
       <div className='head-options-container'>
         <Search
           className="search-box"
@@ -100,5 +100,5 @@ export default function PlayerList() {
         statsSelector="stats"
         onDelete={(id) => dispatch(actions.deletePlayer(id))}
       />}
-    </div>);
+    </>);
 }

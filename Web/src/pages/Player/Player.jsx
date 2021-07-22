@@ -80,7 +80,7 @@ class Player extends Component {
       },
     ];
     return (
-      <div>
+      <>
         <Search
           className="search-box"
           loading={isLoading}
@@ -153,7 +153,7 @@ class Player extends Component {
           <Grid.Column><NewsFeed news={news}></NewsFeed></Grid.Column>
           <Grid.Column><SocialFeed tweets={tweets}></SocialFeed></Grid.Column>
         </Grid.Row></Grid>
-      </div>);
+      </>);
   }
 }
 

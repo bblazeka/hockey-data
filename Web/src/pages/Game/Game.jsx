@@ -51,7 +51,7 @@ class Game extends Component {
       return (<Loader></Loader>);
     }
     return (
-      <div>
+      <>
         {game && <Segment>
           <Grid stackable>
             <Grid.Column floated='left' width={6}>
@@ -140,10 +140,10 @@ class Game extends Component {
           </Grid>
           <Progress className="game-progress" color='blue' percent={game.percentage}>{game.linescore.currentPeriodOrdinal} {game.linescore.currentPeriodTimeRemaining}</Progress>
         </Segment>}
-        {game && <div>
+        {game && <>
           <GameTeamStats team={game.teams.home} />
           <GameTeamStats team={game.teams.away} />
-        </div>}
+        </>}
         {game && <Segment>
           <List horizontal>
             <List.Item>
@@ -160,7 +160,7 @@ class Game extends Component {
             })}
           </List>
         </Segment>}
-      </div>);
+      </>);
   }
 }
 

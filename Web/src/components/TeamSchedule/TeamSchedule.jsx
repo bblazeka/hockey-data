@@ -12,7 +12,7 @@ export default function TeamSchedule(props) {
     return (<Loader></Loader>);
   }
   return (
-    <div>
+    <>
       <Segment>
         <Header as='h3'>Games</Header>
         {games.length === 0 && <NotFound text={'No upcoming games.'} />}
@@ -30,6 +30,6 @@ export default function TeamSchedule(props) {
           })}
         </List>
       </Segment>
-    </div>);
+    </>);
 
 }

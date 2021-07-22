@@ -29,7 +29,7 @@ export default function Standings() {
   }
 
   return (
-    <div>
+    <>
       <Grid columns={2} stackable>
         {standings && standings.map((entry) => {
           return (
@@ -85,12 +85,12 @@ export default function Standings() {
               <Grid.Column>
                 {locations.seasonDescription}
                 {locations.divisions.map((marker, index) => {
-                  return (<div key={marker.key + index}><Label color={marker.value}>{marker.key}</Label></div>);
+                  return (<React.Fragment key={marker.key + index}><Label color={marker.value}>{marker.key}</Label></React.Fragment>);
                 })}
               </Grid.Column>
             </Grid.Row>
           </Grid>}
       </Segment>
-    </div>
+    </>
   );
 }
