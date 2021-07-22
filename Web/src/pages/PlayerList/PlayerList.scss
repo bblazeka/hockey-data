@@ -1,17 +1,4 @@
-.info-list {
-  display: inline-flex !important;
-}
-
-.player-desc {
-  font-size: 1em;
-}
-
-.header > .fr {
-  float: unset !important;
-}
-
 .search-box {
-  margin-bottom: 20px;
   
   .input {
     width: 203px;
@@ -30,4 +17,14 @@
 
 .loading::after {
   display: none;
+}
+
+.head-options-container {
+  display: flex;
+  .player-list-checkbox {
+    width: 3.5rem !important;
+    top: 0.6em;
+    border-width: 0;
+    padding: 0;
+  }
 }

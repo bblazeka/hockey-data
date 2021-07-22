@@ -1,5 +1,16 @@
+.info-list {
+  display: inline-flex !important;
+}
+
+.player-desc {
+  font-size: 1em;
+}
+
+.header > .fr {
+  float: unset !important;
+}
+
 .search-box {
-  margin-bottom: 20px;
   
   .input {
     width: 203px;

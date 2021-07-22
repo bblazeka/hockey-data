@@ -6,10 +6,15 @@ import './PlayerStatsGrid.scss';
 import config from '../../util/config.json';
 import { getLogo } from '../../util/assets';
 import { FormatDecimals } from '../../util/common';
+import { IsNullOrUndefined } from '../../util/common';
+import { Loader } from '..';
 
 function PlayerStatsGrid(props) {
 
   const { data, skater, detailed } = props;
+  if (IsNullOrUndefined(data)) {
+    return (<Loader></Loader>);
+  }
   const { totalGames, totalGoals, totalAssists, totalPoints, totalGamesStarted, totalWins, stats, seasonSums } = data;
 
   var exampleObject = stats[stats.length - 1].stat;
@@ -56,32 +61,33 @@ function PlayerStatsGrid(props) {
       </Table>
       <div className="stat-bar">
         {stats.length === 0 && <div>No stats to show.</div>}
-        {stats.length > 0 && <div style={{ width: '100em', height: '20em' }}>
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              width={500}
-              height={300}
-              data={seasonSums}
+        {stats.length > 0 &&
+          <div className='production-graph'>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart
+                width={500}
+                height={300}
+                data={seasonSums}
 
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="season" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              {skater && <Line type="monotone" dataKey="goals" stroke="#8884d8" activeDot={{ r: 2 }} />}
-              {skater && <Line type="monotone" dataKey="assists" stroke="#82ca9d" activeDot={{ r: 2 }} />}
-              {!skater && <Line type="monotone" dataKey="games" stroke="#8884d8" activeDot={{ r: 2 }} />}
-              {!skater && <Line type="monotone" dataKey="wins" stroke="#82ca9d" activeDot={{ r: 2 }} />}
-            </LineChart>
-          </ResponsiveContainer>
-        </div>}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 0,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="season" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                {skater && <Line type="monotone" dataKey="goals" stroke="#8884d8" activeDot={{ r: 2 }} />}
+                {skater && <Line type="monotone" dataKey="assists" stroke="#82ca9d" activeDot={{ r: 2 }} />}
+                {!skater && <Line type="monotone" dataKey="games" stroke="#8884d8" activeDot={{ r: 2 }} />}
+                {!skater && <Line type="monotone" dataKey="wins" stroke="#82ca9d" activeDot={{ r: 2 }} />}
+              </LineChart>
+            </ResponsiveContainer>
+          </div>}
         <Statistic.Group horizontal>
           {totalGames && <Statistic>
             <Statistic.Value>

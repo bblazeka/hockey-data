@@ -13,19 +13,22 @@ import { NotFound } from '..';
 import config from '../../util/config.json';
 
 function CompareGrid(props) {
-  const { players, skater, onDelete } = props;
+  const { players, skater, statsSelector, onDelete } = props;
   if (IsNullOrUndefined(players)) {
     return (<NotFound />);
   }
 
-  var exampleObject = (players.length > 0) ? players[0].stats : {};
+  var statsMode = statsSelector || 'stats';
+  
+
+  var exampleObject = (players.length > 0) ? players[0][statsMode] : {};
   var displayedCategories = config.categories.filter((cat) => {
     return (cat.name in exampleObject);
   });
   displayedCategories.forEach(cat => {
     return Object.assign(cat, { 
-      topVal: (cat.reverse) ? Math.min.apply(Math, players.map(function (o) { return o.stats[cat.name]; })) 
-      : Math.max.apply(Math, players.map(function (o) { return o.stats[cat.name]; })) 
+      topVal: (cat.reverse) ? Math.min.apply(Math, players.map(function (o) { return o[statsMode][cat.name]; })) 
+      : Math.max.apply(Math, players.map(function (o) { return o[statsMode][cat.name]; })) 
     });
   });
 
@@ -37,7 +40,7 @@ function CompareGrid(props) {
   var chartData = categories.map((cat) => {
     var playerScores = {};
     players.forEach((player) => {
-      playerScores[player.fullName] = player.stats[cat.name] / cat.topVal * 1.0;
+      playerScores[player.fullName] = player[statsMode][cat.name] / cat.topVal * 1.0;
     });
     return Object.assign(cat, playerScores);
   });
@@ -65,14 +68,14 @@ function CompareGrid(props) {
             {displayedCategories.map((cat, index) => {
               return (<Table.HeaderCell key={'headercol' + index}>{cat.abbr}</Table.HeaderCell>);
             })}
-            <Table.HeaderCell>Points</Table.HeaderCell>
+            <Table.HeaderCell>Score</Table.HeaderCell>
             <Table.HeaderCell>Delete</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {players.map((player) => {
             const key = `${player.id}`;
-            const stats = player.stats;
+            const stats = player[statsMode];
             var countTopValues = 0;
             if (IsNullOrUndefined(stats)) {
               return (<Table.Row key={`row${key}`}>
@@ -88,14 +91,15 @@ function CompareGrid(props) {
               <Table.Cell>{player.primaryPosition.abbreviation}</Table.Cell>
               {displayedCategories.map((cat, i) => {
                 var value = stats[cat.name];
+                var isTopValue = value === cat.topVal;
+                countTopValues += isTopValue ? 1 : 0;
                 if (cat.name === 'savePercentage') {
                   value = FormatDecimals(stats[cat.name] * 100, 1);
                 }
                 else if (['goalAgainstAverage', 'evenStrengthSavePercentage', 'powerPlaySavePercentage', 'shortHandedSavePercentage'].includes(cat.name)) {
                   value = FormatDecimals(stats[cat.name], 2);
                 }
-                countTopValues += (value === cat.topVal) ? 1 : 0;
-                return (<Table.Cell positive={value === cat.topVal} key={'col' + i}>{value}</Table.Cell>);
+                return (<Table.Cell positive={isTopValue} key={'col' + i}>{value}</Table.Cell>);
               })}
               <Table.Cell>
                 <Header as='h3' textAlign='center'>

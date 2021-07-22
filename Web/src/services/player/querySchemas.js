@@ -268,7 +268,19 @@ function getSelectedSkaterQuery() {
         shortHandedGoals,
         shortHandedPoints
   }
-    
+      averageStats {
+        goals,
+        assists,
+        points,
+        shots,
+        hits,
+        blocked,
+        powerPlayGoals,
+        powerPlayPoints,
+        shortHandedGoals,
+        shortHandedPoints,
+        gameWinningGoals
+      }
   }`;
 }
 
@@ -300,6 +312,9 @@ function getSelectedSkaterQuery() {
           shortHandedSavePercentage,
           shutouts,
           timeOnIce
+      }
+      averageStats {
+        saves
       }
     }`;
   }

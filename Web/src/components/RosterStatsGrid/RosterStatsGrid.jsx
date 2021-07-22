@@ -5,10 +5,14 @@ import { Header, Table } from 'semantic-ui-react';
 import './RosterStatsGrid.scss';
 import config from '../../util/config.json';
 import routes from '../../routes';
-import { FormatDecimals } from '../../util/common';
+import { FormatDecimals, IsNullOrUndefined } from '../../util/common';
+import { Loader } from '..';
 
 function RosterStatsGrid(props) {
   const { rosterStats, title } = props;
+  if (IsNullOrUndefined(rosterStats)) {
+    return (<Loader></Loader>);
+  }
   var exampleObject = rosterStats[0].stats;
   var displayedCategories = config.categories.filter((cat) => {
     return (cat.name in exampleObject);
@@ -29,7 +33,7 @@ function RosterStatsGrid(props) {
           {rosterStats.map((stat, index) => {
             return (
               <Table.Row key={stat + index}>
-                <Table.Cell><Link to={`${routes.player}/${stat.id}`}>{stat.fullName}</Link></Table.Cell>
+                <Table.Cell className='name-cell'><Link to={`${routes.player}/${stat.id}`}>{stat.fullName}</Link></Table.Cell>
                 {displayedCategories.map((cat, i) => {
                 var value = stat.stats[cat.name];
                 if (cat.name === 'savePercentage') {

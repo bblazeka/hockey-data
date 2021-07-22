@@ -2,12 +2,17 @@ import React from 'react';
 import { Flag, Header, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
+import './RosterElement.scss';
 import routes from '../../routes';
 import { generateSemanticUICountryId, FormatNumberToCurrency } from '../../util/common';
-import './RosterElement.scss';
+import { IsNullOrUndefined } from '../../util/common';
+import { Loader } from '..';
 
 function RosterElement(props) {
   const { filterPlayers, players, title } = props;
+  if (IsNullOrUndefined(players)) {
+    return (<Loader></Loader>);
+  }
   return (
     <div className="roster-part">
       <Header as='h4'>{title}</Header>

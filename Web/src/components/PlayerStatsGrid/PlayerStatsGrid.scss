@@ -3,5 +3,10 @@
 }
 
 .stat-bar {
-  display: inline-flex;
+  display: flex;
+}
+
+.production-graph {
+  width: 67vw;
+  height: 40vh;
 }

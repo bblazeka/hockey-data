@@ -9,10 +9,10 @@ import { IsNullOrUndefined } from '../../util/common';
 
 function GameCard(props) {
   const { game } = props;
-  const { home, away } = game.teams;
   if (IsNullOrUndefined(game)) {
     return (<Loader></Loader>);
   }
+  const { home, away } = game.teams;
   var generalGameInfo = game.ongoingGame ? `${game.currentPeriodOrdinal} ${game.currentPeriodTimeRemaining}` : game.gameTime;
   return (
     <Card key={game.gamePk} href={`${routes.game}/${game.gamePk}`} color={game.ongoingGame ? game.finished ? 'grey' : 'orange' : null}>

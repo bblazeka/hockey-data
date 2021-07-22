@@ -11,19 +11,31 @@ function init(database) {
 }
 
 async function gamesBetweenTeams({ homeId, awayId }) {
-  const games = await db.getCollection('games').find({ 'home.team.id': homeId, 'away.team.id': awayId }).toArray();
-  const gameScores = games.map((g, i) => { return { 'name': `Game ${i+1}` , 'homeGoals': g.home.score, 'awayGoals': g.away.score } } );
+  const dbGames = await db.getCollection('games').find({
+    'home.team.id': homeId,
+    'away.team.id': awayId,
+    'gameType': 'R'
+  }).toArray();
+  const games = _.sortBy(dbGames, function (game) {
+    return new Date(game.gameDate);
+  })
+  const gameScores = games.map((g, i) => {
+    return {
+      'name': `Game ${i + 1}`,
+      'homeGoals': g.home.score,
+      'awayGoals': g.away.score
+    }
+  });
   const homeWins = games.filter(d => d.home.score > d.away.score).length;
   const awayWins = games.length - homeWins;
+
   return {
     score: {
       homeWins,
       awayWins,
       gameScores
     },
-    games: _.sortBy(games, function (game) {
-      return new Date(game.gameDate);
-    })
+    games
   }
 }
 
