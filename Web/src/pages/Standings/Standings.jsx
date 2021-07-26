@@ -84,8 +84,10 @@ export default function Standings() {
               </Grid.Column>
               <Grid.Column>
                 {locations.seasonDescription}
+                <br />
+                <h4>Conferences - legend:</h4>
                 {locations.divisions.map((marker, index) => {
-                  return (<React.Fragment key={marker.key + index}><Label color={marker.value}>{marker.key}</Label></React.Fragment>);
+                  return (<div key={marker.key + index}><Label color={marker.value}>{marker.key}</Label></div>);
                 })}
               </Grid.Column>
             </Grid.Row>

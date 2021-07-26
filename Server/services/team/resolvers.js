@@ -53,11 +53,11 @@ async function getActiveTeams() {
 
 async function getTeamLocations() {
   var teams = await getActiveTeams();
-  var season = await apicomm.wikiApiRequest('2020–21 NHL season');
-  var divisions = [{ key: 'Scotia North', value: 'red' },
-  { key: 'MassMutual East', value: 'green' },
-  { key: 'Discover Central', value: 'orange' },
-  { key: 'Honda West', value: 'blue' }];
+  var season = await apicomm.wikiApiRequest('2021–22 NHL season');
+  var divisions = [{ key: 'Metropolitan', value: 'red' },
+  { key: 'Atlantic', value: 'green' },
+  { key: 'Central', value: 'orange' },
+  { key: 'Pacific', value: 'blue' }];
   var teamLocations = teams.map((team) => {
     if (!_.isNil(team.division)) {
       var division = divisions.find((el) => { return el.key === team.division.name; });

@@ -11,18 +11,20 @@ function abbreviateName(name) {
 
 async function run() {
 
+  const season = '20202021';
+
   var db = new dbhandler.Database();
   await db.init();
 
   try {
-    var response = await apicomm.nhlApiRequest('/api/v1/standings?season=20202021');
+    var response = await apicomm.nhlApiRequest(`/api/v1/standings?season=${season}`);
 
     const teamAnalysisCollection = db.getCollection('analysis');
 
     var res = response.records.map(async (record) => {
       record.teamRecords.map(async (teamRecord) => {
 
-        var playerStats = await apicomm.nhlApiRequest(`/api/v1/teams/${teamRecord.team.id}?hydrate=roster(season=20202021,person(stats(splits=statsSingleSeason)))`);
+        var playerStats = await apicomm.nhlApiRequest(`/api/v1/teams/${teamRecord.team.id}?hydrate=roster(season=${season},person(stats(splits=statsSingleSeason)))`);
         var playersRoster = playerStats.teams[0].roster.roster;
         var fmtRoster = playersRoster.filter((p) => {
           return p.person.stats[0].splits != null && p.person.stats[0].splits.length > 0;

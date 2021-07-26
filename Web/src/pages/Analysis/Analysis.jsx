@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dropdown, Header, Image, Menu, Segment, Statistic, Tab, Table } from 'semantic-ui-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import './Analysis.scss';
 import { getLogo } from '../../util/assets';
@@ -44,7 +44,7 @@ class Analysis extends Component {
         };
       });
 
-      sortedPlayers.reduce(function (res, value, index) {
+    sortedPlayers.reduce(function (res, value, index) {
       var id = index > 7 ? '' : value.label;
       if (!res[id]) {
         res[id] = { label: id, subLabel: 0, angle: 0 };
@@ -76,7 +76,7 @@ class Analysis extends Component {
       const colors = getColorScheme(team.team.colorScheme);
       var skaterPie = this.createSortedList(team.rosterStats.filter((p) => { return p.stats.points > 0; }), category);
       var goalieGraph = this.createSortedList(team.rosterStats.filter((p) => { return p.stats.points == null; }), 'wins');
-
+      
       var skaters = team.rosterStats.filter((p) => { return p.stats.points !== null; });
       return {
         menuItem: (
@@ -122,7 +122,7 @@ class Analysis extends Component {
             </div>
             <div className='line-chart-container'>
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart
+                <BarChart
                   data={team.rankingsGraph}
                   margin={{
                     top: 15,
@@ -133,11 +133,11 @@ class Analysis extends Component {
                 >
                   <CartesianGrid strokeDasharray="4 4" />
                   <XAxis dataKey="x" />
-                  <YAxis name="Rank" reversed />
+                  <YAxis name="Rank" reversed domain={[1, 32]} />
                   <Tooltip />
                   <Legend />
-                  <Line dataKey="y" name="Rank" fill={colors[0]} stroke={colors[0]} />
-                </LineChart>
+                  <Bar dataKey="y" name="Rank" background={{ fill: `${colors[0]}` }} fill={`${colors[4]}`} stroke={`${colors[4]}`} />
+                </BarChart>
               </ResponsiveContainer>
             </div>
             <div className='graph-container'>
