@@ -8,7 +8,7 @@ import { IsNullOrUndefined } from '../../util/common';
 function Lineup(props) {
   const { lines } = props;
   if (IsNullOrUndefined(lines)) {
-    return (<Loader></Loader>);
+    return (<Loader text='Loading lines...'></Loader>);
   }
   if (IsNullOrUndefined(lines.lines)) {
     return (<NotFound></NotFound>);

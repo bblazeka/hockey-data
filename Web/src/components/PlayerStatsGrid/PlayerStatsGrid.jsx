@@ -17,8 +17,8 @@ function PlayerStatsGrid(props) {
   }
   const { totalGames, totalGoals, totalAssists, totalPoints, totalGamesStarted, totalWins, stats, seasonSums } = data;
 
-  var exampleObject = stats[stats.length - 1].stat;
-  var displayedCategories = config.categories.filter((cat) => {
+  const exampleObject = stats[stats.length - 1].stat;
+  const displayedCategories = config.categories.filter((cat) => {
     return (cat.name in exampleObject);
   });
   return (
@@ -46,7 +46,7 @@ function PlayerStatsGrid(props) {
               <Table.Cell>{stat.team.name}</Table.Cell>
               {!detailed && <Table.Cell>{stat.league ? stat.league.name : ''}</Table.Cell>}
               {displayedCategories.map((cat, i) => {
-                var value = stat.stat[cat.name];
+                let value = stat.stat[cat.name];
                 if (cat.name === 'savePercentage') {
                   value = FormatDecimals(value * 100, 1);
                 }

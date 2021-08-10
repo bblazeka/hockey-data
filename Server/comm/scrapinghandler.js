@@ -15,7 +15,7 @@ async function scrapPlayerCapHit(fullName) {
   const dom = new JSDOM(text);
 
   const divs = dom.window.document.getElementsByTagName('div');
-  for (var i = 0; i < divs.length; i++) {
+  for (let i = 0; i < divs.length; i++) {
     if (divs[i].textContent.startsWith('Cap Hit:')) {
       let result = divs[i].textContent.split(': ')[1].replace(/[^A-Z0-9]+/ig, '');
       return parseInt(result);

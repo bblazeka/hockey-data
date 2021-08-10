@@ -18,8 +18,8 @@ class Schedule extends Component {
 
   constructor(props) {
     super(props);
-    var today = new Date();
-    var finish = new Date(today);
+    const today = new Date();
+    const finish = new Date(today);
     finish.setDate(finish.getDate() + 7);
     this.state = {
       start: today,
@@ -44,15 +44,15 @@ class Schedule extends Component {
   }
 
   getScheduleForTimePeriod() {
-    var start = DateToServerFormat(this.state.start);
-    var end = DateToServerFormat(this.state.end);
+    const start = DateToServerFormat(this.state.start);
+    const end = DateToServerFormat(this.state.end);
     this.props.getSchedule(start, end);
   }
 
   render() {
     const { start, end } = this.state;
     const { schedule } = this.props;
-    var dates = getDatesArray(start, end);
+    const dates = getDatesArray(start, end);
     if (!schedule) {
       return (<Loader></Loader>);
     }
@@ -108,7 +108,7 @@ class Schedule extends Component {
                     <Link to={`${routes.teams}/${element.id}`}><img className="logo" src={getLogo(element.id)} alt={`img${element.id}`}></img></Link>
                   </Table.Cell>
                   {dates.map((date) => {
-                    var game = (element.games.filter(game => game.date && game.date === DateToServerFormat(date)))[0];
+                    const game = (element.games.filter(game => game.date && game.date === DateToServerFormat(date)))[0];
                     try {
                       const logo = getLogo(game.opponent.team.id);
                       return (

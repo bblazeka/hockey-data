@@ -17,7 +17,7 @@ const util = require('./services/util');
 
 const app = express();
 
-var databaseInitialized = false;
+let databaseInitialized = false;
 
 // Construct a schema, using GraphQL schema language
 const schema = loadSchemaSync('./services/**/*.gql', { // load from multiple files using glob
@@ -27,7 +27,7 @@ const schema = loadSchemaSync('./services/**/*.gql', { // load from multiple fil
 });
  
 // The root provides a resolver function for each API endpoint
-var root = {
+const root = {
   analysis: analysis.getAnalysis,
   game: game.getGame,
   gamesBetweenTeams: game.gamesBetweenTeams,
@@ -67,7 +67,7 @@ async function init() {
   console.log('Initializing database...');
   
   if (!databaseInitialized) {
-    var database = new Database();
+    const database = new Database();
     await database.init();
     analysis.init(database);
     game.init(database);

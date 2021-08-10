@@ -11,10 +11,10 @@ import { Loader } from '..';
 function RosterStatsGrid(props) {
   const { rosterStats, title } = props;
   if (IsNullOrUndefined(rosterStats)) {
-    return (<Loader></Loader>);
+    return (<Loader text='Loading roster stats...'></Loader>);
   }
-  var exampleObject = rosterStats[0].stats;
-  var displayedCategories = config.categories.filter((cat) => {
+  const exampleObject = rosterStats[0].stats;
+  const displayedCategories = config.categories.filter((cat) => {
     return (cat.name in exampleObject);
   });
   return (
@@ -35,7 +35,7 @@ function RosterStatsGrid(props) {
               <Table.Row key={stat + index}>
                 <Table.Cell className='name-cell'><Link to={`${routes.player}/${stat.id}`}>{stat.fullName}</Link></Table.Cell>
                 {displayedCategories.map((cat, i) => {
-                var value = stat.stats[cat.name];
+                let value = stat.stats[cat.name];
                 if (cat.name === 'savePercentage') {
                   value = FormatDecimals(value * 100, 1);
                 }

@@ -1,4 +1,4 @@
-var axios = require('axios');
+const axios = require('axios');
 const newsapi = require('../keys/newsapi.json');
 const mapbox = require('../keys/mapbox.json');
 
@@ -19,12 +19,12 @@ async function mapboxApiRequest(query) {
 
 async function wikiApiRequest(query) {
   const response = await axios.get(`https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=${encodeURIComponent(query)}`);
-  var pages = response.data.query.pages;
+  const pages = response.data.query.pages;
   return pages[Object.keys(pages)[0]];
 }
 
 async function playerWikiRequest(query, optionalQuery = '') {
-  var result = await wikiApiRequest(query);
+  let result = await wikiApiRequest(query);
   if (result.extract.includes('may refer to') && optionalQuery.length > 0) {
     result = await wikiApiRequest(`${query} (ice hockey)`);
     if (result.extract.includes('may refer to') || Object.prototype.hasOwnProperty.call(result, 'missing')) {
@@ -35,7 +35,7 @@ async function playerWikiRequest(query, optionalQuery = '') {
 }
 
 async function wikiApiAdvancedRequest(mainQuery, subQuery) {
-  var res = await wikiApiRequest(`${mainQuery} ${subQuery}`);
+  let res = await wikiApiRequest(`${mainQuery} ${subQuery}`);
   if (res === undefined || res.ns == 0) {
     res = await wikiApiRequest(`${mainQuery}`);
   }

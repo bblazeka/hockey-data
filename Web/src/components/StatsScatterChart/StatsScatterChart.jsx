@@ -21,12 +21,12 @@ function StatsScatterChart(props) {
     );
   };
 
-  var renderTooltip = (props) => {
+  const renderTooltip = (props) => {
     const { active, payload } = props;
 
     if (active && payload && payload.length) {
       const data = payload[0] && payload[0].payload;
-      var key = yKey.includes('.') ? yKey.split('.')[1] : yKey;
+      const key = yKey.includes('.') ? yKey.split('.')[1] : yKey;
       return (
         <div
           style={{

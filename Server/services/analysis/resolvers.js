@@ -1,22 +1,22 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
 
 const { Database } = require('../../comm/dbhandler');
 const { getActiveTeams } = require('../team/resolvers');
 
-var db = new Database();
+let db = new Database();
 
 function init(database) {
   db = database;
 }
 
 async function getAnalysis() {
-  var activeTeams = await getActiveTeams();
-  var teams = await db.getCollection('analysis').find({}).toArray();
+  const activeTeams = await getActiveTeams();
+  const teams = await db.getCollection('analysis').find({}).toArray();
 
   teams.forEach(function (team) {
     team.team = activeTeams.filter(t => t.id === team.team.id)[0];
-    var formattedRoster = team.rosterStats.map((p) => {
+    const formattedRoster = team.rosterStats.map((p) => {
       return Object.assign(p, {
         stats: p.stats
       });

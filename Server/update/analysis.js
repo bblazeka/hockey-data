@@ -13,20 +13,20 @@ async function run() {
 
   const season = '20202021';
 
-  var db = new dbhandler.Database();
+  const db = new dbhandler.Database();
   await db.init();
 
   try {
-    var response = await apicomm.nhlApiRequest(`/api/v1/standings?season=${season}`);
+    const response = await apicomm.nhlApiRequest(`/api/v1/standings?season=${season}`);
 
     const teamAnalysisCollection = db.getCollection('analysis');
 
-    var res = response.records.map(async (record) => {
+    const res = response.records.map(async (record) => {
       record.teamRecords.map(async (teamRecord) => {
 
-        var playerStats = await apicomm.nhlApiRequest(`/api/v1/teams/${teamRecord.team.id}?hydrate=roster(season=${season},person(stats(splits=statsSingleSeason)))`);
-        var playersRoster = playerStats.teams[0].roster.roster;
-        var fmtRoster = playersRoster.filter((p) => {
+        const playerStats = await apicomm.nhlApiRequest(`/api/v1/teams/${teamRecord.team.id}?hydrate=roster(season=${season},person(stats(splits=statsSingleSeason)))`);
+        const playersRoster = playerStats.teams[0].roster.roster;
+        const fmtRoster = playersRoster.filter((p) => {
           return p.person.stats[0].splits != null && p.person.stats[0].splits.length > 0;
         }).map((p) => {
           return ({
@@ -38,12 +38,12 @@ async function run() {
           });
         });
 
-        var lines = await scrapping.scrapLines(teamRecord.team.name);
+        const lines = await scrapping.scrapLines(teamRecord.team.name);
 
-        var teamStats = await apicomm.nhlApiRequest(`/api/v1/teams/${teamRecord.team.id}/stats`);
+        const teamStats = await apicomm.nhlApiRequest(`/api/v1/teams/${teamRecord.team.id}/stats`);
         const options = { upsert: true };
         const filter = { id: teamRecord.team.id };
-        var rankings = teamStats.stats[1].splits[0].stat;
+        const rankings = teamStats.stats[1].splits[0].stat;
         Object.keys(rankings).forEach(function (key) { rankings[key] = parseInt(rankings[key]); });
         const updateDoc = {
           $set: {

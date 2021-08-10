@@ -1,35 +1,36 @@
-var njdLogo = '/assets/logos/njd.webp';
-var nyiLogo = '/assets/logos/nyi.webp';
-var nyrLogo = '/assets/logos/nyr.webp';
-var phiLogo = '/assets/logos/phi.webp';
-var pitLogo = '/assets/logos/pit.webp';
-var bosLogo = '/assets/logos/bos.webp';
-var bufLogo = '/assets/logos/buf.webp';
-var mtlLogo = '/assets/logos/mtl.webp';
-var ottLogo = '/assets/logos/ott.webp';
-var torLogo = '/assets/logos/tor.webp';
-var carLogo = '/assets/logos/car.webp';
-var flaLogo = '/assets/logos/fla.webp';
-var tblLogo = '/assets/logos/tbl.webp';
-var wshLogo = '/assets/logos/wsh.webp';
-var chiLogo = '/assets/logos/chi.webp';
-var detLogo = '/assets/logos/det.webp';
-var nshLogo = '/assets/logos/nsh.webp';
-var stlLogo = '/assets/logos/stl.webp';
-var cgyLogo = '/assets/logos/cgy.webp';
-var colLogo = '/assets/logos/col.webp';
-var edmLogo = '/assets/logos/edm.webp';
-var vanLogo = '/assets/logos/van.webp';
-var anaLogo = '/assets/logos/ana.webp';
-var dalLogo = '/assets/logos/dal.webp';
-var lakLogo = '/assets/logos/lak.webp';
-var sjsLogo = '/assets/logos/sjs.webp';
-var cbjLogo = '/assets/logos/cbj.webp';
-var minLogo = '/assets/logos/min.webp';
-var wpgLogo = '/assets/logos/wpg.webp';
-var ariLogo = '/assets/logos/ari.webp';
-var vgkLogo = '/assets/logos/vgk.webp';
-var seaLogo = '/assets/logos/sea.webp';
+const njdLogo = '/assets/logos/njd.webp';
+const nyiLogo = '/assets/logos/nyi.webp';
+const nyrLogo = '/assets/logos/nyr.webp';
+const phiLogo = '/assets/logos/phi.webp';
+const pitLogo = '/assets/logos/pit.webp';
+const bosLogo = '/assets/logos/bos.webp';
+const bufLogo = '/assets/logos/buf.webp';
+const mtlLogo = '/assets/logos/mtl.webp';
+const ottLogo = '/assets/logos/ott.webp';
+const torLogo = '/assets/logos/tor.webp';
+const carLogo = '/assets/logos/car.webp';
+const flaLogo = '/assets/logos/fla.webp';
+const tblLogo = '/assets/logos/tbl.webp';
+const wshLogo = '/assets/logos/wsh.webp';
+const chiLogo = '/assets/logos/chi.webp';
+const detLogo = '/assets/logos/det.webp';
+const nshLogo = '/assets/logos/nsh.webp';
+const stlLogo = '/assets/logos/stl.webp';
+const cgyLogo = '/assets/logos/cgy.webp';
+const colLogo = '/assets/logos/col.webp';
+const edmLogo = '/assets/logos/edm.webp';
+const vanLogo = '/assets/logos/van.webp';
+const anaLogo = '/assets/logos/ana.webp';
+const dalLogo = '/assets/logos/dal.webp';
+const lakLogo = '/assets/logos/lak.webp';
+const sjsLogo = '/assets/logos/sjs.webp';
+const cbjLogo = '/assets/logos/cbj.webp';
+const minLogo = '/assets/logos/min.webp';
+const wpgLogo = '/assets/logos/wpg.webp';
+const ariLogo = '/assets/logos/ari.webp';
+const vgkLogo = '/assets/logos/vgk.webp';
+const seaLogo = '/assets/logos/sea.webp';
+const defLogo = '/assets/logos/def.webp';
 
 export function getLogo(teamId) {
   switch (teamId) {
@@ -98,6 +99,6 @@ export function getLogo(teamId) {
     case 55:
       return seaLogo;
     default:
-      return null;
+      return defLogo;
   }
 }

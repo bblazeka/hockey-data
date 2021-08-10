@@ -10,14 +10,14 @@ const client = new MongoClient(db.uri);
 async function run() {
 
 
-  var db = new dbhandler.Database();
+  const db = new dbhandler.Database();
   await db.init();
 
-  var dates = []
+  const dates = []
 
   await client.connect();
 
-  var r = await fetchGames().then((res) => dates = res)
+  const r = await fetchGames().then((res) => dates = res)
 
   try {
 

@@ -14,13 +14,13 @@ function GameTeamStats(props) {
   if (IsNullOrUndefined(team)) {
     return (<Loader></Loader>);
   }
-  var exampleObject = team.skaters[0].stats;
-  var displayedCategories = config.categories.filter((cat) => {
+  const exampleObject = team.skaters[0].stats;
+  const displayedCategories = config.categories.filter((cat) => {
     return (cat.name in exampleObject);
   });
 
-  var goalieObject = team.goalies[0].stats;
-  var goalieCategories = config.categories.filter((cat) => {
+  const goalieObject = team.goalies[0].stats;
+  const goalieCategories = config.categories.filter((cat) => {
     return (cat.name in goalieObject);
   });
   return (
@@ -46,7 +46,7 @@ function GameTeamStats(props) {
                     {'#' + player.jerseyNumber + ' ' + player.position.name}
                   </Header.Subheader></Header></Link></Table.Cell>
                 {displayedCategories.map((cat, i) => {
-                  var value = player.stats[cat.name];
+                  const value = player.stats[cat.name];
                   return (<Table.Cell key={'col' + i}>{value}</Table.Cell>);
                 })}
               </Table.Row>);
@@ -72,7 +72,7 @@ function GameTeamStats(props) {
                   {`#${player.jerseyNumber} ${player.position.name}`}
                 </Header.Subheader></Header></Link></Table.Cell>
               {goalieCategories.map((cat, i) => {
-                var value = player.stats[cat.name];
+                let value = player.stats[cat.name];
                 if (cat.name === 'savePercentage') {
                   value = FormatDecimals(value, 1);
                 }

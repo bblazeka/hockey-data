@@ -1,4 +1,4 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
 const apicomm = require('../comm/apihandler');
 const dbhandler = require('../comm/dbhandler.js');
@@ -6,16 +6,16 @@ const { fetchTeams } = require('./functions');
 
 async function run() {
 
-  var db = new dbhandler.Database();
+  const db = new dbhandler.Database();
   await db.init();
 
-  var teams = await fetchTeams();
+  const teams = await fetchTeams();
   try {
 
     const collection = db.getCollection('teams');
 
     for (let team of teams) {
-      var location = await apicomm.mapboxApiRequest(_.isNil(team.venue) ? team.locationName : `${team.venue.name} ${team.venue.city}`);
+      const location = await apicomm.mapboxApiRequest(_.isNil(team.venue) ? team.locationName : `${team.venue.name} ${team.venue.city}`);
 
       const options = { upsert: true };
       const filter = { id: team.id };
@@ -55,7 +55,7 @@ async function run() {
       if (team.roster == undefined) {
         continue;
       }
-      var roster = team.roster.roster;
+      const roster = team.roster.roster;
       for (let player of roster) {
         const options = { upsert: true };
         const filter = { id: player.person.id };

@@ -6,16 +6,16 @@ import { NotFound, Loader } from '..';
 import { getLogo } from '../../util/assets';
 import { IsNullOrUndefined } from '../../util/common';
 
-export default function TeamSchedule(props) {
+function TeamSchedule(props) {
   const { games } = props;
   if (IsNullOrUndefined(games)) {
-    return (<Loader></Loader>);
+    return (<Loader text='Loading team schedule...'></Loader>);
   }
   return (
     <>
       <Segment>
         <Header as='h3'>Games</Header>
-        {games.length === 0 && <NotFound text={'No upcoming games.'} />}
+        {games.length === 0 && <NotFound text='No upcoming games.' />}
         <List horizontal>
           {games.map((game) => {
             return (
@@ -33,3 +33,5 @@ export default function TeamSchedule(props) {
     </>);
 
 }
+
+export default React.memo(TeamSchedule);

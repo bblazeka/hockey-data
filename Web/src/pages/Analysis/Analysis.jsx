@@ -33,8 +33,8 @@ class Analysis extends Component {
   }
 
   createSortedList(players, category) {
-    var result = [];
-    var sortedPlayers = players
+    const result = [];
+    const sortedPlayers = players
       .sort((a, b) => { return b.stats[category] - a.stats[category]; })
       .map((ps) => {
         return {
@@ -45,7 +45,7 @@ class Analysis extends Component {
       });
 
     sortedPlayers.reduce(function (res, value, index) {
-      var id = index > 7 ? '' : value.label;
+      const id = index > 7 ? '' : value.label;
       if (!res[id]) {
         res[id] = { label: id, subLabel: 0, angle: 0 };
         result.push(res[id]);
@@ -74,10 +74,10 @@ class Analysis extends Component {
 
     const panes = analysis.map((team, index) => {
       const colors = getColorScheme(team.team.colorScheme);
-      var skaterPie = this.createSortedList(team.rosterStats.filter((p) => { return p.stats.points > 0; }), category);
-      var goalieGraph = this.createSortedList(team.rosterStats.filter((p) => { return p.stats.points == null; }), 'wins');
+      const skaterPie = this.createSortedList(team.rosterStats.filter((p) => { return p.stats.points > 0; }), category);
+      const goalieGraph = this.createSortedList(team.rosterStats.filter((p) => { return p.stats.points == null; }), 'wins');
       
-      var skaters = team.rosterStats.filter((p) => { return p.stats.points !== null; });
+      const skaters = team.rosterStats.filter((p) => { return p.stats.points !== null; });
       return {
         menuItem: (
           <Menu.Item key={team.id}>

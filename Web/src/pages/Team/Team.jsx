@@ -40,11 +40,11 @@ class Team extends Component {
       props.geocode(`${team.venue.name} ${team.venue.city}`);
       props.getNews(team.name);
       props.getTweets(team.name);
-      var today = new Date();
-      var finish = new Date(today);
+      const today = new Date();
+      const finish = new Date(today);
       finish.setDate(finish.getDate() + 14);
-      var start = DateToServerFormat(today);
-      var end = DateToServerFormat(finish);
+      const start = DateToServerFormat(today);
+      const end = DateToServerFormat(finish);
       props.getTeamSchedule(team.id, start, end);
       return {
         teamQuery: team.name,

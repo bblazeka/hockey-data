@@ -1,10 +1,10 @@
-var _ = require('lodash');
+const _ = require('lodash');
 const { DateTime } = require('luxon');
 
 const { Database } = require('../../comm/dbhandler');
 const apicomm = require('../../comm/apihandler');
 
-var db = new Database();
+let db = new Database();
 
 function init(database) {
   db = database;
@@ -41,8 +41,8 @@ async function gamesBetweenTeams({ homeId, awayId }) {
 
 async function getGame({ gameId }) {
   const linescore = await apicomm.nhlApiRequest(`/api/v1/game/${gameId}/linescore`);
-  var result = await apicomm.nhlApiRequest(`/api/v1/game/${gameId}/boxscore`);
-  var dbGame = (await db.getCollection('games').find({ 'gamePk': gameId }).toArray())[0];
+  const result = await apicomm.nhlApiRequest(`/api/v1/game/${gameId}/boxscore`);
+  const dbGame = (await db.getCollection('games').find({ 'gamePk': gameId }).toArray())[0];
   result.gameDate = dbGame.gameDate;
   result.gameType = dbGame.gameType;
   result.season = dbGame.season;
@@ -51,8 +51,8 @@ async function getGame({ gameId }) {
   result.venue = dbGame.venue;
 
   if (!_.isNil(result.linescore.currentPeriodTimeRemaining)) {
-    var res = result.linescore.currentPeriodTimeRemaining.split(':');
-    var time = (1200 - (_.toInteger(res[0]) * 60 + _.toInteger(res[1]))) / 1200;
+    const res = result.linescore.currentPeriodTimeRemaining.split(':');
+    const time = (1200 - (_.toInteger(res[0]) * 60 + _.toInteger(res[1]))) / 1200;
     result.percentage = ((result.linescore.currentPeriod - 1) * 0.34 + time * 0.34) * 100;
   }
   result.teams.home.skaters = Object.values(result.teams.home.players)
@@ -71,11 +71,11 @@ async function getGame({ gameId }) {
 }
 
 async function getTodaysGames() {
-  var games = (await db.getCollection('games').find({
+  const games = (await db.getCollection('games').find({
     'date': DateTime.now().toISODate()
   }).toArray()).sort((a, b) => { return new Date(a.gameDate) - new Date(b.gameDate); });
   return games.map(async (game) => {
-    var result = await apicomm.nhlApiRequest(`/api/v1/game/${game.gamePk}/linescore`);
+    const result = await apicomm.nhlApiRequest(`/api/v1/game/${game.gamePk}/linescore`);
     result.gameTime = DateTime.fromJSDate(game.gameDate).toFormat('HH:mm');
     result.gamePk = game.gamePk;
     result.ongoingGame = !_.isNil(result.currentPeriodTimeRemaining);

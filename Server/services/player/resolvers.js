@@ -1,10 +1,10 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
 const { Database } = require('../../comm/dbhandler');
 const apicomm = require('../../comm/apihandler');
 const config = require('../../config.json');
 
-var db = new Database();
+let db = new Database();
 
 function init(database) {
   db = database;
@@ -22,9 +22,9 @@ function getGroup(array) {
     return res;
  }
 
-  var result = [];
+ const result = [];
   array.reduce(function (res, value) {
-    var key = `${value.season.substr(2, 2)}/${value.season.slice(-2)}`;
+    const key = `${value.season.substr(2, 2)}/${value.season.slice(-2)}`;
     if (!res[key]) {
       res[key] = Object.assign(value.stat, { season: key });
       result.push(res[key]);
@@ -42,8 +42,8 @@ async function getPlayer({ id }) {
   };
   const player = await db.getCollection('players').findOne(query, options);
 
-  var result = await apicomm.nhlApiRequest(`/api/v1/people/${id}/stats?stats=yearByYear`);
-  var nhlStatsOnly = result.stats[0].splits.filter(el => el.league.id === 133);
+  const result = await apicomm.nhlApiRequest(`/api/v1/people/${id}/stats?stats=yearByYear`);
+  const nhlStatsOnly = result.stats[0].splits.filter(el => el.league.id === 133);
   player.nhlStats = {
     totalGames: nhlStatsOnly.reduce((accum, item) => accum + item.stat.games, 0),
     totalGamesStarted: nhlStatsOnly.reduce((accum, item) => accum + item.stat.gamesStarted, 0),
@@ -78,36 +78,36 @@ async function getPlayers() {
 }
 
 async function addSelectedPlayer({ id }) {
-  var myquery = { userId: 0 };
-  var newvalues = { $addToSet: { selectedPlayers: parseInt(id) } };
-  var res = await db.getCollection('profiles').updateOne(myquery, newvalues);
+  const myquery = { userId: 0 };
+  const newvalues = { $addToSet: { selectedPlayers: parseInt(id) } };
+  const res = await db.getCollection('profiles').updateOne(myquery, newvalues);
   console.log(`${res.result.nModified} selected players added`);
 
-  var selectedPlayers = await getSelectedPlayers();
+  const selectedPlayers = await getSelectedPlayers();
   return selectedPlayers;
 }
 
 async function deleteSelectedPlayer({ id }) {
-  var myquery = { userId: 0 };
-  var newvalues = { $pull: { selectedPlayers: parseInt(id) } };
-  var res = await db.getCollection('profiles').updateOne(myquery, newvalues);
+  const myquery = { userId: 0 };
+  const newvalues = { $pull: { selectedPlayers: parseInt(id) } };
+  const res = await db.getCollection('profiles').updateOne(myquery, newvalues);
   console.log(`${res.result.nModified} selected players deleted`);
 
-  var selectedPlayers = await getSelectedPlayers();
+  const selectedPlayers = await getSelectedPlayers();
   return selectedPlayers;
 }
 
 async function getSelectedPlayers() {
-  var profiles = await getProfiles();
-  var skaters = [];
-  var goalies = [];
+  const profiles = await getProfiles();
+  const skaters = [];
+  const goalies = [];
   for (let playerId of profiles[0].selectedPlayers) {
-    var playerStats = (await apicomm.nhlApiRequest(`/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${config.currentSeason}`)).stats[0].splits[0].stat;
+    const playerStats = (await apicomm.nhlApiRequest(`/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${config.currentSeason}`)).stats[0].splits[0].stat;
     const query = { id: playerId };
     const options = {
       sort: { id: -1 },
     };
-    var player = await db.getCollection('players').findOne(query, options);
+    const player = await db.getCollection('players').findOne(query, options);
     
     if (player.primaryPosition.code !== 'G') {
       player.stats = Object.assign(playerStats, {
@@ -142,12 +142,12 @@ async function getSelectedPlayers() {
 }
 
 async function clearSelectedPlayers() {
-  var myquery = { userId: 0 };
-  var newvalues = { $set: { selectedPlayers: [] } };
-  var res = await db.getCollection('profiles').updateOne(myquery, newvalues);
+  const myquery = { userId: 0 };
+  const newvalues = { $set: { selectedPlayers: [] } };
+  const res = await db.getCollection('profiles').updateOne(myquery, newvalues);
   console.log(`${res.result.nModified} selected players deleted`);
 
-  var selectedPlayers = await getSelectedPlayers();
+  const selectedPlayers = await getSelectedPlayers();
   return selectedPlayers;
 }
 

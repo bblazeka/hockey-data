@@ -1,5 +1,5 @@
 const { MongoClient } = require('mongodb');
-var dbkey = require('../keys/db.json');
+const dbkey = require('../keys/db.json');
 
 class Database {
 

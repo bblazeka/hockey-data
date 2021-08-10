@@ -7,26 +7,26 @@ const scrapper = require('../comm/scrapinghandler.js');
 
 async function run() {
 
-  var db = new dbhandler.Database();
+  const db = new dbhandler.Database();
   await db.init();
 
   try {
 
     const playerCollection = db.getCollection('players');
 
-    var players = await playerCollection.find({ active: true }).toArray();
+    const players = await playerCollection.find({ active: true }).toArray();
 
     for (let playerTemp of players) {
 
       if (playerTemp.active && ((DateTime.fromJSDate(playerTemp.lastUpdate) < DateTime.now().minus({ weeks: 1 }).endOf('day')) || playerTemp.lastUpdate === null)) {
 
-        var response = await apicomm.nhlApiRequest(`/api/v1/people/${playerTemp.id}`);
-        var player = response.people[0];
+        const response = await apicomm.nhlApiRequest(`/api/v1/people/${playerTemp.id}`);
+        const player = response.people[0];
 
         const options = { upsert: true };
         const filter = { id: player.id };
 
-        var capHit = await scrapper.scrapPlayerCapHit(playerTemp.fullName);
+        const capHit = await scrapper.scrapPlayerCapHit(playerTemp.fullName);
         if (_.isNil(capHit)) {
           if (!_.isNil(playerTemp.altName)) {
             capHit = await scrapper.scrapPlayerCapHit(playerTemp.altName);

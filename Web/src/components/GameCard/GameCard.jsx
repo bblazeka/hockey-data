@@ -13,7 +13,7 @@ function GameCard(props) {
     return (<Loader></Loader>);
   }
   const { home, away } = game.teams;
-  var generalGameInfo = game.ongoingGame ? `${game.currentPeriodOrdinal} ${game.currentPeriodTimeRemaining}` : game.gameTime;
+  const generalGameInfo = game.ongoingGame ? `${game.currentPeriodOrdinal} ${game.currentPeriodTimeRemaining}` : game.gameTime;
   return (
     <Card key={game.gamePk} href={`${routes.game}/${game.gamePk}`} color={game.ongoingGame ? game.finished ? 'grey' : 'orange' : null}>
       <Card.Content>

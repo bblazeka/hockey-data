@@ -32,8 +32,8 @@ export default function Home() {
   return (
     <>
       <Header as="h2">Today NHL games</Header>
+      {(IsNullOrUndefined(games) || games.length === 0) &&  <NotFound text="No games found." />}
       <Card.Group>
-        {(IsNullOrUndefined(games) || games.length === 0) && <NotFound text="No games found." />}
         {games.map((game) => {
           return (<GameCard key={`gamecard${game.gamePk}`} game={game} />);
         })}

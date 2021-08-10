@@ -1,10 +1,10 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
 const { Database } = require('../../comm/dbhandler');
 const apicomm = require('../../comm/apihandler');
 const util = require('../util/index.js');
 
-var db = new Database();
+let db = new Database();
 
 function init(database) {
   db = database;
@@ -29,8 +29,8 @@ async function getTeam({ id }) {
   const team = await collection.findOne(query, options);
   
   if (!_.isNil(team)) {
-    var rosterResponse = await getPlayersFromTeam(id);
-    var rosterStats = await getTeamRosterStats(id);
+    const rosterResponse = await getPlayersFromTeam(id);
+    const rosterStats = await getTeamRosterStats(id);
 
     team.goalies = rosterResponse.filter(p => p.primaryPosition.type == 'Goalie');
     team.defenders = rosterResponse.filter(p => p.primaryPosition.type == 'Defenseman');
@@ -42,25 +42,24 @@ async function getTeam({ id }) {
     team.description = (await apicomm.wikiApiRequest(team.name)).extract;
     team.venue.description = (await apicomm.wikiApiAdvancedRequest(team.venue.name, team.venue.city)).extract;
   }
-
   return team;
 }
 
 async function getActiveTeams() {
-  var teams = await db.getCollection('teams').find({}).toArray();
+  const teams = await db.getCollection('teams').find({}).toArray();
   return _.sortBy(teams.filter(t => t.active), 'name');
 }
 
 async function getTeamLocations() {
-  var teams = await getActiveTeams();
-  var season = await apicomm.wikiApiRequest('2021–22 NHL season');
-  var divisions = [{ key: 'Metropolitan', value: 'red' },
+  const teams = await getActiveTeams();
+  const season = await apicomm.wikiApiRequest('2021–22 NHL season');
+  const divisions = [{ key: 'Metropolitan', value: 'red' },
   { key: 'Atlantic', value: 'green' },
   { key: 'Central', value: 'orange' },
   { key: 'Pacific', value: 'blue' }];
-  var teamLocations = teams.map((team) => {
+  const teamLocations = teams.map((team) => {
     if (!_.isNil(team.division)) {
-      var division = divisions.find((el) => { return el.key === team.division.name; });
+      const division = divisions.find((el) => { return el.key === team.division.name; });
       if (division != null) {
         team.location.color = division.value;
       }
@@ -77,7 +76,7 @@ async function getTeamLocations() {
 }
 
 async function getTeamSchedule({ id, start, end }) {
-  var games = await db.getCollection('games').find({
+  let games = await db.getCollection('games').find({
     'date': {
       $gte: `${start}`,
       $lte: `${end}`

@@ -1,7 +1,7 @@
 const apicomm = require('../../comm/apihandler');
 
 async function geocode({ query }) {
-  var result = await apicomm.mapboxApiRequest(query);
+  const result = await apicomm.mapboxApiRequest(query);
   return result.features.map(el => {
     return ({
       text: el.text,

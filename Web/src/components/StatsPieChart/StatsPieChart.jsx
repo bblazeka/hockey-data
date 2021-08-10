@@ -8,7 +8,7 @@ import { getColorScheme } from '../../util/shared';
 
 function StatsPieChart(props) {
   const { colorScheme, values, radius } = props;
-  var colors = colorScheme || getColorScheme('blue');
+  const colors = colorScheme || getColorScheme('blue');
 
   if (IsNullOrUndefined(values)) {
     return (<Loader></Loader>);
