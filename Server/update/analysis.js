@@ -1,50 +1,66 @@
-const apicomm = require('../comm/apihandler');
-const dbhandler = require('../comm/dbhandler.js');
-const scrapping = require('../comm/scrapinghandler');
+const apicomm = require("../comm/apihandler");
+const dbhandler = require("../comm/dbhandler.js");
+const scrapping = require("../comm/scrapinghandler");
 
 function abbreviateName(name) {
-  if (name.includes('.')) {
+  if (name.includes(".")) {
     return name;
   }
-  return name.split(' ').map(p => `${p[0]}.`).join(' ');
+  return name
+    .split(" ")
+    .map((p) => `${p[0]}.`)
+    .join(" ");
 }
 
 async function run() {
-
-  const season = '20202021';
+  const season = "20202021";
 
   const db = new dbhandler.Database();
   await db.init();
 
   try {
-    const response = await apicomm.nhlApiRequest(`/api/v1/standings?season=${season}`);
+    const response = await apicomm.nhlApiRequest(
+      `/api/v1/standings?season=${season}`
+    );
 
-    const teamAnalysisCollection = db.getCollection('analysis');
+    const teamAnalysisCollection = db.getCollection("analysis");
 
-    const res = response.records.map(async (record) => {
+    let res = response.records.map(async (record) => {
       record.teamRecords.map(async (teamRecord) => {
-
-        const playerStats = await apicomm.nhlApiRequest(`/api/v1/teams/${teamRecord.team.id}?hydrate=roster(season=${season},person(stats(splits=statsSingleSeason)))`);
+        const playerStats = await apicomm.nhlApiRequest(
+          `/api/v1/teams/${teamRecord.team.id}?hydrate=roster(season=${season},person(stats(splits=statsSingleSeason)))`
+        );
         const playersRoster = playerStats.teams[0].roster.roster;
-        const fmtRoster = playersRoster.filter((p) => {
-          return p.person.stats[0].splits != null && p.person.stats[0].splits.length > 0;
-        }).map((p) => {
-          return ({
-            id: p.person.id,
-            abbrName: `${abbreviateName(p.person.firstName)} ${p.person.lastName}`,
-            fullName: p.person.fullName,
-            currentAge: p.person.currentAge,
-            stats: p.person.stats[0].splits[0].stat
+        const fmtRoster = playersRoster
+          .filter((p) => {
+            return (
+              p.person.stats[0].splits != null &&
+              p.person.stats[0].splits.length > 0
+            );
+          })
+          .map((p) => {
+            return {
+              id: p.person.id,
+              abbrName: `${abbreviateName(p.person.firstName)} ${
+                p.person.lastName
+              }`,
+              fullName: p.person.fullName,
+              currentAge: p.person.currentAge,
+              stats: p.person.stats[0].splits[0].stat,
+            };
           });
-        });
 
         const lines = await scrapping.scrapLines(teamRecord.team.name);
 
-        const teamStats = await apicomm.nhlApiRequest(`/api/v1/teams/${teamRecord.team.id}/stats`);
+        const teamStats = await apicomm.nhlApiRequest(
+          `/api/v1/teams/${teamRecord.team.id}/stats`
+        );
         const options = { upsert: true };
         const filter = { id: teamRecord.team.id };
         const rankings = teamStats.stats[1].splits[0].stat;
-        Object.keys(rankings).forEach(function (key) { rankings[key] = parseInt(rankings[key]); });
+        Object.keys(rankings).forEach(function (key) {
+          rankings[key] = parseInt(rankings[key]);
+        });
         const updateDoc = {
           $set: {
             id: teamRecord.team.id,
@@ -72,12 +88,18 @@ async function run() {
             regularSeasonStatRankings: rankings,
             rosterStats: fmtRoster,
             lines: lines,
-            lastUpdated: teamRecord.lastUpdated
+            lastUpdated: teamRecord.lastUpdated,
           },
         };
         try {
-          const queryResult = await teamAnalysisCollection.updateOne(filter, updateDoc, options);
-          console.log(`${queryResult.matchedCount} document(s) matched the filter, updated ${queryResult.modifiedCount} document(s)`);
+          const queryResult = await teamAnalysisCollection.updateOne(
+            filter,
+            updateDoc,
+            options
+          );
+          console.log(
+            `${queryResult.matchedCount} document(s) matched the filter, updated ${queryResult.modifiedCount} document(s)`
+          );
         } catch (ex) {
           console.log(ex);
         }
@@ -85,7 +107,7 @@ async function run() {
     });
   } finally {
     Promise.all(res).then(() => {
-      console.log('Finished.');
+      console.log("Finished.");
     });
   }
 }
