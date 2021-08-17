@@ -6,10 +6,10 @@ import dayjs from 'dayjs';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 import routes from '../../routes';
-import * as actions from '../../services/game';
-import * as teamActions from '../../services/team';
+import * as actions from 'services/game';
+import * as teamActions from 'services/team';
 import { getLogo } from '../../util/assets';
-import { Loader } from '../../components';
+import { Loader } from 'components';
 import './GameList.scss';
 import { GetCompetitionStageFullName, IsNullOrUndefined } from '../../util/common';
 

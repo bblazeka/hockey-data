@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Grid, Header, Image, List, Progress, Segment, Statistic } from 'semantic-ui-react';
 import dayjs from 'dayjs';
 
-import * as actions from '../../services/game';
+import * as actions from 'services/game';
 import { getLogo } from '../../util/assets';
-import { GameTeamStats, Loader } from '../../components';
+import { GameTeamStats, Loader } from 'components';
 import { DateToServerFormat, GetCompetitionStageFullName } from '../../util/common';
 import './Game.scss';
 
