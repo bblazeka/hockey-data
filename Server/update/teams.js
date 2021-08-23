@@ -1,4 +1,4 @@
-const _ = require("lodash");
+const { isNil } = require("lodash");
 
 const apicomm = require("../comm/apihandler");
 const dbhandler = require("../comm/dbhandler.js");
@@ -14,7 +14,7 @@ async function run() {
 
     for (let team of teams) {
       const location = await apicomm.mapboxApiRequest(
-        _.isNil(team.venue)
+        isNil(team.venue)
           ? team.locationName
           : `${team.venue.name} ${team.venue.city}`
       );

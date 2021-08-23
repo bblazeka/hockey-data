@@ -106,9 +106,6 @@ async function run() {
       });
     });
   } finally {
-    Promise.all(res).then(() => {
-      console.log("Finished.");
-    });
   }
 }
 
