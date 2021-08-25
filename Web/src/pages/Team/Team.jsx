@@ -5,15 +5,9 @@ import { useParams } from "react-router-dom";
 
 import "./Team.scss";
 import { getTeam } from "services/team";
-import {
-  Loader,
-  Map,
-  NewsFeed,
-  RosterGrid,
-  RosterStatsGrid,
-  SocialFeed,
-  TeamSchedule,
-} from "components";
+import { Loader, Map, NewsFeed, SocialFeed, TeamSchedule } from "components";
+import RosterGrid from "./RosterGrid/RosterGrid.jsx";
+import RosterStatsGrid from "./RosterStatsGrid/RosterStatsGrid.jsx";
 import { getLogo } from "util/assets";
 import { getNews, getTweets } from "services/news";
 import { geocode } from "services/util";

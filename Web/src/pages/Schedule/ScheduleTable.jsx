@@ -94,5 +94,5 @@ export default function ScheduleTable({ schedule, dates }) {
 
 ScheduleTable.propTypes = {
   dates: PropTypes.arrayOf(PropTypes.object),
-  schedule: PropTypes.object,
+  schedule: PropTypes.arrayOf(PropTypes.object),
 };

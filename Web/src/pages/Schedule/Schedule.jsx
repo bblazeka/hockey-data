@@ -21,6 +21,22 @@ export default function Schedule() {
   const [start, setStart] = useState(defaultStart);
   const [end, setEnd] = useState(defaultEnd);
   const dispatch = useDispatch();
+  const setStartControl = (date) => {
+    if (date.getTime() > end.getTime()) {
+      const newEndDate = new Date(date);
+      newEndDate.setDate(date.getDate() + 1);
+      setEnd(newEndDate);
+    }
+    setStart(date);
+  };
+  const setEndControl = (date) => {
+    if (date.getTime() < start.getTime()) {
+      const newStartDate = new Date(date);
+      newStartDate.setDate(date.getDate() - 1);
+      setStart(newStartDate);
+    }
+    setEnd(date);
+  };
   const getScheduleForTimePeriod = () => {
     const startDate = DateToServerFormat(start);
     const endDate = DateToServerFormat(end);
@@ -41,12 +57,12 @@ export default function Schedule() {
         <div className="dates">
           <DatePicker
             selected={start}
-            onChange={(date) => setStart(date)}
+            onChange={(date) => setStartControl(date)}
             dateFormat="dd.MM.yyyy"
           />
           <DatePicker
             selected={end}
-            onChange={(date) => setEnd(date)}
+            onChange={(date) => setEndControl(date)}
             dateFormat="dd.MM.yyyy"
           />
           <Label

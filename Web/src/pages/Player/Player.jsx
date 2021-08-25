@@ -5,7 +5,8 @@ import { Grid, Search, Tab } from "semantic-ui-react";
 import * as actions from "../../services/player";
 import "./Player.scss";
 
-import { Loader, NewsFeed, SocialFeed, PlayerStatsGrid } from "components";
+import { Loader, NewsFeed, SocialFeed } from "components";
+import PlayerStatsGrid from "./PlayerStatsGrid/PlayerStatsGrid";
 import { IsNullOrUndefined } from "util/common";
 import { getTweets, getNews } from "services/news";
 import PlayerHeader from "./PlayerHeader";
