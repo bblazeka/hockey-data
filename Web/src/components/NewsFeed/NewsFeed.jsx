@@ -11,7 +11,7 @@ function NewsFeed(props) {
   const { news } = props;
   if (IsNullOrUndefined(news))
   {
-    return (<Loader></Loader>);
+    return (<Loader text='Loading news feed...'></Loader>);
   }
   return (
     <div className="news-container">
@@ -34,4 +34,4 @@ function NewsFeed(props) {
 
 }
 
-export default NewsFeed;
+export default React.memo(NewsFeed);

@@ -21,7 +21,7 @@ describe('ErrorFallback component', () => {
   });
 
   it('renders error given as parameter', () => {
-    var testErrorMessage = 'This is a funny error';
+    const testErrorMessage = 'This is a funny error';
     act(() => {
       render(<ErrorFallback error={{ 'message': testErrorMessage }} />, container);
     });

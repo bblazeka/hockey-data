@@ -29,7 +29,7 @@ class App extends Component {
   render() {
     const { activeItem } = this.state;
     const { divisionsWithTeams } = this.props;
-    var headerButtons = ['home', 'analysis', 'games', 'standings', 'schedule', 'players'];
+    const headerButtons = ['home', 'analysis', 'games', 'standings', 'schedule', 'players'];
     return (
       <div className="App">
         <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -86,7 +86,7 @@ class App extends Component {
                 <div>Made using <a href="https://semantic-ui.com/">Semantic UI</a></div>
               </Grid.Column>
               <Grid.Column>
-                <div>Logos provided by <a href="https://www.puckmarks.net/nhllogos">Puckmarks</a></div>
+                <div>Logos provided by <a href="https://www.puckmarks.net/nhl-logos">Puckmarks</a></div>
                 <div>Icons made by <a href="https://www.flaticon.com/authors/prettycons" title="prettycons">prettycons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
               </Grid.Column>
             </Grid.Row>

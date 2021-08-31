@@ -4,20 +4,20 @@ const apicomm = require('../../comm/apihandler');
 const twtcomm = require('../../comm/twitterhandler');
 
 async function getArticles({ query }) {
-  var pastDate = DateTime.now().minus({ weeks: 1 }).endOf('day').toISODate();
+  const pastDate = DateTime.now().minus({ weeks: 1 }).endOf('day').toISODate();
 
-  var newsResponse = await apicomm.newsApiRequest(`/v2/everything?q=${query}&from=${pastDate}&language=en&sortBy=relevancy&pageSize=10&language=en`);
+  const newsResponse = await apicomm.newsApiRequest(`/v2/everything?q=${query}&from=${pastDate}&language=en&sortBy=relevancy&pageSize=10&language=en`);
   return newsResponse.articles.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 }
 
 async function getTweets({ query }) {
-  var tweetsResponse = await twtcomm.searchTweets(query, 10, 'en', 'popular');
-  var tweets = [];
+  const tweetsResponse = await twtcomm.searchTweets(query, 10, 'en', 'popular');
+  const tweets = [];
   for (let status of tweetsResponse.statuses) {
-    var users = status.entities.user_mentions.map(u => {
+    const users = status.entities.user_mentions.map(u => {
       return { text: u.name };
     });
-    var hashtags = status.entities.hashtags.map(h => {
+    const hashtags = status.entities.hashtags.map(h => {
       return { text: h.text };
     });
     tweets.push({
@@ -41,12 +41,12 @@ async function getTweets({ query }) {
 }
 
 async function getUserTweets({ name }) {
-  var result = await twtcomm.getTweets(name);
+  const result = await twtcomm.getTweets(name);
   return result;
 }
 
 async function getTwitterApiStatus() {
-  var result = await twtcomm.getLimitStatus();
+  const result = await twtcomm.getLimitStatus();
   return result;
 }
 

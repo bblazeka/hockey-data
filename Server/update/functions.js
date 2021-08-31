@@ -1,16 +1,17 @@
 const { MongoClient } = require("mongodb");
-const db = require('../keys/db.json');
-const apicomm = require('../comm/apihandler');
+const db = require("../keys/db.json");
+const apicomm = require("../comm/apihandler");
 
 async function fetchTeams() {
-  const teams = []
+  const teams = [];
   for (i = 1; i < 56; i++) {
     try {
-      await apicomm.nhlApiRequest(`/api/v1/teams/${i}?expand=team.roster`).then(function (res) {
-        teams.push(res.teams[0]);
-      })
-    }
-    catch (ex) {
+      await apicomm
+        .nhlApiRequest(`/api/v1/teams/${i}?expand=team.roster`)
+        .then(function (res) {
+          teams.push(res.teams[0]);
+        });
+    } catch (ex) {
       console.log(ex);
     }
   }
@@ -21,11 +22,13 @@ async function fetchTeams() {
 }
 
 async function fetchGames() {
-  var games = await apicomm.nhlApiRequest('/api/v1/schedule?startDate=2021-01-01&endDate=2021-08-01')
+  const games = await apicomm.nhlApiRequest(
+    "/api/v1/schedule?startDate=2021-10-01&endDate=2022-05-01"
+  );
   return games.dates;
 }
 
 module.exports = {
   fetchTeams,
   fetchGames,
-}
+};

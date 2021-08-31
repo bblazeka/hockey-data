@@ -34,7 +34,7 @@ describe('Lineup component', () => {
   });
 
   it('renders not found if object is empty', () => {
-    var testLines = {
+    const testLines = {
       'lines': [
         {
           'leftDefender': 'Left defender',

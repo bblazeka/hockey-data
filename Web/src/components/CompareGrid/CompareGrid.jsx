@@ -18,11 +18,11 @@ function CompareGrid(props) {
     return (<NotFound />);
   }
 
-  var statsMode = statsSelector || 'stats';
+  const statsMode = statsSelector || 'stats';
   
 
-  var exampleObject = (players.length > 0) ? players[0][statsMode] : {};
-  var displayedCategories = config.categories.filter((cat) => {
+  const exampleObject = (players.length > 0) ? players[0][statsMode] : {};
+  const displayedCategories = config.categories.filter((cat) => {
     return (cat.name in exampleObject);
   });
   displayedCategories.forEach(cat => {
@@ -32,13 +32,13 @@ function CompareGrid(props) {
     });
   });
 
-  var playerNames = players.map(p => p.fullName);
-  var categories = config.categories.filter((cat) => {
+  const playerNames = players.map(p => p.fullName);
+  const categories = config.categories.filter((cat) => {
     return (cat.compare && ((skater && cat.skaterCategory) || (!skater && cat.goalieCategory)));
   });
 
-  var chartData = categories.map((cat) => {
-    var playerScores = {};
+  const chartData = categories.map((cat) => {
+    const playerScores = {};
     players.forEach((player) => {
       playerScores[player.fullName] = player[statsMode][cat.name] / cat.topVal * 1.0;
     });
@@ -76,7 +76,7 @@ function CompareGrid(props) {
           {players.map((player) => {
             const key = `${player.id}`;
             const stats = player[statsMode];
-            var countTopValues = 0;
+            let countTopValues = 0;
             if (IsNullOrUndefined(stats)) {
               return (<Table.Row key={`row${key}`}>
                 <Table.Cell><img className="small-logo" src={getLogo(player.currentTeam.id)} alt={`imglogo${player.id}`} /> <Link to={routes.player + '/' + player.id}>{player.fullName}</Link></Table.Cell>
@@ -85,13 +85,13 @@ function CompareGrid(props) {
             }
             return (<Table.Row key={`row${key}`}>
               <Table.Cell>
-                <img className="small-logo" src={getLogo(player.currentTeam.id)} alt={`imglogo${player.id}`} /> 
+                <img className="small-logo" src={getLogo(player.currentTeam?.id)} alt={`imglogo${player.id}`} /> 
                 <Link to={routes.player + '/' + player.id}>{player.fullName}</Link>
               </Table.Cell>
               <Table.Cell>{player.primaryPosition.abbreviation}</Table.Cell>
               {displayedCategories.map((cat, i) => {
-                var value = stats[cat.name];
-                var isTopValue = value === cat.topVal;
+                let value = stats[cat.name];
+                const isTopValue = value === cat.topVal;
                 countTopValues += isTopValue ? 1 : 0;
                 if (cat.name === 'savePercentage') {
                   value = FormatDecimals(stats[cat.name] * 100, 1);

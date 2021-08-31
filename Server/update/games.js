@@ -1,31 +1,27 @@
 const { MongoClient } = require("mongodb");
-const db = require('../keys/db.json');
+const db = require("../keys/db.json");
 // Replace the uri string with your MongoDB deployment's connection string.
-const apicomm = require('../comm/apihandler');
-const dbhandler = require('../comm/dbhandler.js');
+const apicomm = require("../comm/apihandler");
+const dbhandler = require("../comm/dbhandler.js");
 const { fetchGames } = require("./functions.js");
 
 const client = new MongoClient(db.uri);
 
 async function run() {
-
-
-  var db = new dbhandler.Database();
+  const db = new dbhandler.Database();
   await db.init();
-
-  var dates = []
 
   await client.connect();
 
-  var r = await fetchGames().then((res) => dates = res)
+  const dates = await fetchGames();
 
+  console.log("Skipping games that are already finished...");
   try {
-
     const database = client.db("hockey-data", { useUnifiedTopology: true });
     const collection = database.collection("games");
     for (let date of dates) {
       for (let game of date.games) {
-        if (game.status.statusCode === '7') {
+        if (game.status.statusCode === "7") {
           continue;
         }
         const options = { upsert: true };
@@ -40,19 +36,23 @@ async function run() {
             away: game.teams.away,
             status: game.status,
             venue: game.venue,
-            lastUpdate: new Date()
+            lastUpdate: new Date(),
           },
         };
         try {
-          const queryResult = await collection.updateOne(filter, updateDoc, options);
-          console.log(`${queryResult.matchedCount} document(s) matched the filter, updated ${queryResult.modifiedCount} document(s): ${game.gamePk}`);
+          const queryResult = await collection.updateOne(
+            filter,
+            updateDoc,
+            options
+          );
+          console.log(
+            `${queryResult.matchedCount} document(s) matched the filter, updated ${queryResult.modifiedCount} document(s): ${game.gamePk}`
+          );
         } catch (ex) {
-          console.log(ex)
+          console.log(ex);
         }
-
       }
     }
-
   } finally {
     await client.close();
   }

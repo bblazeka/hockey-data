@@ -6,8 +6,8 @@ export const getPlayer = (id) => async (dispatch) => {
   dispatch({
     type: actionTypes.GET_PLAYER,
   });
-  var player = (await axiosGraphQL.post('', { query: querySchemas.getBasicPlayer(id) })).data.data.player;
-  var queryString = (player.primaryPosition.code === 'G') ? querySchemas.getGoalie(id)
+  const player = (await axiosGraphQL.post('', { query: querySchemas.getBasicPlayer(id) })).data.data.player;
+  const queryString = (player.primaryPosition.code === 'G') ? querySchemas.getGoalie(id)
     : querySchemas.getSkater(id);
   axiosGraphQL
     .post('', { query: queryString })

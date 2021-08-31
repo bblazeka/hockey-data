@@ -8,7 +8,7 @@ import { IsNullOrUndefined } from '../../util/common';
 function SocialFeed(props) {
   const { tweets } = props;
   if (IsNullOrUndefined(tweets)) {
-    return (<Loader></Loader>);
+    return (<Loader text='Loading social feed...'></Loader>);
   }
   return (
     <div className="news-container">
@@ -46,4 +46,4 @@ function SocialFeed(props) {
 
 }
 
-export default SocialFeed;
+export default React.memo(SocialFeed);

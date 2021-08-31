@@ -59,14 +59,14 @@ type Stats {
   shots: Int
   hits: Int
   blocked: Int
-  faceOffPct: String
+  faceOffPct: Float
   faceOffWins: Int
   faceoffTaken: Int
   evenTimeOnIce: String
   evenTimeOnIceMinutes: Int
   powerPlayTimeOnIce: String
   powerPlayTimeOnIceMinutes: Int
-  shotPct: String
+  shotPct: Float
   overTimeGoals: Int
   gameWinningGoals: Int
   powerPlayGoals: Int
@@ -119,14 +119,14 @@ type AverageStats {
   shots: Float
   hits: Float
   blocked: Float
-  faceOffPct: String
+  faceOffPct: Float
   faceOffWins: Float
   faceoffTaken: Float
   evenTimeOnIce: String
   evenTimeOnIceMinutes: Float
   powerPlayTimeOnIce: String
   powerPlayTimeOnIceMinutes: Float
-  shotPct: String
+  shotPct: Float
   overTimeGoals: Float
   gameWinningGoals: Float
   powerPlayGoals: Float

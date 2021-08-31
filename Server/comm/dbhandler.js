@@ -1,8 +1,7 @@
-const { MongoClient } = require('mongodb');
-var dbkey = require('../keys/db.json');
+const { MongoClient } = require("mongodb");
+const dbkey = require("../keys/db.json");
 
 class Database {
-
   constructor() {
     this.client = {};
     this.database = {};
@@ -13,17 +12,17 @@ class Database {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    this.database = this.client.db('hockey-data');
+    this.database = this.client.db("hockey-data");
   }
 
   async closeClient() {
     await this.client.close();
   }
 
-  getCollection (name) {
+  getCollection(name) {
     return this.database.collection(name);
   }
 }
 module.exports = {
-  Database
+  Database,
 };

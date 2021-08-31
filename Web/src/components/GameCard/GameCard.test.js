@@ -43,10 +43,10 @@ describe('GameCard component', () => {
   });
 
   it('renders ongoing game', () => {
-    var currentTime = '10:00';
-    var currentPeriod = '3rd';
+    const currentTime = '10:00';
+    const currentPeriod = '3rd';
 
-    var game = Object.assign(baseGame, {
+    const game = Object.assign(baseGame, {
       ongoingGame: true,
       finished: false,
       currentPeriodOrdinal: currentPeriod,
@@ -63,7 +63,7 @@ describe('GameCard component', () => {
 
   it('renders planned game', () => {
     const gameTime = '10:00';
-    var game = Object.assign(baseGame, {
+    const game = Object.assign(baseGame, {
       ongoingGame: false,
       finished: false,
       gameTime
@@ -79,7 +79,7 @@ describe('GameCard component', () => {
   it('renders finished game', () => {
     const finalLabel = 'Final';
 
-    var game = Object.assign(baseGame, {
+    const game = Object.assign(baseGame, {
       ongoingGame: true,
       currentPeriodOrdinal: '3rd',
       currentPeriodTimeRemaining: finalLabel,
