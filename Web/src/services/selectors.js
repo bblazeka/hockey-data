@@ -78,3 +78,31 @@ export const selectHome = createSelector(
     };
   }
 );
+
+export const selectGameData = createSelector(selectGame, (game) => ({
+  game: game.game,
+  loading: game.loading,
+}));
+
+export const selectGameList = createSelector(
+  selectGame,
+  selectTeam,
+  (game, team) => ({
+    gamesBetweenTeams: game.gamesBetweenTeams,
+    dropdownTeams: team.dropdownTeams,
+    loading: game.loading,
+    loadingTeams: team.loading,
+  })
+);
+
+export const selectPlayerData = createSelector(
+  selectPlayer,
+  selectNews,
+  (player, news) => ({
+    player: player.player,
+    suggestions: player.suggestions,
+    tweets: news.tweets,
+    news: news.news,
+    loadingTweets: news.loadingTweets,
+  })
+);

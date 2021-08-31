@@ -15,7 +15,10 @@ import {
 import { getLogo } from "util/assets";
 import { GetNumberWithOrdinal } from "util/common";
 import { getColorScheme } from "util/shared";
-import { Lineup, StatsScatterChart, StatsPieChart } from "components";
+import { Lineup } from "components";
+
+import StatsPieChart from "./StatsPieChart/StatsPieChart";
+import StatsScatterChart from "./StatsScatterChart/StatsScatterChart";
 
 const dropdownOptions = [
   { key: "points", text: "Points", value: "points" },

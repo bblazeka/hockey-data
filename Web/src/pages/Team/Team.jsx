@@ -3,17 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Checkbox, Grid, Header, Segment, Tab } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
 
-import "./Team.scss";
 import { getTeam } from "services/team";
-import { Loader, Map, NewsFeed, SocialFeed, TeamSchedule } from "components";
-import RosterGrid from "./RosterGrid/RosterGrid.jsx";
-import RosterStatsGrid from "./RosterStatsGrid/RosterStatsGrid.jsx";
+import { Loader, Map, NewsFeed, SocialFeed } from "components";
 import { getLogo } from "util/assets";
 import { getNews, getTweets } from "services/news";
 import { geocode } from "services/util";
 import { getTeamSchedule } from "services/league";
 import { DateToServerFormat, IsNullOrUndefined } from "util/common";
 import { selectTeamObject } from "services/selectors";
+
+import "./Team.scss";
+import TeamSchedule from "./TeamSchedule/TeamSchedule";
+import RosterGrid from "./RosterGrid/RosterGrid.jsx";
+import RosterStatsGrid from "./RosterStatsGrid/RosterStatsGrid.jsx";
 
 export default function Team() {
   const [filterActive, setFilterActive] = useState(true);
