@@ -1,10 +1,14 @@
-import React from 'react';
+import React from "react";
+import { Button, Header, Segment } from "semantic-ui-react";
 
-export default function ErrorFallback({ error }) {
+export default function ErrorFallback({ error, resetErrorBoundary }) {
   return (
-    <div role="alert">
-      <p>Oops, there was an error:</p>
-      <p style={{ color: 'red' }}>{error.message}</p>
-    </div>
+    <Segment placeholder>
+      <Header>Oops, there was an error</Header>
+      <Segment.Inline>
+        <Segment>{error.message}</Segment>
+        <Button onClick={resetErrorBoundary}>Go to start screen</Button>
+      </Segment.Inline>
+    </Segment>
   );
 }
