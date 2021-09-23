@@ -79,13 +79,9 @@ export function DateToServerFormat(date) {
   const day = date.getDate() + 0;
   // Get the month as a number (0-11)
   const month = date.getMonth() + 1;
-  return (
-    date.getFullYear() +
-    "-" +
-    (month <= 9 ? "0" + month : month) +
-    "-" +
-    (day <= 9 ? "0" + day : day)
-  );
+  return `${date.getFullYear()}-${month <= 9 ? `0${month}` : month}-${
+    day <= 9 ? `0${day}` : day
+  }`;
 }
 
 export function GetMapboxApi() {

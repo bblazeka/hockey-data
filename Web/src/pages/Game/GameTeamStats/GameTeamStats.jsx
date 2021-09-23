@@ -1,13 +1,17 @@
 import React from "react";
 import { Header, Segment, Table } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-import "./GameTeamStats.scss";
 import { Loader } from "components";
 import routes from "../../../routes";
 import { getLogo } from "../../../util/assets";
 import { FormatDecimals, IsNullOrUndefined } from "util/common";
 import config from "util/config.json";
+
+const TeamTableStyled = styled.div`
+  overflow-x: scroll;
+`;
 
 function GameTeamStats(props) {
   const { team } = props;
@@ -34,7 +38,7 @@ function GameTeamStats(props) {
         {team.team.name}
       </Header>
       <Header as="h3">Roster</Header>
-      <div className="team-table">
+      <TeamTableStyled>
         <Table celled>
           <Table.Header>
             <Table.Row>
@@ -42,7 +46,7 @@ function GameTeamStats(props) {
 
               {displayedCategories.map((cat, index) => {
                 return (
-                  <Table.HeaderCell key={"headercol" + index}>
+                  <Table.HeaderCell key={`headercol${index}`}>
                     {cat.abbr}
                   </Table.HeaderCell>
                 );
@@ -54,28 +58,25 @@ function GameTeamStats(props) {
               return (
                 <Table.Row key={player.person.fullName}>
                   <Table.Cell>
-                    <Link to={routes.player + "/" + player.person.id}>
+                    <Link to={`${routes.player}/${player.person.id}`}>
                       <Header as="h4">
                         {player.person.fullName}
                         <Header.Subheader>
-                          {"#" +
-                            player.jerseyNumber +
-                            " " +
-                            player.position.name}
+                          {`#${player.jerseyNumber} ${player.position.name}`}
                         </Header.Subheader>
                       </Header>
                     </Link>
                   </Table.Cell>
                   {displayedCategories.map((cat, i) => {
                     const value = player.stats[cat.name];
-                    return <Table.Cell key={"col" + i}>{value}</Table.Cell>;
+                    return <Table.Cell key={`col${i}`}>{value}</Table.Cell>;
                   })}
                 </Table.Row>
               );
             })}
           </Table.Body>
         </Table>
-      </div>
+      </TeamTableStyled>
       <Header as="h3">Goalies</Header>
       <Table celled>
         <Table.Header>
@@ -83,7 +84,7 @@ function GameTeamStats(props) {
             <Table.HeaderCell>Name</Table.HeaderCell>
             {goalieCategories.map((cat, index) => {
               return (
-                <Table.HeaderCell key={"headercol" + index}>
+                <Table.HeaderCell key={`headercol${index}`}>
                   {cat.abbr}
                 </Table.HeaderCell>
               );
@@ -95,7 +96,7 @@ function GameTeamStats(props) {
             return (
               <Table.Row key={player.person.fullName}>
                 <Table.Cell>
-                  <Link to={routes.player + "/" + player.person.id}>
+                  <Link to={`${routes.player}/${player.person.id}`}>
                     <Header as="h4">
                       {player.person.fullName}
                       <Header.Subheader>
@@ -118,7 +119,7 @@ function GameTeamStats(props) {
                   ) {
                     value = FormatDecimals(value, 2);
                   }
-                  return <Table.Cell key={"col" + i}>{value}</Table.Cell>;
+                  return <Table.Cell key={`col${i}`}>{value}</Table.Cell>;
                 })}
               </Table.Row>
             );
