@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Dropdown, Header, Statistic, Table } from "semantic-ui-react";
+import { Dropdown, Header } from "semantic-ui-react";
 import {
   BarChart,
   Bar,
@@ -13,12 +13,17 @@ import {
 } from "recharts";
 
 import { getLogo } from "util/assets";
-import { GetNumberWithOrdinal } from "util/common";
 import { getColorScheme } from "util/shared";
-import { Lineup } from "components";
+import {
+  createSortedList,
+  separateGoaliesAndSkaters,
+} from "services/analysis/hooks";
 
 import StatsPieChart from "./StatsPieChart/StatsPieChart";
+import Lineup from "./Lineup/Lineup";
 import StatsScatterChart from "./StatsScatterChart/StatsScatterChart";
+import TeamStatsHeader from "./TeamStatsHeader";
+import EnhancedStatsTable from "./EnhancedStatsTable";
 
 const dropdownOptions = [
   { key: "points", text: "Points", value: "points" },
@@ -27,57 +32,16 @@ const dropdownOptions = [
 ];
 
 export default function AnalysisTeamTab({ category, team, setCategory }) {
-  const createStatistic = (text, value) => {
-    return (
-      <Statistic>
-        <Statistic.Value>{value}</Statistic.Value>
-        <Statistic.Label>{text}</Statistic.Label>
-      </Statistic>
-    );
-  };
-  const createSortedList = (players, category) => {
-    const result = [];
-    const sortedPlayers = players
-      .sort((a, b) => {
-        return b.stats[category] - a.stats[category];
-      })
-      .map((ps) => {
-        return {
-          label: ps.fullName,
-          subLabel: ps.stats[category],
-          angle: ps.stats[category],
-        };
-      });
-
-    sortedPlayers.reduce(function (res, value, index) {
-      const id = index > 7 ? "" : value.label;
-      if (!res[id]) {
-        res[id] = { label: id, subLabel: 0, angle: 0 };
-        result.push(res[id]);
-      }
-      res[id].angle += value.angle;
-      res[id].subLabel += value.subLabel;
-      return res;
-    }, {});
-    return result;
-  };
   const colors = getColorScheme(team.team.colorScheme);
+  const { skaters, goalies } = separateGoaliesAndSkaters(team.rosterStats);
   const skaterPie = createSortedList(
-    team.rosterStats.filter((p) => {
+    skaters.filter((p) => {
       return p.stats.points > 0;
     }),
     category
   );
-  const goalieGraph = createSortedList(
-    team.rosterStats.filter((p) => {
-      return p.stats.points == null;
-    }),
-    "wins"
-  );
+  const goalieGraph = createSortedList(goalies, "wins");
 
-  const skaters = team.rosterStats.filter((p) => {
-    return p.stats.points !== null;
-  });
   return (
     <>
       <Header as="h1" className="team-header">
@@ -88,70 +52,7 @@ export default function AnalysisTeamTab({ category, team, setCategory }) {
         />
         {team.team.name}
       </Header>
-      <Statistic.Group widths="5">
-        {createStatistic("League", GetNumberWithOrdinal(team.leagueRank))}
-        {createStatistic(
-          "League Home",
-          GetNumberWithOrdinal(team.leagueHomeRank)
-        )}
-        {createStatistic(
-          "League Road",
-          GetNumberWithOrdinal(team.leagueRoadRank)
-        )}
-        {createStatistic(
-          "League Last 10",
-          GetNumberWithOrdinal(team.leagueL10Rank)
-        )}
-        {createStatistic(
-          "League Powerplay",
-          GetNumberWithOrdinal(team.ppLeagueRank)
-        )}
-      </Statistic.Group>
-      <Statistic.Group widths="5">
-        {createStatistic("Division", GetNumberWithOrdinal(team.divisionRank))}
-        {createStatistic(
-          "Division Home",
-          GetNumberWithOrdinal(team.divisionHomeRank)
-        )}
-        {createStatistic(
-          "Division Road",
-          GetNumberWithOrdinal(team.divisionRoadRank)
-        )}
-        {createStatistic(
-          "Division Last 10",
-          GetNumberWithOrdinal(team.divisionL10Rank)
-        )}
-        {createStatistic(
-          "Division Powerplay",
-          GetNumberWithOrdinal(team.ppDivisionRank)
-        )}
-      </Statistic.Group>
-      <div className="team-stats-table">
-        <Table>
-          <Table.Header>
-            <Table.Row>
-              {team.stats.map((stat) => {
-                return (
-                  <Table.HeaderCell key={stat.title + team.id}>
-                    {stat.title}
-                  </Table.HeaderCell>
-                );
-              })}
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            <Table.Row>
-              {team.stats.map((stat) => {
-                return (
-                  <Table.Cell key={stat.title + team.id}>
-                    {stat.value}
-                  </Table.Cell>
-                );
-              })}
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </div>
+      <TeamStatsHeader team={team} />
       <div className="line-chart-container">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -231,6 +132,7 @@ export default function AnalysisTeamTab({ category, team, setCategory }) {
       <div className="lineup-container">
         <Lineup lines={team.lines}></Lineup>
       </div>
+      <EnhancedStatsTable team={team} />
     </>
   );
 }

@@ -18,6 +18,7 @@ type TeamAnalysis {
   rankingsGraph: [GraphFloat]
   lines: Lines
   rosterStats: [Player]
+  enhancedSkaterStats: [EnhancedSkaterStats]
 }
 
 type AnalysisRosterPlayer {
@@ -92,4 +93,29 @@ type RegularSeasonRankings {
   faceOffWinPercentage: Int
   shootingPctg: Int
   savePctg: Int
+}
+
+type EnhancedSkaterStats {
+  seasonId: Int
+  playerId: Int
+  skaterFullName: String
+  positionCode: String
+  assists5v5: Int
+  assistsPer605v5: Float
+  gamesPlayed: Int
+  goals5v5: Int
+  goalsPer605v5: Float
+  netMinorPenaltiesPer60: Int
+  offensiveZoneStartPct5v5: Float
+  onIceShootingPct5v5: Float
+  points5v5: Int
+  pointsPer605v5: Float
+  primaryAssists5v5: Int
+  primaryAssistsPer605v5: Float
+  satPct: Float
+  satRelative5v5: Float
+  secondaryAssists5v5: Int
+  secondaryAssistsPer605v5: Float
+  shootingPct5v5: Float
+  timeOnIcePerGame5v5: Float
 }
