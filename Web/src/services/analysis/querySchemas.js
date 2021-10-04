@@ -74,6 +74,63 @@ export const getAnalysis = /* GraphQL */ `
           plusMinus
         }
       }
+      skaterStats {
+        id
+        fullName
+        stats {
+          games
+          goals
+          assists
+          points
+          plusMinus
+          timeOnIce
+          shots
+          hits
+          blocked
+          powerPlayGoals
+          powerPlayPoints
+          powerPlayTimeOnIce
+          evenTimeOnIce
+          penaltyMinutes
+          faceOffPct
+          shotPct
+          gameWinningGoals
+          overTimeGoals
+          shortHandedGoals
+          shortHandedTimeOnIce
+          shifts
+          timeOnIcePerGame
+          shortHandedTimeOnIcePerGame
+          powerPlayTimeOnIcePerGame
+        }
+      }
+      goalieStats {
+        id
+        fullName
+        stats {
+          timeOnIce
+          ot
+          shutouts
+          wins
+          losses
+          saves
+          powerPlaySaves
+          shortHandedSaves
+          evenSaves
+          shortHandedShots
+          evenShots
+          powerPlayShots
+          savePercentage
+          goalAgainstAverage
+          games
+          gamesStarted
+          shotsAgainst
+          goalsAgainst
+          powerPlaySavePercentage
+          shortHandedSavePercentage
+          evenStrengthSavePercentage
+        }
+      }
       enhancedSkaterStats {
         seasonId
         playerId

@@ -18,13 +18,9 @@ type TeamAnalysis {
   rankingsGraph: [GraphFloat]
   lines: Lines
   rosterStats: [Player]
+  skaterStats: [Player]
+  goalieStats: [Player]
   enhancedSkaterStats: [EnhancedSkaterStats]
-}
-
-type AnalysisRosterPlayer {
-  id: Int
-  fullName: String
-  stats: Stats
 }
 
 type TeamStatTableProperty {

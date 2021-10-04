@@ -20,6 +20,12 @@ async function getAnalysis() {
         stats: p.stats,
       });
     });
+    team.skaterStats =
+      team.rosterStats?.filter((s) => "shifts" in s.stats) ?? [];
+    team.skaterStats.sort((p1, p2) => p2.stats.points - p1.stats.points);
+    team.goalieStats =
+      team.rosterStats?.filter((s) => "saves" in s.stats) ?? [];
+    team.goalieStats.sort((p1, p2) => p2.stats.wins - p1.stats.wins);
     Object.assign(team, {
       rankingsGraph: [
         { x: "Wins", y: team.regularSeasonStatRankings.wins },

@@ -17,13 +17,6 @@ async function getPlayersFromTeam(teamId) {
   return items;
 }
 
-async function getTeamRosterStats(teamId) {
-  const stats = await db
-    .getCollection("analysis")
-    .findOne({ "team.id": teamId });
-  return stats?.rosterStats;
-}
-
 async function getTeam({ id }) {
   const collection = db.getCollection("teams");
   const query = { id: id };
@@ -32,7 +25,6 @@ async function getTeam({ id }) {
   };
   const team = await collection.findOne(query, options);
   if (!isNil(team)) {
-    const rosterStats = await getTeamRosterStats(id);
     const rosterResponse = await getPlayersFromTeam(id);
     team.goalies = rosterResponse.filter(
       (p) => p.primaryPosition.type == "Goalie"
@@ -43,10 +35,6 @@ async function getTeam({ id }) {
     team.forwards = rosterResponse.filter(
       (p) => p.primaryPosition.type == "Forward"
     );
-    team.skaterStats = rosterStats?.filter((s) => "shifts" in s.stats) ?? [];
-    team.skaterStats.sort((p1, p2) => p2.stats.points - p1.stats.points);
-    team.goalieStats = rosterStats?.filter((s) => "saves" in s.stats) ?? [];
-    team.goalieStats.sort((p1, p2) => p2.stats.wins - p1.stats.wins);
     team.description = (await apicomm.wikiApiRequest(team.name)).extract;
     team.venue.description = (
       await apicomm.wikiApiAdvancedRequest(team.venue.name, team.venue.city)

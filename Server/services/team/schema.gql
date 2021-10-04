@@ -1,31 +1,15 @@
 type Team {
-    id: Int
-    abbreviation: String
-    name: String
-    description: String
-    active: Boolean
-    venue: Venue
-    colorScheme: String
-    rosterResponse: [Player]
-    goalies: [Player]
-    defenders: [Player]
-    forwards: [Player]
-    skaterStats: [AnalysisRosterPlayer]
-    goalieStats: [AnalysisRosterPlayer]
-  }
-
-type AnalysisRosterPlayerStats {
   id: Int
-  fullName: String
-  label: String
-  subLabel: String
-  angle: Int
-  stats: [RosterPlayerStat]
-}
-
-type RosterPlayerStat {
+  abbreviation: String
   name: String
-  value: String
+  description: String
+  active: Boolean
+  venue: Venue
+  colorScheme: String
+  rosterResponse: [Player]
+  goalies: [Player]
+  defenders: [Player]
+  forwards: [Player]
 }
 
 type Lines {

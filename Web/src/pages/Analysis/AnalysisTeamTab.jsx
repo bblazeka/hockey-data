@@ -6,6 +6,7 @@ import { getLogo } from "util/assets";
 
 import TeamStats from "./TeamStats";
 import PlayerStats from "./PlayerStats";
+import RosterStatsGrid from "./RosterStatsGrid/RosterStatsGrid";
 
 export default function AnalysisTeamTab({ category, team, setCategory }) {
   const renderTeamPane = () => (
@@ -13,6 +14,15 @@ export default function AnalysisTeamTab({ category, team, setCategory }) {
       <TeamStats team={team} category={category} setCategory={setCategory} />
     </Tab.Pane>
   );
+
+  const renderStatsPane = () => {
+    return (
+      <Tab.Pane>
+        <RosterStatsGrid rosterStats={team.skaterStats} title="Skaters" />
+        <RosterStatsGrid rosterStats={team.goalieStats} title="Goalies" />
+      </Tab.Pane>
+    );
+  };
 
   const renderPlayerPane = () => (
     <Tab.Pane>
@@ -22,6 +32,7 @@ export default function AnalysisTeamTab({ category, team, setCategory }) {
 
   const panes = [
     { menuItem: "Team overall", render: renderTeamPane },
+    { menuItem: "Team stats", render: renderStatsPane },
     { menuItem: "Individual stats", render: renderPlayerPane },
   ];
 
