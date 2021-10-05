@@ -30,12 +30,14 @@ const wpgLogo = "/assets/logos/wpg.webp";
 const ariLogo = "/assets/logos/ari.webp";
 const vgkLogo = "/assets/logos/vgk.webp";
 const seaLogo = "/assets/logos/sea.webp";
-const defLogo = "/assets/logos/def.webp";
+const nhlLogo = "/assets/logos/nhl.webp";
+
+const puck = "/logo512.png";
 
 export function getLogo(teamId) {
   switch (teamId) {
     case 0:
-      return defLogo;
+      return nhlLogo;
     case 1:
       return njdLogo;
     case 2:
@@ -101,6 +103,6 @@ export function getLogo(teamId) {
     case 55:
       return seaLogo;
     default:
-      return null;
+      return puck;
   }
 }

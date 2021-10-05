@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Button, Header, Segment } from "semantic-ui-react";
 
 export default function ErrorFallback({ error, resetErrorBoundary }) {
@@ -12,3 +13,8 @@ export default function ErrorFallback({ error, resetErrorBoundary }) {
     </Segment>
   );
 }
+
+ErrorFallback.propTypes = {
+  error: PropTypes.object,
+  resetErrorBoundary: PropTypes.func,
+};

@@ -19,7 +19,7 @@ function GameTeamStats(props) {
     return <Loader></Loader>;
   }
   const exampleObject = team.skaters[0].stats;
-  const displayedCategories = config.categories.filter((cat) => {
+  const skaterCategories = config.categories.filter((cat) => {
     return cat.name in exampleObject;
   });
 
@@ -43,10 +43,12 @@ function GameTeamStats(props) {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Name</Table.HeaderCell>
-
-              {displayedCategories.map((cat, index) => {
+              {skaterCategories.map((cat, index) => {
                 return (
-                  <Table.HeaderCell key={`headercol${index}`}>
+                  <Table.HeaderCell
+                    key={`headercol${index}`}
+                    title={cat.description}
+                  >
                     {cat.abbr}
                   </Table.HeaderCell>
                 );
@@ -67,7 +69,7 @@ function GameTeamStats(props) {
                       </Header>
                     </Link>
                   </Table.Cell>
-                  {displayedCategories.map((cat, i) => {
+                  {skaterCategories.map((cat, i) => {
                     const value = player.stats[cat.name];
                     return <Table.Cell key={`col${i}`}>{value}</Table.Cell>;
                   })}
@@ -84,7 +86,10 @@ function GameTeamStats(props) {
             <Table.HeaderCell>Name</Table.HeaderCell>
             {goalieCategories.map((cat, index) => {
               return (
-                <Table.HeaderCell key={`headercol${index}`}>
+                <Table.HeaderCell
+                  key={`headercol${index}`}
+                  title={cat.description}
+                >
                   {cat.abbr}
                 </Table.HeaderCell>
               );

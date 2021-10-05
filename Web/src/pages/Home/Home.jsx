@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Grid, Header } from "semantic-ui-react";
-import { IsNullOrUndefined } from "../../util/common";
 
-import "./Home.scss";
 import * as gameActions from "services/game";
 import * as actions from "services/news";
 import { GameCard, Loader, NewsFeed, NotFound, SocialFeed } from "components";
 import { selectHome } from "services/selectors";
+import { IsNullOrUndefined } from "util/common";
 
 export default function Home() {
   const { homeNews, loadingNews, tweets, loadingTweets, games } =
@@ -22,11 +21,7 @@ export default function Home() {
   }, [dispatch]);
 
   if (loadingNews && loadingTweets) {
-    return (
-      <div>
-        <Loader></Loader>
-      </div>
-    );
+    return <Loader></Loader>;
   }
   return (
     <>

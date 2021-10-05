@@ -33,11 +33,7 @@ export default function GameSelection() {
   const { gamesBetweenTeams, dropdownTeams, loading, loadingTeams } =
     useSelector(selectGameList);
   if (loading || loadingTeams || IsNullOrUndefined(dropdownTeams)) {
-    return (
-      <div>
-        <Loader></Loader>
-      </div>
-    );
+    return <Loader></Loader>;
   }
 
   return (

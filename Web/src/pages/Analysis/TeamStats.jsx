@@ -22,12 +22,18 @@ import StatsPieChart from "./StatsPieChart/StatsPieChart";
 import Lineup from "./Lineup/Lineup";
 import StatsScatterChart from "./StatsScatterChart/StatsScatterChart";
 import TeamStatsHeader from "./TeamStatsHeader";
+import styled from "styled-components";
 
 const dropdownOptions = [
   { key: "points", text: "Points", value: "points" },
   { key: "goals", text: "Goals", value: "goals" },
   { key: "assists", text: "Assists", value: "assists" },
 ];
+
+const LineChartContainer = styled.div`
+  height: 20vh;
+  margin-bottom: 20px;
+`;
 
 export default function TeamStats({ category, team, setCategory }) {
   const colors = getColorScheme(team.team.colorScheme);
@@ -43,7 +49,7 @@ export default function TeamStats({ category, team, setCategory }) {
   return (
     <>
       <TeamStatsHeader team={team} />
-      <div className="line-chart-container">
+      <LineChartContainer>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={team.rankingsGraph}
@@ -58,7 +64,7 @@ export default function TeamStats({ category, team, setCategory }) {
             <XAxis dataKey="x" />
             <YAxis name="Rank" reversed domain={[1, 32]} />
             <Tooltip />
-            <Legend />
+            <Legend wrapperStyle={{ position: "relative" }} />
             <Bar
               dataKey="y"
               name="Rank"
@@ -68,7 +74,7 @@ export default function TeamStats({ category, team, setCategory }) {
             />
           </BarChart>
         </ResponsiveContainer>
-      </div>
+      </LineChartContainer>
       <div className="graph-container">
         <div className="filter-container">
           <Header as="h4">

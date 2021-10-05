@@ -39,7 +39,10 @@ function RosterStatsGrid({ rosterStats, title }) {
             <Table.HeaderCell>Name</Table.HeaderCell>
             {displayedCategories.map((cat, index) => {
               return (
-                <Table.HeaderCell key={`headercol${index}`}>
+                <Table.HeaderCell
+                  key={`headercol${index}`}
+                  title={cat.description}
+                >
                   {cat.abbr}
                 </Table.HeaderCell>
               );
