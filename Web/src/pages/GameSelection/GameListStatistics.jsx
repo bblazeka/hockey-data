@@ -53,7 +53,7 @@ export default function GameListStatistics(props) {
             <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
-            <Legend />
+            <Legend wrapperStyle={{ position: "relative" }} />
             <Bar dataKey="homeGoals" name={homeTeam} fill="#8884d8" />
             <Bar dataKey="awayGoals" name={awayTeam} fill="#82ca9d" />
           </BarChart>

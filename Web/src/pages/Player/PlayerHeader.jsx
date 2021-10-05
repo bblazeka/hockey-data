@@ -16,7 +16,7 @@ export default function PlayerHeader({ player }) {
     <Segment textAlign="center">
       <Grid columns="equal">
         <Grid.Column width={3}>
-          <Image src={getLogo(player.currentTeam.id)} size="medium"></Image>
+          <Image src={getLogo(player.currentTeam?.id)} size="medium"></Image>
         </Grid.Column>
         <Grid.Column width={12}>
           <Grid columns="equal">
@@ -39,13 +39,15 @@ export default function PlayerHeader({ player }) {
                     <List.Header>Position</List.Header>
                     <List.Content>{player.primaryPosition.name}</List.Content>
                   </List.Item>
-                  <List.Item>
-                    <List.Icon name="users" />
-                    <List.Header>Team</List.Header>
-                    <Link to={`${routes.teams}/${player.currentTeam.id}`}>
-                      {player.currentTeam.name}
-                    </Link>
-                  </List.Item>
+                  {player.currentTeam && (
+                    <List.Item>
+                      <List.Icon name="users" />
+                      <List.Header>Team</List.Header>
+                      <Link to={`${routes.teams}/${player.currentTeam.id}`}>
+                        {player.currentTeam.name}
+                      </Link>
+                    </List.Item>
+                  )}
                   <List.Item>
                     <List.Icon name="user" />
                     <List.Header>Age</List.Header>

@@ -61,6 +61,11 @@ async function run() {
         Object.keys(rankings).forEach(function (key) {
           rankings[key] = parseInt(rankings[key]);
         });
+
+        const enhancedSkaterStats = await apicomm.enhancedNhlApiRequest(
+          `/stats/rest/en/skater/scoringRates?isAggregate=false&isGame=false&start=0&limit=50&factCayenneExp=gamesPlayed>=1&cayenneExp=teamId=${teamRecord.team.id} and gameTypeId=2 and seasonId<=${season} and seasonId>=${season}`
+        );
+
         const updateDoc = {
           $set: {
             id: teamRecord.team.id,
@@ -87,7 +92,8 @@ async function run() {
             statsSingleSeason: teamStats.stats[0].splits[0].stat,
             regularSeasonStatRankings: rankings,
             rosterStats: fmtRoster,
-            lines: lines,
+            enhancedSkaterStats: enhancedSkaterStats.data,
+            lines,
             lastUpdated: teamRecord.lastUpdated,
           },
         };

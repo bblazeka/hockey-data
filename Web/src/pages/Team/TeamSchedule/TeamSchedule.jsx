@@ -1,10 +1,16 @@
 import React from "react";
 import { Header, List, Image, Segment } from "semantic-ui-react";
+import styled from "styled-components";
 
-import "./TeamSchedule.scss";
-import { NotFound, Loader } from "../../../components";
-import { getLogo } from "../../../util/assets";
-import { IsNullOrUndefined } from "../../../util/common";
+import { NotFound, Loader } from "components";
+import { getLogo } from "util/assets";
+import { IsNullOrUndefined } from "util/common";
+
+const TeamGameDateStyled = styled.div`
+  font-size: 10px;
+  font-style: italic;
+  color: gray;
+`;
 
 function TeamSchedule(props) {
   const { games } = props;
@@ -22,7 +28,7 @@ function TeamSchedule(props) {
               <List.Item key={game.gamePk}>
                 <Image avatar src={getLogo(game.opponent.team.id)} />
                 <List.Content>
-                  <div className="team-game-date">{game.date}</div>
+                  <TeamGameDateStyled>{game.date}</TeamGameDateStyled>
                   <List.Header>{game.opponent.team.name}</List.Header>
                   <List.Description>
                     {game.opponent.leagueRecord.wins}-

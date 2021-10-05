@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Segment } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
 
 import * as actions from "services/game";
 import * as teamActions from "services/team";
@@ -9,9 +10,16 @@ import { Loader } from "components";
 import { IsNullOrUndefined } from "util/common";
 import { selectGameList } from "services/selectors";
 
-import "./GameSelection.scss";
 import GameList from "./GameList";
 import GameListStatistics from "./GameListStatistics";
+
+const GameListFilterStyled = styled(Segment)`
+  . > div {
+    margin-right: 1vw;
+    div {
+      width: 15vw;
+    }
+`;
 
 export default function GameSelection() {
   const [home, setHome] = useState(1);
@@ -25,16 +33,12 @@ export default function GameSelection() {
   const { gamesBetweenTeams, dropdownTeams, loading, loadingTeams } =
     useSelector(selectGameList);
   if (loading || loadingTeams || IsNullOrUndefined(dropdownTeams)) {
-    return (
-      <div>
-        <Loader></Loader>
-      </div>
-    );
+    return <Loader></Loader>;
   }
 
   return (
     <>
-      <Segment className="game-list-filter">
+      <GameListFilterStyled>
         <Dropdown
           placeholder="Home team"
           onChange={(_event, data) => setHome(data.value)}
@@ -62,7 +66,7 @@ export default function GameSelection() {
         <Button onClick={() => dispatch(actions.findGames(home, away))}>
           Search
         </Button>
-      </Segment>
+      </GameListFilterStyled>
       <Segment>
         {gamesBetweenTeams && (
           <GameListStatistics gamesBetweenTeams={gamesBetweenTeams} />

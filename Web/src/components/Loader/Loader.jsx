@@ -1,14 +1,16 @@
-import React from 'react';
-import { Dimmer, Loader as SemanticLoader } from 'semantic-ui-react';
+import React from "react";
+import PropTypes from "prop-types";
+import { Dimmer, Loader as SemanticLoader } from "semantic-ui-react";
 
-import './Loader.scss';
-
-function Loader(props) {
-    return (
-      <Dimmer active inverted>
-        <SemanticLoader>{props.text ? props.text : 'Loading...'}</SemanticLoader>
-      </Dimmer>
-    );
+export default function Loader(props) {
+  const { text } = props;
+  return (
+    <Dimmer active inverted>
+      <SemanticLoader>{text ? text : "Loading..."}</SemanticLoader>
+    </Dimmer>
+  );
 }
 
-export default Loader;
+Loader.propTypes = {
+  text: PropTypes.string,
+};

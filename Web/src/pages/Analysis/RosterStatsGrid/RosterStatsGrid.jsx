@@ -2,27 +2,36 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Header, Table } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import { Loader, NotFound } from "components";
+import { FormatDecimals, IsNullOrUndefined } from "util/common";
 
-import "./RosterStatsGrid.scss";
 import config from "util/config.json";
 import routes from "../../../routes";
-import { FormatDecimals, IsNullOrUndefined } from "util/common";
+
+const RosterStatsStyled = styled.div`
+  padding: 5px;
+  overflow-x: scroll;
+`;
+
+const NameCellStyled = styled(Table.Cell)`
+  white-space: nowrap;
+`;
 
 function RosterStatsGrid({ rosterStats, title }) {
   if (IsNullOrUndefined(rosterStats)) {
     return <Loader text="Loading roster stats..."></Loader>;
   }
   if (rosterStats.length === 0) {
-    return <NotFound text={title + " - " + "Stats not found."}></NotFound>;
+    return <NotFound text={`${title} - Stats not found.`}></NotFound>;
   }
   const exampleObject = rosterStats[0].stats;
   const displayedCategories = config.categories.filter((cat) => {
     return cat.name in exampleObject;
   });
   return (
-    <div className="roster-stats">
+    <RosterStatsStyled>
       <Header as="h4">{title}</Header>
       <Table>
         <Table.Header>
@@ -30,7 +39,10 @@ function RosterStatsGrid({ rosterStats, title }) {
             <Table.HeaderCell>Name</Table.HeaderCell>
             {displayedCategories.map((cat, index) => {
               return (
-                <Table.HeaderCell key={"headercol" + index}>
+                <Table.HeaderCell
+                  key={`headercol${index}`}
+                  title={cat.description}
+                >
                   {cat.abbr}
                 </Table.HeaderCell>
               );
@@ -41,11 +53,11 @@ function RosterStatsGrid({ rosterStats, title }) {
           {rosterStats.map((stat, index) => {
             return (
               <Table.Row key={stat + index}>
-                <Table.Cell className="name-cell">
+                <NameCellStyled>
                   <Link to={`${routes.player}/${stat.id}`}>
                     {stat.fullName}
                   </Link>
-                </Table.Cell>
+                </NameCellStyled>
                 {displayedCategories.map((cat, i) => {
                   let value = stat.stats[cat.name];
                   if (cat.name === "savePercentage") {
@@ -60,14 +72,14 @@ function RosterStatsGrid({ rosterStats, title }) {
                   ) {
                     value = FormatDecimals(value, 2);
                   }
-                  return <Table.Cell key={"col" + i}>{value}</Table.Cell>;
+                  return <Table.Cell key={`col${i}`}>{value}</Table.Cell>;
                 })}
               </Table.Row>
             );
           })}
         </Table.Body>
       </Table>
-    </div>
+    </RosterStatsStyled>
   );
 }
 

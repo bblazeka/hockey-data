@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Header, Statistic } from "semantic-ui-react";
+import { Table, Header } from "semantic-ui-react";
 import {
   LineChart,
   Line,
@@ -10,35 +10,40 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import styled from "styled-components";
 
-import "./PlayerStatsGrid.scss";
 import config from "util/config.json";
-import { getLogo } from "../../../util/assets";
+import { getLogo } from "util/assets";
 import { FormatDecimals, IsNullOrUndefined } from "util/common";
 import { Loader } from "components";
+import PlayerStatsSummary from "./PlayerStatsSummary";
+
+const PlayerStatsGridStyled = styled.div`
+  padding: 8px;
+`;
+
+const ProductionGraphStyled = styled.div`
+  width: 67vw;
+  height: 40vh;
+`;
+
+const StatBarStyled = styled.div`
+  display: flex;
+`;
 
 function PlayerStatsGrid(props) {
   const { data, skater, detailed } = props;
   if (IsNullOrUndefined(data)) {
     return <Loader></Loader>;
   }
-  const {
-    totalGames,
-    totalGoals,
-    totalAssists,
-    totalPoints,
-    totalGamesStarted,
-    totalWins,
-    stats,
-    seasonSums,
-  } = data;
+  const { stats, seasonSums } = data;
 
   const exampleObject = stats[stats.length - 1].stat;
   const displayedCategories = config.categories.filter((cat) => {
     return cat.name in exampleObject;
   });
   return (
-    <div className="grid">
+    <PlayerStatsGridStyled>
       <Header as="h4">Statistics</Header>
       <Table>
         <Table.Header>
@@ -49,7 +54,10 @@ function PlayerStatsGrid(props) {
             {!detailed && <Table.HeaderCell>League</Table.HeaderCell>}
             {displayedCategories.map((cat, index) => {
               return (
-                <Table.HeaderCell key={"headercol" + index}>
+                <Table.HeaderCell
+                  key={`headercol${index}`}
+                  title={cat.description}
+                >
                   {cat.abbr}
                 </Table.HeaderCell>
               );
@@ -90,17 +98,17 @@ function PlayerStatsGrid(props) {
                   ) {
                     value = FormatDecimals(value, 2);
                   }
-                  return <Table.Cell key={"col" + i}>{value}</Table.Cell>;
+                  return <Table.Cell key={`col${i}`}>{value}</Table.Cell>;
                 })}
               </Table.Row>
             );
           })}
         </Table.Body>
       </Table>
-      <div className="stat-bar">
+      <StatBarStyled>
         {stats.length === 0 && <div>No stats to show.</div>}
         {stats.length > 0 && (
-          <div className="production-graph">
+          <ProductionGraphStyled>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 width={500}
@@ -152,48 +160,11 @@ function PlayerStatsGrid(props) {
                 )}
               </LineChart>
             </ResponsiveContainer>
-          </div>
+          </ProductionGraphStyled>
         )}
-        <Statistic.Group horizontal>
-          {totalGames && (
-            <Statistic>
-              <Statistic.Value>{totalGames}</Statistic.Value>
-              <Statistic.Label>Games</Statistic.Label>
-            </Statistic>
-          )}
-          {totalGoals && (
-            <Statistic>
-              <Statistic.Value>{totalGoals}</Statistic.Value>
-              <Statistic.Label>Goals</Statistic.Label>
-            </Statistic>
-          )}
-          {totalAssists && (
-            <Statistic>
-              <Statistic.Value>{totalAssists}</Statistic.Value>
-              <Statistic.Label>Assists</Statistic.Label>
-            </Statistic>
-          )}
-          {totalPoints && (
-            <Statistic>
-              <Statistic.Value>{totalPoints}</Statistic.Value>
-              <Statistic.Label>Points</Statistic.Label>
-            </Statistic>
-          )}
-          {totalGamesStarted && (
-            <Statistic>
-              <Statistic.Value>{totalGamesStarted}</Statistic.Value>
-              <Statistic.Label>Starts</Statistic.Label>
-            </Statistic>
-          )}
-          {totalWins && (
-            <Statistic>
-              <Statistic.Value>{totalWins}</Statistic.Value>
-              <Statistic.Label>Wins</Statistic.Label>
-            </Statistic>
-          )}
-        </Statistic.Group>
-      </div>
-    </div>
+        <PlayerStatsSummary data={data} />
+      </StatBarStyled>
+    </PlayerStatsGridStyled>
   );
 }
 

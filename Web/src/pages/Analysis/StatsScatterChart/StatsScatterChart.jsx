@@ -11,7 +11,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import "./StatsScatterChart.scss";
 import { Loader } from "../../../components";
 import { IsNullOrUndefined } from "../../../util/common";
 

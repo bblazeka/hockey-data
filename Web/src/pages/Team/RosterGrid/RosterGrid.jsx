@@ -1,9 +1,14 @@
 import React from "react";
+import styled from "styled-components";
 
-import "./RosterGrid.scss";
+import { Loader } from "components";
+
 import RosterElement from "../RosterElement/RosterElement";
 import { IsNullOrUndefined } from "../../../util/common";
-import { Loader } from "../../../components";
+
+const RosterDisplayStyled = styled.div`
+  display: block;
+`;
 
 function RosterGrid(props) {
   const { filterPlayers, team } = props;
@@ -12,7 +17,7 @@ function RosterGrid(props) {
   }
   return (
     <>
-      <div className="roster">
+      <RosterDisplayStyled>
         <RosterElement
           title={"Goalies"}
           players={team.goalies}
@@ -28,7 +33,7 @@ function RosterGrid(props) {
           players={team.forwards}
           filterPlayers={filterPlayers}
         />
-      </div>
+      </RosterDisplayStyled>
     </>
   );
 }

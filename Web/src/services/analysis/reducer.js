@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from "./actionTypes";
 
 const defaultAppState = {
   loading: false,
@@ -9,12 +9,12 @@ const analysisReducer = (state = defaultAppState, action) => {
     case actionTypes.GET_ANALYSIS:
       return {
         ...state,
-        analysis: null
+        analysis: null,
       };
     case actionTypes.ANALYSIS_LOADED:
       return {
         ...state,
-        analysis: action.payload
+        analysis: action.payload,
       };
     default:
       return state;

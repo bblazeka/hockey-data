@@ -1,4 +1,3 @@
-export { default as Lineup } from "./Lineup/Lineup";
 export { default as Loader } from "./Loader/Loader";
 export { default as CompareGrid } from "./CompareGrid/CompareGrid";
 export { default as SocialFeed } from "./SocialFeed/SocialFeed";

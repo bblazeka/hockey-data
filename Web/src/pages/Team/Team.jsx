@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Checkbox, Grid, Header, Segment, Tab } from "semantic-ui-react";
+import { Checkbox, Grid, Header, Segment } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
 
 import { getTeam } from "services/team";
@@ -15,7 +15,6 @@ import { selectTeamObject } from "services/selectors";
 import "./Team.scss";
 import TeamSchedule from "./TeamSchedule/TeamSchedule";
 import RosterGrid from "./RosterGrid/RosterGrid.jsx";
-import RosterStatsGrid from "./RosterStatsGrid/RosterStatsGrid.jsx";
 
 export default function Team() {
   const [filterActive, setFilterActive] = useState(true);
@@ -47,31 +46,6 @@ export default function Team() {
       </div>
     );
   }
-  const renderRosterPane = () => {
-    return (
-      <Tab.Pane>
-        <RosterGrid team={team} filterPlayers={filterActive} />
-      </Tab.Pane>
-    );
-  };
-  const renderStatsPane = () => {
-    return (
-      <Tab.Pane>
-        <RosterStatsGrid rosterStats={team.skaterStats} title="Skaters" />
-        <RosterStatsGrid rosterStats={team.goalieStats} title="Goalies" />
-      </Tab.Pane>
-    );
-  };
-  const panes = [
-    {
-      menuItem: "Roster",
-      render: renderRosterPane,
-    },
-    {
-      menuItem: "Stats",
-      render: renderStatsPane,
-    },
-  ];
   return (
     <>
       <Header as="h1" className="team-header">
@@ -83,12 +57,14 @@ export default function Team() {
         {team.name}
       </Header>
       <p className="desc">{team.description}</p>
-      <Tab panes={panes} />
+      <RosterGrid team={team} filterPlayers={filterActive} />
       <Segment>
         <Checkbox
           checked={filterActive}
           label="Show active players only"
-          onChange={setFilterActive}
+          onChange={(_, data) => {
+            setFilterActive(data.checked);
+          }}
         />
       </Segment>
       <TeamSchedule games={teamGames} />

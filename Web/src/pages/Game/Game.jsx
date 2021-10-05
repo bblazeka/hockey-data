@@ -54,7 +54,7 @@ export default function Game() {
             {game.officials &&
               game.officials.map((official, index) => {
                 return (
-                  <List.Item key={official.official.id + "" + index}>
+                  <List.Item key={`${official.official.id}${index}`}>
                     <List.Icon name="user" />
                     <List.Content>
                       <List.Header>{official.official.fullName}</List.Header>

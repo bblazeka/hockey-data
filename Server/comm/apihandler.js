@@ -7,6 +7,11 @@ async function nhlApiRequest(path) {
   return response.data;
 }
 
+async function enhancedNhlApiRequest(path) {
+  const response = await axios.get(`https://api.nhle.com${path}`);
+  return response.data;
+}
+
 async function newsApiRequest(path) {
   const response = await axios.get(
     `http://newsapi.org${path}&apiKey=${newsapi.key}`
@@ -57,6 +62,7 @@ async function wikiApiAdvancedRequest(mainQuery, subQuery) {
 
 module.exports = {
   nhlApiRequest,
+  enhancedNhlApiRequest,
   newsApiRequest,
   mapboxApiRequest,
   wikiApiRequest,
