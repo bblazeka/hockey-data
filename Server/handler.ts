@@ -1,31 +1,31 @@
-const serverless = require("serverless-http");
-const express = require("express");
-const bodyParser = require("body-parser-graphql");
-const { graphqlHTTP } = require('express-graphql');
-const { loadSchemaSync } = require('@graphql-tools/load');
-const { GraphQLFileLoader } = require('@graphql-tools/graphql-file-loader');
-const cors = require('cors');
+import serverless from "serverless-http";
+import express from "express";
+import { graphqlHTTP } from "express-graphql";
+import { loadSchemaSync } from "@graphql-tools/load";
+import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
+import cors from "cors";
 
-const { Database } = require('./comm/dbhandler.js');
-const analysis = require('./services/analysis');
-const game = require('./services/game');
-const team = require('./services/team');
-const news = require('./services/news');
-const league = require('./services/league');
-const player = require('./services/player');
-const util = require('./services/util');
+import * as analysis from "./services/analysis";
+import * as game from "./services/game";
+import * as team from "./services/team";
+import * as news from "./services/news";
+import * as league from "./services/league";
+import * as player from "./services/player";
+import * as util from "./services/util";
+
+import { Database } from "./comm/dbhandler.js";
+import { graphql } from "body-parser-graphql";
 
 const app = express();
 
 let databaseInitialized = false;
 
 // Construct a schema, using GraphQL schema language
-const schema = loadSchemaSync('./services/**/*.gql', { // load from multiple files using glob
-  loaders: [
-      new GraphQLFileLoader()
-  ]
+const schema = loadSchemaSync("./services/**/*.gql", {
+  // load from multiple files using glob
+  loaders: [new GraphQLFileLoader()],
 });
- 
+
 // The root provides a resolver function for each API endpoint
 const root = {
   analysis: analysis.getAnalysis,
@@ -53,19 +53,24 @@ const root = {
 
 const port = 4000;
 
-app.use(cors({
-  credentials: true
-}));
-app.use(bodyParser.graphql());
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
-}));
+app.use(
+  cors({
+    credentials: true,
+  })
+);
+app.use(graphql());
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  })
+);
 
 async function init() {
-  console.log('Initializing database...');
-  
+  console.log("Initializing database...");
+
   if (!databaseInitialized) {
     const database = new Database();
     await database.init();
@@ -74,7 +79,7 @@ async function init() {
     team.init(database);
     player.init(database);
     league.init(database);
-    
+
     databaseInitialized = true;
   }
 }
@@ -82,7 +87,9 @@ async function init() {
 app.listen(port, async () => {
   await init();
 
-  console.log(`Running a GraphQL API server at http://localhost:${port}/graphql`);
+  console.log(
+    `Running a GraphQL API server at http://localhost:${port}/graphql`
+  );
 });
 
 // Handler

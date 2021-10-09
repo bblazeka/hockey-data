@@ -1,8 +1,8 @@
-const { round } = require("lodash");
+import { round } from "lodash";
 
-const { Database } = require("../../comm/dbhandler");
-const apicomm = require("../../comm/apihandler");
-const config = require("../../config.json");
+import { Database } from "../../comm/dbhandler";
+import apicomm from "../../comm/apihandler";
+import config from "../../config.json";
 
 let db = new Database();
 
@@ -204,7 +204,7 @@ async function getProfiles() {
   return items;
 }
 
-module.exports = {
+export {
   init,
   getPlayer,
   getPlayers,

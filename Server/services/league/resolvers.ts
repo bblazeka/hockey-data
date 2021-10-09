@@ -1,8 +1,8 @@
-const { sortBy, uniqBy } = require("lodash");
+import { sortBy, uniqBy } from "lodash";
 
-const { Database } = require("../../comm/dbhandler");
-const apicomm = require("../../comm/apihandler");
-const team = require("../team");
+import { Database } from "../../comm/dbhandler";
+import apicomm from "../../comm/apihandler";
+import * as team from "../team";
 
 let db = new Database();
 
@@ -78,9 +78,4 @@ async function divisionsWithTeams() {
   return divisionExtended;
 }
 
-module.exports = {
-  init,
-  getSchedule,
-  getStandings,
-  divisionsWithTeams,
-};
+export { init, getSchedule, getStandings, divisionsWithTeams };

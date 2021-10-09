@@ -1,7 +1,7 @@
-const { round, sortBy } = require("lodash");
+import { round, sortBy } from "lodash";
 
-const { Database } = require("../../comm/dbhandler");
-const { getActiveTeams } = require("../team/resolvers");
+import { Database } from "../../comm/dbhandler";
+import { getActiveTeams } from "../team";
 
 let db = new Database();
 
@@ -193,7 +193,4 @@ async function getAnalysis() {
   return sortBy(teams, "leagueRank");
 }
 
-module.exports = {
-  init,
-  getAnalysis,
-};
+export { init, getAnalysis };

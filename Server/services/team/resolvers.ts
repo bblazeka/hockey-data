@@ -1,7 +1,7 @@
-const { isNil, sortBy } = require("lodash");
+import { isNil, sortBy } from "lodash";
 
-const { Database } = require("../../comm/dbhandler");
-const apicomm = require("../../comm/apihandler");
+import { Database } from "../../comm/dbhandler";
+import apicomm from "../../comm/apihandler";
 
 let db = new Database();
 
@@ -99,10 +99,4 @@ async function getTeamSchedule({ id, start, end }) {
   return games;
 }
 
-module.exports = {
-  init,
-  getTeam,
-  getActiveTeams,
-  getTeamLocations,
-  getTeamSchedule,
-};
+export { init, getTeam, getActiveTeams, getTeamLocations, getTeamSchedule };

@@ -1,23 +1,28 @@
-const { DateTime } = require('luxon');
+import { DateTime } from "luxon";
+import _ from "lodash";
 
-const apicomm = require('../../comm/apihandler');
-const twtcomm = require('../../comm/twitterhandler');
+import apicomm from "../../comm/apihandler";
+import twtcomm from "../../comm/twitterhandler";
 
 async function getArticles({ query }) {
-  const pastDate = DateTime.now().minus({ weeks: 1 }).endOf('day').toISODate();
+  const pastDate = DateTime.now().minus({ weeks: 1 }).endOf("day").toISODate();
 
-  const newsResponse = await apicomm.newsApiRequest(`/v2/everything?q=${query}&from=${pastDate}&language=en&sortBy=relevancy&pageSize=10&language=en`);
-  return newsResponse.articles.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  const newsResponse = await apicomm.newsApiRequest(
+    `/v2/everything?q=${query}&from=${pastDate}&language=en&sortBy=relevancy&pageSize=10&language=en`
+  );
+  return _.sortBy(newsResponse.articles, function (obj) {
+    return new Date(obj.publishedAt);
+  });
 }
 
 async function getTweets({ query }) {
-  const tweetsResponse = await twtcomm.searchTweets(query, 10, 'en', 'popular');
+  const tweetsResponse = await twtcomm.searchTweets(query, 10, "en", "popular");
   const tweets = [];
   for (let status of tweetsResponse.statuses) {
-    const users = status.entities.user_mentions.map(u => {
+    const users = status.entities.user_mentions.map((u) => {
       return { text: u.name };
     });
-    const hashtags = status.entities.hashtags.map(h => {
+    const hashtags = status.entities.hashtags.map((h) => {
       return { text: h.text };
     });
     tweets.push({
@@ -34,7 +39,7 @@ async function getTweets({ query }) {
       },
       favoriteCount: status.favorite_count,
       retweetCount: status.retweet_count,
-      entities: users.concat(hashtags)
+      entities: users.concat(hashtags),
     });
   }
   return tweets;
@@ -50,9 +55,4 @@ async function getTwitterApiStatus() {
   return result;
 }
 
-module.exports = {
-  getArticles,
-  getUserTweets,
-  getTweets,
-  getTwitterApiStatus,
-};
+export { getArticles, getUserTweets, getTweets, getTwitterApiStatus };

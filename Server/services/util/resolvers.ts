@@ -1,4 +1,4 @@
-const apicomm = require("../../comm/apihandler");
+import apicomm from "../../comm/apihandler";
 
 async function geocode({ query }) {
   const result = await apicomm.mapboxApiRequest(query);
@@ -11,6 +11,4 @@ async function geocode({ query }) {
   });
 }
 
-module.exports = {
-  geocode,
-};
+export { geocode };
