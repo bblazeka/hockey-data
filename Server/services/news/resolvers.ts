@@ -1,13 +1,16 @@
 import { DateTime } from "luxon";
 import _ from "lodash";
+import { newsApiRequest } from "../../adapters/apihandler";
+import { getLimitStatus, searchTweets } from "../../adapters/twitterhandler";
 
-import apicomm from "../../comm/apihandler";
-import twtcomm from "../../comm/twitterhandler";
+type TGetArticlesParams = {
+  query: string;
+};
 
-async function getArticles({ query }) {
+async function getArticles({ query }: TGetArticlesParams) {
   const pastDate = DateTime.now().minus({ weeks: 1 }).endOf("day").toISODate();
 
-  const newsResponse = await apicomm.newsApiRequest(
+  const newsResponse = await newsApiRequest(
     `/v2/everything?q=${query}&from=${pastDate}&language=en&sortBy=relevancy&pageSize=10&language=en`
   );
   return _.sortBy(newsResponse.articles, function (obj) {
@@ -16,7 +19,7 @@ async function getArticles({ query }) {
 }
 
 async function getTweets({ query }) {
-  const tweetsResponse = await twtcomm.searchTweets(query, 10, "en", "popular");
+  const tweetsResponse = await searchTweets(query, 10, "en", "popular");
   const tweets = [];
   for (let status of tweetsResponse.statuses) {
     const users = status.entities.user_mentions.map((u) => {
@@ -46,12 +49,12 @@ async function getTweets({ query }) {
 }
 
 async function getUserTweets({ name }) {
-  const result = await twtcomm.getTweets(name);
+  const result = await getTweets(name);
   return result;
 }
 
 async function getTwitterApiStatus() {
-  const result = await twtcomm.getLimitStatus();
+  const result = await getLimitStatus();
   return result;
 }
 

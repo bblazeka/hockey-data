@@ -1,6 +1,6 @@
 import { round, sortBy } from "lodash";
 
-import { Database } from "../../comm/dbhandler";
+import { Database } from "../../adapters/dbhandler";
 import { getActiveTeams } from "../team";
 
 let db = new Database();

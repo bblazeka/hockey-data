@@ -1,9 +1,9 @@
 import { sortBy, isNil, toInteger } from "lodash";
 import { DateTime } from "luxon";
 
-import { Database } from "../../comm/dbhandler";
-import apicomm from "../../comm/apihandler";
-import { mapGoalie, mapSkater } from "./tools";
+import { Database } from "../../adapters/dbhandler";
+import { nhlApiRequest } from "../../adapters/apihandler";
+import { mapGoalie, mapSkater } from "./functions";
 
 let db = new Database();
 
@@ -48,10 +48,8 @@ type TGetGameParams = {
 };
 
 async function getGame({ gameId }: TGetGameParams) {
-  const linescore = await apicomm.nhlApiRequest(
-    `/api/v1/game/${gameId}/linescore`
-  );
-  const result = await apicomm.nhlApiRequest(`/api/v1/game/${gameId}/boxscore`);
+  const linescore = await nhlApiRequest(`/api/v1/game/${gameId}/linescore`);
+  const result = await nhlApiRequest(`/api/v1/game/${gameId}/boxscore`);
   const dbGame = (
     await db.getCollection("games").find({ gamePk: gameId }).toArray()
   )[0];
@@ -114,9 +112,7 @@ async function getTodaysGames() {
     return new Date(game.gameDate);
   });
   return games.map(async (game) => {
-    const result = await apicomm.nhlApiRequest(
-      `/api/v1/game/${game.gamePk}/linescore`
-    );
+    const result = await nhlApiRequest(`/api/v1/game/${game.gamePk}/linescore`);
     result.gameTime = DateTime.fromJSDate(game.gameDate).toFormat("HH:mm");
     result.gamePk = game.gamePk;
     result.ongoingGame = !isNil(result.currentPeriodTimeRemaining);

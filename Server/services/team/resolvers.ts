@@ -1,7 +1,10 @@
 import { isNil, sortBy } from "lodash";
 
-import { Database } from "../../comm/dbhandler";
-import apicomm from "../../comm/apihandler";
+import { Database } from "../../adapters/dbhandler";
+import {
+  wikiApiRequest,
+  wikiApiAdvancedRequest,
+} from "../../adapters/apihandler";
 
 let db = new Database();
 
@@ -9,7 +12,7 @@ function init(database) {
   db = database;
 }
 
-async function getPlayersFromTeam(teamId) {
+async function getPlayersFromTeam(teamId: number) {
   const items = await db
     .getCollection("players")
     .find({ "currentTeam.id": teamId })
@@ -35,16 +38,16 @@ async function getTeam({ id }) {
     team.forwards = rosterResponse.filter(
       (p) => p.primaryPosition.type == "Forward"
     );
-    team.description = (await apicomm.wikiApiRequest(team.name)).extract;
+    team.description = (await wikiApiRequest(team.name)).extract;
     team.venue.description = (
-      await apicomm.wikiApiAdvancedRequest(team.venue.name, team.venue.city)
+      await wikiApiAdvancedRequest(team.venue.name, team.venue.city)
     ).extract;
   }
   return team;
 }
 
 async function getActiveTeams() {
-  const teams = await db.getCollection("teams").find({}).toArray();
+  const teams = (await db.getCollection("teams").find({}).toArray()) as TTeam[];
   return sortBy(
     teams.filter((t) => t.active),
     "name"
@@ -53,7 +56,7 @@ async function getActiveTeams() {
 
 async function getTeamLocations() {
   const teams = await getActiveTeams();
-  const season = await apicomm.wikiApiRequest("2021–22 NHL season");
+  const season = await wikiApiRequest("2021–22 NHL season");
   const divisions = [
     { key: "Metropolitan", value: "red" },
     { key: "Atlantic", value: "green" },
@@ -80,7 +83,13 @@ async function getTeamLocations() {
   };
 }
 
-async function getTeamSchedule({ id, start, end }) {
+type TTeamScheduleParams = {
+  id: number;
+  start: string;
+  end: string;
+};
+
+async function getTeamSchedule({ id, start, end }: TTeamScheduleParams) {
   let games = await db
     .getCollection("games")
     .find({

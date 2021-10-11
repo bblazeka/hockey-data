@@ -1,7 +1,7 @@
-import apicomm from "../../comm/apihandler";
+import { mapboxApiRequest } from "../../adapters/apihandler";
 
 async function geocode({ query }) {
-  const result = await apicomm.mapboxApiRequest(query);
+  const result = await mapboxApiRequest(query);
   return result.features.map((el) => {
     return {
       text: el.text,

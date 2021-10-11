@@ -1,7 +1,7 @@
 import { round } from "lodash";
+import { nhlApiRequest, playerWikiRequest } from "../../adapters/apihandler";
 
-import { Database } from "../../comm/dbhandler";
-import apicomm from "../../comm/apihandler";
+import { Database } from "../../adapters/dbhandler";
 import config from "../../config.json";
 
 let db = new Database();
@@ -41,7 +41,7 @@ async function getPlayer({ id }) {
   };
   const player = await db.getCollection("players").findOne(query, options);
 
-  const result = await apicomm.nhlApiRequest(
+  const result = await nhlApiRequest(
     `/api/v1/people/${id}/stats?stats=yearByYear`
   );
   const nhlStatsOnly = result.stats[0].splits.filter(
@@ -74,7 +74,7 @@ async function getPlayer({ id }) {
   };
   player.careerStats = { stats: result.stats[0].splits };
   player.description = (
-    await apicomm.playerWikiRequest(
+    await playerWikiRequest(
       player.fullName,
       `(ice hockey, born ${player.birthDate.split("-")[0]})`
     )
@@ -129,7 +129,7 @@ async function getSelectedPlayers() {
   const goalies = [];
   for (let playerId of profiles[0].selectedPlayers) {
     const playerStats = (
-      await apicomm.nhlApiRequest(
+      await nhlApiRequest(
         `/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${config.currentSeason}`
       )
     ).stats[0].splits[0].stat;

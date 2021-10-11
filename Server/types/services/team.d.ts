@@ -4,12 +4,26 @@ type TTeam = {
   name: string;
   description: string;
   active: boolean;
-  venue: TVenue;
+  venue: TApiVenue;
   colorScheme: string;
-  rosterResponse: [TPlayer];
-  goalies: [TPlayer];
-  defenders: [TPlayer];
-  forwards: [TPlayer];
+  rosterResponse: TPlayer[];
+  goalies: TPlayer[];
+  defenders: TPlayer[];
+  forwards: TPlayer[];
+  conference: TApiConference;
+  division: TApiDivision;
+  firstYearOfPlay: number;
+  franchiseId: number;
+  locationName: string;
+  location?: TLocation;
+};
+
+type TLocation = {
+  id: number;
+  text: string;
+  placeName: string;
+  center: number[];
+  color: string;
 };
 
 type TVenue = {

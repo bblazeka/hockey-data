@@ -35,8 +35,8 @@ type TStatsCollection = {
   totalPoints: number;
   totalGamesStarted: number;
   totalWins: number;
-  seasonSums: [TSeasonSum];
-  stats: [TSeasonStats];
+  seasonSums: TSeasonSum[];
+  stats: TSeasonStats[];
 };
 
 type TSeasonSum = {
@@ -52,11 +52,6 @@ type TSeasonStats = {
   team: TTeam;
   league: TLeague;
   stat: TStats;
-};
-
-type TLeague = {
-  id: number;
-  name: string;
 };
 
 type TPosition = {

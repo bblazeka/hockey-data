@@ -1,6 +1,6 @@
-const axios = require("axios");
-const newsapi = require("../keys/newsapi.json");
-const mapbox = require("../keys/mapbox.json");
+import axios from "axios";
+import newsapi from "../keys/newsapi.json";
+import mapbox from "../keys/mapbox.json";
 
 async function nhlApiRequest(path) {
   const response = await axios.get(`http://statsapi.web.nhl.com${path}`);
@@ -60,7 +60,7 @@ async function wikiApiAdvancedRequest(mainQuery, subQuery) {
   return res;
 }
 
-module.exports = {
+export {
   nhlApiRequest,
   enhancedNhlApiRequest,
   newsApiRequest,

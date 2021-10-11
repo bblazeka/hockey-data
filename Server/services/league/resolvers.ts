@@ -1,8 +1,9 @@
 import { sortBy, uniqBy } from "lodash";
+import { nhlApiRequest } from "../../adapters/apihandler";
 
-import { Database } from "../../comm/dbhandler";
-import apicomm from "../../comm/apihandler";
+import { Database } from "../../adapters/dbhandler";
 import * as team from "../team";
+import { calculateGameScore, mapApiDivision } from "./functions";
 
 let db = new Database();
 
@@ -10,27 +11,23 @@ function init(database) {
   db = database;
 }
 
-function calculateGameScore(opponent) {
-  const totalGames =
-    opponent.leagueRecord.wins +
-    opponent.leagueRecord.ot +
-    opponent.leagueRecord.losses;
-  return (
-    (opponent.leagueRecord.wins * 2 + opponent.leagueRecord.ot) /
-    (2 * totalGames)
-  );
-}
+type TGetStandingsParams = {
+  season: string;
+};
 
-async function getStandings({ season }) {
-  const records = await apicomm.nhlApiRequest(
-    `/api/v1/standings?season=${season}`
-  );
+async function getStandings({ season }: TGetStandingsParams) {
+  const records = await nhlApiRequest(`/api/v1/standings?season=${season}`);
   return records.records;
 }
 
-async function getSchedule({ start, end }) {
+type TGetScheduleParams = {
+  start: string;
+  end: string;
+};
+
+async function getSchedule({ start, end }: TGetScheduleParams) {
   const teams = await team.getActiveTeams();
-  const sortedTeams = sortBy(teams, ["name"]);
+  const sortedTeams = sortBy(teams, ["name"]) as TScheduleTeam[];
 
   const games = await db
     .getCollection("games")
@@ -67,15 +64,15 @@ async function divisionsWithTeams() {
   const teams = await team.getActiveTeams();
 
   const divisions = teams.map((i) => i.division);
-  const uniqueDivisions = uniqBy(divisions, "id");
-  const divisionExtended = uniqueDivisions.map((d) => {
-    return Object.assign(d, { teams: [] });
-  });
+  const uniqueDivisions = uniqBy(divisions, "id") as TApiDivision[];
+  const divisionsWithTeams = uniqueDivisions.map(mapApiDivision);
 
   teams.forEach((t) => {
-    divisionExtended.find((div) => div.name === t.division.name).teams.push(t);
+    divisionsWithTeams
+      .find((div) => div.name === t.division.name)
+      .teams.push(t);
   });
-  return divisionExtended;
+  return divisionsWithTeams;
 }
 
 export { init, getSchedule, getStandings, divisionsWithTeams };

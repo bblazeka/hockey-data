@@ -1,3 +1,17 @@
+type TApiConference = {
+  id: number;
+  name: string;
+  link: string;
+};
+
+type TApiDivision = {
+  id: number;
+  name: string;
+  nameShort: string;
+  abbreviation: string;
+  link: string;
+};
+
 type TApiGameBoxscore = {
   teams: TApiGameTeams;
   officials: [TApiOfficials];
@@ -91,4 +105,16 @@ type TApiGamePlayerPerson = {
 type TApiOfficials = {
   official: any;
   officialType: string;
+};
+
+type TApiVenue = {
+  id: number;
+  name: string;
+  link: string;
+  city: string;
+  timeZone: {
+    id: string;
+    offset: number;
+    tz: string;
+  };
 };

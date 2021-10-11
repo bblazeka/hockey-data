@@ -1,7 +1,9 @@
-const { MongoClient } = require("mongodb");
-const dbkey = require("../keys/db.json");
+import { MongoClient } from "mongodb";
+import dbkey from "../keys/db.json";
 
-class Database {
+export class Database {
+  client: any;
+  database: any;
   constructor() {
     this.client = {};
     this.database = {};
@@ -23,6 +25,3 @@ class Database {
     return this.database.collection(name);
   }
 }
-module.exports = {
-  Database,
-};

@@ -13,7 +13,7 @@ import * as league from "./services/league";
 import * as player from "./services/player";
 import * as util from "./services/util";
 
-import { Database } from "./comm/dbhandler.js";
+import { Database } from "./adapters/dbhandler";
 import { graphql } from "body-parser-graphql";
 
 const app = express();

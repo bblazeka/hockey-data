@@ -1,5 +1,5 @@
-const Twitter = require("twitter");
-const twitterKeys = require("../keys/twitter.json");
+import Twitter from "twitter";
+import twitterKeys from "../keys/twitter.json";
 
 const client = new Twitter({
   consumer_key: twitterKeys.consumer_key,
@@ -37,8 +37,4 @@ async function searchTweets(q, count, lang, result_type) {
   }
 }
 
-module.exports = {
-  getLimitStatus,
-  getTweets,
-  searchTweets,
-};
+export { getLimitStatus, getTweets, searchTweets };
