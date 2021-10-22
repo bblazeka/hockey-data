@@ -115,7 +115,9 @@ async function getTodaysGames() {
     const result = await nhlApiRequest(`/api/v1/game/${game.gamePk}/linescore`);
     result.gameTime = DateTime.fromJSDate(game.gameDate).toFormat("HH:mm");
     result.gamePk = game.gamePk;
-    result.ongoingGame = !isNil(result.currentPeriodTimeRemaining);
+    result.ongoingGame =
+      !isNil(result.currentPeriodTimeRemaining) &&
+      DateTime.fromJSDate(game.gameDate) < DateTime.now();
     result.finished =
       result.ongoingGame && result.currentPeriodTimeRemaining === "Final";
     return result;

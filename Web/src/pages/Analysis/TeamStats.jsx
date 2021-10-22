@@ -19,7 +19,6 @@ import {
 } from "services/analysis/hooks";
 
 import StatsPieChart from "./StatsPieChart/StatsPieChart";
-import Lineup from "./Lineup/Lineup";
 import StatsScatterChart from "./StatsScatterChart/StatsScatterChart";
 import TeamStatsHeader from "./TeamStatsHeader";
 import styled from "styled-components";
@@ -124,9 +123,6 @@ export default function TeamStats({ category, team, setCategory }) {
             color={colors[0]}
           />
         </div>
-      </div>
-      <div className="lineup-container">
-        <Lineup lines={team.lines}></Lineup>
       </div>
     </>
   );

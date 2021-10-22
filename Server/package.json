@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "@types/luxon": "^2.0.5",
     "@types/node-fetch": "^3.0.3",
     "axios": "^0.21.2",
     "body-parser": "^1.19.0",
