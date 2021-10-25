@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Image, Menu, Segment, Tab } from "semantic-ui-react";
 
-import "./Analysis.scss";
 import { getLogo } from "util/assets";
 import { IsNullOrUndefined } from "util/common";
 import { Loader } from "components";
 import * as actions from "services/analysis";
-import AnalysisTeamTab from "./AnalysisTeamTab";
 import { selectAnalysisObject } from "services/selectors";
+
+import AnalysisTeamTab from "./AnalysisTeamTab";
 
 export default function Analysis() {
   const [category, setCategory] = useState("points");

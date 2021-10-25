@@ -5,7 +5,7 @@ import { Tab, Header } from "semantic-ui-react";
 import { getLogo } from "util/assets";
 
 import TeamStats from "./TeamStats";
-import PlayerStats from "./PlayerStats";
+import EnhancedStatsTable from "./EnhancedStatsTable";
 import Lineup from "./Lineup/Lineup";
 import RosterStatsGrid from "./RosterStatsGrid/RosterStatsGrid";
 
@@ -27,13 +27,13 @@ export default function AnalysisTeamTab({ category, team, setCategory }) {
 
   const renderPlayerPane = () => (
     <Tab.Pane>
-      <PlayerStats team={team} />
+      <EnhancedStatsTable teamStats={team.enhancedSkaterStats} />
     </Tab.Pane>
   );
 
   const renderInsights = () => (
     <Tab.Pane>
-      <div className="lineup-container">
+      <div>
         <Lineup lines={team.lines}></Lineup>
       </div>
     </Tab.Pane>

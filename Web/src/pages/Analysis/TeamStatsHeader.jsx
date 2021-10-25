@@ -1,8 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Statistic, Table } from "semantic-ui-react";
+import styled from "styled-components";
 
 import { GetNumberWithOrdinal } from "util/common";
+
+const TeamStatsTable = styled.div`
+  overflow-x: scroll;
+  margin-top: 1vh;
+`;
 
 export default function TeamStatsHeader({ team }) {
   const createStatistic = (text, value) => {
@@ -54,7 +60,7 @@ export default function TeamStatsHeader({ team }) {
           GetNumberWithOrdinal(team.ppDivisionRank)
         )}
       </Statistic.Group>
-      <div className="team-stats-table">
+      <TeamStatsTable>
         <Table>
           <Table.Header>
             <Table.Row>
@@ -79,11 +85,11 @@ export default function TeamStatsHeader({ team }) {
             </Table.Row>
           </Table.Body>
         </Table>
-      </div>
+      </TeamStatsTable>
     </>
   );
 }
 
 TeamStatsHeader.propTypes = {
-  player: PropTypes.object,
+  team: PropTypes.object,
 };

@@ -11,6 +11,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import styled from "styled-components";
 
 import { getColorScheme } from "util/shared";
 import {
@@ -21,7 +22,6 @@ import {
 import StatsPieChart from "./StatsPieChart/StatsPieChart";
 import StatsScatterChart from "./StatsScatterChart/StatsScatterChart";
 import TeamStatsHeader from "./TeamStatsHeader";
-import styled from "styled-components";
 
 const dropdownOptions = [
   { key: "points", text: "Points", value: "points" },
@@ -32,6 +32,32 @@ const dropdownOptions = [
 const LineChartContainer = styled.div`
   height: 20vh;
   margin-bottom: 20px;
+`;
+
+const ScatterChartContainer = styled.div`
+  width: 100%;
+  height: 60vh;
+`;
+
+const PieChartContainer = styled.div`
+  width: 50%;
+  height: 40vh;
+  overflow: visible;
+  min-width: 480px;
+`;
+
+const GraphContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const PieChartHeader = styled.h4`
+  margin-bottom: 0;
+`;
+
+const FilterContainer = styled.div`
+  margin-right: -8vw;
+  z-index: 20;
 `;
 
 export default function TeamStats({ category, team, setCategory }) {
@@ -74,8 +100,8 @@ export default function TeamStats({ category, team, setCategory }) {
           </BarChart>
         </ResponsiveContainer>
       </LineChartContainer>
-      <div className="graph-container">
-        <div className="filter-container">
+      <GraphContainer>
+        <FilterContainer>
           <Header as="h4">
             <Header.Content>
               Player{" "}
@@ -88,18 +114,18 @@ export default function TeamStats({ category, team, setCategory }) {
               />{" "}
             </Header.Content>
           </Header>
-        </div>
-        <div className="pie-chart-container">
+        </FilterContainer>
+        <PieChartContainer>
           <h4>{/*empty space*/}</h4>
           <StatsPieChart values={skaterPie} colorScheme={colors} />
-        </div>
-        <div className="pie-chart-container">
-          <h4 className="pie-chart-header">Goalie wins:</h4>
+        </PieChartContainer>
+        <PieChartContainer>
+          <PieChartHeader>Goalie wins:</PieChartHeader>
           <StatsPieChart values={goalieGraph} colorScheme={colors} />
-        </div>
-      </div>
-      <div className="graph-container">
-        <div className="scatter-chart-container">
+        </PieChartContainer>
+      </GraphContainer>
+      <GraphContainer>
+        <ScatterChartContainer>
           <StatsScatterChart
             values={skaters}
             xAxisName="Games"
@@ -108,10 +134,10 @@ export default function TeamStats({ category, team, setCategory }) {
             yKey={`stats.${category}`}
             color={colors[0]}
           />
-        </div>
-      </div>
-      <div className="graph-container">
-        <div className="scatter-chart-container">
+        </ScatterChartContainer>
+      </GraphContainer>
+      <GraphContainer>
+        <ScatterChartContainer>
           <StatsScatterChart
             values={skaters}
             xAxisName="Games"
@@ -122,12 +148,14 @@ export default function TeamStats({ category, team, setCategory }) {
             width={400}
             color={colors[0]}
           />
-        </div>
-      </div>
+        </ScatterChartContainer>
+      </GraphContainer>
     </>
   );
 }
 
 TeamStats.propTypes = {
-  player: PropTypes.object,
+  category: PropTypes.string,
+  team: PropTypes.object,
+  setCategory: PropTypes.func,
 };

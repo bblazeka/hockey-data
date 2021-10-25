@@ -10,8 +10,7 @@ const PlayerNameStyled = styled.div`
   text-align: center;
 `;
 
-function Lineup(props) {
-  const { lines } = props;
+function Lineup({ lines }) {
   if (IsNullOrUndefined(lines)) {
     return <Loader text="Loading lines..."></Loader>;
   }
