@@ -103,6 +103,48 @@ export const getAnalysis = /* GraphQL */ `
           shortHandedTimeOnIcePerGame
           powerPlayTimeOnIcePerGame
         }
+        advancedStats {
+          seasonId
+          playerId
+          skaterFullName
+          positionCode
+          assists5v5
+          assistsPer605v5
+          gamesPlayed
+          goals5v5
+          goalsPer605v5
+          netMinorPenaltiesPer60
+          offensiveZoneStartPct5v5
+          onIceShootingPct5v5
+          points5v5
+          pointsPer605v5
+          primaryAssists5v5
+          primaryAssistsPer605v5
+          satPct
+          satRelative5v5
+          secondaryAssists5v5
+          secondaryAssistsPer605v5
+          shootingPct5v5
+          timeOnIcePerGame5v5
+          ppAssists
+          ppGoals
+          ppGoalsForPer60
+          ppGoalsPer60
+          ppIndividualSatFor
+          ppIndividualSatForPer60
+          ppPoints
+          ppPointsPer60
+          ppPrimaryAssists
+          ppPrimaryAssistsPer60
+          ppSecondaryAssists
+          ppSecondaryAssistsPer60
+          ppShootingPct
+          ppShots
+          ppShotsPer60
+          ppTimeOnIce
+          ppTimeOnIcePctPerGame
+          ppTimeOnIcePerGame
+        }
       }
       goalieStats {
         id
@@ -130,30 +172,30 @@ export const getAnalysis = /* GraphQL */ `
           shortHandedSavePercentage
           evenStrengthSavePercentage
         }
-      }
-      enhancedSkaterStats {
-        seasonId
-        playerId
-        skaterFullName
-        positionCode
-        assists5v5
-        assistsPer605v5
-        gamesPlayed
-        goals5v5
-        goalsPer605v5
-        netMinorPenaltiesPer60
-        offensiveZoneStartPct5v5
-        onIceShootingPct5v5
-        points5v5
-        pointsPer605v5
-        primaryAssists5v5
-        primaryAssistsPer605v5
-        satPct
-        satRelative5v5
-        secondaryAssists5v5
-        secondaryAssistsPer605v5
-        shootingPct5v5
-        timeOnIcePerGame5v5
+        advancedStats {
+          seasonId
+          playerId
+          goalieFullName
+          gamesPlayed
+          completeGamePct
+          completeGames
+          gamesStarted
+          goalieFullName
+          goalsAgainst
+          goalsAgainstAverage
+          goalsFor
+          goalsForAverage
+          incompleteGames
+          qualityStart
+          qualityStartsPct
+          regulationLosses
+          regulationWins
+          savePct
+          shootsCatches
+          shotsAgainstPer60
+          teamAbbrevs
+          timeOnIce
+        }
       }
     }
   }

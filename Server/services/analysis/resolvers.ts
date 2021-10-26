@@ -18,6 +18,7 @@ async function getAnalysis() {
     const formattedRoster = team.rosterStats.map((p) => {
       return Object.assign(p, {
         stats: p.stats,
+        advancedStats: p.advancedStats,
       });
     });
     team.skaterStats = team.rosterStats?.filter((s) => s.stats["shifts"]) ?? [];

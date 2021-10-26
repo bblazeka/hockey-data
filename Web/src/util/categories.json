@@ -1,0 +1,267 @@
+{
+  "skaterCategories": {
+    "gamesPlayed": {
+      "title": "GP",
+      "property": "gamesPlayed",
+      "description": "Games played"
+    },
+    "goals": {
+      "title": "G",
+      "property": "goals",
+      "description": "Goals"
+    },
+    "assists": {
+      "title": "A",
+      "property": "assists",
+      "description": "Assists"
+    },
+    "timeOnIcePerGame5v5": {
+      "title": "TOI/GP",
+      "property": "timeOnIcePerGame5v5",
+      "description": "Time on ice 5v5 per game played"
+    },
+    "goals5v5": {
+      "title": "G5v5",
+      "property": "goals5v5",
+      "description": "Goals 5v5"
+    },
+    "goalsPer605v5": {
+      "title": "G5v5/60",
+      "property": "goalsPer605v5",
+      "description": "Goals 5v5 per 60 min"
+    },
+    "assists5v5": {
+      "title": "A5v5",
+      "property": "assists5v5",
+      "description": "Assists 5v5"
+    },
+    "primaryAssists5v5": {
+      "title": "A15v5",
+      "property": "assists5v5",
+      "description": "Primary assists 5v5"
+    },
+    "secondaryAssists5v5": {
+      "title": "A25v5",
+      "property": "secondaryAssists5v5",
+      "description": "Secondary assists 5v5"
+    },
+    "assistsPer605v5": {
+      "title": "A5v5/60",
+      "property": "assistsPer605v5",
+      "description": "Assists 5v5 per 60 min"
+    },
+    "points5v5": {
+      "title": "P5v5",
+      "property": "points5v5",
+      "description": "Points 5v5"
+    },
+    "pointsPer605v5": {
+      "title": "P5v5/60",
+      "property": "pointsPer605v5",
+      "description": "Points 5v5 per 60 min"
+    },
+    "offensiveZoneStartPct5v5": {
+      "title": "OZS",
+      "property": "offensiveZoneStartPct5v5",
+      "description": "Offensive zone starts"
+    },
+    "satPct": {
+      "title": "SAT%",
+      "property": "satPct",
+      "description": "Shot attept percentage"
+    },
+    "satRelative5v5": {
+      "title": "SAT5v5",
+      "property": "satRelative5v5",
+      "description": "Shot attempts relative percentage"
+    },
+    "netMinorPenaltiesPer60": {
+      "title": "NM/60",
+      "property": "netMinorPenaltiesPer60",
+      "description": "Net minor penalties 5v5 per 60 minutes 5v5"
+    },
+    "shootingPct5v5": {
+      "title": "S%5v5",
+      "property": "shootingPct5v5",
+      "description": "Shoting percentage 5v5"
+    },
+    "onIceShootingPct5v5": {
+      "title": "OIS%",
+      "property": "onIceShootingPct5v5",
+      "description": "Shoting percentage when player on ice"
+    },
+    "ppAssists": {
+      "title": "PPA",
+      "property": "ppAssists",
+      "description": "Powerplay assists"
+    },
+    "ppGoals": {
+      "title": "PPG",
+      "property": "ppGoals",
+      "description": "Powerplay goals"
+    },
+    "ppGoalsForPer60": {
+      "title": "PPGF/60",
+      "property": "ppGoalsForPer60",
+      "description": "Powerplay goals for team per 60 min"
+    },
+    "ppGoalsPer60": {
+      "title": "PPG/60",
+      "property": "ppGoalsPer60",
+      "description": "Powerplay goals per 60 min"
+    },
+    "ppIndividualSatFor": {
+      "title": "iSATF",
+      "property": "ppIndividualSatFor",
+      "description": "Powerplay individual SAT For"
+    },
+    "ppIndividualSatForPer60": {
+      "title": "iSATF/60",
+      "property": "ppIndividualSatForPer60",
+      "description": "Powerplay individual SAT For per 60 min"
+    },
+    "ppPoints": {
+      "title": "PPP",
+      "property": "ppPoints",
+      "description": "Powerplay points"
+    },
+    "ppPointsPer60": {
+      "title": "PPP/60",
+      "property": "ppPointsPer60",
+      "description": "Powerplay points per 60 min"
+    },
+    "ppPrimaryAssists": {
+      "title": "PPPA",
+      "property": "ppPrimaryAssists",
+      "description": "Powerplay primary assists"
+    },
+    "ppPrimaryAssistsPer60": {
+      "title": "PPPA/60",
+      "property": "ppPrimaryAssistsPer60",
+      "description": "Powerplay primary assists per 60 min"
+    },
+    "ppSecondaryAssists": {
+      "title": "PPSA",
+      "property": "ppSecondaryAssists",
+      "description": "Powerplay secondary assists"
+    },
+    "ppSecondaryAssistsPer60": {
+      "title": "PPSA/60",
+      "property": "ppSecondaryAssistsPer60",
+      "description": "Powerplay secondary assists per 60 min"
+    },
+    "ppShootingPct": {
+      "title": "PPS%",
+      "property": "ppShootingPct",
+      "description": "Powerplay shooting percentage"
+    },
+    "ppShots": {
+      "title": "PPS",
+      "property": "ppShots",
+      "description": "Powerplay shots"
+    },
+    "ppShotsPer60": {
+      "title": "PPS/60",
+      "property": "ppShotsPer60",
+      "description": "Powerplay shots per 60 min"
+    },
+    "ppTimeOnIce": {
+      "title": "PPTOI",
+      "property": "ppTimeOnIce",
+      "description": "Powerplay time on ice"
+    },
+    "ppTimeOnIcePctPerGame": {
+      "title": "PPTOI%PG",
+      "property": "ppTimeOnIcePctPerGame",
+      "description": "Powerplay time on ice percent per game"
+    },
+    "ppTimeOnIcePerGame": {
+      "title": "PPTOIPG",
+      "property": "ppTimeOnIcePerGame",
+      "description": "Powerplay time on ice per game"
+    }
+  },
+  "goalieCategories": {
+    "gamesPlayed": {
+      "title": "GP",
+      "property": "gamesPlayed",
+      "description": "Games played"
+    },
+    "gamesStarted": {
+      "title": "GS",
+      "property": "gamesStarted",
+      "description": "Games started"
+    },
+    "completeGames": {
+      "title": "CG",
+      "property": "completeGames",
+      "description": "Complete games when starter"
+    },
+    "incompleteGames": {
+      "title": "IG",
+      "property": "incompleteGames",
+      "description": "Incomplete games when starter"
+    },
+    "completeGamePct": {
+      "title": "CG%",
+      "property": "completeGamePct",
+      "description": "Complete game percentage"
+    },
+    "qualityStart": {
+      "title": "QS",
+      "property": "qualityStart",
+      "description": "Quality starts"
+    },
+    "qualityStartsPct": {
+      "title": "QS%",
+      "property": "qualityStartsPct",
+      "description": "Quality starts percentage"
+    },
+    "goalsFor": {
+      "title": "GF",
+      "property": "goalsFor",
+      "description": "Team goals for while goalie on ice"
+    },
+    "goalsAgainst": {
+      "title": "GA",
+      "property": "goalsAgainst",
+      "description": "Team goals against while goalie on ice"
+    },
+    "goalsForAverage": {
+      "title": "GFA",
+      "property": "goalsForAverage",
+      "description": "Goals for average"
+    },
+    "goalsAgainstAverage": {
+      "title": "GAA",
+      "property": "goalsAgainstAverage",
+      "description": "Goals against average"
+    },
+    "regulationWins": {
+      "title": "ROW",
+      "property": "regulationWins",
+      "description": "Regulation and overtime wins"
+    },
+    "regulationLosses": {
+      "title": "ROL",
+      "property": "regulationLosses",
+      "description": "Regulation and overtime losses"
+    },
+    "shotsAgainstPer60": {
+      "title": "SA/60",
+      "property": "shotsAgainstPer60",
+      "description": "Shots against per 60 min"
+    },
+    "savePct": {
+      "title": "SV%",
+      "property": "savePct",
+      "description": "Save percentage"
+    },
+    "timeOnIce": {
+      "title": "TOI",
+      "property": "timeOnIce",
+      "description": "Time on ice"
+    }
+  },
+  "teamCategories": {}
+}

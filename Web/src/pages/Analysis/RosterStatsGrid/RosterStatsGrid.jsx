@@ -12,7 +12,7 @@ import routes from "../../../routes";
 
 const RosterStatsStyled = styled.div`
   padding: 5px;
-  overflow-x: scroll;
+  overflow-x: auto;
 `;
 
 const NameCellStyled = styled(Table.Cell)`

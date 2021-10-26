@@ -1,31 +1,32 @@
 type Player {
-    id: Int
-    description: String
-    abbrName: String
-    fullName: String
-    currentAge: Int
-    jerseyNumber: Int
-    active: Boolean
-    alternateCaptain: Boolean
-    birthCity: String
-    birthDate: String
-    captain: Boolean
-    currentTeam: Team
-    firstName: String
-    lastName: String
-    height: Int
-    primaryNumber: Int
-    primaryPosition: Position
-    rookie: Boolean
-    rosterStatus: String
-    shootsCatches: String
-    weight: Int
-    nationality: String
-    capHit: String
-    stats: Stats
-    averageStats: AverageStats
-    nhlStats: StatsCollection
-    careerStats: StatsCollection
+  id: Int
+  description: String
+  abbrName: String
+  fullName: String
+  currentAge: Int
+  jerseyNumber: Int
+  active: Boolean
+  alternateCaptain: Boolean
+  birthCity: String
+  birthDate: String
+  captain: Boolean
+  currentTeam: Team
+  firstName: String
+  lastName: String
+  height: Int
+  primaryNumber: Int
+  primaryPosition: Position
+  rookie: Boolean
+  rosterStatus: String
+  shootsCatches: String
+  weight: Int
+  nationality: String
+  capHit: String
+  stats: Stats
+  advancedStats: AdvancedStats
+  averageStats: AverageStats
+  nhlStats: StatsCollection
+  careerStats: StatsCollection
 }
 
 type StatsCollection {
@@ -180,10 +181,10 @@ type League {
 }
 
 type Position {
-    code: String
-    name: String
-    type: String
-    abbreviation: String
+  code: String
+  name: String
+  type: String
+  abbreviation: String
 }
 
 type SelectedPlayers {

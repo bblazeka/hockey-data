@@ -25,9 +25,12 @@ export default function AnalysisTeamTab({ category, team, setCategory }) {
     );
   };
 
-  const renderPlayerPane = () => (
+  const renderAdvancedStatsPane = () => (
     <Tab.Pane>
-      <EnhancedStatsTable teamStats={team.enhancedSkaterStats} />
+      <EnhancedStatsTable
+        skaterStats={team.skaterStats}
+        goalieStats={team.goalieStats}
+      />
     </Tab.Pane>
   );
 
@@ -42,7 +45,7 @@ export default function AnalysisTeamTab({ category, team, setCategory }) {
   const panes = [
     { menuItem: "Team overall", render: renderTeamPane },
     { menuItem: "Team stats", render: renderStatsPane },
-    { menuItem: "Individual stats", render: renderPlayerPane },
+    { menuItem: "Advanced stats", render: renderAdvancedStatsPane },
     { menuItem: "Insights", render: renderInsights },
   ];
 

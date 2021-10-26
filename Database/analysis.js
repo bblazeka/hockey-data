@@ -31,6 +31,30 @@ async function run() {
         const playerStats = await apicomm.nhlApiRequest(
           `/api/v1/teams/${teamRecord.team.id}?hydrate=roster(season=${season},person(stats(splits=statsSingleSeason)))`
         );
+
+        const skaterScoringStats = await apicomm.enhancedNhlApiRequest(
+          `/stats/rest/en/skater/scoringRates?isAggregate=false&isGame=false&start=0&limit=50&factCayenneExp=gamesPlayed>=1&cayenneExp=teamId=${teamRecord.team.id} and gameTypeId=2 and seasonId<=${season} and seasonId>=${season}`
+        );
+
+        const skaterPowerplayStats = await apicomm.enhancedNhlApiRequest(
+          `/stats/rest/en/skater/powerplay?isAggregate=false&isGame=false&start=0&limit=50&factCayenneExp=gamesPlayed>=1&cayenneExp=teamId=${teamRecord.team.id} and gameTypeId=2 and seasonId<=${season} and seasonId>=${season}`
+        );
+
+        const enhancedGoalieStats = await apicomm.enhancedNhlApiRequest(
+          `/stats/rest/en/goalie/advanced?isAggregate=false&isGame=false&start=0&limit=50&factCayenneExp=gamesPlayed>=1&cayenneExp=teamId=${teamRecord.team.id} and gameTypeId=2 and seasonId<=${season} and seasonId>=${season}`
+        );
+
+        const enhancedSkaterStats = [
+          ...skaterScoringStats.data
+            .concat(skaterPowerplayStats.data)
+            .reduce(
+              (m, o) =>
+                m.set(o.playerId, Object.assign(m.get(o.playerId) || {}, o)),
+              new Map()
+            )
+            .values(),
+        ];
+
         const playersRoster = playerStats.teams[0].roster.roster;
         const fmtRoster = playersRoster
           .filter((p) => {
@@ -40,6 +64,14 @@ async function run() {
             );
           })
           .map((p) => {
+            let enhancedStats = enhancedSkaterStats.find(
+              (enhancedStats) => enhancedStats.playerId === p.person.id
+            );
+            if (!enhancedStats) {
+              enhancedStats = enhancedGoalieStats.data.find(
+                (enhancedStats) => enhancedStats.playerId === p.person.id
+              );
+            }
             return {
               id: p.person.id,
               abbrName: `${abbreviateName(p.person.firstName)} ${
@@ -48,6 +80,7 @@ async function run() {
               fullName: p.person.fullName,
               currentAge: p.person.currentAge,
               stats: p.person.stats[0].splits[0].stat,
+              advancedStats: enhancedStats,
             };
           });
 
@@ -62,10 +95,6 @@ async function run() {
         Object.keys(rankings).forEach(function (key) {
           rankings[key] = parseInt(rankings[key]);
         });
-
-        const enhancedSkaterStats = await apicomm.enhancedNhlApiRequest(
-          `/stats/rest/en/skater/scoringRates?isAggregate=false&isGame=false&start=0&limit=50&factCayenneExp=gamesPlayed>=1&cayenneExp=teamId=${teamRecord.team.id} and gameTypeId=2 and seasonId<=${season} and seasonId>=${season}`
-        );
 
         const updateDoc = {
           $set: {
@@ -93,7 +122,6 @@ async function run() {
             statsSingleSeason: teamStats.stats[0].splits[0].stat,
             regularSeasonStatRankings: rankings,
             rosterStats: fmtRoster,
-            enhancedSkaterStats: enhancedSkaterStats.data,
             lines,
             lastUpdated: teamRecord.lastUpdated,
           },
@@ -113,6 +141,7 @@ async function run() {
       });
     });
   } finally {
+    await client.close();
   }
 }
 

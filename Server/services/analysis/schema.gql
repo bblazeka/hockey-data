@@ -20,7 +20,6 @@ type TeamAnalysis {
   rosterStats: [Player]
   skaterStats: [Player]
   goalieStats: [Player]
-  enhancedSkaterStats: [EnhancedSkaterStats]
 }
 
 type TeamStatTableProperty {
@@ -91,17 +90,18 @@ type RegularSeasonRankings {
   savePctg: Int
 }
 
-type EnhancedSkaterStats {
+type AdvancedStats {
   seasonId: Int
   playerId: Int
+  gamesPlayed: Int
+  # skaters
   skaterFullName: String
   positionCode: String
   assists5v5: Int
   assistsPer605v5: Float
-  gamesPlayed: Int
   goals5v5: Int
   goalsPer605v5: Float
-  netMinorPenaltiesPer60: Int
+  netMinorPenaltiesPer60: Float
   offensiveZoneStartPct5v5: Float
   onIceShootingPct5v5: Float
   points5v5: Int
@@ -114,4 +114,42 @@ type EnhancedSkaterStats {
   secondaryAssistsPer605v5: Float
   shootingPct5v5: Float
   timeOnIcePerGame5v5: Float
+  ppAssists: Int
+  ppGoals: Int
+  ppGoalsForPer60: Float
+  ppGoalsPer60: Int
+  ppIndividualSatFor: Int
+  ppIndividualSatForPer60: Float
+  ppPoints: Int
+  ppPointsPer60: Float
+  ppPrimaryAssists: Int
+  ppPrimaryAssistsPer60: Float
+  ppSecondaryAssists: Int
+  ppSecondaryAssistsPer60: Float
+  ppShootingPct: Float
+  ppShots: Int
+  ppShotsPer60: Float
+  ppTimeOnIce: Int
+  ppTimeOnIcePctPerGame: Float
+  ppTimeOnIcePerGame: Float
+  # goalies
+  completeGamePct: Float
+  completeGames: Int
+  gamesStarted: Int
+  goalieFullName: String
+  goalsAgainst: Int
+  goalsAgainstAverage: Float
+  goalsFor: Int
+  goalsForAverage: Float
+  incompleteGames: Int
+  lastName: String
+  qualityStart: Int
+  qualityStartsPct: Float
+  regulationLosses: Int
+  regulationWins: Int
+  savePct: Float
+  shootsCatches: String
+  shotsAgainstPer60: Float
+  teamAbbrevs: String
+  timeOnIce: Int
 }

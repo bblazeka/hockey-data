@@ -10,7 +10,7 @@ import { FormatDecimals, IsNullOrUndefined } from "util/common";
 import config from "util/config.json";
 
 const TeamTableStyled = styled.div`
-  overflow-x: scroll;
+  overflow-x: auto;
 `;
 
 function GameTeamStats(props) {

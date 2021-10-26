@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { GetNumberWithOrdinal } from "util/common";
 
 const TeamStatsTable = styled.div`
-  overflow-x: scroll;
+  overflow-x: auto;
   margin-top: 1vh;
 `;
 
