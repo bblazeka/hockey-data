@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb");
-const db = require("../keys/db.json");
-const apicomm = require("../comm/apihandler");
+const db = require("./keys/db.json");
+const apicomm = require("./adapters/apihandler");
 
 async function fetchTeams() {
   const teams = [];

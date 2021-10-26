@@ -1,8 +1,8 @@
 const { MongoClient } = require("mongodb");
-const db = require("../keys/db.json");
+const db = require("./keys/db.json");
 // Replace the uri string with your MongoDB deployment's connection string.
-const apicomm = require("../comm/apihandler");
-const dbhandler = require("../comm/dbhandler.js");
+const apicomm = require("./adapters/apihandler");
+const dbhandler = require("./adapters/dbhandler.js");
 const { fetchGames } = require("./functions.js");
 
 const client = new MongoClient(db.uri);

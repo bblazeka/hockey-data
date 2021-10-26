@@ -1,7 +1,7 @@
 const { isNil } = require("lodash");
 
-const apicomm = require("../comm/apihandler");
-const dbhandler = require("../comm/dbhandler.js");
+const apicomm = require("./adapters/apihandler");
+const dbhandler = require("./adapters/dbhandler.js");
 const { fetchTeams } = require("./functions");
 
 async function run() {

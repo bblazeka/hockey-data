@@ -1,9 +1,9 @@
 const { DateTime } = require("luxon");
 const { isNil } = require("lodash");
 
-const apicomm = require("../comm/apihandler");
-const dbhandler = require("../comm/dbhandler.js");
-const scrapper = require("../comm/scrapinghandler.js");
+const apicomm = require("./adapters/apihandler");
+const dbhandler = require("./adapters/dbhandler.js");
+const scrapper = require("./adapters/scrapinghandler.js");
 
 async function run() {
   const db = new dbhandler.Database();

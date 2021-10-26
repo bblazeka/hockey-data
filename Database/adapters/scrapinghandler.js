@@ -1,5 +1,5 @@
-import fetch from "node-fetch";
-import jsdom from "jsdom";
+const fetch = require("node-fetch");
+const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
 function playerName(dom, query) {
@@ -41,8 +41,8 @@ async function scrapLines(name) {
   const text = await response.text();
   const dom = new JSDOM(text);
 
-  const lines = [{}, {}, {}, {}];
-  const ppLines = [{}, {}];
+  const lines = [{} * 4];
+  const ppLines = [{} * 2];
   const goalies = {
     starter: playerName(dom, "G1"),
     backup: playerName(dom, "G2"),
@@ -71,4 +71,7 @@ async function scrapLines(name) {
   return { goalies, lines, ppLines };
 }
 
-export { scrapLines, scrapPlayerCapHit };
+module.exports = {
+  scrapLines,
+  scrapPlayerCapHit,
+};

@@ -1,6 +1,7 @@
-const apicomm = require("../comm/apihandler");
-const dbhandler = require("../comm/dbhandler.js");
-const scrapping = require("../comm/scrapinghandler");
+const apicomm = require("./adapters/apihandler");
+const dbhandler = require("./adapters/dbhandler.js");
+const scrapping = require("./adapters/scrapinghandler");
+const config = require("./config.json");
 
 function abbreviateName(name) {
   if (name.includes(".")) {
@@ -13,7 +14,7 @@ function abbreviateName(name) {
 }
 
 async function run() {
-  const season = "20202021";
+  const season = config.currentSeason;
 
   const db = new dbhandler.Database();
   await db.init();
@@ -104,7 +105,7 @@ async function run() {
             options
           );
           console.log(
-            `${queryResult.matchedCount} document(s) matched the filter, updated ${queryResult.modifiedCount} document(s)`
+            `${queryResult.matchedCount} document(s) matched the filter, updated ${queryResult.modifiedCount} document(s): ${teamRecord.team.name}`
           );
         } catch (ex) {
           console.log(ex);
