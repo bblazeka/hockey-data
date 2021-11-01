@@ -11,7 +11,10 @@ function init(database) {
 
 async function getAnalysis() {
   const activeTeams = await getActiveTeams();
-  const teams = await db.getCollection("analysis").find({}).toArray();
+  const teams: TTeamAnalysis[] = await db
+    .getCollection("analysis")
+    .find({})
+    .toArray();
 
   teams.forEach(function (team) {
     team.team = activeTeams.filter((t) => t.id === team.team.id)[0];
@@ -21,9 +24,9 @@ async function getAnalysis() {
         advancedStats: p.advancedStats,
       });
     });
-    team.skaterStats = team.rosterStats?.filter((s) => s.stats["shifts"]) ?? [];
+    team.skaterStats = team.rosterStats?.filter((s) => s.stats.shifts) ?? [];
     team.skaterStats.sort((p1, p2) => p2.stats.points - p1.stats.points);
-    team.goalieStats = team.rosterStats?.filter((s) => s.stats["saves"]) ?? [];
+    team.goalieStats = team.rosterStats?.filter((s) => s.stats.saves) ?? [];
     team.goalieStats.sort((p1, p2) => p2.stats.wins - p1.stats.wins);
     Object.assign(team, {
       rankingsGraph: [

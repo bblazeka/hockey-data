@@ -44,10 +44,16 @@ async function getSchedule({ start, end }: TGetScheduleParams) {
     team.games = JSON.parse(JSON.stringify(games))
       .filter((g) => g.home.team.id === team.id || g.away.team.id === team.id)
       .map((el) => {
+        const teamScore = calculateGameScore(
+          el.home.team.id === team.id ? el.home : el.away
+        );
+
         el.opponent = el.home.team.id === team.id ? el.away : el.home;
         const score = calculateGameScore(el.opponent);
-        el.opponent.rating = Math.round((score + Number.EPSILON) * 100) / 100;
-        team.scheduleScore += score;
+        const gameScore = teamScore - score;
+        el.opponent.rating =
+          Math.round((gameScore + Number.EPSILON) * 100) / 100;
+        team.scheduleScore += gameScore;
         return el;
       });
     team.scheduleScore =

@@ -67,7 +67,7 @@ type TStats = {
   // skater props
   goals: number;
   assists: number;
-  ponumbers: number;
+  points: number;
   pim: number;
   penaltyMinutes: number;
   plusMinus: number;
