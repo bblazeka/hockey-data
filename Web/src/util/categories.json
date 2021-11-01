@@ -1,5 +1,10 @@
 {
   "skaterCategories": {
+    "games": {
+      "title": "GP",
+      "property": "games",
+      "description": "Games played"
+    },
     "gamesPlayed": {
       "title": "GP",
       "property": "gamesPlayed",
@@ -14,6 +19,116 @@
       "title": "A",
       "property": "assists",
       "description": "Assists"
+    },
+    "points": {
+      "title": "P",
+      "property": "points",
+      "description": "Points"
+    },
+    "plusMinus": {
+      "title": "+/-",
+      "property": "plusMinus",
+      "description": "Plus minus score"
+    },
+    "penaltyMinutes": {
+      "title": "PIM",
+      "property": "penaltyMinutes",
+      "description": "Penalty minutes"
+    },
+    "timeOnIce": {
+      "title": "TOI",
+      "property": "timeOnIce",
+      "description": "Time on ice"
+    },
+    "overTimeGoals": {
+      "title": "OTG",
+      "property": "overTimeGoals",
+      "description": "Overtime goals"
+    },
+    "powerPlayGoals": {
+      "property": "powerPlayGoals",
+      "title": "PPG",
+      "description": "Power play goals"
+    },
+    "powerPlayAssists": {
+      "property": "powerPlayAssists",
+      "title": "PPA",
+      "description": "Power play assists"
+    },
+    "powerPlayPoints": {
+      "property": "powerPlayPoints",
+      "title": "PPP",
+      "description": "Power play points"
+    },
+    "shots": {
+      "property": "shots",
+      "title": "SOG",
+      "description": "Shots on goal"
+    },
+    "hits": {
+      "property": "hits",
+      "title": "HIT",
+      "description": "Hits"
+    },
+    "blocked": {
+      "property": "blocked",
+      "title": "BLK",
+      "description": "Blocks"
+    },
+    "faceOffPct": {
+      "property": "faceOffPct",
+      "title": "FO%",
+      "description": "Faceoff percentage"
+    },
+    "shifts": {
+      "property": "shifts",
+      "title": "SHF",
+      "description": "Shifts"
+    },
+    "evenTimeOnIce": {
+      "property": "evenTimeOnIce",
+      "title": "TOI-ES",
+      "description": "Even strength time on ice"
+    },
+    "powerPlayTimeOnIce": {
+      "property": "powerPlayTimeOnIce",
+      "title": "TOI-PP",
+      "description": "Powerplay time on ice"
+    },
+    "shortHandedTimeOnIce": {
+      "property": "shortHandedTimeOnIce",
+      "title": "TOI-SH",
+      "description": "Shorthanded time on ice"
+    },
+    "shotPct": {
+      "property": "shotPct",
+      "title": "SOG%",
+      "description": "Short percentage"
+    },
+    "gameWinningGoals": {
+      "property": "gameWinningGoals",
+      "title": "GWG",
+      "description": "Game winning goals"
+    },
+    "shortHandedGoals": {
+      "property": "shortHandedGoals",
+      "title": "SHG",
+      "description": "Shorthanded goals"
+    },
+    "timeOnIcePerGame": {
+      "property": "timeOnIcePerGame",
+      "title": "TOI-PG",
+      "description": "Time on ice per game"
+    },
+    "shortHandedTimeOnIcePerGame": {
+      "property": "shortHandedTimeOnIcePerGame",
+      "title": "TOI-SHPG",
+      "description": "Short handed time on ice per game"
+    },
+    "powerPlayTimeOnIcePerGame": {
+      "property": "powerPlayTimeOnIcePerGame",
+      "title": "TOI-PPPG",
+      "description": "Power play time on ice per game"
     },
     "timeOnIcePerGame5v5": {
       "title": "TOI/GP",
@@ -182,6 +297,11 @@
     }
   },
   "goalieCategories": {
+    "games": {
+      "title": "GP",
+      "property": "games",
+      "description": "Games played"
+    },
     "gamesPlayed": {
       "title": "GP",
       "property": "gamesPlayed",
@@ -196,6 +316,106 @@
       "title": "CG",
       "property": "completeGames",
       "description": "Complete games when starter"
+    },
+    "goalAgainstAverage": {
+      "property": "goalAgainstAverage",
+      "title": "GAA",
+      "description": "Goals against average"
+    },
+    "savePercentage": {
+      "property": "savePercentage",
+      "title": "SVS%",
+      "description": "Save percentage",
+      "percent": true,
+      "compare": true
+    },
+    "wins": {
+      "property": "wins",
+      "title": "W",
+      "description": "Wins"
+    },
+    "losses": {
+      "property": "losses",
+      "title": "L",
+      "description": "Losses",
+      "compare": false
+    },
+    "ot": {
+      "property": "ot",
+      "title": "OT",
+      "description": "Overtime"
+    },
+    "saves": {
+      "property": "saves",
+      "title": "SV",
+      "description": "Saves",
+      "compare": true
+    },
+    "evenSaves": {
+      "property": "evenSaves",
+      "title": "SV-ES",
+      "description": "Even strength saves"
+    },
+    "powerPlaySaves": {
+      "property": "powerPlaySaves",
+      "title": "SV-PP",
+      "description": "Powerplay saves"
+    },
+    "shortHandedSaves": {
+      "property": "shortHandedSaves",
+      "title": "SV-SH",
+      "description": "Shorthanded saves"
+    },
+    "shots": {
+      "property": "shots",
+      "title": "SA",
+      "description": "Shots against"
+    },
+    "shotsAgainst": {
+      "property": "shotsAgainst",
+      "title": "SA",
+      "description": "Shots against"
+    },
+    "evenShots": {
+      "property": "evenShots",
+      "title": "SA-ES",
+      "description": "Even strength Shots against"
+    },
+    "evenShotsAgainst": {
+      "property": "evenShotsAgainst",
+      "title": "SA-ES",
+      "description": "Even strength Shots against"
+    },
+    "powerPlayShots": {
+      "property": "powerPlayShots",
+      "title": "SA-PP",
+      "description": "Power play shots against"
+    },
+    "shortHandedShots": {
+      "property": "shortHandedShots",
+      "title": "SA-SH",
+      "description": "Short handed shots against"
+    },
+    "evenStrengthSavePercentage": {
+      "property": "evenStrengthSavePercentage",
+      "title": "SV%-ES",
+      "description": "Even strength save percentage"
+    },
+    "powerPlaySavePercentage": {
+      "property": "powerPlaySavePercentage",
+      "title": "SV%-PP",
+      "description": "Powerplay save percentage"
+    },
+    "shortHandedSavePercentage": {
+      "property": "shortHandedSavePercentage",
+      "title": "SV%-SH",
+      "description": "Shorthanded save percentage"
+    },
+    "shutouts": {
+      "property": "shutouts",
+      "title": "SO",
+      "description": "Shutouts",
+      "compare": true
     },
     "incompleteGames": {
       "title": "IG",

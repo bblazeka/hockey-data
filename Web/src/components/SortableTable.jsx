@@ -9,6 +9,10 @@ const TableContainer = styled.div`
   overflow: auto;
 `;
 
+const NameCellStyled = styled(Table.Cell)`
+  white-space: nowrap;
+`;
+
 function SortableTable({ columnNames, dataSource }) {
   const [data, setData] = useState(dataSource);
   const [sortedColumn, setSortedColumn] = useState(null);
@@ -63,14 +67,29 @@ function SortableTable({ columnNames, dataSource }) {
             return (
               <Table.Row key={`row${index}`}>
                 {columnNames.map((col, colIndex) => {
-                  return (
-                    <Table.Cell key={`column${colIndex}`}>
-                      {col.link ? (
-                        <Link to={row.link}>{row[col.property]}</Link>
-                      ) : (
-                        row[col.property]
-                      )}
-                    </Table.Cell>
+                  const formatNumber = () => {
+                    if (typeof row[col.property] === "number") {
+                      let newValue = row[col.property];
+                      if (col.percent) {
+                        newValue *= 100;
+                      }
+                      if (row[col.property]?.toString().includes(".")) {
+                        return newValue.toFixed(2);
+                      }
+                      return newValue;
+                    } else {
+                      return row[col.property];
+                    }
+                  };
+                  const value = formatNumber();
+                  return col.link ? (
+                    <NameCellStyled key={`column${colIndex}`}>
+                      <Link to={row.link}>{value}</Link>
+                    </NameCellStyled>
+                  ) : col.custom ? (
+                    row.customName
+                  ) : (
+                    <Table.Cell key={`column${colIndex}`}>{value}</Table.Cell>
                   );
                 })}
               </Table.Row>

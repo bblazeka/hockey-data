@@ -3,11 +3,34 @@ import { Link } from "react-router-dom";
 import { Table } from "semantic-ui-react";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
-import "./Schedule.scss";
 import routes from "routes";
 import { DateToServerFormat } from "util/common";
 import { getLogo } from "util/assets";
+
+const ScoreSpan = styled.span`
+  ${({ negative }) => negative && `color: red;`}
+`;
+
+const MatchupInfo = styled.div`
+  display: inline-block;
+`;
+
+const LogoStyled = styled.img`
+  max-height: 50px;
+  max-width: 50px;
+`;
+
+const GameCell = styled(Table.Cell)`
+  background-color: lightblue;
+  ${({ homeGame }) => homeGame && `background-color: turquoise;`}
+`;
+
+const GameCountCell = styled.td`
+  font-weight: bold;
+  font-size: xx-large;
+`;
 
 export default function ScheduleTable({ schedule, dates }) {
   return (
@@ -32,11 +55,10 @@ export default function ScheduleTable({ schedule, dates }) {
             <Table.Row key={`games ${element.id}`}>
               <Table.Cell key={`logo ${element.id}`}>
                 <Link to={`${routes.teams}/${element.id}`}>
-                  <img
-                    className="logo"
+                  <LogoStyled
                     src={getLogo(element.id)}
                     alt={`img${element.id}`}
-                  ></img>
+                  ></LogoStyled>
                 </Link>
               </Table.Cell>
               {dates.map((date) => {
@@ -46,27 +68,24 @@ export default function ScheduleTable({ schedule, dates }) {
                 try {
                   const logo = getLogo(game.opponent.team.id);
                   return (
-                    <Table.Cell
+                    <GameCell
                       key={`opp ${element.id}${game.date}`}
-                      className={
-                        element.id === game.home.team.id
-                          ? "home-game"
-                          : "away-game"
-                      }
+                      homeGame={element.id === game.home.team.id}
                     >
-                      <img
-                        className="logo"
+                      <LogoStyled
                         src={logo}
                         alt={`img${game.gameDate}${element.id}`}
-                      ></img>
-                      <div className="matchup-info">
+                      ></LogoStyled>
+                      <MatchupInfo>
                         {game.opponent.leagueRecord.wins}-
                         {game.opponent.leagueRecord.losses}-
                         {game.opponent.leagueRecord.ot}
                         <br />
-                        {game.opponent.rating}
-                      </div>
-                    </Table.Cell>
+                        <ScoreSpan negative={game.opponent.rating < 0}>
+                          {game.opponent.rating}
+                        </ScoreSpan>
+                      </MatchupInfo>
+                    </GameCell>
                   );
                 } catch (err) {
                   return (
@@ -76,13 +95,17 @@ export default function ScheduleTable({ schedule, dates }) {
                   );
                 }
               })}
-              <td className="emphasized-letter">{element.games.length}</td>
+              <GameCountCell>{element.games.length}</GameCountCell>
               <td>
-                <div className="matchup-info">
-                  {element.scheduleScore}
+                <MatchupInfo>
+                  <ScoreSpan negative={element.scheduleScore < 0}>
+                    {element.scheduleScore}
+                  </ScoreSpan>
                   <br />
-                  {element.avgScheduleScore}
-                </div>
+                  <ScoreSpan negative={element.avgScheduleScore < 0}>
+                    {element.avgScheduleScore}
+                  </ScoreSpan>
+                </MatchupInfo>
               </td>
             </Table.Row>
           );

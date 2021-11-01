@@ -19,8 +19,10 @@ export default function AnalysisTeamTab({ category, team, setCategory }) {
   const renderStatsPane = () => {
     return (
       <Tab.Pane>
-        <RosterStatsGrid rosterStats={team.skaterStats} title="Skaters" />
-        <RosterStatsGrid rosterStats={team.goalieStats} title="Goalies" />
+        <RosterStatsGrid
+          skaterStats={team.skaterStats}
+          goalieStats={team.goalieStats}
+        />
       </Tab.Pane>
     );
   };

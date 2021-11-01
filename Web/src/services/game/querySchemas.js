@@ -1,100 +1,244 @@
-export const getGamesBetweenTeams = /* GraphQL */`
+export const getGamesBetweenTeams = /* GraphQL */ `
   query gamesBetweenTeams($homeId: Int, $awayId: Int) {
-    gamesBetweenTeams(homeId: $homeId, awayId: $awayId){
-      score { 
-        homeWins, 
-        awayWins,
-        gameScores { name, homeGoals, awayGoals }
-      },
+    gamesBetweenTeams(homeId: $homeId, awayId: $awayId) {
+      score {
+        homeWins
+        awayWins
+        gameScores {
+          name
+          homeGoals
+          awayGoals
+        }
+      }
       games {
-        gamePk,
-        gameDate,
-        gameType,
-        season,
+        gamePk
+        gameDate
+        gameType
+        season
         home {
-          score,
-          leagueRecord { wins, losses, ot },
-          team { id, name }
-        },
-        away { 
-          score,
-          leagueRecord { wins, losses, ot },
-          team { id, name }
+          score
+          leagueRecord {
+            wins
+            losses
+            ot
+          }
+          team {
+            id
+            name
+          }
+        }
+        away {
+          score
+          leagueRecord {
+            wins
+            losses
+            ot
+          }
+          team {
+            id
+            name
+          }
         }
       }
     }
-  }`;
+  }
+`;
 
-export const getGame = /* GraphQL */`
-  query game($gameId: Int){
-    game(gameId: $gameId){ 
-        id,
-        gameDate,
-        gameType,
-        percentage,
-        venue { id, name },
-        season,
+export const getGame = /* GraphQL */ `
+  query game($gameId: Int) {
+    game(gameId: $gameId) {
+      id
+      gameDate
+      gameType
+      percentage
+      venue {
+        id
+        name
+      }
+      season
       teams {
         home {
           skaters {
-            jerseyNumber,
-            person { id, fullName },
-            position { code, name }
-            stats { timeOnIce, assists, goals, points, shots, hits, blocked, plusMinus, penaltyMinutes, faceOffWins, faceoffTaken, faceOffPct, powerPlayGoals, powerPlayAssists, shortHandedGoals, shortHandedAssists, shortHandedTimeOnIce, powerPlayTimeOnIce }
-          },
+            jerseyNumber
+            person {
+              id
+              fullName
+            }
+            position {
+              code
+              name
+            }
+            stats {
+              timeOnIce
+              assists
+              goals
+              shots
+              hits
+              blocked
+              plusMinus
+              penaltyMinutes
+              faceOffWins
+              faceoffTaken
+              faceOffPct
+              powerPlayGoals
+              powerPlayAssists
+              shortHandedGoals
+              shortHandedAssists
+              shortHandedTimeOnIce
+              powerPlayTimeOnIce
+            }
+          }
           goalies {
-            jerseyNumber,
-            person { id, fullName },
-            position { code, name }
-            stats { timeOnIce, shots, saves, savePercentage, powerPlaySaves, shortHandedSaves, evenSaves, shortHandedShotsAgainst, evenShotsAgainst, savePercentage, powerPlaySavePercentage, shortHandedSavePercentage, evenStrengthSavePercentage }
-          },
-          team { id, name },
+            jerseyNumber
+            person {
+              id
+              fullName
+            }
+            position {
+              code
+              name
+            }
+            stats {
+              timeOnIce
+              shots
+              saves
+              savePercentage
+              powerPlaySaves
+              shortHandedSaves
+              evenSaves
+              shortHandedShotsAgainst
+              evenShotsAgainst
+              savePercentage
+              powerPlaySavePercentage
+              shortHandedSavePercentage
+              evenStrengthSavePercentage
+            }
+          }
+          team {
+            id
+            name
+          }
           coaches {
-            person { fullName },
-            position { code, name, type }
+            person {
+              fullName
+            }
+            position {
+              code
+              name
+              type
+            }
           }
         }
         away {
           skaters {
-            jerseyNumber,
-            person { id, fullName },
-            position { code, name }
-            stats { timeOnIce, assists, goals, points, shots, hits, blocked, plusMinus, penaltyMinutes, faceOffWins, faceoffTaken, faceOffPct, powerPlayGoals, powerPlayAssists, shortHandedGoals, shortHandedAssists, shortHandedTimeOnIce, powerPlayTimeOnIce }
-          },
+            jerseyNumber
+            person {
+              id
+              fullName
+            }
+            position {
+              code
+              name
+            }
+            stats {
+              timeOnIce
+              assists
+              goals
+              shots
+              hits
+              blocked
+              plusMinus
+              penaltyMinutes
+              faceOffWins
+              faceoffTaken
+              faceOffPct
+              powerPlayGoals
+              powerPlayAssists
+              shortHandedGoals
+              shortHandedAssists
+              shortHandedTimeOnIce
+              powerPlayTimeOnIce
+            }
+          }
           goalies {
-            jerseyNumber,
-            person { id, fullName },
-            position { code, name }
-            stats { timeOnIce, shots, saves, savePercentage, powerPlaySaves, shortHandedSaves, evenSaves, shortHandedShotsAgainst, evenShotsAgainst, savePercentage, powerPlaySavePercentage, shortHandedSavePercentage, evenStrengthSavePercentage }
-          },
-          team { id, name },
+            jerseyNumber
+            person {
+              id
+              fullName
+            }
+            position {
+              code
+              name
+            }
+            stats {
+              timeOnIce
+              shots
+              saves
+              savePercentage
+              powerPlaySaves
+              shortHandedSaves
+              evenSaves
+              shortHandedShotsAgainst
+              evenShotsAgainst
+              savePercentage
+              powerPlaySavePercentage
+              shortHandedSavePercentage
+              evenStrengthSavePercentage
+            }
+          }
+          team {
+            id
+            name
+          }
           coaches {
-            person { fullName },
-            position { code, name, type }
+            person {
+              fullName
+            }
+            position {
+              code
+              name
+              type
+            }
           }
         }
       }
       officials {
-        official { id, fullName },
+        official {
+          id
+          fullName
+        }
         officialType
-      },
+      }
       linescore {
-        currentPeriodOrdinal,
-        currentPeriodTimeRemaining,
+        currentPeriodOrdinal
+        currentPeriodTimeRemaining
         teams {
-          home { goals, shotsOnGoal },
-          away { goals, shotsOnGoal }
+          home {
+            goals
+            shotsOnGoal
+          }
+          away {
+            goals
+            shotsOnGoal
+          }
         }
         periods {
-          num,
-          home { goals, shotsOnGoal },
-          away { goals, shotsOnGoal }
+          num
+          home {
+            goals
+            shotsOnGoal
+          }
+          away {
+            goals
+            shotsOnGoal
+          }
         }
       }
     }
-  }`;
+  }
+`;
 
-export const getTodaysGames = /* GraphQL */`
+export const getTodaysGames = /* GraphQL */ `
   query todaysGames {
     todaysGames {
       gamePk

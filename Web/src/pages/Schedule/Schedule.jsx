@@ -2,15 +2,45 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Icon, Label } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
+import styled from "styled-components";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-import "./Schedule.scss";
 import { getSchedule } from "services/league";
 import { Loader } from "components";
 import { DateToServerFormat, getDatesArray } from "util/common";
 import ScheduleTable from "./ScheduleTable";
 import { selectSchedule } from "services/selectors";
+
+const SchedulePageStyled = styled.div`
+  overflow-x: auto;
+`;
+
+const TagContainerStyled = styled.div`
+  display: flex;
+  max-width: 400px;
+`;
+
+const FilterContainer = styled.div`
+  display: inline-flex;
+`;
+
+const DatesFilterStyled = styled.div`
+  display: flex;
+  max-width: 500px;
+`;
+
+const RefreshButton = styled(Label)`
+  cursor: pointer;
+`;
+
+const HomeGameTag = styled(Label)`
+  background-color: turquoise !important;
+`;
+
+const AwayGameTag = styled(Label)`
+  background-color: lightblue !important;
+`;
 
 const defaultStart = new Date();
 const defaultEnd = new Date(defaultStart);
@@ -52,9 +82,9 @@ export default function Schedule() {
     return <Loader></Loader>;
   }
   return (
-    <div className="schedule-page">
-      <div className="filter">
-        <div className="dates">
+    <SchedulePageStyled>
+      <FilterContainer>
+        <DatesFilterStyled>
           <DatePicker
             selected={start}
             onChange={(date) => setStartControl(date)}
@@ -65,23 +95,16 @@ export default function Schedule() {
             onChange={(date) => setEndControl(date)}
             dateFormat="dd.MM.yyyy"
           />
-          <Label
-            className="refresh-button"
-            onClick={() => getScheduleForTimePeriod()}
-          >
+          <RefreshButton onClick={() => getScheduleForTimePeriod()}>
             <Icon name="refresh" /> Refresh
-          </Label>
-        </div>
-        <div className="tag-container">
-          <Label as="a" className="home-game-tag" tag>
-            Home game
-          </Label>
-          <Label as="a" className="away-game-tag" tag>
-            Away game
-          </Label>
-        </div>
-      </div>
+          </RefreshButton>
+        </DatesFilterStyled>
+        <TagContainerStyled>
+          <HomeGameTag tag>Home game</HomeGameTag>
+          <AwayGameTag tag>Away game</AwayGameTag>
+        </TagContainerStyled>
+      </FilterContainer>
       <ScheduleTable dates={dates} schedule={schedule} />
-    </div>
+    </SchedulePageStyled>
   );
 }

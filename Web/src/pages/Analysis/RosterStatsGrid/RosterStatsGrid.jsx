@@ -1,91 +1,107 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Header, Table } from "semantic-ui-react";
+import { Header } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import { Loader, NotFound } from "components";
-import { FormatDecimals, IsNullOrUndefined } from "util/common";
-
-import config from "util/config.json";
-import routes from "../../../routes";
+import { Loader, NotFound, SortableTable } from "components";
+import { IsNullOrUndefined } from "util/common";
+import categories from "util/categories.json";
+import routes from "routes";
 
 const RosterStatsStyled = styled.div`
   padding: 5px;
   overflow-x: auto;
 `;
 
-const NameCellStyled = styled(Table.Cell)`
-  white-space: nowrap;
-`;
+function RosterStatsGrid({ skaterStats, goalieStats }) {
+  if (IsNullOrUndefined(skaterStats) && IsNullOrUndefined(goalieStats)) {
+    return <Loader text="Loading stats..."></Loader>;
+  }
+  if (skaterStats.length === 0 && goalieStats.length === 0) {
+    return <NotFound text={`Stats not found.`}></NotFound>;
+  }
 
-function RosterStatsGrid({ rosterStats, title }) {
-  if (IsNullOrUndefined(rosterStats)) {
-    return <Loader text="Loading roster stats..."></Loader>;
-  }
-  if (rosterStats.length === 0) {
-    return <NotFound text={`${title} - Stats not found.`}></NotFound>;
-  }
-  const exampleObject = rosterStats[0].stats;
-  const displayedCategories = config.categories.filter((cat) => {
-    return cat.name in exampleObject;
-  });
   return (
     <RosterStatsStyled>
-      <Header as="h4">{title}</Header>
-      <Table>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            {displayedCategories.map((cat, index) => {
-              return (
-                <Table.HeaderCell
-                  key={`headercol${index}`}
-                  title={cat.description}
-                >
-                  {cat.abbr}
-                </Table.HeaderCell>
-              );
-            })}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {rosterStats.map((stat, index) => {
-            return (
-              <Table.Row key={stat + index}>
-                <NameCellStyled>
-                  <Link to={`${routes.player}/${stat.id}`}>
-                    {stat.fullName}
-                  </Link>
-                </NameCellStyled>
-                {displayedCategories.map((cat, i) => {
-                  let value = stat.stats[cat.name];
-                  if (cat.name === "savePercentage") {
-                    value = FormatDecimals(value * 100, 1);
-                  } else if (
-                    [
-                      "goalAgainstAverage",
-                      "evenStrengthSavePercentage",
-                      "powerPlaySavePercentage",
-                      "shortHandedSavePercentage",
-                    ].includes(cat.name)
-                  ) {
-                    value = FormatDecimals(value, 2);
-                  }
-                  return <Table.Cell key={`col${i}`}>{value}</Table.Cell>;
-                })}
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table>
+      <Header as="h4">Skater stats</Header>
+      <SortableTable
+        columnNames={[
+          {
+            title: "Skater",
+            property: "fullName",
+            link: true,
+          },
+          categories.skaterCategories["games"],
+          categories.skaterCategories["goals"],
+          categories.skaterCategories["assists"],
+          categories.skaterCategories["points"],
+          categories.skaterCategories["plusMinus"],
+          categories.skaterCategories["penaltyMinutes"],
+          categories.skaterCategories["powerPlayGoals"],
+          categories.skaterCategories["powerPlayPoints"],
+          categories.skaterCategories["shortHandedGoals"],
+          categories.skaterCategories["shots"],
+          categories.skaterCategories["hits"],
+          categories.skaterCategories["blocked"],
+          categories.skaterCategories["overTimeGoals"],
+          categories.skaterCategories["gameWinningGoals"],
+          categories.skaterCategories["faceOffPct"],
+          categories.skaterCategories["shotPct"],
+          categories.skaterCategories["timeOnIce"],
+          categories.skaterCategories["evenTimeOnIce"],
+          categories.skaterCategories["powerPlayTimeOnIce"],
+          categories.skaterCategories["shortHandedTimeOnIce"],
+          categories.skaterCategories["timeOnIcePerGame"],
+          categories.skaterCategories["shortHandedTimeOnIcePerGame"],
+          categories.skaterCategories["powerPlayTimeOnIcePerGame"],
+        ]}
+        dataSource={skaterStats.map((r) => ({
+          ...r,
+          ...r.stats,
+          link: `${routes.player}/${r.id}`,
+        }))}
+      />
+      <Header as="h4">Goalies stats</Header>
+      <SortableTable
+        columnNames={[
+          {
+            title: "Goalie",
+            property: "fullName",
+            link: true,
+          },
+          categories.goalieCategories["games"],
+          categories.goalieCategories["gamesStarted"],
+          categories.goalieCategories["goalAgainstAverage"],
+          categories.goalieCategories["savePercentage"],
+          categories.goalieCategories["wins"],
+          categories.goalieCategories["losses"],
+          categories.goalieCategories["ot"],
+          categories.goalieCategories["saves"],
+          categories.goalieCategories["evenSaves"],
+          categories.goalieCategories["powerPlaySaves"],
+          categories.goalieCategories["shortHandedSaves"],
+          categories.goalieCategories["shotsAgainst"],
+          categories.goalieCategories["evenShots"],
+          categories.goalieCategories["powerPlayShots"],
+          categories.goalieCategories["shortHandedShots"],
+          categories.goalieCategories["evenStrengthSavePercentage"],
+          categories.goalieCategories["powerPlaySavePercentage"],
+          categories.goalieCategories["shortHandedSavePercentage"],
+          categories.goalieCategories["shutouts"],
+        ]}
+        dataSource={goalieStats.map((r) => ({
+          ...r,
+          ...r.stats,
+          link: `${routes.player}/${r.id}`,
+        }))}
+      />
     </RosterStatsStyled>
   );
 }
 
 RosterStatsGrid.PropTypes = {
-  rosterStats: PropTypes.arrayOf(PropTypes.object),
-  title: PropTypes.string,
+  skaterStats: PropTypes.arrayOf(PropTypes.object),
+  goalieStats: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default RosterStatsGrid;

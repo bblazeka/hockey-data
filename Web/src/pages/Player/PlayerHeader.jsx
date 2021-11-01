@@ -61,7 +61,7 @@ export default function PlayerHeader({ player }) {
                     </List.Content>
                   </List.Item>
                   <List.Item>
-                    <List.Icon name="map pin" />
+                    <List.Icon name="home" />
                     <List.Header>Birthplace</List.Header>
                     <List.Content>{player.birthCity}</List.Content>
                   </List.Item>
