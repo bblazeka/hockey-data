@@ -19,15 +19,15 @@ async function run() {
   const db = new dbhandler.Database();
   await db.init();
 
-  try {
-    const response = await apicomm.nhlApiRequest(
-      `/api/v1/standings?season=${season}`
-    );
+  const response = await apicomm.nhlApiRequest(
+    `/api/v1/standings?season=${season}`
+  );
 
+  try {
     const teamAnalysisCollection = db.getCollection("analysis");
 
-    let res = response.records.map(async (record) => {
-      record.teamRecords.map(async (teamRecord) => {
+    for (let record of response.records) {
+      for (let teamRecord of record.teamRecords) {
         const playerStats = await apicomm.nhlApiRequest(
           `/api/v1/teams/${teamRecord.team.id}?hydrate=roster(season=${season},person(stats(splits=statsSingleSeason)))`
         );
@@ -138,10 +138,10 @@ async function run() {
         } catch (ex) {
           console.log(ex);
         }
-      });
-    });
+      }
+    }
   } finally {
-    await client.close();
+    await db.closeClient();
   }
 }
 
