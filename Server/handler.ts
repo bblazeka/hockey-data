@@ -1,72 +1,21 @@
-import serverless from "serverless-http";
-import express from "express";
-import { graphqlHTTP } from "express-graphql";
-import { loadSchemaSync } from "@graphql-tools/load";
-import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader";
-import cors from "cors";
+import { ApolloServer } from "apollo-server";
 
 import * as analysis from "./services/analysis";
 import * as game from "./services/game";
 import * as team from "./services/team";
-import * as news from "./services/news";
 import * as league from "./services/league";
 import * as player from "./services/player";
-import * as util from "./services/util";
 
 import { Database } from "./adapters/dbhandler";
-import { graphql } from "body-parser-graphql";
+import { getTypeDefs } from "./typeDefs";
+import { getResolvers } from "./resolvers";
 
-const app = express();
-
-let databaseInitialized = false;
-
-// Construct a schema, using GraphQL schema language
-const schema = loadSchemaSync("./services/**/*.gql", {
-  // load from multiple files using glob
-  loaders: [new GraphQLFileLoader()],
+const server = new ApolloServer({
+  typeDefs: getTypeDefs(),
+  resolvers: getResolvers(),
 });
 
-// The root provides a resolver function for each API endpoint
-const root = {
-  analysis: analysis.getAnalysis,
-  game: game.getGame,
-  gamesBetweenTeams: game.gamesBetweenTeams,
-  todaysGames: game.getTodaysGames,
-  team: team.getTeam,
-  teams: team.getActiveTeams,
-  teamLocations: team.getTeamLocations,
-  player: player.getPlayer,
-  searchPlayerByName: player.getPlayerByName,
-  selectedPlayers: player.getSelectedPlayers,
-  addSelectedPlayer: player.addSelectedPlayer,
-  deleteSelectedPlayer: player.deleteSelectedPlayer,
-  clearSelectedPlayers: player.clearSelectedPlayers,
-  articles: news.getArticles,
-  tweets: news.getTweets,
-  twitterApiStatus: news.getTwitterApiStatus,
-  schedule: league.getSchedule,
-  scheduleByTeam: team.getTeamSchedule,
-  standings: league.getStandings,
-  divisionsWithTeams: league.divisionsWithTeams,
-  geocode: util.geocode,
-};
-
-const port = 4000;
-
-app.use(
-  cors({
-    credentials: true,
-  })
-);
-app.use(graphql());
-app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema: schema,
-    rootValue: root,
-    graphiql: true,
-  })
-);
+let databaseInitialized = false;
 
 async function init() {
   console.log("Initializing database...");
@@ -84,19 +33,8 @@ async function init() {
   }
 }
 
-app.listen(port, async () => {
+// The `listen` method launches a web server.
+server.listen().then(async ({ url }) => {
   await init();
-
-  console.log(
-    `Running a GraphQL API server at http://localhost:${port}/graphql`
-  );
+  console.log(`🚀  Server ready at ${url}`);
 });
-
-// Handler
-const handle = serverless(app);
-
-module.exports.handler = async (event, context) => {
-  await init();
-  const res = await handle(event, context);
-  return res;
-};

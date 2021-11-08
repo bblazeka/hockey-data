@@ -10,10 +10,7 @@ export class Database {
   }
 
   async init() {
-    this.client = await MongoClient.connect(dbkey.uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    this.client = await MongoClient.connect(dbkey.uri, {});
     this.database = this.client.db("hockey-data");
   }
 

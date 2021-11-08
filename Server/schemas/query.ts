@@ -1,5 +1,8 @@
-scalar Date  
-  
+import { gql } from "apollo-server";
+
+export const querySchema = gql`
+  scalar Date
+
   type Query {
     analysis: [TeamAnalysis]
     player(id: Int): Player
@@ -28,25 +31,26 @@ scalar Date
   }
 
   type Venue {
-    id: Int,
-    name: String,
-    city: String,
-    description: String,
+    id: Int
+    name: String
+    city: String
+    description: String
     timeZone: TimeZone
   }
 
   type TimeZone {
-    id: String,
-    offset: Int,
+    id: String
+    offset: Int
     tz: String
   }
 
   type LineInt {
-    x: String,
+    x: String
     y: Int
   }
 
   type GraphFloat {
-    x: String,
+    x: String
     y: Float
   }
+`;

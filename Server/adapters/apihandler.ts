@@ -19,7 +19,7 @@ async function newsApiRequest(path) {
   return response.data;
 }
 
-async function mapboxApiRequest(query) {
+async function mapboxApiRequest(query): Promise<TApiMapboxLocations> {
   const response = await axios.get(
     `https://api.tiles.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
       query

@@ -1,28 +1,18 @@
 {
-  "name": "hockey-data-server",
+  "name": "gql-server",
   "version": "1.0.0",
-  "description": "",
+  "main": "handler.ts",
+  "license": "MIT",
   "dependencies": {
     "@types/luxon": "^2.0.5",
-    "@types/node-fetch": "^3.0.3",
-    "axios": "^0.21.2",
-    "body-parser": "^1.19.0",
-    "body-parser-graphql": "^1.1.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-graphql": "^0.12.0",
-    "graphql": "^15.4.0",
-    "graphql-tools": "^7.0.5",
-    "jsdom": "^16.5.1",
+    "@types/mongodb": "^4.0.7",
+    "apollo-server": "^3.5.0",
+    "axios": "^0.24.0",
+    "graphql": "^16.0.1",
     "lodash": "^4.17.21",
-    "luxon": "^1.26.0",
-    "mongodb": "^3.6.2",
-    "node-fetch": "^2.6.1",
-    "serverless-http": "^2.7.0",
+    "luxon": "^2.0.2",
+    "mongodb": "^4.1.4",
     "twitter": "^1.7.1"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.14.175"
   },
   "scripts": {
     "start": "ts-node handler.ts"

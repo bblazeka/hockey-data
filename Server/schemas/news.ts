@@ -1,3 +1,6 @@
+import { gql } from "apollo-server";
+
+export const newsSchema = gql`
   type TwitterStats {
     requests: Int
   }
@@ -40,3 +43,4 @@
   type Entity {
     text: String
   }
+`;
