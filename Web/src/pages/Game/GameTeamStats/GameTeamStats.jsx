@@ -50,10 +50,6 @@ function GameTeamStats(props) {
       </Table.Cell>
     ),
   }));
-  console.log(
-    "🚀 ~ file: GameTeamStats.jsx ~ line 38 ~ goalieStats ~ goalieStats",
-    goalieStats
-  );
   return (
     <Segment>
       <Header as="h2">

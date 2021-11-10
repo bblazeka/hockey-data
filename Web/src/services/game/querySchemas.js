@@ -1,3 +1,5 @@
+import gql from "graphql-tag";
+
 export const getGamesBetweenTeams = /* GraphQL */ `
   query gamesBetweenTeams($homeId: Int, $awayId: Int) {
     gamesBetweenTeams(homeId: $homeId, awayId: $awayId) {
@@ -238,7 +240,7 @@ export const getGame = /* GraphQL */ `
   }
 `;
 
-export const getTodaysGames = /* GraphQL */ `
+export const getTodaysGames = gql`
   query todaysGames {
     todaysGames {
       gamePk

@@ -1,9 +1,14 @@
 import React from "react";
 import { Grid, Label, Segment } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import { Map } from "components";
-import "./Standings.scss";
+
+const StandingsMapControl = styled(Map)`
+  width: 100%;
+  height: 55vh;
+`;
 
 export default function LocationsDisplay({ locations }) {
   return (
@@ -12,8 +17,7 @@ export default function LocationsDisplay({ locations }) {
         <Grid columns={2} stackable>
           <Grid.Row>
             <Grid.Column>
-              <Map
-                className="standingsMapControl"
+              <StandingsMapControl
                 center={{ center: [-97.131087, 42.509726] }}
                 points={locations.teamLocations}
                 zoom={2.5}

@@ -1,21 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, Grid, Header } from "semantic-ui-react";
+import { Grid, Header } from "semantic-ui-react";
 
-import * as gameActions from "services/game";
 import * as actions from "services/news";
-import { GameCard, Loader, NewsFeed, NotFound, SocialFeed } from "components";
+import { Loader, NewsFeed, SocialFeed } from "components";
 import { selectHome } from "services/selectors";
-import { IsNullOrUndefined } from "util/common";
+
+import GameCards from "./GameCards";
 
 export default function Home() {
-  const { homeNews, loadingNews, tweets, loadingTweets, games } =
+  const { homeNews, loadingNews, tweets, loadingTweets } =
     useSelector(selectHome);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(gameActions.getGamesToday());
     dispatch(actions.getNews("NHL"));
     dispatch(actions.getTweets("NHL"));
   }, [dispatch]);
@@ -26,14 +25,7 @@ export default function Home() {
   return (
     <>
       <Header as="h2">Today NHL games</Header>
-      {(IsNullOrUndefined(games) || games.length === 0) && (
-        <NotFound text="No games found." />
-      )}
-      <Card.Group>
-        {games.map((game) => {
-          return <GameCard key={`gamecard${game.gamePk}`} game={game} />;
-        })}
-      </Card.Group>
+      <GameCards />
       <div className="news-container">
         <Grid columns={2} stackable>
           <Grid.Row>

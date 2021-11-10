@@ -2,15 +2,36 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Header, Table } from "semantic-ui-react";
+import styled from "styled-components";
 
-import "./Standings.scss";
 import * as actions from "services/league";
 import * as teamActions from "services/team";
 import { Loader } from "components";
+import { LogoStyled } from "components/collection";
 import routes from "routes";
 import { getLogo } from "util/assets";
 import { selectLocations, selectStandings } from "services/selectors";
+
 import LocationsDisplay from "./LocationsDisplay";
+
+const StandingsContainer = styled(Grid.Column)`
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+`;
+
+const RankCell = styled(Table.Cell)`
+  font-size: 2em;
+  font-weight: bold;
+`;
+
+const TeamNameCell = styled(Table.Cell)`
+  font-size: 1.5em;
+`;
+
+const PointsCell = styled(Table.Cell)`
+  font-weight: bold;
+`;
 
 export default function Standings() {
   const { standings } = useSelector(selectStandings);
@@ -33,7 +54,7 @@ export default function Standings() {
         {standings &&
           standings.map((entry) => {
             return (
-              <Grid.Column className="standings" key={entry.division.id}>
+              <StandingsContainer key={entry.division.id}>
                 <Header as="h3">{entry.division.name}</Header>
                 <Table celled>
                   <Table.Header>
@@ -54,38 +75,33 @@ export default function Standings() {
                     {entry.teamRecords.map((record) => {
                       return (
                         <Table.Row key={`row${record.team.id}`}>
-                          <Table.Cell className="bigger-text bold">
-                            {record.divisionRank}
-                          </Table.Cell>
+                          <RankCell>{record.divisionRank}</RankCell>
                           <Table.Cell>
                             <Link to={`${routes.teams}/${record.team.id}`}>
-                              <img
-                                className="logo"
+                              <LogoStyled
                                 src={getLogo(record.team.id)}
                                 alt={`img${record.team.Id}`}
-                              ></img>
+                              />
                             </Link>
                           </Table.Cell>
-                          <Table.Cell className="standings-team-name">
+                          <TeamNameCell>
                             <Link to={`${routes.teams}/${record.team.id}`}>
                               {record.team.name}
                             </Link>
-                          </Table.Cell>
+                          </TeamNameCell>
                           <Table.Cell>{record.gamesPlayed}</Table.Cell>
                           <Table.Cell>{record.leagueRecord.wins}</Table.Cell>
                           <Table.Cell>{record.leagueRecord.losses}</Table.Cell>
                           <Table.Cell>{record.leagueRecord.ot}</Table.Cell>
                           <Table.Cell>{record.goalsScored}</Table.Cell>
                           <Table.Cell>{record.goalsAgainst}</Table.Cell>
-                          <Table.Cell className="bold">
-                            {record.points}
-                          </Table.Cell>
+                          <PointsCell>{record.points}</PointsCell>
                         </Table.Row>
                       );
                     })}
                   </Table.Body>
                 </Table>
-              </Grid.Column>
+              </StandingsContainer>
             );
           })}
       </Grid>

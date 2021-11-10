@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import routes from "routes";
+import { LogoStyled } from "components/collection";
 import { DateToServerFormat } from "util/common";
 import { getLogo } from "util/assets";
 
@@ -15,11 +16,6 @@ const ScoreSpan = styled.span`
 
 const MatchupInfo = styled.div`
   display: inline-block;
-`;
-
-const LogoStyled = styled.img`
-  max-height: 50px;
-  max-width: 50px;
 `;
 
 const GameCell = styled(Table.Cell)`
@@ -58,7 +54,7 @@ export default function ScheduleTable({ schedule, dates }) {
                   <LogoStyled
                     src={getLogo(element.id)}
                     alt={`img${element.id}`}
-                  ></LogoStyled>
+                  />
                 </Link>
               </Table.Cell>
               {dates.map((date) => {
