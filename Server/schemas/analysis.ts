@@ -120,7 +120,7 @@ export const analysisSchema = gql`
     ppAssists: Int
     ppGoals: Int
     ppGoalsForPer60: Float
-    ppGoalsPer60: Int
+    ppGoalsPer60: Float
     ppIndividualSatFor: Int
     ppIndividualSatForPer60: Float
     ppPoints: Int

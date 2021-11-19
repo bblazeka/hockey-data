@@ -1,25 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import { Image, Menu, Segment, Tab } from "semantic-ui-react";
+import { useQuery } from "@apollo/client";
 
 import { getLogo } from "util/assets";
-import { IsNullOrUndefined } from "util/common";
 import { Loader } from "components";
-import * as actions from "services/analysis";
-import { selectAnalysisObject } from "services/selectors";
+import { getAnalysis } from "services/analysis/querySchemas";
 
 import AnalysisTeamTab from "./AnalysisTeamTab";
 
 export default function Analysis() {
   const [category, setCategory] = useState("points");
-  const { analysis } = useSelector(selectAnalysisObject);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(actions.getAnalysis());
-  }, [dispatch]);
-  if (IsNullOrUndefined(analysis)) {
+  const { loading: loadingAnalysis, data } = useQuery(getAnalysis);
+  if (loadingAnalysis) {
     return <Loader />;
   }
+  const { analysis } = data;
   const renderTabPane = (team) => {
     return (
       <Tab.Pane>

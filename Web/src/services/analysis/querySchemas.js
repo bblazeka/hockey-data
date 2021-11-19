@@ -1,4 +1,6 @@
-export const getAnalysis = /* GraphQL */ `
+import gql from "graphql-tag";
+
+export const getAnalysis = gql`
   query analysis {
     analysis {
       id
