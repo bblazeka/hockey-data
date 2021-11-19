@@ -1,3 +1,5 @@
+/// <reference path='../index.d.ts' />
+
 type TApiConference = {
   id: number;
   name: string;

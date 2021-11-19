@@ -11,7 +11,6 @@ async function run() {
   const teams = await fetchTeams();
   try {
     const collection = db.getCollection("teams");
-
     for (let team of teams) {
       const location = await apicomm.mapboxApiRequest(
         isNil(team.venue)
@@ -73,6 +72,7 @@ async function run() {
             fullName: player.person.fullName,
             jerseyNumber: parseInt(player.jerseyNumber),
             positon: player.position,
+            active: true,
           },
         };
         try {
