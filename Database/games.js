@@ -5,20 +5,15 @@ const apicomm = require("./adapters/apihandler");
 const dbhandler = require("./adapters/dbhandler.js");
 const { fetchGames } = require("./functions.js");
 
-const client = new MongoClient(db.uri);
-
 async function run() {
   const db = new dbhandler.Database();
   await db.init();
-
-  await client.connect();
 
   const dates = await fetchGames();
 
   console.log("Skipping games that are already finished...");
   try {
-    const database = client.db("hockey-data", { useUnifiedTopology: true });
-    const collection = database.collection("games");
+    const collection = db.getCollection("games");
     for (let date of dates) {
       for (let game of date.games) {
         if (game.status.statusCode === "7") {
@@ -54,7 +49,7 @@ async function run() {
       }
     }
   } finally {
-    await client.close();
+    await db.closeClient();
   }
 }
 

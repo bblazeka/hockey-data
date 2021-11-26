@@ -21,9 +21,13 @@ const GameListFilterStyled = styled(Segment)`
     }
 `;
 
+const DropdownStyled = styled(Dropdown)`
+  margin-right: 1vw;
+`;
+
 export default function GameSelection() {
-  const [home, setHome] = useState(1);
-  const [away, setAway] = useState(2);
+  const [home, setHome] = useState(-1);
+  const [away, setAway] = useState(-1);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -39,7 +43,7 @@ export default function GameSelection() {
   return (
     <>
       <GameListFilterStyled>
-        <Dropdown
+        <DropdownStyled
           placeholder="Home team"
           onChange={(_event, data) => setHome(data.value)}
           options={dropdownTeams.map((el) => {
@@ -51,7 +55,7 @@ export default function GameSelection() {
             };
           })}
         />
-        <Dropdown
+        <DropdownStyled
           placeholder="Away team"
           onChange={(_event, data) => setAway(data.value)}
           options={dropdownTeams.map((el) => {

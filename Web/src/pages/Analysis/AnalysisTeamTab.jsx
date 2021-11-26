@@ -67,5 +67,7 @@ export default function AnalysisTeamTab({ category, team, setCategory }) {
 }
 
 AnalysisTeamTab.propTypes = {
+  category: PropTypes.string,
   player: PropTypes.object,
+  setCategory: PropTypes.func,
 };

@@ -58,6 +58,9 @@
     "eslint": "^7.24.0",
     "eslint-plugin-react": "^7.23.2"
   },
+  "resolutions": {
+    "coa": "2.0.2"
+  },
   "jest": {
     "coverageReporters": [
       "text",

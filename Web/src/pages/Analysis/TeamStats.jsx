@@ -108,7 +108,7 @@ export default function TeamStats({ category, team, setCategory }) {
               <Dropdown
                 header="Category"
                 inline
-                onChange={(category) => setCategory(category)}
+                onChange={(_event, data) => setCategory(data.value)}
                 defaultValue={dropdownOptions[0].value}
                 options={dropdownOptions}
               />{" "}

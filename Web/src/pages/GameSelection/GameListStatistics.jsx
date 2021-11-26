@@ -11,8 +11,19 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import styled from "styled-components";
 
 import { IsNullOrUndefined } from "util/common";
+
+const StatisticsContainer = styled.div`
+  display: flex;
+  padding-bottom: 4vh;
+`;
+
+const GraphContainer = styled.div`
+  height: 20vh;
+  width: 80vw;
+`;
 
 export default function GameListStatistics(props) {
   const { gamesBetweenTeams } = props;
@@ -25,7 +36,7 @@ export default function GameListStatistics(props) {
       ? gamesBetweenTeams.games[0].away.team.name
       : "Away team";
   return (
-    <div style={{ display: "flex" }}>
+    <StatisticsContainer>
       <Statistic.Group horizontal>
         <Statistic>
           <Statistic.Value>{gamesBetweenTeams.score.homeWins}</Statistic.Value>
@@ -36,11 +47,9 @@ export default function GameListStatistics(props) {
           <Statistic.Label>{`${awayTeam} wins`}</Statistic.Label>
         </Statistic>
       </Statistic.Group>
-      <div style={{ height: "20vh", width: "80vw" }}>
+      <GraphContainer>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            width={500}
-            height={300}
             data={gamesBetweenTeams.score.gameScores}
             margin={{
               top: 5,
@@ -58,8 +67,8 @@ export default function GameListStatistics(props) {
             <Bar dataKey="awayGoals" name={awayTeam} fill="#82ca9d" />
           </BarChart>
         </ResponsiveContainer>
-      </div>
-    </div>
+      </GraphContainer>
+    </StatisticsContainer>
   );
 }
 
