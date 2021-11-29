@@ -3,6 +3,7 @@
     "files": true
   },
   "compilerOptions": {
+    "baseUrl": "src",
     "lib": ["es6"],
     "target": "es6",
     "module": "commonjs",

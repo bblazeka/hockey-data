@@ -1,6 +1,10 @@
 import { mapboxApiRequest } from "../../adapters/apihandler";
 
-async function geocode({ query }) {
+type TGeocodeParams = {
+  query: string;
+};
+
+async function geocode({ query }: TGeocodeParams): Promise<TGeocodeLocation[]> {
   const result = await mapboxApiRequest(query);
   return result.features.map((el) => {
     return {

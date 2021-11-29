@@ -2,24 +2,24 @@ import axios from "axios";
 import newsapi from "../keys/newsapi.json";
 import mapbox from "../keys/mapbox.json";
 
-async function nhlApiRequest(path) {
+async function nhlApiRequest(path: string) {
   const response = await axios.get(`http://statsapi.web.nhl.com${path}`);
   return response.data;
 }
 
-async function enhancedNhlApiRequest(path) {
+async function enhancedNhlApiRequest(path: string) {
   const response = await axios.get(`https://api.nhle.com${path}`);
   return response.data;
 }
 
-async function newsApiRequest(path) {
+async function newsApiRequest(path: string) {
   const response = await axios.get(
     `http://newsapi.org${path}&apiKey=${newsapi.key}`
   );
   return response.data;
 }
 
-async function mapboxApiRequest(query): Promise<TApiMapboxLocations> {
+async function mapboxApiRequest(query: string): Promise<TApiMapboxLocations> {
   const response = await axios.get(
     `https://api.tiles.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
       query
@@ -28,17 +28,19 @@ async function mapboxApiRequest(query): Promise<TApiMapboxLocations> {
   return response.data;
 }
 
-async function wikiApiRequest(query) {
+async function wikiApiRequest(query: string): Promise<TApiWikiResponse> {
   const response = await axios.get(
     `https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=${encodeURIComponent(
       query
     )}`
   );
   const pages = response.data.query.pages;
-  return pages[Object.keys(pages)[0]];
+  const wikiResponse = pages[Object.keys(pages)[0]];
+
+  return wikiResponse;
 }
 
-async function playerWikiRequest(query, optionalQuery = "") {
+async function playerWikiRequest(query: string, optionalQuery = "") {
   let result = await wikiApiRequest(query);
   if (result.extract.includes("may refer to") && optionalQuery.length > 0) {
     result = await wikiApiRequest(`${query} (ice hockey)`);
@@ -52,7 +54,7 @@ async function playerWikiRequest(query, optionalQuery = "") {
   return result;
 }
 
-async function wikiApiAdvancedRequest(mainQuery, subQuery) {
+async function wikiApiAdvancedRequest(mainQuery: string, subQuery: string) {
   let res = await wikiApiRequest(`${mainQuery} ${subQuery}`);
   if (res === undefined || res.ns == 0) {
     res = await wikiApiRequest(`${mainQuery}`);
