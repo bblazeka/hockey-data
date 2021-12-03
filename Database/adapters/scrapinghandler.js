@@ -4,7 +4,11 @@ const { JSDOM } = jsdom;
 
 function playerName(dom, query) {
   const player = dom.window.document.getElementById(query);
-  return player.querySelectorAll(".player-name")[0].textContent;
+  try {
+    return player.querySelectorAll(".player-name")[0].textContent;
+  } catch (exception) {
+    return "Not found";
+  }
 }
 
 async function scrapPlayerCapHit(fullName) {

@@ -1,8 +1,8 @@
 import { round } from "lodash";
-import { nhlApiRequest, playerWikiRequest } from "../../adapters/apihandler";
+import { nhlApiRequest, playerWikiRequest } from "../adapters/apihandler";
 
-import { Database } from "../../adapters/dbhandler";
-import config from "../../config.json";
+import { Database } from "../adapters/dbhandler";
+import config from "../config.json";
 
 let db = new Database();
 

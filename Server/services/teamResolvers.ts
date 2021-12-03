@@ -1,10 +1,7 @@
 import { isNil, sortBy } from "lodash";
 
-import {
-  wikiApiRequest,
-  wikiApiAdvancedRequest,
-} from "../../adapters/apihandler";
-import { Database } from "../../adapters/dbhandler";
+import { wikiApiRequest, wikiApiAdvancedRequest } from "../adapters/apihandler";
+import { Database } from "../adapters/dbhandler";
 
 let db = new Database();
 

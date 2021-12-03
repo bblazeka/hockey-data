@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import _ from "lodash";
-import { newsApiRequest } from "../../adapters/apihandler";
-import { getLimitStatus, searchTweets } from "../../adapters/twitterhandler";
+import { newsApiRequest } from "../adapters/apihandler";
+import { getLimitStatus, searchTweets } from "../adapters/twitterhandler";
 
 type TGetArticlesParams = {
   query: string;

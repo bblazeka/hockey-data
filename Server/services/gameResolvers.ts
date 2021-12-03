@@ -1,9 +1,9 @@
 import { sortBy, isNil, toInteger } from "lodash";
 import { DateTime } from "luxon";
 
-import { Database } from "../../adapters/dbhandler";
-import { nhlApiRequest } from "../../adapters/apihandler";
-import { mapGoalie, mapSkater } from "./functions";
+import { Database } from "../adapters/dbhandler";
+import { nhlApiRequest } from "../adapters/apihandler";
+import { mapGoalie, mapSkater } from "./gameFunctions";
 
 let db = new Database();
 

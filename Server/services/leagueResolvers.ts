@@ -1,9 +1,9 @@
 import { sortBy, uniqBy } from "lodash";
-import { nhlApiRequest } from "../../adapters/apihandler";
+import { nhlApiRequest } from "../adapters/apihandler";
 
-import { Database } from "../../adapters/dbhandler";
-import * as team from "../team";
-import { calculateGameScore, mapApiDivision } from "./functions";
+import { Database } from "../adapters/dbhandler";
+import * as team from "./teamResolvers";
+import { calculateGameScore, mapApiDivision } from "./leagueFunctions";
 
 let db = new Database();
 
