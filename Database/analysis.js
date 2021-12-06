@@ -1,7 +1,6 @@
 const apicomm = require("./adapters/apihandler");
 const dbhandler = require("./adapters/dbhandler.js");
 const scrapping = require("./adapters/scrapinghandler");
-const config = require("./config.json");
 
 function abbreviateName(name) {
   if (name.includes(".")) {
@@ -13,9 +12,7 @@ function abbreviateName(name) {
     .join(" ");
 }
 
-async function run() {
-  const season = config.currentSeason;
-
+async function run(season = "20212022") {
   const db = new dbhandler.Database();
   await db.init();
 
@@ -144,5 +141,9 @@ async function run() {
     await db.closeClient();
   }
 }
+
+exports.handler = async (event) => {
+  await run(event.season);
+};
 
 run().catch(console.dir);

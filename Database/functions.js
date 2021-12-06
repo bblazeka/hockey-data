@@ -21,14 +21,6 @@ async function fetchTeams() {
   });
 }
 
-async function fetchGames() {
-  const games = await apicomm.nhlApiRequest(
-    "/api/v1/schedule?startDate=2021-10-01&endDate=2022-05-01"
-  );
-  return games.dates;
-}
-
 module.exports = {
   fetchTeams,
-  fetchGames,
 };

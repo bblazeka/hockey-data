@@ -1,24 +1,20 @@
-const { MongoClient } = require("mongodb");
-const db = require("./keys/db.json");
-// Replace the uri string with your MongoDB deployment's connection string.
-const apicomm = require("./adapters/apihandler");
 const dbhandler = require("./adapters/dbhandler.js");
-const { fetchGames } = require("./functions.js");
+const apicomm = require("./adapters/apihandler.js");
 
-async function run() {
+async function run(startDate = "2021-10-01", endDate = "2022-05-01") {
   const db = new dbhandler.Database();
   await db.init();
 
-  const dates = await fetchGames();
-
+  const games = await apicomm.nhlApiRequest(
+    `/api/v1/schedule?startDate=${startDate}&endDate=${endDate}`
+  );
+  const { dates } = games;
+  let updatedGames = 0;
   console.log("Skipping games that are already finished...");
   try {
     const collection = db.getCollection("games");
     for (let date of dates) {
       for (let game of date.games) {
-        if (game.status.statusCode === "7") {
-          continue;
-        }
         const options = { upsert: true };
         const filter = { gamePk: game.gamePk };
         const updateDoc = {
@@ -43,6 +39,7 @@ async function run() {
           console.log(
             `${queryResult.matchedCount} document(s) matched the filter, updated ${queryResult.modifiedCount} document(s): ${game.gamePk}`
           );
+          updatedGames++;
         } catch (ex) {
           console.log(ex);
         }
@@ -50,7 +47,12 @@ async function run() {
     }
   } finally {
     await db.closeClient();
+    console.log(`Updated ${updatedGames} game(s).`);
   }
 }
+
+exports.handler = async (event) => {
+  await run(event.startDate, event.endDate);
+};
 
 run().catch(console.dir);
