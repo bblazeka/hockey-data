@@ -3,11 +3,11 @@ import _ from "lodash";
 import { newsApiRequest } from "../adapters/apihandler";
 import { getLimitStatus, searchTweets } from "../adapters/twitterhandler";
 
-type TGetArticlesParams = {
+type TGetContentParams = {
   query: string;
 };
 
-async function getArticles({ query }: TGetArticlesParams) {
+async function getArticles({ query }: TGetContentParams) {
   const pastDate = DateTime.now().minus({ weeks: 1 }).endOf("day").toISODate();
 
   const newsResponse = await newsApiRequest(
@@ -18,7 +18,7 @@ async function getArticles({ query }: TGetArticlesParams) {
   });
 }
 
-async function getTweets({ query }) {
+async function getTweets({ query }: TGetContentParams) {
   const tweetsResponse = await searchTweets(query, 10, "en", "popular");
   const tweets = [];
   for (let status of tweetsResponse.statuses) {

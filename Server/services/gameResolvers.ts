@@ -11,7 +11,12 @@ function init(database) {
   db = database;
 }
 
-async function gamesBetweenTeams({ homeId, awayId }) {
+type TGamesBetweenTeamsParams = {
+  homeId: number;
+  awayId: number;
+};
+
+async function gamesBetweenTeams({ homeId, awayId }: TGamesBetweenTeamsParams) {
   const dbGames = await db
     .getCollection("games")
     .find({
@@ -102,12 +107,12 @@ async function getGame({ gameId }: TGetGameParams) {
 }
 
 async function getTodaysGames() {
-  const games = await db
+  const games = (await db
     .getCollection("games")
     .find({
       date: DateTime.now().toISODate(),
     })
-    .toArray();
+    .toArray()) as TGame[];
   sortBy(games, function (game) {
     return new Date(game.gameDate);
   });
@@ -120,6 +125,10 @@ async function getTodaysGames() {
       DateTime.fromJSDate(game.gameDate) < DateTime.now();
     result.finished =
       result.ongoingGame && result.currentPeriodTimeRemaining === "Final";
+    console.log(
+      "🚀 ~ file: gameResolvers.ts ~ line 127 ~ returngames.map ~ result",
+      result
+    );
     return result;
   });
 }

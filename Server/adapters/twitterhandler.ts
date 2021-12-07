@@ -23,9 +23,14 @@ async function getTweets(accountScreenName) {
   return res;
 }
 
-async function searchTweets(q, count, lang, result_type) {
+async function searchTweets(
+  query: string,
+  count: number,
+  lang: string,
+  result_type: string
+) {
   const tweet_mode = "extended";
-  const params = { q, count, lang, result_type, tweet_mode };
+  const params = { q: query, count, lang, result_type, tweet_mode };
   try {
     const res = await client.get("search/tweets", params);
     return res;

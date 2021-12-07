@@ -18,7 +18,7 @@ export class Database {
     await this.client.close();
   }
 
-  getCollection(name) {
+  getCollection(name: string) {
     return this.database.collection(name);
   }
 }
