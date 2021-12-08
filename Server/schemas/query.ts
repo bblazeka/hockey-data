@@ -48,9 +48,4 @@ export const querySchema = gql`
     x: String
     y: Int
   }
-
-  type GraphFloat {
-    x: String
-    y: Float
-  }
 `;

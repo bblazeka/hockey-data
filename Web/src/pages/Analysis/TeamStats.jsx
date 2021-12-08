@@ -11,6 +11,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { has } from "lodash";
 import styled from "styled-components";
 
 import { getColorScheme } from "util/shared";
@@ -18,6 +19,7 @@ import {
   createSortedList,
   separateGoaliesAndSkaters,
 } from "services/analysis/hooks";
+import categories from "util/categories.json";
 
 import StatsPieChart from "./StatsPieChart/StatsPieChart";
 import StatsScatterChart from "./StatsScatterChart/StatsScatterChart";
@@ -70,6 +72,13 @@ export default function TeamStats({ category, team, setCategory }) {
     category
   );
   const goalieGraph = createSortedList(goalies, "wins");
+  const rankingsGraph = [];
+  for (var key in team.regularSeasonStatRankings) {
+    if (key != "__typename" && has(team.regularSeasonStatRankings, key)) {
+      var value = team.regularSeasonStatRankings[key];
+      rankingsGraph.push({ x: categories.teamCategories[key].title, y: value });
+    }
+  }
 
   return (
     <>
@@ -77,7 +86,7 @@ export default function TeamStats({ category, team, setCategory }) {
       <LineChartContainer>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={team.rankingsGraph}
+            data={rankingsGraph}
             margin={{
               top: 15,
               right: 10,

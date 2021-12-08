@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Statistic, Table } from "semantic-ui-react";
+import { has } from "lodash";
 import styled from "styled-components";
 
 import { GetNumberWithOrdinal } from "util/common";
+import categories from "util/categories.json";
 
 const TeamStatsTable = styled.div`
   overflow-x: auto;
@@ -19,6 +21,18 @@ export default function TeamStatsHeader({ team }) {
       </Statistic>
     );
   };
+
+  const stats = [];
+  for (var key in team.statsSingleSeason) {
+    if (key != "__typename" && has(team.statsSingleSeason, key)) {
+      var value = team.statsSingleSeason[key];
+      stats.push({
+        title: categories.teamCategories[key].title,
+        description: categories.teamCategories[key].description,
+        value: value,
+      });
+    }
+  }
 
   return (
     <>
@@ -64,9 +78,12 @@ export default function TeamStatsHeader({ team }) {
         <Table>
           <Table.Header>
             <Table.Row>
-              {team.stats.map((stat) => {
+              {stats.map((stat) => {
                 return (
-                  <Table.HeaderCell key={stat.title + team.id}>
+                  <Table.HeaderCell
+                    key={stat.title + team.id}
+                    title={stat.description}
+                  >
                     {stat.title}
                   </Table.HeaderCell>
                 );
@@ -75,7 +92,7 @@ export default function TeamStatsHeader({ team }) {
           </Table.Header>
           <Table.Body>
             <Table.Row>
-              {team.stats.map((stat) => {
+              {stats.map((stat) => {
                 return (
                   <Table.Cell key={stat.title + team.id}>
                     {stat.value}

@@ -33,10 +33,52 @@ export const getAnalysis = gql`
         powerPlayGoals
         powerPlayGoalsAgainst
         powerPlayOpportunities
+        powerPlayPercentage
+        penaltyKillPercentage
+        shotsPerGame
+        shotsAllowed
+        winScoreFirst
+        winOppScoreFirst
+        winLeadFirstPer
+        winLeadSecondPer
+        winOutshootOpp
+        winOutshotByOpp
+        faceOffsTaken
+        faceOffsWon
+        faceOffsLost
+        faceOffWinPercentage
+        shootingPctRank
+        savePctRank
       }
-      rankingsGraph {
-        x
-        y
+      statsSingleSeason {
+        wins
+        losses
+        ot
+        pts
+        ptPctg
+        goalsPerGame
+        goalsAgainstPerGame
+        evGGARatio
+        powerPlayPercentage
+        powerPlayGoals
+        powerPlayGoalsAgainst
+        powerPlayOpportunities
+        powerPlayPercentage
+        penaltyKillPercentage
+        shotsPerGame
+        shotsAllowed
+        winScoreFirst
+        winOppScoreFirst
+        winLeadFirstPer
+        winLeadSecondPer
+        winOutshootOpp
+        winOutshotByOpp
+        faceOffsTaken
+        faceOffsWon
+        faceOffsLost
+        faceOffWinPercentage
+        shootingPctg
+        savePctg
       }
       team {
         name

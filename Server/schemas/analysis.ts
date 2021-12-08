@@ -16,19 +16,12 @@ export const analysisSchema = gql`
     ppDivisionRank: Int
     points: Int
     leagueRecord: LeagueRecord
-    stats: [TeamStatTableProperty]
     regularSeasonStatRankings: RegularSeasonRankings
-    rankingsGraph: [GraphFloat]
+    statsSingleSeason: StatsSingleSeason
     lines: Lines
     rosterStats: [Player]
     skaterStats: [Player]
     goalieStats: [Player]
-  }
-
-  type TeamStatTableProperty {
-    title: String
-    value: Float
-    description: String
   }
 
   type StatsSingleSeason {
@@ -89,8 +82,8 @@ export const analysisSchema = gql`
     faceOffsWon: Int
     faceOffsLost: Int
     faceOffWinPercentage: Int
-    shootingPctg: Int
-    savePctg: Int
+    shootingPctRank: Int
+    savePctRank: Int
   }
 
   type AdvancedStats {

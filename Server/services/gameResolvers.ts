@@ -118,18 +118,18 @@ async function getTodaysGames() {
   });
   return games.map(async (game) => {
     const result = await nhlApiRequest(`/api/v1/game/${game.gamePk}/linescore`);
-    result.gameTime = DateTime.fromJSDate(game.gameDate).toFormat("HH:mm");
-    result.gamePk = game.gamePk;
-    result.ongoingGame =
+    const isOngoingGame =
       !isNil(result.currentPeriodTimeRemaining) &&
       DateTime.fromJSDate(game.gameDate) < DateTime.now();
-    result.finished =
-      result.ongoingGame && result.currentPeriodTimeRemaining === "Final";
-    console.log(
-      "🚀 ~ file: gameResolvers.ts ~ line 127 ~ returngames.map ~ result",
-      result
-    );
-    return result;
+    const isFinished =
+      isOngoingGame && result.currentPeriodTimeRemaining === "Final";
+    return {
+      ...result,
+      gameTime: DateTime.fromJSDate(game.gameDate).toFormat("HH:mm"),
+      gamePk: game.gamePk,
+      ongoingGame: isOngoingGame,
+      finished: isFinished,
+    };
   });
 }
 

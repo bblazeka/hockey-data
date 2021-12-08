@@ -483,5 +483,151 @@
       "description": "Time on ice"
     }
   },
-  "teamCategories": {}
+  "teamCategories": {
+    "wins": {
+      "title": "W",
+      "property": "wins",
+      "description": "Wins"
+    },
+    "losses": {
+      "title": "L",
+      "property": "losses",
+      "description": "Losses"
+    },
+    "ot": {
+      "title": "OT",
+      "property": "ot",
+      "description": "Overtime losses"
+    },
+    "pts": {
+      "title": "PTS",
+      "property": "pts",
+      "description": "Points"
+    },
+    "ptPctg": {
+      "title": "PTS%",
+      "property": "ptPctg",
+      "description": "Point percentage"
+    },
+    "goalsPerGame": {
+      "title": "GFPG",
+      "property": "goalsPerGame",
+      "description": "goals for per game"
+    },
+    "goalsAgainstPerGame": {
+      "title": "GAPG",
+      "property": "goalsAgainstPerGame",
+      "description": "goals against per game"
+    },
+    "evGGARatio": {
+      "title": "EGR",
+      "property": "evGGARatio",
+      "description": "even strength goals ratio"
+    },
+    "powerPlayGoals": {
+      "title": "PPGF",
+      "property": "powerPlayGoals",
+      "description": "power play goals for"
+    },
+    "powerPlayGoalsAgainst": {
+      "title": "PPGA",
+      "property": "powerPlayGoalsAgainst",
+      "description": "power play goals against"
+    },
+    "powerPlayOpportunities": {
+      "title": "PPO",
+      "property": "powerPlayOpportunities",
+      "description": "power play opportunities"
+    },
+    "powerPlayPercentage": {
+      "title": "PP%",
+      "property": "powerPlayPercentage",
+      "description": "power play percentage"
+    },
+    "penaltyKillPercentage": {
+      "title": "PK%",
+      "property": "penaltyKillPercentage",
+      "description": "penalty kill percentage"
+    },
+    "shotsPerGame": {
+      "title": "SFPG",
+      "property": "shotsPerGame",
+      "description": "shots per game"
+    },
+    "shotsAllowed": {
+      "title": "SAPG",
+      "property": "shotsAllowed",
+      "description": "shots allowed per game"
+    },
+    "winScoreFirst": {
+      "title": "WSF",
+      "property": "winScoreFirst",
+      "description": "winScoreFirst"
+    },
+    "winOppScoreFirst": {
+      "title": "WOSF",
+      "property": "winOppScoreFirst",
+      "description": "winOppScoreFirst"
+    },
+    "winLeadFirstPer": {
+      "title": "WL1",
+      "property": "winLeadFirstPer",
+      "description": "winLeadFirstPer"
+    },
+    "winLeadSecondPer": {
+      "title": "WL2",
+      "property": "winLeadSecondPer",
+      "description": "winLeadSecondPer"
+    },
+    "winOutshootOpp": {
+      "title": "WOS",
+      "property": "winOutshootOpp",
+      "description": "winOutshootOpp"
+    },
+    "winOutshotByOpp": {
+      "title": "WOP",
+      "property": "winOutshotByOpp",
+      "description": "winOutshotByOpp"
+    },
+    "faceOffsTaken": {
+      "title": "FO",
+      "property": "faceOffsTaken",
+      "description": "faceOffsTaken"
+    },
+    "faceOffsWon": {
+      "title": "FOw",
+      "property": "faceOffsWon",
+      "description": "faceOffsWon"
+    },
+    "faceOffsLost": {
+      "title": "FOL",
+      "property": "faceOffsLost",
+      "description": "faceOffsLost"
+    },
+    "faceOffWinPercentage": {
+      "title": "FO%",
+      "property": "faceOffWinPercentage",
+      "description": "faceOffWinPercentage"
+    },
+    "shootingPctRank": {
+      "title": "S%",
+      "property": "shootingPctRank",
+      "description": "shootingPctRank"
+    },
+    "savePctRank": {
+      "title": "SVS%",
+      "property": "savePctRank",
+      "description": "savePctRank"
+    },
+    "shootingPctg": {
+      "title": "S%",
+      "property": "shootingPctg",
+      "description": "shootingPctg"
+    },
+    "savePctg": {
+      "title": "SVS%",
+      "property": "savePctg",
+      "description": "savePctg"
+    }
+  }
 }
