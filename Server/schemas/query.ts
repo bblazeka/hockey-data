@@ -43,9 +43,4 @@ export const querySchema = gql`
     offset: Int
     tz: String
   }
-
-  type LineInt {
-    x: String
-    y: Int
-  }
 `;

@@ -15,11 +15,6 @@ export const getAnalysis = gql`
       divisionL10Rank
       ppDivisionRank
       points
-      stats {
-        title
-        value
-        description
-      }
       regularSeasonStatRankings {
         wins
         losses
