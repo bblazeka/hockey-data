@@ -98,10 +98,10 @@ async function getTeamSchedule({ id, start, end }: TTeamScheduleParams) {
     .toArray();
   games = JSON.parse(JSON.stringify(games))
     .filter((g) => g.home.team.id === id || g.away.team.id === id)
-    .map((el) => {
-      el.opponent = el.home.team.id === id ? el.away : el.home;
-      return el;
-    });
+    .map((el) => ({
+      ...el,
+      opponent: el.home.team.id === id ? el.away : el.home,
+    }));
   return games;
 }
 

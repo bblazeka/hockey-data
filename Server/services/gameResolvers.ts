@@ -28,13 +28,11 @@ async function gamesBetweenTeams({ homeId, awayId }: TGamesBetweenTeamsParams) {
   const games = sortBy(dbGames, function (game) {
     return new Date(game.gameDate);
   });
-  const gameScores = games.map((g, i) => {
-    return {
-      name: `Game ${i + 1}`,
-      homeGoals: g.home.score,
-      awayGoals: g.away.score,
-    };
-  });
+  const gameScores = games.map((g, i) => ({
+    name: `Game ${i + 1}`,
+    homeGoals: g.home.score,
+    awayGoals: g.away.score,
+  }));
   const homeWins = games.filter((d) => d.home.score > d.away.score).length;
   const awayWins = games.length - homeWins;
 

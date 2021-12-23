@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import _ from "lodash";
+import { sortBy } from "lodash";
 import styled from "styled-components";
 
 const TableContainer = styled.div`
@@ -19,7 +19,7 @@ function SortableTable({ columnNames, dataSource }) {
   const [sortDirection, setSortDirection] = useState(null);
   useEffect(() => {
     if (sortedColumn) {
-      const sortedArray = _.sortBy(dataSource, [sortedColumn]);
+      const sortedArray = sortBy(dataSource, [sortedColumn]);
       setData(
         sortDirection === "ascending" ? sortedArray : sortedArray.reverse()
       );
@@ -35,7 +35,7 @@ function SortableTable({ columnNames, dataSource }) {
         sortDirection === "ascending" ? "descending" : "ascending"
       );
     } else {
-      setData(_.sortBy(dataSource, [column]));
+      setData(sortBy(dataSource, [column]));
       setSortDirection("ascending");
       setSortedColumn(column);
     }

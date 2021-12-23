@@ -63,7 +63,7 @@ function CompareGrid(props) {
       playerScores[player.fullName] =
         (player[statsMode][cat.name] / cat.topVal) * 1.0;
     });
-    return Object.assign(cat, playerScores);
+    return { ...cat, playerScores };
   });
   return (
     <div className="grid">

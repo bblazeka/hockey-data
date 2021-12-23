@@ -38,7 +38,6 @@ function StatsScatterChart(props) {
 
   const renderTooltip = (props) => {
     const { active, payload } = props;
-
     if (active && payload && payload.length) {
       const data = payload[0] && payload[0].payload;
       const key = yKey.includes(".") ? yKey.split(".")[1] : yKey;
@@ -52,10 +51,11 @@ function StatsScatterChart(props) {
           }}
         >
           <p>{data.fullName}</p>
-          <p style={{ color: color }}>
+          <div style={{ color: color }}>
+            <div>games: {data.stats.games}</div>
             <span>{yAxisName}: </span>
             {data.stats[key]}
-          </p>
+          </div>
         </div>
       );
     }

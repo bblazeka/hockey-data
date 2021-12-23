@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import _ from "lodash";
+import { sortBy, uniqBy } from "lodash";
 import { newsApiRequest } from "../adapters/apihandler";
 import { getLimitStatus, searchTweets } from "../adapters/twitterhandler";
 
@@ -13,7 +13,7 @@ async function getArticles({ query }: TGetContentParams) {
   const newsResponse = await newsApiRequest(
     `/v2/everything?q=${query}&from=${pastDate}&language=en&sortBy=relevancy&pageSize=10&language=en`
   );
-  return _.sortBy(newsResponse.articles, function (obj) {
+  return sortBy(newsResponse.articles, function (obj) {
     return new Date(obj.publishedAt);
   });
 }
@@ -22,12 +22,8 @@ async function getTweets({ query }: TGetContentParams) {
   const tweetsResponse = await searchTweets(query, 10, "en", "popular");
   const tweets = [];
   for (let status of tweetsResponse.statuses) {
-    const users = status.entities.user_mentions.map((u) => {
-      return { text: u.name };
-    });
-    const hashtags = status.entities.hashtags.map((h) => {
-      return { text: h.text };
-    });
+    const users = status.entities.user_mentions.map((u) => ({ text: u.name }));
+    const hashtags = status.entities.hashtags.map((h) => ({ text: h.text }));
     tweets.push({
       id: status.id_str,
       createdAt: status.created_at,
@@ -42,7 +38,7 @@ async function getTweets({ query }: TGetContentParams) {
       },
       favoriteCount: status.favorite_count,
       retweetCount: status.retweet_count,
-      entities: users.concat(hashtags),
+      entities: uniqBy(users.concat(hashtags), "text"),
     });
   }
   return tweets;

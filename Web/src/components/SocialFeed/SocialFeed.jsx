@@ -21,7 +21,7 @@ function SocialFeed(props) {
         {tweets.length === 0 && <NotFound />}
         {tweets.map((tweet) => {
           return (
-            <Feed.Event key={tweet.id}>
+            <Feed.Event key={`socialFeed${tweet.id}`}>
               <Feed.Label>
                 <Icon name="twitter"></Icon>
               </Feed.Label>
@@ -34,9 +34,11 @@ function SocialFeed(props) {
                 </Feed.Summary>
                 <Feed.Extra>{tweet.text}</Feed.Extra>
                 <Feed.Meta>
-                  {tweet.entities.map((hashtag) => {
+                  {tweet.entities.map((hashtag, index) => {
                     return (
-                      <Label key={`${tweet.user.id}${hashtag.text}`}>
+                      <Label
+                        key={`${index}${tweet.id}${tweet.user.id}${hashtag.text}`}
+                      >
                         {hashtag.text}
                       </Label>
                     );

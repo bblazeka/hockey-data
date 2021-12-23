@@ -18,12 +18,11 @@ async function getAnalysis() {
 
   teams.forEach(function (team) {
     team.team = activeTeams.filter((t) => t.id === team.team.id)[0];
-    const formattedRoster = team.rosterStats.map((p) => {
-      return Object.assign(p, {
-        stats: p.stats,
-        advancedStats: p.advancedStats,
-      });
-    });
+    const formattedRoster = team.rosterStats.map((p) => ({
+      ...p,
+      stats: p.stats,
+      advancedStats: p.advancedStats,
+    }));
     team.skaterStats = team.rosterStats?.filter((s) => s.stats.shifts) ?? [];
     team.skaterStats.sort((p1, p2) => p2.stats.points - p1.stats.points);
     team.goalieStats = team.rosterStats?.filter((s) => s.stats.saves) ?? [];
