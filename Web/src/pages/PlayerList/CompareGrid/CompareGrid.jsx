@@ -13,24 +13,20 @@ import { scaleOrdinal } from "d3-scale";
 import { schemeCategory10 } from "d3-scale-chromatic";
 
 import "./CompareGrid.scss";
-import routes from "../../routes";
-import { IsNullOrUndefined, FormatDecimals } from "../../util/common";
-import { getLogo } from "../../util/assets";
-import { NotFound } from "..";
-import config from "../../util/config.json";
+import routes from "../../../routes";
+import { IsNullOrUndefined, FormatDecimals } from "../../../util/common";
+import { getLogo } from "../../../util/assets";
+import { NotFound } from "../../../components";
+import config from "../../../util/categories.json";
 
-function CompareGrid(props) {
-  const { players, skater, statsSelector, onDelete } = props;
-  if (IsNullOrUndefined(players)) {
-    return <NotFound />;
-  }
-
-  const statsMode = statsSelector || "stats";
-
-  const exampleObject = players.length > 0 ? players[0][statsMode] : {};
-  const displayedCategories = config.categories.filter((cat) => {
-    return cat.name in exampleObject;
-  });
+function displayedProperties(players, exampleObject, statsMode) {
+  const displayableCategories = {
+    ...config.goalieCategories,
+    ...config.skaterCategories,
+  };
+  const displayedCategories = Object.keys(displayableCategories).filter(
+    (key) => key in exampleObject
+  );
   displayedCategories.forEach((cat) => {
     return Object.assign(cat, {
       topVal: cat.reverse
@@ -48,9 +44,27 @@ function CompareGrid(props) {
           ),
     });
   });
+  return displayableCategories;
+}
+
+function CompareGrid(props) {
+  const { players, skater, statsSelector, onDelete } = props;
+  if (IsNullOrUndefined(players)) {
+    return <NotFound />;
+  }
+
+  const statsMode = statsSelector || "stats";
+
+  const exampleObject = players.length > 0 ? players[0][statsMode] : {};
+
+  const displayedCategories = displayedProperties(
+    players,
+    exampleObject,
+    statsMode
+  );
 
   const playerNames = players.map((p) => p.fullName);
-  const categories = config.categories.filter((cat) => {
+  const categories = displayedCategories.filter((cat) => {
     return (
       cat.compare &&
       ((skater && cat.skaterCategory) || (!skater && cat.goalieCategory))

@@ -1,5 +1,4 @@
 export { default as Loader } from "./Loader/Loader";
-export { default as CompareGrid } from "./CompareGrid/CompareGrid";
 export { default as SocialFeed } from "./SocialFeed/SocialFeed";
 export { default as NewsFeed } from "./NewsFeed/NewsFeed";
 export { default as NotFound } from "./NotFound/NotFound";

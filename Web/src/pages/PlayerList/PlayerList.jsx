@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Checkbox, Search } from "semantic-ui-react";
 
-import "./PlayerList.scss";
 import { IsNullOrUndefined } from "util/common";
-import { CompareGrid, Loader, QuestionModal } from "components";
+import { Loader, QuestionModal } from "components";
 import * as actions from "services/player";
 import { selectSelectedPlayers } from "services/selectors";
+
+import "./PlayerList.scss";
+import CompareGrid from "./CompareGrid/CompareGrid";
 
 export default function PlayerList() {
   const [isLoading, setLoading] = useState(false);
