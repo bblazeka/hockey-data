@@ -107,7 +107,7 @@ async function addSelectedPlayer({ id }) {
   const myquery = { userId: 0 };
   const newvalues = { $addToSet: { selectedPlayers: parseInt(id) } };
   const res = await db.getCollection("profiles").updateOne(myquery, newvalues);
-  console.log(`${res.result.nModified} selected players added`);
+  console.log(`${res.modifiedCount} selected players added`);
 
   const selectedPlayers = await getSelectedPlayers();
   return selectedPlayers;
@@ -117,7 +117,7 @@ async function deleteSelectedPlayer({ id }) {
   const myquery = { userId: 0 };
   const newvalues = { $pull: { selectedPlayers: parseInt(id) } };
   const res = await db.getCollection("profiles").updateOne(myquery, newvalues);
-  console.log(`${res.result.nModified} selected players deleted`);
+  console.log(`${res.modifiedCount} selected players deleted`);
 
   const selectedPlayers = await getSelectedPlayers();
   return selectedPlayers;

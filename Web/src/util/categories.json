@@ -3,7 +3,8 @@
     "games": {
       "title": "GP",
       "property": "games",
-      "description": "Games played"
+      "description": "Games played",
+      "compare": true
     },
     "gamesPlayed": {
       "title": "GP",
@@ -13,12 +14,14 @@
     "goals": {
       "title": "G",
       "property": "goals",
-      "description": "Goals"
+      "description": "Goals",
+      "compare": true
     },
     "assists": {
       "title": "A",
       "property": "assists",
-      "description": "Assists"
+      "description": "Assists",
+      "compare": true
     },
     "points": {
       "title": "P",
@@ -28,7 +31,8 @@
     "plusMinus": {
       "title": "+/-",
       "property": "plusMinus",
-      "description": "Plus minus score"
+      "description": "Plus minus score",
+      "compare": true
     },
     "penaltyMinutes": {
       "title": "PIM",
@@ -63,17 +67,20 @@
     "shots": {
       "property": "shots",
       "title": "SOG",
-      "description": "Shots on goal"
+      "description": "Shots on goal",
+      "compare": true
     },
     "hits": {
       "property": "hits",
       "title": "HIT",
-      "description": "Hits"
+      "description": "Hits",
+      "compare": true
     },
     "blocked": {
       "property": "blocked",
       "title": "BLK",
-      "description": "Blocks"
+      "description": "Blocks",
+      "compare": true
     },
     "faceOffPct": {
       "property": "faceOffPct",
@@ -305,7 +312,8 @@
     "gamesPlayed": {
       "title": "GP",
       "property": "gamesPlayed",
-      "description": "Games played"
+      "description": "Games played",
+      "compare": true
     },
     "gamesStarted": {
       "title": "GS",
@@ -315,7 +323,8 @@
     "completeGames": {
       "title": "CG",
       "property": "completeGames",
-      "description": "Complete games when starter"
+      "description": "Complete games when starter",
+      "compare": true
     },
     "goalAgainstAverage": {
       "property": "goalAgainstAverage",
@@ -332,7 +341,8 @@
     "wins": {
       "property": "wins",
       "title": "W",
-      "description": "Wins"
+      "description": "Wins",
+      "compare": true
     },
     "losses": {
       "property": "losses",
@@ -374,7 +384,8 @@
     "shotsAgainst": {
       "property": "shotsAgainst",
       "title": "SA",
-      "description": "Shots against"
+      "description": "Shots against",
+      "compare": true
     },
     "evenShots": {
       "property": "evenShots",

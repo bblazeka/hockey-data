@@ -19,13 +19,12 @@ import { getLogo } from "../../../util/assets";
 import { NotFound } from "../../../components";
 import config from "../../../util/categories.json";
 
-function displayedProperties(players, exampleObject, statsMode) {
-  const displayableCategories = {
-    ...config.goalieCategories,
-    ...config.skaterCategories,
-  };
-  const displayedCategories = Object.keys(displayableCategories).filter(
-    (key) => key in exampleObject
+function displayedProperties(players, exampleObject, statsMode, skater) {
+  const displayableCategories = skater
+    ? config.skaterCategories
+    : config.goalieCategories;
+  const displayedCategories = Object.values(displayableCategories).filter(
+    (key) => key.property in exampleObject
   );
   displayedCategories.forEach((cat) => {
     return Object.assign(cat, {
@@ -33,18 +32,18 @@ function displayedProperties(players, exampleObject, statsMode) {
         ? Math.min.apply(
             Math,
             players.map(function (o) {
-              return o[statsMode][cat.name];
+              return o[statsMode][cat.property];
             })
           )
         : Math.max.apply(
             Math,
             players.map(function (o) {
-              return o[statsMode][cat.name];
+              return o[statsMode][cat.property];
             })
           ),
     });
   });
-  return displayableCategories;
+  return displayedCategories;
 }
 
 function CompareGrid(props) {
@@ -60,25 +59,22 @@ function CompareGrid(props) {
   const displayedCategories = displayedProperties(
     players,
     exampleObject,
-    statsMode
+    statsMode,
+    skater
   );
 
   const playerNames = players.map((p) => p.fullName);
-  const categories = displayedCategories.filter((cat) => {
-    return (
-      cat.compare &&
-      ((skater && cat.skaterCategory) || (!skater && cat.goalieCategory))
-    );
-  });
+  const categories = displayedCategories.filter((cat) => cat.compare);
 
   const chartData = categories.map((cat) => {
     const playerScores = {};
     players.forEach((player) => {
       playerScores[player.fullName] =
-        (player[statsMode][cat.name] / cat.topVal) * 1.0;
+        (player[statsMode][cat.property] / cat.topVal) * 1.0;
     });
-    return { ...cat, playerScores };
+    return { ...cat, ...playerScores };
   });
+
   return (
     <div className="grid">
       <Header as="h4">{skater ? "Skaters" : "Goalies"}</Header>
@@ -89,12 +85,13 @@ function CompareGrid(props) {
             <PolarAngleAxis dataKey="description" />
             <Legend wrapperStyle={{ position: "relative" }} />
             {playerNames &&
-              playerNames.map((pn, i) => {
+              playerNames.map((playerName, i) => {
+                console.log(playerName);
                 return (
                   <Radar
                     key={`radar${i}`}
-                    name={pn}
-                    dataKey={pn}
+                    name={playerName}
+                    dataKey={playerName}
                     stroke={scaleOrdinal(schemeCategory10).range()[i % 10]}
                     fill={scaleOrdinal(schemeCategory10).range()[i % 10]}
                     fillOpacity={0.6}
@@ -114,7 +111,7 @@ function CompareGrid(props) {
                   key={`headercol${index}`}
                   title={cat.description}
                 >
-                  {cat.abbr}
+                  {cat.title}
                 </Table.HeaderCell>
               );
             })}
@@ -157,20 +154,20 @@ function CompareGrid(props) {
                   ({player.primaryPosition.abbreviation})
                 </Table.Cell>
                 {displayedCategories.map((cat, i) => {
-                  let value = stats[cat.name];
+                  let value = stats[cat.property];
                   const isTopValue = value === cat.topVal;
                   countTopValues += isTopValue ? 1 : 0;
-                  if (cat.name === "savePercentage") {
-                    value = FormatDecimals(stats[cat.name] * 100, 1);
+                  if (cat.property === "savePercentage") {
+                    value = FormatDecimals(stats[cat.property] * 100, 1);
                   } else if (
                     [
                       "goalAgainstAverage",
                       "evenStrengthSavePercentage",
                       "powerPlaySavePercentage",
                       "shortHandedSavePercentage",
-                    ].includes(cat.name)
+                    ].includes(cat.property)
                   ) {
-                    value = FormatDecimals(stats[cat.name], 2);
+                    value = FormatDecimals(stats[cat.property], 2);
                   }
                   return (
                     <Table.Cell positive={isTopValue} key={`col${i}`}>
