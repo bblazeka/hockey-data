@@ -1,23 +1,13 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Button, Header, Table } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import {
-  Radar,
-  Legend,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  ResponsiveContainer,
-} from "recharts";
-import { scaleOrdinal } from "d3-scale";
-import { schemeCategory10 } from "d3-scale-chromatic";
 
 import "./CompareGrid.scss";
 import routes from "../../../routes";
-import { IsNullOrUndefined, FormatDecimals } from "../../../util/common";
-import { getLogo } from "../../../util/assets";
-import { NotFound } from "../../../components";
+import { IsNullOrUndefined } from "../../../util/common";
+import { NotFound } from "components";
 import config from "../../../util/categories.json";
+import StatsRadarChart from "./StatsRadarChart";
+import SortableTable from "components/SortableTable";
 
 function displayedProperties(players, exampleObject, statsMode, skater) {
   const displayableCategories = skater
@@ -56,144 +46,50 @@ function CompareGrid(props) {
 
   const exampleObject = players.length > 0 ? players[0][statsMode] : {};
 
-  const displayedCategories = displayedProperties(
-    players,
-    exampleObject,
-    statsMode,
-    skater
+  const displayedCategories = useMemo(
+    () => displayedProperties(players, exampleObject, statsMode, skater),
+    [players, exampleObject, statsMode, skater]
   );
 
   const playerNames = players.map((p) => p.fullName);
-  const categories = displayedCategories.filter((cat) => cat.compare);
 
-  const chartData = categories.map((cat) => {
-    const playerScores = {};
-    players.forEach((player) => {
-      playerScores[player.fullName] =
-        (player[statsMode][cat.property] / cat.topVal) * 1.0;
-    });
-    return { ...cat, ...playerScores };
-  });
+  const statData = players.map((p) => ({
+    ...p[statsMode],
+    fullName: p.fullName,
+    id: p.id,
+    link: `${routes.player}/${p.id}`,
+    score: displayedCategories.filter((cat) => {
+      const value = p[statsMode][cat.property];
+      return cat.topVal && value === cat.topVal;
+    }).length,
+    customName: (
+      <Table.Cell>
+        <Button size="mini" circular onClick={() => onDelete(p.id)}>
+          X
+        </Button>
+      </Table.Cell>
+    ),
+  }));
 
   return (
     <div className="grid">
       <Header as="h4">{skater ? "Skaters" : "Goalies"}</Header>
-      <div style={{ width: "40vw", height: "30vh", marginBottom: "1vh" }}>
-        <ResponsiveContainer width="100%" height="100%">
-          <RadarChart cx="50%" cy="50%" outerRadius="80%" data={chartData}>
-            <PolarGrid />
-            <PolarAngleAxis dataKey="description" />
-            <Legend wrapperStyle={{ position: "relative" }} />
-            {playerNames &&
-              playerNames.map((playerName, i) => {
-                console.log(playerName);
-                return (
-                  <Radar
-                    key={`radar${i}`}
-                    name={playerName}
-                    dataKey={playerName}
-                    stroke={scaleOrdinal(schemeCategory10).range()[i % 10]}
-                    fill={scaleOrdinal(schemeCategory10).range()[i % 10]}
-                    fillOpacity={0.6}
-                  />
-                );
-              })}
-          </RadarChart>
-        </ResponsiveContainer>
-      </div>
-      <Table>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Player</Table.HeaderCell>
-            {displayedCategories.map((cat, index) => {
-              return (
-                <Table.HeaderCell
-                  key={`headercol${index}`}
-                  title={cat.description}
-                >
-                  {cat.title}
-                </Table.HeaderCell>
-              );
-            })}
-            <Table.HeaderCell>Score</Table.HeaderCell>
-            <Table.HeaderCell>Delete</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {players.map((player) => {
-            const key = `${player.id}`;
-            const stats = player[statsMode];
-            let countTopValues = 0;
-            if (IsNullOrUndefined(stats)) {
-              return (
-                <Table.Row key={`row${key}`}>
-                  <Table.Cell>
-                    <img
-                      className="small-logo"
-                      src={getLogo(player.currentTeam.id)}
-                      alt={`imglogo${player.id}`}
-                    />{" "}
-                    <Link to={`${routes.player}/${player.id}`}>
-                      {player.fullName} ({player.primaryPosition.abbreviation})
-                    </Link>
-                  </Table.Cell>
-                </Table.Row>
-              );
-            }
-            return (
-              <Table.Row key={`row${key}`}>
-                <Table.Cell>
-                  <img
-                    className="small-logo"
-                    src={getLogo(player.currentTeam?.id)}
-                    alt={`imglogo${player.id}`}
-                  />
-                  <Link to={`${routes.player}/${player.id}`}>
-                    {player.fullName}
-                  </Link>{" "}
-                  ({player.primaryPosition.abbreviation})
-                </Table.Cell>
-                {displayedCategories.map((cat, i) => {
-                  let value = stats[cat.property];
-                  const isTopValue = value === cat.topVal;
-                  countTopValues += isTopValue ? 1 : 0;
-                  if (cat.property === "savePercentage") {
-                    value = FormatDecimals(stats[cat.property] * 100, 1);
-                  } else if (
-                    [
-                      "goalAgainstAverage",
-                      "evenStrengthSavePercentage",
-                      "powerPlaySavePercentage",
-                      "shortHandedSavePercentage",
-                    ].includes(cat.property)
-                  ) {
-                    value = FormatDecimals(stats[cat.property], 2);
-                  }
-                  return (
-                    <Table.Cell positive={isTopValue} key={`col${i}`}>
-                      {value}
-                    </Table.Cell>
-                  );
-                })}
-                <Table.Cell>
-                  <Header as="h3" textAlign="center">
-                    {countTopValues}
-                  </Header>
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    size="mini"
-                    circular
-                    onClick={() => onDelete(player.id)}
-                  >
-                    X
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table>
+      <StatsRadarChart
+        {...{ players, displayedCategories, playerNames, statsMode }}
+      />
+      <SortableTable
+        columnNames={[
+          {
+            title: "Player",
+            property: "fullName",
+            link: true,
+          },
+          ...displayedCategories,
+          { title: "score", property: "score", bold: true },
+          { title: "x", property: "x", custom: true },
+        ]}
+        dataSource={statData}
+      />
     </div>
   );
 }

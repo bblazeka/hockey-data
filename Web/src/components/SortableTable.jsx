@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "semantic-ui-react";
+import { Table, Header } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { sortBy } from "lodash";
@@ -82,14 +82,23 @@ function SortableTable({ columnNames, dataSource }) {
                     }
                   };
                   const value = formatNumber();
+                  const isTopValue = value === col.topVal;
                   return col.link ? (
                     <NameCellStyled key={`column${colIndex}`}>
                       <Link to={row.link}>{value}</Link>
                     </NameCellStyled>
                   ) : col.custom ? (
                     row.customName
+                  ) : col.bold ? (
+                    <Table.Cell>
+                      <Header as="h3" textAlign="center">
+                        {value}
+                      </Header>
+                    </Table.Cell>
                   ) : (
-                    <Table.Cell key={`column${colIndex}`}>{value}</Table.Cell>
+                    <Table.Cell key={`column${colIndex}`} positive={isTopValue}>
+                      {value}
+                    </Table.Cell>
                   );
                 })}
               </Table.Row>
