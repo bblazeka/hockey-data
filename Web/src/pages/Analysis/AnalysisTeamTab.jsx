@@ -40,6 +40,7 @@ export default function AnalysisTeamTab({ category, team, setCategory }) {
     <Tab.Pane>
       <div>
         <Lineup lines={team.lines}></Lineup>
+        <span>Last update: {team.lastUpdated}</span>
       </div>
     </Tab.Pane>
   );

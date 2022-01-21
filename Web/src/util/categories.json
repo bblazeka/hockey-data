@@ -32,7 +32,8 @@
       "title": "+/-",
       "property": "plusMinus",
       "description": "Plus minus score",
-      "compare": true
+      "compare": true,
+      "baseValue": -50
     },
     "penaltyMinutes": {
       "title": "PIM",

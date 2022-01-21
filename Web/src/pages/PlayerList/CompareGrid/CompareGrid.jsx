@@ -1,13 +1,20 @@
 import React, { useMemo } from "react";
-import { Button, Header, Table } from "semantic-ui-react";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { Button, Segment, Header, Table } from "semantic-ui-react";
 
-import "./CompareGrid.scss";
+import { selectSelectedPlayers } from "services/selectors";
+
 import routes from "../../../routes";
 import { IsNullOrUndefined } from "../../../util/common";
 import { NotFound } from "components";
 import config from "../../../util/categories.json";
 import StatsRadarChart from "./StatsRadarChart";
 import SortableTable from "components/SortableTable";
+
+const CompareGridSegment = styled(Segment)`
+  padding: 8px;
+`;
 
 function displayedProperties(players, exampleObject, statsMode, skater) {
   const displayableCategories = skater
@@ -17,20 +24,21 @@ function displayedProperties(players, exampleObject, statsMode, skater) {
     (key) => key.property in exampleObject
   );
   displayedCategories.forEach((cat) => {
+    const min = Math.min.apply(
+      Math,
+      players.map(function (o) {
+        return o[statsMode][cat.property];
+      })
+    );
+    const max = Math.max.apply(
+      Math,
+      players.map(function (o) {
+        return o[statsMode][cat.property];
+      })
+    );
     return Object.assign(cat, {
-      topVal: cat.reverse
-        ? Math.min.apply(
-            Math,
-            players.map(function (o) {
-              return o[statsMode][cat.property];
-            })
-          )
-        : Math.max.apply(
-            Math,
-            players.map(function (o) {
-              return o[statsMode][cat.property];
-            })
-          ),
+      topVal: cat.reverse ? min : max,
+      bottomVal: cat.reverse ? max : min,
     });
   });
   return displayedCategories;
@@ -41,6 +49,8 @@ function CompareGrid(props) {
   if (IsNullOrUndefined(players)) {
     return <NotFound />;
   }
+
+  const { loading } = useSelector(selectSelectedPlayers);
 
   const statsMode = statsSelector || "stats";
 
@@ -63,7 +73,7 @@ function CompareGrid(props) {
       return cat.topVal && value === cat.topVal;
     }).length,
     customName: (
-      <Table.Cell>
+      <Table.Cell key={`cancelCell${p.id}`}>
         <Button size="mini" circular onClick={() => onDelete(p.id)}>
           X
         </Button>
@@ -72,7 +82,7 @@ function CompareGrid(props) {
   }));
 
   return (
-    <div className="grid">
+    <CompareGridSegment basic loading={loading}>
       <Header as="h4">{skater ? "Skaters" : "Goalies"}</Header>
       <StatsRadarChart
         {...{ players, displayedCategories, playerNames, statsMode }}
@@ -90,7 +100,7 @@ function CompareGrid(props) {
         ]}
         dataSource={statData}
       />
-    </div>
+    </CompareGridSegment>
   );
 }
 

@@ -8,7 +8,7 @@ export const createSortedList = (players, category) => {
     })
     .map((ps) => {
       return {
-        label: ps.fullName,
+        label: ps.abbrName,
         subLabel: ps.stats[category],
         angle: ps.stats[category],
       };

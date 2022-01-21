@@ -54,6 +54,7 @@ export const selectLocations = createSelector(selectTeam, (team) => {
 
 export const selectSelectedPlayers = createSelector(selectPlayer, (player) => {
   return {
+    loading: player.loading,
     selectedPlayers: player.selectedPlayers,
     suggestions: player.suggestions,
   };

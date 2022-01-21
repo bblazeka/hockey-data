@@ -7,7 +7,7 @@ export const querySchema = gql`
     analysis: [TeamAnalysis]
     player(id: Int): Player
     searchPlayerByName(name: String): [Player]
-    selectedPlayers: SelectedPlayers
+    selectedPlayers(seasonId: Int): SelectedPlayers
     team(id: Int): Team
     teams: [Team]
     teamLocations: TeamLocations
@@ -25,9 +25,9 @@ export const querySchema = gql`
   }
 
   type Mutation {
-    addSelectedPlayer(id: Int): SelectedPlayers
-    deleteSelectedPlayer(id: Int): SelectedPlayers
-    clearSelectedPlayers: SelectedPlayers
+    addSelectedPlayer(id: Int, seasonId: Int): SelectedPlayers
+    deleteSelectedPlayer(id: Int, seasonId: Int): SelectedPlayers
+    clearSelectedPlayers(seasonId: Int): SelectedPlayers
   }
 
   type Venue {

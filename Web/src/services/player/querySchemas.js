@@ -196,40 +196,40 @@ export function getGoalie(id) {
   }`;
 }
 
-export function getSelectedPlayers() {
+export function getSelectedPlayers(seasonId) {
   return `
   {
-    selectedPlayers {
+    selectedPlayers(seasonId: ${seasonId}) {
       ${getSelectedSkaterQuery()}
       ${getSelectedGoalieQuery()}
     }
   }`;
 }
 
-export function deleteSelectedPlayer(id) {
+export function deleteSelectedPlayer(id, seasonId) {
   return `
     mutation {
-      deleteSelectedPlayer(id: ${id}) {
+      deleteSelectedPlayer(id: ${id}, seasonId: ${seasonId}) {
         ${getSelectedSkaterQuery()}
         ${getSelectedGoalieQuery()}
       }
     }`;
 }
 
-export function removeAllPlayers() {
+export function removeAllPlayers(seasonId) {
   return `
     mutation {
-      clearSelectedPlayers {
+      clearSelectedPlayers(seasonId: ${seasonId}) {
         ${getSelectedSkaterQuery()}
         ${getSelectedGoalieQuery()}
       }
     }`;
 }
 
-export function addSelectedPlayer(id) {
+export function addSelectedPlayer(id, seasonId) {
   return `
       mutation {
-        addSelectedPlayer(id: ${id}) {
+        addSelectedPlayer(id: ${id}, seasonId: ${seasonId}) {
           ${getSelectedSkaterQuery()}
           ${getSelectedGoalieQuery()}
         }
@@ -284,8 +284,8 @@ function getSelectedSkaterQuery() {
   }`;
 }
 
-  function getSelectedGoalieQuery() {
-    return `
+function getSelectedGoalieQuery() {
+  return `
     goalies {  
         id, 
         fullName,
@@ -317,4 +317,4 @@ function getSelectedSkaterQuery() {
         saves
       }
     }`;
-  }
+}

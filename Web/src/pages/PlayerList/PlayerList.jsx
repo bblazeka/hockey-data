@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Checkbox, Search } from "semantic-ui-react";
+import { Button, Checkbox, Dropdown, Search } from "semantic-ui-react";
 
 import { IsNullOrUndefined } from "util/common";
 import { Loader, QuestionModal } from "components";
@@ -8,11 +8,13 @@ import * as actions from "services/player";
 import { selectSelectedPlayers } from "services/selectors";
 
 import "./PlayerList.scss";
+import config from "util/config.json";
 import CompareGrid from "./CompareGrid/CompareGrid";
 
 export default function PlayerList() {
   const [isLoading, setLoading] = useState(false);
   const [statsMode, setStatsMode] = useState("stats");
+  const [seasonId, setSeasonId] = useState(config.currentSeason);
   const [value, setValue] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -21,11 +23,11 @@ export default function PlayerList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actions.getSelectedPlayers());
-  }, [dispatch]);
+    dispatch(actions.getSelectedPlayers(seasonId));
+  }, [dispatch, seasonId]);
 
   const onRemoveAll = () => {
-    dispatch(actions.removeAllPlayers());
+    dispatch(actions.removeAllPlayers(seasonId));
   };
 
   const checkedChanged = (e, { checked }) => {
@@ -51,7 +53,7 @@ export default function PlayerList() {
   const handleResultSelect = (e, { result }) => {
     setValue("");
     setLoading(false);
-    dispatch(actions.addPlayer(result.id));
+    dispatch(actions.addPlayer(result.id, seasonId));
   };
 
   if (IsNullOrUndefined(selectedPlayers) || selectedPlayers.length === 0) {
@@ -82,6 +84,13 @@ export default function PlayerList() {
           open={modalOpen}
           trigger={<Button className="clear-button">Clear players</Button>}
         />
+        <Dropdown
+          header="Season"
+          selection
+          onChange={(_event, data) => setSeasonId(data.value)}
+          defaultValue={config.currentSeason}
+          options={config.seasons}
+        />
         <Checkbox
           className="player-list-checkbox"
           toggle
@@ -94,7 +103,7 @@ export default function PlayerList() {
           players={selectedPlayers.skaters}
           skater={true}
           statsSelector={statsMode}
-          onDelete={(id) => dispatch(actions.deletePlayer(id))}
+          onDelete={(id) => dispatch(actions.deletePlayer(id, seasonId))}
         />
       )}
       {selectedPlayers.goalies.length > 0 && (
@@ -102,7 +111,7 @@ export default function PlayerList() {
           players={selectedPlayers.goalies}
           skater={false}
           statsSelector="stats"
-          onDelete={(id) => dispatch(actions.deletePlayer(id))}
+          onDelete={(id) => dispatch(actions.deletePlayer(id, seasonId))}
         />
       )}
     </>

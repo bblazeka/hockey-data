@@ -2,7 +2,6 @@ import { round } from "lodash";
 import { nhlApiRequest, playerWikiRequest } from "../adapters/apihandler";
 
 import { Database } from "../adapters/dbhandler";
-import config from "../config.json";
 
 let db = new Database();
 
@@ -103,34 +102,34 @@ async function getPlayers() {
   return items;
 }
 
-async function addSelectedPlayer({ id }) {
+async function addSelectedPlayer({ id, seasonId }) {
   const myquery = { userId: 0 };
   const newvalues = { $addToSet: { selectedPlayers: parseInt(id) } };
   const res = await db.getCollection("profiles").updateOne(myquery, newvalues);
   console.log(`${res.modifiedCount} selected players added`);
 
-  const selectedPlayers = await getSelectedPlayers();
+  const selectedPlayers = await getSelectedPlayers({ seasonId });
   return selectedPlayers;
 }
 
-async function deleteSelectedPlayer({ id }) {
+async function deleteSelectedPlayer({ id, seasonId }) {
   const myquery = { userId: 0 };
   const newvalues = { $pull: { selectedPlayers: parseInt(id) } };
   const res = await db.getCollection("profiles").updateOne(myquery, newvalues);
   console.log(`${res.modifiedCount} selected players deleted`);
 
-  const selectedPlayers = await getSelectedPlayers();
+  const selectedPlayers = await getSelectedPlayers({ seasonId });
   return selectedPlayers;
 }
 
-async function getSelectedPlayers() {
+async function getSelectedPlayers({ seasonId }) {
   const profiles = await getProfiles();
   const skaters = [];
   const goalies = [];
   for (let playerId of profiles[0].selectedPlayers) {
     const playerStats = (
       await nhlApiRequest(
-        `/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${config.currentSeason}`
+        `/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${seasonId}`
       )
     ).stats[0].splits[0].stat;
     const query = { id: playerId };
@@ -189,13 +188,13 @@ async function getSelectedPlayers() {
   };
 }
 
-async function clearSelectedPlayers() {
+async function clearSelectedPlayers({ seasonId }) {
   const myquery = { userId: 0 };
   const newvalues = { $set: { selectedPlayers: [] } };
   const res = await db.getCollection("profiles").updateOne(myquery, newvalues);
   console.log(`${res.result.nModified} selected players deleted`);
 
-  const selectedPlayers = await getSelectedPlayers();
+  const selectedPlayers = await getSelectedPlayers({ seasonId });
   return selectedPlayers;
 }
 

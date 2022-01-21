@@ -90,7 +90,7 @@ function SortableTable({ columnNames, dataSource }) {
                   ) : col.custom ? (
                     row.customName
                   ) : col.bold ? (
-                    <Table.Cell>
+                    <Table.Cell key={`column${colIndex}`}>
                       <Header as="h3" textAlign="center">
                         {value}
                       </Header>

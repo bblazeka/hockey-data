@@ -24,8 +24,10 @@ function StatsRadarChart(props) {
   const chartData = categories.map((cat) => {
     const playerScores = {};
     players.forEach((player) => {
+      const playerPropValue = player[statsMode][cat.property];
+      const baseValue = cat.baseValue ?? 0;
       playerScores[player.fullName] =
-        (player[statsMode][cat.property] / cat.topVal) * 1.0;
+        ((playerPropValue - baseValue) / (cat.topVal - baseValue)) * 1.0;
     });
     return { ...cat, ...playerScores };
   });

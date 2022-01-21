@@ -1,4 +1,9 @@
 {
+  "currentSeason": "20212022",
+  "seasons": [
+    { "value": "20212022", "key": "20212022", "text": "Current season" },
+    { "value": "20202021", "key": "20202021", "text": "Previous season" }
+  ],
   "categories": [
     {
       "name": "games",

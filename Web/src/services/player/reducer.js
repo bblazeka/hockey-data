@@ -1,8 +1,9 @@
-import { getLogo } from '../../util/assets';
-import * as actionTypes from './actionTypes';
+import { getLogo } from "../../util/assets";
+import * as actionTypes from "./actionTypes";
 
 const defaultAppState = {
   loadingPlayer: false,
+  loading: false,
   players: [],
   roster: [],
   selectedPlayers: [],
@@ -27,7 +28,9 @@ const playerReducer = (state = defaultAppState, action) => {
     case actionTypes.REMOVE_PLAYER:
       return {
         ...state,
-        players: state.players.filter(p => p.id !== parseInt(action.payload.id))
+        players: state.players.filter(
+          (p) => p.id !== parseInt(action.payload.id)
+        ),
       };
     case actionTypes.PLAYER_LOADED:
       return {
@@ -40,22 +43,30 @@ const playerReducer = (state = defaultAppState, action) => {
         ...state,
         suggestions: action.payload.map((result) => {
           return {
-            'title': result.fullName,
-            'description': result.currentTeam ? result.currentTeam.name : 'Unknown',
-            'image': result.currentTeam ? getLogo(result.currentTeam.id) : 0,
-            'id': result.id,
+            title: result.fullName,
+            description: result.currentTeam
+              ? result.currentTeam.name
+              : "Unknown",
+            image: result.currentTeam ? getLogo(result.currentTeam.id) : 0,
+            id: result.id,
           };
         }),
+      };
+    case actionTypes.GET_SELECTED_PLAYERS:
+      return {
+        ...state,
+        loading: true,
       };
     case actionTypes.SELECTED_PLAYERS_LOADED:
       return {
         ...state,
-        selectedPlayers: action.payload
+        loading: false,
+        selectedPlayers: action.payload,
       };
     case actionTypes.REMOVE_ALL_PLAYERS:
       return {
         ...state,
-        selectedPlayers: action.payload
+        selectedPlayers: action.payload,
       };
     default:
       return state;

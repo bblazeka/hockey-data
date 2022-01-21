@@ -4,6 +4,7 @@ export const analysisSchema = gql`
   type TeamAnalysis {
     team: Team
     id: Int
+    lastUpdated: String
     leagueRank: Int
     leagueHomeRank: Int
     leagueRoadRank: Int

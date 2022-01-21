@@ -4,6 +4,7 @@ export const getAnalysis = gql`
   query analysis {
     analysis {
       id
+      lastUpdated
       leagueRank
       leagueHomeRank
       leagueRoadRank
