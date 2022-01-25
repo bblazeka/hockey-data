@@ -71,6 +71,11 @@ export default function TeamStats({ category, team, setCategory }) {
     }),
     category
   );
+
+  const max = Math.max.apply(
+    Math,
+    skaters.map((s) => s.stats.games)
+  );
   const goalieGraph = createSortedList(goalies, "wins");
   const rankingsGraph = [];
   for (var key in team.regularSeasonStatRankings) {
@@ -142,6 +147,7 @@ export default function TeamStats({ category, team, setCategory }) {
             yAxisName={category}
             yKey={`stats.${category}`}
             color={colors[0]}
+            maxDomain={max}
           />
         </ScatterChartContainer>
       </GraphContainer>
@@ -156,6 +162,7 @@ export default function TeamStats({ category, team, setCategory }) {
             height={400}
             width={400}
             color={colors[0]}
+            maxDomain={max}
           />
         </ScatterChartContainer>
       </GraphContainer>

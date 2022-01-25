@@ -11,12 +11,21 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import { Loader } from "../../../components";
-import { IsNullOrUndefined } from "../../../util/common";
+import { Loader } from "components";
+import { IsNullOrUndefined } from "util/common";
 
 function StatsScatterChart(props) {
-  const { color, values, xAxisName, yAxisName, xKey, yKey, height, width } =
-    props;
+  const {
+    color,
+    values,
+    xAxisName,
+    yAxisName,
+    xKey,
+    yKey,
+    height,
+    width,
+    maxDomain,
+  } = props;
 
   const renderCustomizedLabel = (props) => {
     const { x, y, width, value } = props;
@@ -79,7 +88,11 @@ function StatsScatterChart(props) {
         }}
       >
         <CartesianGrid />
-        <XAxis type="number" dataKey={xKey || "x"}>
+        <XAxis
+          type="number"
+          dataKey={xKey || "x"}
+          domain={[0, maxDomain + 5 ?? "auto"]}
+        >
           <Label value={xAxisName || "x"} offset={0} position="insideBottom" />
         </XAxis>
         <YAxis type="number" dataKey={yKey || "y"}>

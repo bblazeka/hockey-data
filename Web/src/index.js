@@ -24,7 +24,7 @@ import configureStore from "./store";
 
 const client = new ApolloClient({
   // eslint-disable-next-line no-undef
-  uri: process.env.REACT_APP_BACKEND_API,
+  uri: process?.env.REACT_APP_BACKEND_API,
   cache: new InMemoryCache(),
 });
 

@@ -19,8 +19,8 @@ const MatchupInfo = styled.div`
 `;
 
 const GameCell = styled(Table.Cell)`
-  background-color: lightblue;
-  ${({ homeGame }) => homeGame && `background-color: turquoise;`}
+  ${({ $homegame }) =>
+    $homegame ? `background-color: turquoise;` : `background-color: lightblue;`}
 `;
 
 const GameCountCell = styled.td`
@@ -66,7 +66,7 @@ export default function ScheduleTable({ schedule, dates }) {
                   return (
                     <GameCell
                       key={`opp ${element.id}${game.date}`}
-                      homeGame={element.id === game.home.team.id}
+                      $homegame={element.id === game.home.team.id}
                     >
                       <LogoStyled
                         src={logo}

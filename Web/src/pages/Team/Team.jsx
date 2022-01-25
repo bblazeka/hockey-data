@@ -28,9 +28,10 @@ export default function Team() {
   }, [id]);
   useEffect(() => {
     if (!IsNullOrUndefined(team)) {
+      const teamSocialQuery = `${team.name} hockey`;
       dispatch(geocode(`${team.venue.name} ${team.venue.city}`));
-      dispatch(getNews(team.name));
-      dispatch(getTweets(team.name));
+      dispatch(getNews(teamSocialQuery));
+      dispatch(getTweets(teamSocialQuery));
       const today = new Date();
       const finish = new Date(today);
       finish.setDate(finish.getDate() + 14);
@@ -40,11 +41,7 @@ export default function Team() {
     }
   }, [team]);
   if (!team) {
-    return (
-      <div>
-        <Loader></Loader>
-      </div>
-    );
+    return <Loader />;
   }
   return (
     <>

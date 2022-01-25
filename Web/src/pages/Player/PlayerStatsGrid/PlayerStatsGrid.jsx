@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import styled from "styled-components";
 
-import config from "util/config.json";
+import categories from "util/categories.json";
 import { getLogo } from "util/assets";
 import { FormatDecimals, IsNullOrUndefined } from "util/common";
 import { Loader } from "components";
@@ -39,7 +39,10 @@ function PlayerStatsGrid(props) {
   const { stats, seasonSums } = data;
 
   const exampleObject = stats[stats.length - 1].stat;
-  const displayedCategories = config.categories.filter((cat) => {
+  const categorySet = skater
+    ? categories.skaterCategories
+    : categories.goalieCategories;
+  const displayedCategories = categorySet.filter((cat) => {
     return cat.name in exampleObject;
   });
   return (
