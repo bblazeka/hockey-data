@@ -10,9 +10,21 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import styled from "styled-components";
 
 import { Loader } from "components";
 import { IsNullOrUndefined } from "util/common";
+
+const TooltipDiv = styled.div`
+  background-color: #fff;
+  border: 1px solid #999;
+  margin: 0;
+  padding: 10px;
+`;
+
+const TooltipTextDiv = styled.div`
+  color: ${({ $color }) => $color};
+`;
 
 function StatsScatterChart(props) {
   const {
@@ -51,21 +63,14 @@ function StatsScatterChart(props) {
       const data = payload[0] && payload[0].payload;
       const key = yKey.includes(".") ? yKey.split(".")[1] : yKey;
       return (
-        <div
-          style={{
-            backgroundColor: "#fff",
-            border: "1px solid #999",
-            margin: 0,
-            padding: 10,
-          }}
-        >
+        <TooltipDiv>
           <p>{data.fullName}</p>
-          <div style={{ color: color }}>
+          <TooltipTextDiv $color={color}>
             <div>games: {data.stats.games}</div>
             <span>{yAxisName}: </span>
             {data.stats[key]}
-          </div>
-        </div>
+          </TooltipTextDiv>
+        </TooltipDiv>
       );
     }
 
