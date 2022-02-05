@@ -38,7 +38,7 @@ const LineChartContainer = styled.div`
 
 const ScatterChartContainer = styled.div`
   width: 100%;
-  height: 60vh;
+  height: 70vh;
 `;
 
 const PieChartContainer = styled.div`
@@ -159,8 +159,6 @@ export default function TeamStats({ category, team, setCategory }) {
             xKey="stats.games"
             yAxisName="+/-"
             yKey="stats.plusMinus"
-            height={400}
-            width={400}
             color={colors[0]}
             maxDomain={max}
           />
