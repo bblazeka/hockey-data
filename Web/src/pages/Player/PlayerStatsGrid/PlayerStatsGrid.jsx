@@ -38,12 +38,13 @@ function PlayerStatsGrid(props) {
   }
   const { stats, seasonSums } = data;
 
-  const exampleObject = stats[stats.length - 1].stat;
   const categorySet = skater
     ? categories.skaterCategories
     : categories.goalieCategories;
-  const displayedCategories = categorySet.filter((cat) => {
-    return cat.name in exampleObject;
+
+  const exampleObject = stats[stats.length - 1].stat;
+  const displayedCategories = Object.values(categorySet).filter((cat) => {
+    return cat.property in exampleObject;
   });
   return (
     <PlayerStatsGridStyled>
@@ -61,7 +62,7 @@ function PlayerStatsGrid(props) {
                   key={`headercol${index}`}
                   title={cat.description}
                 >
-                  {cat.abbr}
+                  {cat.title}
                 </Table.HeaderCell>
               );
             })}
@@ -87,9 +88,9 @@ function PlayerStatsGrid(props) {
                 {!detailed && (
                   <Table.Cell>{stat.league ? stat.league.name : ""}</Table.Cell>
                 )}
-                {displayedCategories.map((cat, i) => {
-                  let value = stat.stat[cat.name];
-                  if (cat.name === "savePercentage") {
+                {displayedCategories.map((category, i) => {
+                  let value = stat.stat[category.property];
+                  if (category.property === "savePercentage") {
                     value = FormatDecimals(value * 100, 1);
                   } else if (
                     [
@@ -97,7 +98,7 @@ function PlayerStatsGrid(props) {
                       "evenStrengthSavePercentage",
                       "powerPlaySavePercentage",
                       "shortHandedSavePercentage",
-                    ].includes(cat.name)
+                    ].includes(category.property)
                   ) {
                     value = FormatDecimals(value, 2);
                   }
