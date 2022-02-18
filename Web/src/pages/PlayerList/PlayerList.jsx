@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Button, Checkbox, Dropdown, Search } from "semantic-ui-react";
 
-import { IsNullOrUndefined } from "util/common";
 import { Loader, QuestionModal } from "components";
 import * as actions from "services/player";
-import { selectSelectedPlayers } from "services/selectors";
+import { usePlayerSelection } from "services/player/hooks";
 
 import "./PlayerList.scss";
 import config from "util/config.json";
@@ -18,7 +17,8 @@ export default function PlayerList() {
   const [value, setValue] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
-  const { selectedPlayers, suggestions } = useSelector(selectSelectedPlayers);
+  const { loading, selectedPlayers, suggestions } = usePlayerSelection();
+  const { skaters, goalies } = selectedPlayers;
 
   const dispatch = useDispatch();
 
@@ -56,7 +56,7 @@ export default function PlayerList() {
     dispatch(actions.addPlayer(result.id, seasonId));
   };
 
-  if (IsNullOrUndefined(selectedPlayers) || selectedPlayers.length === 0) {
+  if (loading) {
     return <Loader />;
   }
   return (
@@ -98,17 +98,17 @@ export default function PlayerList() {
           onChange={checkedChanged}
         />
       </div>
-      {selectedPlayers.skaters.length > 0 && (
+      {skaters?.length > 0 && (
         <CompareGrid
-          players={selectedPlayers.skaters}
+          players={skaters}
           skater={true}
           statsSelector={statsMode}
           onDelete={(id) => dispatch(actions.deletePlayer(id, seasonId))}
         />
       )}
-      {selectedPlayers.goalies.length > 0 && (
+      {goalies?.length > 0 && (
         <CompareGrid
-          players={selectedPlayers.goalies}
+          players={goalies}
           skater={false}
           statsSelector="stats"
           onDelete={(id) => dispatch(actions.deletePlayer(id, seasonId))}

@@ -6,7 +6,8 @@ const defaultAppState = {
   loading: false,
   players: [],
   roster: [],
-  selectedPlayers: [],
+  loadingSelectedPlayers: false,
+  selectedPlayers: {},
 };
 
 const playerReducer = (state = defaultAppState, action) => {
@@ -55,18 +56,18 @@ const playerReducer = (state = defaultAppState, action) => {
     case actionTypes.GET_SELECTED_PLAYERS:
       return {
         ...state,
-        loading: true,
+        loadingSelectedPlayers: true,
       };
     case actionTypes.SELECTED_PLAYERS_LOADED:
       return {
         ...state,
-        loading: false,
-        selectedPlayers: action.payload,
+        loadingSelectedPlayers: false,
+        selectedPlayers: action.payload ?? {},
       };
     case actionTypes.REMOVE_ALL_PLAYERS:
       return {
         ...state,
-        selectedPlayers: action.payload,
+        selectedPlayers: {},
       };
     default:
       return state;

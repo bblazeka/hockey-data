@@ -13,7 +13,7 @@ const NameCellStyled = styled(Table.Cell)`
   white-space: nowrap;
 `;
 
-function SortableTable({ columnNames, dataSource }) {
+function SortableTable({ columnNames, dataSource, paintBestValues = false }) {
   const [data, setData] = useState(dataSource);
   const [sortedColumn, setSortedColumn] = useState(null);
   const [sortDirection, setSortDirection] = useState(null);
@@ -82,7 +82,7 @@ function SortableTable({ columnNames, dataSource }) {
                     }
                   };
                   const value = formatNumber();
-                  const isTopValue = value === col.topVal;
+                  const isTopValue = value === col.topVal && paintBestValues;
                   return col.link ? (
                     <NameCellStyled key={`column${colIndex}`}>
                       <Link to={row.link}>{value}</Link>
@@ -113,6 +113,7 @@ function SortableTable({ columnNames, dataSource }) {
 SortableTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.object),
   dataSource: PropTypes.arrayOf(PropTypes.object),
+  paintBestValues: PropTypes.boolean,
 };
 
 export default SortableTable;

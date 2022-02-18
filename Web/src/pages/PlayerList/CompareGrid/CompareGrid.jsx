@@ -99,6 +99,7 @@ function CompareGrid(props) {
           { title: "x", property: "x", custom: true },
         ]}
         dataSource={statData}
+        paintBestValues
       />
     </CompareGridSegment>
   );
