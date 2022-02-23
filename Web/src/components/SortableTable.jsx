@@ -113,7 +113,7 @@ function SortableTable({ columnNames, dataSource, paintBestValues = false }) {
 SortableTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.object),
   dataSource: PropTypes.arrayOf(PropTypes.object),
-  paintBestValues: PropTypes.boolean,
+  paintBestValues: PropTypes.bool,
 };
 
 export default SortableTable;

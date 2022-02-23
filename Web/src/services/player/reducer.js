@@ -48,7 +48,9 @@ const playerReducer = (state = defaultAppState, action) => {
             description: result.currentTeam
               ? result.currentTeam.name
               : "Unknown",
-            image: result.currentTeam ? getLogo(result.currentTeam.id) : 0,
+            image: result.currentTeam
+              ? getLogo(result.currentTeam.id)
+              : getLogo(0),
             id: result.id,
           };
         }),

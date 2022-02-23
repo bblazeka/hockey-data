@@ -5,6 +5,7 @@ import { Button, Checkbox, Dropdown, Search } from "semantic-ui-react";
 import { Loader, QuestionModal } from "components";
 import * as actions from "services/player";
 import { usePlayerSelection } from "services/player/hooks";
+import { useConfigContext } from "util/indexedDB";
 
 import "./PlayerList.scss";
 import config from "util/config.json";
@@ -16,6 +17,8 @@ export default function PlayerList() {
   const [seasonId, setSeasonId] = useState(config.currentSeason);
   const [value, setValue] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedPlayerIds, setSelectedPlayerIds] = useState([]);
+  const { getSelectedPlayers, saveSelectedPlayers } = useConfigContext();
 
   const { loading, selectedPlayers, suggestions } = usePlayerSelection();
   const { skaters, goalies } = selectedPlayers;
@@ -23,11 +26,30 @@ export default function PlayerList() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actions.getSelectedPlayers(seasonId));
-  }, [dispatch, seasonId]);
+    const fetchData = async () => {
+      const selectedPlayers = await getSelectedPlayers();
+      if (selectedPlayers) {
+        const selectedPlayerIds = selectedPlayers.map(
+          (selectedPlayer) => selectedPlayer.id
+        );
+        setSelectedPlayerIds(selectedPlayerIds);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    dispatch(actions.getSelectedPlayers(selectedPlayerIds, seasonId));
+  }, [selectedPlayerIds, seasonId]);
 
   const onRemoveAll = () => {
-    dispatch(actions.removeAllPlayers(seasonId));
+    setSelectedPlayerIds([]);
+  };
+
+  const onRemoveId = (id) => {
+    setSelectedPlayerIds(
+      selectedPlayerIds.filter((playerId) => id != playerId)
+    );
   };
 
   const checkedChanged = (e, { checked }) => {
@@ -53,7 +75,11 @@ export default function PlayerList() {
   const handleResultSelect = (e, { result }) => {
     setValue("");
     setLoading(false);
-    dispatch(actions.addPlayer(result.id, seasonId));
+    setSelectedPlayerIds([...selectedPlayerIds, result.id]);
+  };
+
+  const savePlayers = async () => {
+    await saveSelectedPlayers(selectedPlayerIds);
   };
 
   if (loading) {
@@ -71,6 +97,9 @@ export default function PlayerList() {
           size="large"
           value={value}
         />
+        <Button onClick={async () => await savePlayers()}>
+          Save selected players
+        </Button>
         <QuestionModal
           onOpen={() => {
             setModalOpen(true);
@@ -82,7 +111,7 @@ export default function PlayerList() {
             setModalOpen(false);
           }}
           open={modalOpen}
-          trigger={<Button className="clear-button">Clear players</Button>}
+          trigger={<Button>Clear players</Button>}
         />
         <Dropdown
           header="Season"
@@ -103,7 +132,7 @@ export default function PlayerList() {
           players={skaters}
           skater={true}
           statsSelector={statsMode}
-          onDelete={(id) => dispatch(actions.deletePlayer(id, seasonId))}
+          onDelete={(id) => onRemoveId(id, seasonId)}
         />
       )}
       {goalies?.length > 0 && (
@@ -111,7 +140,7 @@ export default function PlayerList() {
           players={goalies}
           skater={false}
           statsSelector="stats"
-          onDelete={(id) => dispatch(actions.deletePlayer(id, seasonId))}
+          onDelete={(id) => onRemoveId(id, seasonId)}
         />
       )}
     </>

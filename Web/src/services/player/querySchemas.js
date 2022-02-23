@@ -196,10 +196,12 @@ export function getGoalie(id) {
   }`;
 }
 
-export function getSelectedPlayers(seasonId) {
+export function getSelectedPlayers(playerIds, seasonId) {
   return `
   {
-    selectedPlayers(seasonId: ${seasonId}) {
+    selectedPlayers(playerIds: "${playerIds.join(
+      ","
+    )}", seasonId: ${seasonId}) {
       ${getSelectedSkaterQuery()}
       ${getSelectedGoalieQuery()}
     }

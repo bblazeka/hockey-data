@@ -66,6 +66,17 @@ export const selectSchedule = createSelector(selectLeague, (league) => {
   };
 });
 
+export const selectApp = createSelector(
+  selectTeam,
+  selectLeague,
+  (team, league) => {
+    return {
+      teams: team.teams,
+      divisionsWithTeams: league.divisionsWithTeams,
+    };
+  }
+);
+
 export const selectHome = createSelector(
   selectGame,
   selectNews,

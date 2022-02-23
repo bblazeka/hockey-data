@@ -85,16 +85,19 @@ export const removePlayer = (id) => ({
   },
 });
 
-export const getSelectedPlayers = (seasonId) => (dispatch) => {
-  dispatch({
-    type: actionTypes.GET_SELECTED_PLAYERS,
-  });
-  axiosGraphQL
-    .post("", { query: querySchemas.getSelectedPlayers(seasonId) })
-    .then((response) => {
-      dispatch({
-        type: actionTypes.SELECTED_PLAYERS_LOADED,
-        payload: response.data.data.selectedPlayers,
-      });
+export const getSelectedPlayers =
+  (selectedPlayerIds, seasonId) => (dispatch) => {
+    dispatch({
+      type: actionTypes.GET_SELECTED_PLAYERS,
     });
-};
+    axiosGraphQL
+      .post("", {
+        query: querySchemas.getSelectedPlayers(selectedPlayerIds, seasonId),
+      })
+      .then((response) => {
+        dispatch({
+          type: actionTypes.SELECTED_PLAYERS_LOADED,
+          payload: response.data.data.selectedPlayers,
+        });
+      });
+  };

@@ -9,7 +9,7 @@ import {
 } from "./services";
 
 const funcWrapper = (functionName) => (parent, args, context, info) => {
-  return functionName(args);
+  return functionName(args, context);
 };
 
 export function getResolvers() {
@@ -34,11 +34,11 @@ export function getResolvers() {
       divisionsWithTeams: funcWrapper(leagueResolvers.divisionsWithTeams),
       geocode: funcWrapper(utilResolvers.geocode),
     },
-    Mutation: {
+    /*Mutation: {
       addSelectedPlayer: funcWrapper(playerResolvers.addSelectedPlayer),
       deleteSelectedPlayer: funcWrapper(playerResolvers.deleteSelectedPlayer),
       clearSelectedPlayers: funcWrapper(playerResolvers.clearSelectedPlayers),
-    },
+    },*/
   };
   return resolvers;
 }

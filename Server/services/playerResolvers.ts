@@ -102,37 +102,17 @@ async function getPlayers() {
   return items;
 }
 
-async function addSelectedPlayer({ id, seasonId }) {
-  const myquery = { userId: 0 };
-  const newvalues = { $addToSet: { selectedPlayers: parseInt(id) } };
-  const res = await db.getCollection("profiles").updateOne(myquery, newvalues);
-  console.log(`${res.modifiedCount} selected players added`);
-
-  const selectedPlayers = await getSelectedPlayers({ seasonId });
-  return selectedPlayers;
-}
-
-async function deleteSelectedPlayer({ id, seasonId }) {
-  const myquery = { userId: 0 };
-  const newvalues = { $pull: { selectedPlayers: parseInt(id) } };
-  const res = await db.getCollection("profiles").updateOne(myquery, newvalues);
-  console.log(`${res.modifiedCount} selected players deleted`);
-
-  const selectedPlayers = await getSelectedPlayers({ seasonId });
-  return selectedPlayers;
-}
-
-async function getSelectedPlayers({ seasonId }) {
-  const profiles = await getProfiles();
+async function getSelectedPlayers({ playerIds, seasonId }) {
+  const selectedPlayerIds = playerIds.split(",");
   const skaters = [];
   const goalies = [];
-  for (let playerId of profiles[0].selectedPlayers) {
+  for (let playerId of selectedPlayerIds) {
     const playerStats = (
       await nhlApiRequest(
         `/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${seasonId}`
       )
     ).stats[0].splits[0].stat;
-    const query = { id: playerId };
+    const query = { id: parseInt(playerId) };
     const options = {
       sort: { id: -1 },
     };
@@ -188,21 +168,6 @@ async function getSelectedPlayers({ seasonId }) {
   };
 }
 
-async function clearSelectedPlayers({ seasonId }) {
-  const myquery = { userId: 0 };
-  const newvalues = { $set: { selectedPlayers: [] } };
-  const res = await db.getCollection("profiles").updateOne(myquery, newvalues);
-  console.log(`${res.result.nModified} selected players deleted`);
-
-  const selectedPlayers = await getSelectedPlayers({ seasonId });
-  return selectedPlayers;
-}
-
-async function getProfiles() {
-  const items = await db.getCollection("profiles").find({}).toArray();
-  return items;
-}
-
 export {
   init,
   getPlayer,
@@ -210,7 +175,4 @@ export {
   getPlayersFromTeam,
   getPlayerByName,
   getSelectedPlayers,
-  addSelectedPlayer,
-  deleteSelectedPlayer,
-  clearSelectedPlayers,
 };
