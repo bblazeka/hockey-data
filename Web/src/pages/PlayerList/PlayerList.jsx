@@ -12,7 +12,6 @@ import config from "util/config.json";
 import CompareGrid from "./CompareGrid/CompareGrid";
 
 export default function PlayerList() {
-  const [isLoading, setLoading] = useState(false);
   const [statsMode, setStatsMode] = useState("stats");
   const [seasonId, setSeasonId] = useState(config.currentSeason);
   const [value, setValue] = useState("");
@@ -20,7 +19,8 @@ export default function PlayerList() {
   const [selectedPlayerIds, setSelectedPlayerIds] = useState([]);
   const { getSelectedPlayers, saveSelectedPlayers } = useConfigContext();
 
-  const { loading, selectedPlayers, suggestions } = usePlayerSelection();
+  const { loading, selectedPlayers, suggestions, loadingSearchResults } =
+    usePlayerSelection();
   const { skaters, goalies } = selectedPlayers;
 
   const dispatch = useDispatch();
@@ -57,24 +57,19 @@ export default function PlayerList() {
   };
 
   const handleSearchChange = (e, { value }) => {
-    setLoading(true);
     setValue(value);
 
     if (value.length < 1 && value.length < 1) {
-      setLoading(false);
       setValue("");
     }
 
     if (value.length > 2) {
       dispatch(actions.searchBasicPlayer(value));
-    } else {
-      setLoading(false);
     }
   };
 
   const handleResultSelect = (e, { result }) => {
     setValue("");
-    setLoading(false);
     setSelectedPlayerIds([...selectedPlayerIds, result.id]);
   };
 
@@ -90,7 +85,7 @@ export default function PlayerList() {
       <div className="head-options-container">
         <Search
           className="search-box"
-          loading={isLoading}
+          loading={loadingSearchResults}
           onResultSelect={handleResultSelect}
           onSearchChange={handleSearchChange}
           results={suggestions}

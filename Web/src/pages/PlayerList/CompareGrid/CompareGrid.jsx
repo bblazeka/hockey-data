@@ -8,7 +8,7 @@ import { selectSelectedPlayers } from "services/selectors";
 import routes from "../../../routes";
 import { IsNullOrUndefined } from "../../../util/common";
 import { NotFound } from "components";
-import config from "../../../util/categories.json";
+import config from "util/categories.json";
 import StatsRadarChart from "./StatsRadarChart";
 import SortableTable from "components/SortableTable";
 

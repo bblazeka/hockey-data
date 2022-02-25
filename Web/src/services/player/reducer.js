@@ -6,6 +6,7 @@ const defaultAppState = {
   loading: false,
   players: [],
   roster: [],
+  loadingSearchResults: false,
   loadingSelectedPlayers: false,
   selectedPlayers: {},
 };
@@ -39,9 +40,15 @@ const playerReducer = (state = defaultAppState, action) => {
         player: action.payload,
         loadingPlayer: false,
       };
+    case actionTypes.BASIC_SEARCH_PLAYER:
+      return {
+        ...state,
+        loadingSearchResults: true,
+      };
     case actionTypes.BASIC_PLAYER_LOADED:
       return {
         ...state,
+        loadingSearchResults: false,
         suggestions: action.payload.map((result) => {
           return {
             title: result.fullName,
