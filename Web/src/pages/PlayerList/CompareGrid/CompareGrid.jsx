@@ -24,21 +24,14 @@ function displayedProperties(players, exampleObject, statsMode, skater) {
     (key) => key.property in exampleObject
   );
   displayedCategories.forEach((cat) => {
-    const min = Math.min.apply(
-      Math,
-      players.map(function (o) {
-        return o[statsMode][cat.property];
-      })
-    );
-    const max = Math.max.apply(
-      Math,
-      players.map(function (o) {
-        return o[statsMode][cat.property];
-      })
-    );
+    const categoryValues = players.map((o) => o[statsMode][cat.property]);
+    const min = Math.min.apply(Math, categoryValues);
+    const minValue = cat.decimal ? min.toFixed(2) : min;
+    const max = Math.max.apply(Math, categoryValues);
+    const maxValue = cat.decimal ? max.toFixed(2) : max;
     return Object.assign(cat, {
-      topVal: cat.reverse ? min : max,
-      bottomVal: cat.reverse ? max : min,
+      topVal: cat.reverse ? minValue : maxValue,
+      bottomVal: cat.reverse ? maxValue : minValue,
     });
   });
   return displayedCategories;
@@ -70,7 +63,9 @@ function CompareGrid(props) {
     link: `${routes.player}/${p.id}`,
     score: displayedCategories.filter((cat) => {
       const value = p[statsMode][cat.property];
-      return cat.topVal && value === cat.topVal;
+      return (
+        cat.topVal && (cat.decimal ? value.toFixed(2) : value) === cat.topVal
+      );
     }).length,
     customName: (
       <Table.Cell key={`cancelCell${p.id}`}>
