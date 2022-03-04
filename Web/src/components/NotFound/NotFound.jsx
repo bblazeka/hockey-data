@@ -1,5 +1,6 @@
 import React from "react";
 import { Header, Icon } from "semantic-ui-react";
+import PropTypes from "prop-types";
 
 export default function NotFound(props) {
   return (
@@ -9,3 +10,7 @@ export default function NotFound(props) {
     </Header>
   );
 }
+
+NotFound.propTypes = {
+  text: PropTypes.string,
+};

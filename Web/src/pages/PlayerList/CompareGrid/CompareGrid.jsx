@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Button, Segment, Header, Table } from "semantic-ui-react";
 
 import { selectSelectedPlayers } from "services/selectors";
@@ -68,6 +69,16 @@ function CompareGrid(props) {
       );
     }).length,
     customName: (
+      <Table.Cell>
+        <Link to={`${routes.player}/${p.id}`}>
+          <Header as="h4">
+            {p.fullName}
+            <Header.Subheader>{p.currentTeam.name}</Header.Subheader>
+          </Header>
+        </Link>
+      </Table.Cell>
+    ),
+    customOptions: (
       <Table.Cell key={`cancelCell${p.id}`}>
         <Button size="mini" circular onClick={() => onDelete(p.id)}>
           X
@@ -87,11 +98,11 @@ function CompareGrid(props) {
           {
             title: "Player",
             property: "fullName",
-            link: true,
+            customName: true,
           },
           ...displayedCategories,
           { title: "score", property: "score", bold: true },
-          { title: "x", property: "x", custom: true },
+          { title: "", property: "x", customOptions: true, notSortable: true },
         ]}
         dataSource={statData}
         paintBestValues

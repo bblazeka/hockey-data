@@ -71,7 +71,7 @@ const playerReducer = (state = defaultAppState, action) => {
       return {
         ...state,
         loadingSelectedPlayers: false,
-        selectedPlayers: action.payload ?? {},
+        selectedPlayers: action.payload ?? { skaters: [], goalies: [] },
       };
     case actionTypes.REMOVE_ALL_PLAYERS:
       return {

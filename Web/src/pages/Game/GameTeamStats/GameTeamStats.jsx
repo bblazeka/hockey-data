@@ -67,7 +67,7 @@ function GameTeamStats(props) {
             {
               title: "Skater",
               property: "name",
-              custom: true,
+              customName: true,
             },
             categories.skaterCategories["goals"],
             categories.skaterCategories["assists"],
@@ -93,7 +93,7 @@ function GameTeamStats(props) {
           {
             title: "Goalie",
             property: "name",
-            custom: true,
+            customName: true,
           },
           { ...categories.goalieCategories["savePercentage"], percent: false },
           categories.goalieCategories["saves"],

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Button, Checkbox, Dropdown, Search } from "semantic-ui-react";
 
-import { Loader, QuestionModal } from "components";
+import { Loader, NotFound, QuestionModal } from "components";
 import * as actions from "services/player";
 import { usePlayerSelection } from "services/player/hooks";
 import { useConfigContext } from "util/indexedDB";
@@ -122,6 +122,9 @@ export default function PlayerList() {
           onChange={checkedChanged}
         />
       </div>
+      {skaters?.length === 0 && goalies?.length === 0 && (
+        <NotFound text="Search for players to add them to the comparison" />
+      )}
       {skaters?.length > 0 && (
         <CompareGrid
           players={skaters}

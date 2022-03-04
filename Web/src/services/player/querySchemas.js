@@ -243,7 +243,7 @@ function getSelectedSkaterQuery() {
   skaters { 
       id,
       fullName,
-      currentTeam { id },
+      currentTeam { id, name },
       primaryPosition { abbreviation }
       stats {
         games,
@@ -291,7 +291,7 @@ function getSelectedGoalieQuery() {
     goalies {  
         id, 
         fullName,
-        currentTeam { id },
+        currentTeam { id, name },
         primaryPosition { abbreviation }
         stats {
           games,

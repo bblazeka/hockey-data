@@ -13,6 +13,11 @@ const NameCellStyled = styled(Table.Cell)`
   white-space: nowrap;
 `;
 
+const ValueCellStyled = styled(Table.Cell)`
+  text-align: center !important;
+  vertical-align: middle !important;
+`;
+
 function SortableTable({ columnNames, dataSource, paintBestValues = false }) {
   const [data, setData] = useState(dataSource);
   const [sortedColumn, setSortedColumn] = useState(null);
@@ -51,10 +56,16 @@ function SortableTable({ columnNames, dataSource, paintBestValues = false }) {
                 <Table.HeaderCell
                   key={`header${index}`}
                   title={colName.description}
-                  sorted={
-                    sortedColumn === colName.property ? sortDirection : null
-                  }
-                  onClick={() => changeSort(colName.property)}
+                  {...(!colName.notSortable
+                    ? {
+                        sorted:
+                          sortedColumn === colName.property &&
+                          !colName.notSortable
+                            ? sortDirection
+                            : null,
+                        onClick: () => changeSort(colName.property),
+                      }
+                    : "")}
                 >
                   {colName.title}
                 </Table.HeaderCell>
@@ -87,18 +98,23 @@ function SortableTable({ columnNames, dataSource, paintBestValues = false }) {
                     <NameCellStyled key={`column${colIndex}`}>
                       <Link to={row.link}>{value}</Link>
                     </NameCellStyled>
-                  ) : col.custom ? (
+                  ) : col.customName ? (
                     row.customName
+                  ) : col.customOptions ? (
+                    row.customOptions
                   ) : col.bold ? (
-                    <Table.Cell key={`column${colIndex}`}>
+                    <ValueCellStyled key={`column${colIndex}`}>
                       <Header as="h3" textAlign="center">
                         {value}
                       </Header>
-                    </Table.Cell>
+                    </ValueCellStyled>
                   ) : (
-                    <Table.Cell key={`column${colIndex}`} positive={isTopValue}>
+                    <ValueCellStyled
+                      key={`column${colIndex}`}
+                      positive={isTopValue}
+                    >
                       {value}
-                    </Table.Cell>
+                    </ValueCellStyled>
                   );
                 })}
               </Table.Row>
