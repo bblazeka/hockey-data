@@ -16,6 +16,7 @@ export function getResolvers() {
   const resolvers = {
     Query: {
       analysis: funcWrapper(analysisResolvers.getAnalysis),
+      teamAnalysis: funcWrapper(analysisResolvers.getTeamAnalysis),
       game: funcWrapper(gameResolvers.getGame),
       gamesBetweenTeams: funcWrapper(gameResolvers.gamesBetweenTeams),
       todaysGames: funcWrapper(gameResolvers.getTodaysGames),

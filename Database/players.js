@@ -19,7 +19,7 @@ async function run() {
         playerTemp.active &&
         (DateTime.fromJSDate(playerTemp.lastUpdate) <
           DateTime.now().minus({ weeks: 1 }).endOf("day") ||
-          playerTemp.lastUpdate === null)
+          !playerTemp.lastUpdate)
       ) {
         const response = await apicomm.nhlApiRequest(
           `/api/v1/people/${playerTemp.id}`

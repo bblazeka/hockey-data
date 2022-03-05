@@ -12,6 +12,7 @@ import {
   Schedule,
   Standings,
   Team,
+  TeamAnalysis,
   Home,
   Player,
   PlayerList,
@@ -40,6 +41,11 @@ ReactDOM.render(
             <Route exact path={routes.games} component={GameSelection} />
             <Route exact path={routes.standings} component={Standings} />
             <Route exact path={routes.analysis} component={Analysis} />
+            <Route
+              exact
+              path={`${routes.analysis}/:id`}
+              component={TeamAnalysis}
+            />
             <Route exact path={`${routes.teams}/:id`} component={Team} />
             <Route exact path={routes.players} component={PlayerList} />
             <Route exact path={`${routes.player}/:id`} component={Player} />

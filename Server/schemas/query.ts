@@ -5,6 +5,7 @@ export const querySchema = gql`
 
   type Query {
     analysis: [TeamAnalysis]
+    teamAnalysis(teamId: Int): TeamAnalysis
     player(id: Int): Player
     searchPlayerByName(name: String): [Player]
     selectedPlayers(playerIds: String, seasonId: Int): SelectedPlayers
