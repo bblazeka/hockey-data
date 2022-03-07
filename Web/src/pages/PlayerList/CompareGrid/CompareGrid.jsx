@@ -69,7 +69,7 @@ function CompareGrid(props) {
       );
     }).length,
     customName: (
-      <Table.Cell>
+      <Table.Cell key={`nameCell${p.id}`}>
         <Link to={`${routes.player}/${p.id}`}>
           <Header as="h4">
             {p.fullName}

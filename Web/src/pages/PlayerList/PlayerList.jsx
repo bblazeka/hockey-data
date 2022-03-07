@@ -39,7 +39,9 @@ export default function PlayerList() {
   }, []);
 
   useEffect(() => {
-    dispatch(actions.getSelectedPlayers(selectedPlayerIds, seasonId));
+    if (selectedPlayerIds && selectedPlayerIds.length > 0) {
+      dispatch(actions.getSelectedPlayers(selectedPlayerIds, seasonId));
+    }
   }, [selectedPlayerIds, seasonId]);
 
   const onRemoveAll = () => {

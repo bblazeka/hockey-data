@@ -98,14 +98,13 @@ export default function TeamAnalysis() {
     <>
       <QuickJumpContainer>
         {linkOptions.map((opt) => (
-          <a key={opt.id}>
-            <Image
-              avatar
-              src={getLogo(opt.id)}
-              href={opt.href}
-              title={opt.name}
-            />
-          </a>
+          <Image
+            key={opt.id}
+            avatar
+            src={getLogo(opt.id)}
+            href={opt.href}
+            title={opt.name}
+          />
         ))}
       </QuickJumpContainer>
       <Header as="h1" className="team-header">
