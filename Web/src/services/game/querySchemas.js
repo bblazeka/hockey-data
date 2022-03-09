@@ -240,9 +240,9 @@ export const getGame = /* GraphQL */ `
   }
 `;
 
-export const getTodaysGames = gql`
-  query todaysGames {
-    todaysGames {
+export const dailyGames = gql`
+  query dailyGames($dateISO: String) {
+    dailyGames(dateISO: $dateISO) {
       gamePk
       gameTime
       currentPeriod

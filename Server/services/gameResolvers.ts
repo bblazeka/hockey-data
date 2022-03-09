@@ -104,11 +104,15 @@ async function getGame({ gameId }: TGetGameParams) {
   return result;
 }
 
-async function getTodaysGames() {
+type TGetDailyGamesParams = {
+  dateISO: string;
+};
+
+async function getDailyGames({ dateISO }: TGetDailyGamesParams) {
   const games = (await db
     .getCollection("games")
     .find({
-      date: DateTime.now().toISODate(),
+      date: dateISO ?? DateTime.now().toISODate(),
     })
     .toArray()) as TGame[];
   sortBy(games, function (game) {
@@ -131,4 +135,4 @@ async function getTodaysGames() {
   });
 }
 
-export { init, getGame, getTodaysGames, gamesBetweenTeams };
+export { init, getGame, getDailyGames, gamesBetweenTeams };

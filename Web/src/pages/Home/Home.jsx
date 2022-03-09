@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, Header } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 
 import * as actions from "services/news";
 import { Loader, NewsFeed, SocialFeed } from "components";
@@ -24,7 +24,6 @@ export default function Home() {
   }
   return (
     <>
-      <Header as="h2">Today NHL games</Header>
       <GameCards />
       <div className="news-container">
         <Grid columns={2} stackable>

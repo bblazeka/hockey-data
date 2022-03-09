@@ -21,7 +21,7 @@ export const querySchema = gql`
     divisionsWithTeams: [Division]
     gamesBetweenTeams(homeId: Int, awayId: Int): GamesBetweenTeams
     game(gameId: Int): Game
-    todaysGames: [Game]
+    dailyGames(dateISO: String): [Game]
     geocode(query: String): [Location]
   }
 
