@@ -20,10 +20,7 @@ async function getPlayersFromTeam(teamId: number) {
 async function getTeam({ id }) {
   const collection = db.getCollection("teams");
   const query = { id: id };
-  const options = {
-    sort: { id: -1 },
-  };
-  const team = await collection.findOne(query, options);
+  const team = await collection.findOne(query);
   if (!isNil(team)) {
     const rosterResponse = await getPlayersFromTeam(id);
     team.goalies = rosterResponse.filter(
@@ -44,7 +41,7 @@ async function getTeam({ id }) {
 }
 
 async function getActiveTeams() {
-  const teams = (await db.getCollection("teams").find({}).toArray()) as TTeam[];
+  const teams = await db.getCollection("teams").find({}).toArray();
   return sortBy(
     teams.filter((t) => t.active),
     "name"

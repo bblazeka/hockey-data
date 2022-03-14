@@ -14,15 +14,36 @@ function init(database) {
 type TGamesBetweenTeamsParams = {
   homeId: number;
   awayId: number;
+  season: string;
 };
 
-async function gamesBetweenTeams({ homeId, awayId }: TGamesBetweenTeamsParams) {
+async function gamesBetweenTeams({
+  homeId,
+  awayId,
+  season,
+}: TGamesBetweenTeamsParams) {
   const dbGames = await db
     .getCollection("games")
     .find({
-      "home.team.id": homeId,
-      "away.team.id": awayId,
-      gameType: "R",
+      $and: [
+        {
+          $or: [
+            {
+              "home.team.id": homeId,
+              "away.team.id": awayId,
+              gameType: "R",
+            },
+            {
+              "home.team.id": awayId,
+              "away.team.id": homeId,
+              gameType: "R",
+            },
+          ],
+        },
+        {
+          ...(season ? { season: season } : {}),
+        },
+      ],
     })
     .toArray();
   const games = sortBy(dbGames, function (game) {
@@ -109,12 +130,12 @@ type TGetDailyGamesParams = {
 };
 
 async function getDailyGames({ dateISO }: TGetDailyGamesParams) {
-  const games = (await db
+  const games = await db
     .getCollection("games")
     .find({
       date: dateISO ?? DateTime.now().toISODate(),
     })
-    .toArray()) as TGame[];
+    .toArray();
   sortBy(games, function (game) {
     return new Date(game.gameDate);
   });

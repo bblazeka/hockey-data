@@ -1,12 +1,14 @@
-import { MongoClient } from "mongodb";
+import { Db, Document, MongoClient, WithId } from "mongodb";
 import dbkey from "../keys/db.json";
 
+export interface TDbTeam extends WithId<Document>, TTeam {}
+
 export class Database {
-  client: any;
-  database: any;
+  client: MongoClient | undefined;
+  database: Db | undefined;
   constructor() {
-    this.client = {};
-    this.database = {};
+    this.client = undefined;
+    this.database = undefined;
   }
 
   async init() {

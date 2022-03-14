@@ -49,6 +49,8 @@ export const gameSchema = gql`
 
   type GameStatus {
     abstractGameState: String
+    codedGameState: String
+    detailedState: String
     statusCode: String
   }
 

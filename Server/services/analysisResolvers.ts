@@ -10,10 +10,7 @@ function init(database) {
 }
 
 async function getAnalysis() {
-  const teams: TTeamAnalysis[] = await db
-    .getCollection("analysis")
-    .find({})
-    .toArray();
+  const teams = await db.getCollection("analysis").find({}).toArray();
   return sortBy(teams, "leagueRank");
 }
 
@@ -23,7 +20,7 @@ type TGetTeamAnalysisParams = {
 
 async function getTeamAnalysis({ teamId }: TGetTeamAnalysisParams) {
   const activeTeams = await getActiveTeams();
-  const team: TTeamAnalysis = (
+  const team = (
     await db.getCollection("analysis").find({ id: teamId }).toArray()
   )[0];
 

@@ -35,10 +35,7 @@ function getGroup(array) {
 
 async function getPlayer({ id }) {
   const query = { id };
-  const options = {
-    sort: { id: -1 },
-  };
-  const player = await db.getCollection("players").findOne(query, options);
+  const player = await db.getCollection("players").findOne(query);
 
   const result = await nhlApiRequest(
     `/api/v1/people/${id}/stats?stats=yearByYear`
@@ -113,10 +110,7 @@ async function getSelectedPlayers({ playerIds, seasonId }) {
       )
     ).stats[0].splits[0].stat;
     const query = { id: parseInt(playerId) };
-    const options = {
-      sort: { id: -1 },
-    };
-    const player = await db.getCollection("players").findOne(query, options);
+    const player = await db.getCollection("players").findOne(query);
 
     if (player.primaryPosition.code !== "G") {
       player.stats = Object.assign(playerStats, {

@@ -1,7 +1,7 @@
 import { sortBy, uniqBy } from "lodash";
 import { nhlApiRequest } from "../adapters/apihandler";
 
-import { Database } from "../adapters/dbhandler";
+import { Database, TDbTeam } from "../adapters/dbhandler";
 import * as team from "./teamResolvers";
 import { calculateGameScore, mapApiDivision } from "./leagueFunctions";
 
@@ -27,7 +27,7 @@ type TGetScheduleParams = {
 
 async function getSchedule({ start, end }: TGetScheduleParams) {
   const teams = await team.getActiveTeams();
-  const sortedTeams = sortBy(teams, ["name"]) as TScheduleTeam[];
+  const sortedTeams = sortBy(teams, ["name"]);
 
   const games = await db
     .getCollection("games")
@@ -67,7 +67,7 @@ async function getSchedule({ start, end }: TGetScheduleParams) {
 }
 
 async function divisionsWithTeams() {
-  const teams = await team.getActiveTeams();
+  const teams = (await team.getActiveTeams()) as TDbTeam[];
 
   const divisions = teams.map((i) => i.division);
   const uniqueDivisions = uniqBy(divisions, "id") as TApiDivision[];
