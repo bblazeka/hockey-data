@@ -7,3 +7,4 @@ export { default as GameCard } from "./GameCard/GameCard";
 export { default as ErrorFallback } from "./ErrorFallback/ErrorFallback";
 export { default as QuestionModal } from "./QuestionModal/QuestionModal";
 export { default as SortableTable } from "./SortableTable";
+export { default as PieChartWithLegend } from "./PieChartWithLegend";

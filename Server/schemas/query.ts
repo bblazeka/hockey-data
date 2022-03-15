@@ -20,8 +20,8 @@ export const querySchema = gql`
     standings(season: String): [Record]
     divisionsWithTeams: [Division]
     gamesBetweenTeams(
-      homeId: Int
-      awayId: Int
+      teamId: Int
+      opponentId: Int
       season: String
     ): GamesBetweenTeams
     game(gameId: Int): Game

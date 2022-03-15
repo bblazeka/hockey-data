@@ -1,15 +1,34 @@
 import gql from "graphql-tag";
 
 export const getGamesBetweenTeams = /* GraphQL */ `
-  query gamesBetweenTeams($homeId: Int, $awayId: Int, $season: String) {
-    gamesBetweenTeams(homeId: $homeId, awayId: $awayId, season: $season) {
+  query gamesBetweenTeams($teamId: Int, $opponentId: Int, $season: String) {
+    gamesBetweenTeams(
+      teamId: $teamId
+      opponentId: $opponentId
+      season: $season
+    ) {
+      team {
+        id
+        abbreviation
+        name
+        colorScheme
+      }
+      opponent {
+        id
+        abbreviation
+        name
+        colorScheme
+      }
       score {
         homeWins
         awayWins
-        gameScores {
+        teamWins
+        opponentWins
+        teamGoals
+        opponentGoals
+        gameGoals {
           name
-          homeGoals
-          awayGoals
+          value
         }
       }
       games {

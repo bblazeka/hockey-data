@@ -55,6 +55,8 @@ export const gameSchema = gql`
   }
 
   type GamesBetweenTeams {
+    team: Team
+    opponent: Team
     score: ScoreBetweenTeams
     games: [Game]
   }
@@ -62,12 +64,15 @@ export const gameSchema = gql`
   type ScoreBetweenTeams {
     homeWins: Int
     awayWins: Int
-    gameScores: [GameScore]
+    teamWins: Int
+    opponentWins: Int
+    teamGoals: Int
+    opponentGoals: Int
+    gameGoals: [GameGoals]
   }
 
-  type GameScore {
+  type GameGoals {
     name: String
-    homeGoals: Int
-    awayGoals: Int
+    value: Int
   }
 `;

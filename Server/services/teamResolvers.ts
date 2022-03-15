@@ -1,7 +1,7 @@
 import { isNil, sortBy } from "lodash";
 
 import { wikiApiRequest, wikiApiAdvancedRequest } from "../adapters/apihandler";
-import { Database } from "../adapters/dbhandler";
+import { Database, TDbTeam } from "../adapters/dbhandler";
 
 let db = new Database();
 
@@ -40,8 +40,11 @@ async function getTeam({ id }) {
   return team;
 }
 
-async function getActiveTeams() {
-  const teams = await db.getCollection("teams").find({}).toArray();
+async function getActiveTeams(): Promise<TDbTeam[]> {
+  const teams = (await db
+    .getCollection("teams")
+    .find({})
+    .toArray()) as TDbTeam[];
   return sortBy(
     teams.filter((t) => t.active),
     "name"

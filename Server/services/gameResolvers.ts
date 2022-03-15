@@ -1,9 +1,10 @@
 import { sortBy, isNil, toInteger } from "lodash";
 import { DateTime } from "luxon";
 
-import { Database } from "../adapters/dbhandler";
+import { Database, TDbTeam } from "../adapters/dbhandler";
 import { nhlApiRequest } from "../adapters/apihandler";
 import { mapGoalie, mapSkater } from "./gameFunctions";
+import { getActiveTeams } from "./teamResolvers";
 
 let db = new Database();
 
@@ -12,14 +13,14 @@ function init(database) {
 }
 
 type TGamesBetweenTeamsParams = {
-  homeId: number;
-  awayId: number;
+  teamId: number;
+  opponentId: number;
   season: string;
 };
 
 async function gamesBetweenTeams({
-  homeId,
-  awayId,
+  teamId,
+  opponentId,
   season,
 }: TGamesBetweenTeamsParams) {
   const dbGames = await db
@@ -29,13 +30,13 @@ async function gamesBetweenTeams({
         {
           $or: [
             {
-              "home.team.id": homeId,
-              "away.team.id": awayId,
+              "home.team.id": teamId,
+              "away.team.id": opponentId,
               gameType: "R",
             },
             {
-              "home.team.id": awayId,
-              "away.team.id": homeId,
+              "home.team.id": opponentId,
+              "away.team.id": teamId,
               gameType: "R",
             },
           ],
@@ -46,22 +47,71 @@ async function gamesBetweenTeams({
       ],
     })
     .toArray();
+  const activeTeams = await getActiveTeams();
+  const team = activeTeams.find((team) => team.id === teamId);
+  const opponent = activeTeams.find((team) => team.id === opponentId);
   const games = sortBy(dbGames, function (game) {
     return new Date(game.gameDate);
   });
-  const gameScores = games.map((g, i) => ({
-    name: `Game ${i + 1}`,
-    homeGoals: g.home.score,
-    awayGoals: g.away.score,
-  }));
-  const homeWins = games.filter((d) => d.home.score > d.away.score).length;
-  const awayWins = games.length - homeWins;
+
+  let teamGoals = 0;
+  let opponentGoals = 0;
+
+  const goalScoringOptions = [
+    { name: "0-3 goals", threshold: 4, value: 0 },
+    { name: "4-7 goals", threshold: 8, value: 0 },
+    { name: "8+ goals", value: 0 },
+  ];
+
+  const determineGameScoringLevel = (homeGoals: number, awayGoals: number) => {
+    const gameGoalsTotal = homeGoals + awayGoals;
+    for (let option of goalScoringOptions) {
+      if (!option.threshold || option.threshold > gameGoalsTotal) {
+        option.value++;
+        break;
+      }
+    }
+  };
+
+  const gameScores = games.map((g, i) => {
+    teamGoals += g.home.team.id === teamId ? g.home.score : g.away.score;
+    opponentGoals +=
+      g.home.team.id === opponentId ? g.home.score : g.away.score;
+    const finished = g.status.statusCode === "7";
+    if (finished) {
+      determineGameScoringLevel(g.home.score, g.away.score);
+    }
+    return {
+      name: `Game ${i + 1}`,
+      homeGoals: g.home.score,
+      awayGoals: g.away.score,
+      winnerId: !finished
+        ? undefined
+        : g.home.score > g.away.score
+        ? g.home.team.id
+        : g.away.team.id,
+      homeWin: g.home.score > g.away.score,
+      finished,
+    };
+  });
+  const teamWins = gameScores.filter((g) => g.winnerId === teamId).length;
+  const opponentWins = gameScores.filter(
+    (g) => g.winnerId === opponentId
+  ).length;
+  const homeWins = gameScores.filter((g) => g.homeWin && g.finished).length;
+  const awayWins = gameScores.filter((g) => !g.homeWin && g.finished).length;
 
   return {
+    team,
+    opponent,
     score: {
       homeWins,
       awayWins,
-      gameScores,
+      teamWins,
+      opponentWins,
+      teamGoals,
+      opponentGoals,
+      gameGoals: goalScoringOptions,
     },
     games,
   };

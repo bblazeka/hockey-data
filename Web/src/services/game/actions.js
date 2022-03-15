@@ -2,14 +2,14 @@ import { axiosGraphQL, IsNullOrUndefined } from "../../util/common";
 import * as actionTypes from "./actionTypes";
 import * as querySchemas from "./querySchemas";
 
-export const findGames = (homeId, awayId, season) => (dispatch) => {
+export const findGames = (teamId, opponentId, season) => (dispatch) => {
   dispatch({
     type: actionTypes.GET_GAMES,
   });
   axiosGraphQL
     .post("", {
       query: querySchemas.getGamesBetweenTeams,
-      variables: { homeId, awayId, season },
+      variables: { teamId, opponentId, season },
     })
     .then((response) => {
       if (IsNullOrUndefined(response.data.data.gamesBetweenTeams.games[0])) {

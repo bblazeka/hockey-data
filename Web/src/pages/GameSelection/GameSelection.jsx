@@ -23,8 +23,8 @@ const DropdownStyled = styled(Dropdown)`
 `;
 
 export default function GameSelection() {
-  const [home, setHome] = useState(-1);
-  const [away, setAway] = useState(-1);
+  const [team, setTeam] = useState(-1);
+  const [opponent, setOpponent] = useState(-1);
   const [season, setSeasonId] = useState();
 
   const dispatch = useDispatch();
@@ -40,10 +40,10 @@ export default function GameSelection() {
         {dropdownTeams && (
           <>
             <DropdownStyled
-              placeholder="Home team"
+              placeholder="Team"
               selection
               search
-              onChange={(_event, data) => setHome(data.value)}
+              onChange={(_event, data) => setTeam(data.value)}
               options={dropdownTeams.map((el) => {
                 return {
                   key: el.id,
@@ -54,10 +54,10 @@ export default function GameSelection() {
               })}
             />
             <DropdownStyled
-              placeholder="Away team"
+              placeholder="Opponent"
               selection
               search
-              onChange={(_event, data) => setAway(data.value)}
+              onChange={(_event, data) => setOpponent(data.value)}
               options={dropdownTeams.map((el) => {
                 return {
                   key: el.id,
@@ -79,7 +79,9 @@ export default function GameSelection() {
             text: "All seasons",
           })}
         />
-        <Button onClick={() => dispatch(actions.findGames(home, away, season))}>
+        <Button
+          onClick={() => dispatch(actions.findGames(team, opponent, season))}
+        >
           Search
         </Button>
       </GameListFilterStyled>
