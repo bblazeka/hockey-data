@@ -19,6 +19,7 @@ export const playerSchema = gql`
     height: Int
     primaryNumber: Int
     primaryPosition: Position
+    positionName: String
     rookie: Boolean
     rosterStatus: String
     shootsCatches: String

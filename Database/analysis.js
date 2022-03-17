@@ -75,6 +75,9 @@ async function run(season = "20212022") {
                 p.person.lastName
               }`,
               fullName: p.person.fullName,
+              primaryNumber: p.person.primaryNumber,
+              positionName: p.person.primaryPosition.name,
+              nationality: p.person.nationality,
               currentAge: p.person.currentAge,
               stats: p.person.stats[0].splits[0].stat,
               advancedStats: enhancedStats,

@@ -104,6 +104,10 @@ export const getTeamAnalysis = gql`
         id
         abbrName
         fullName
+        currentAge
+        positionName
+        primaryNumber
+        nationality
         stats {
           games
           wins
@@ -325,6 +329,10 @@ export const getAnalysis = gql`
         id
         abbrName
         fullName
+        currentAge
+        positionName
+        primaryNumber
+        nationality
         stats {
           games
           wins

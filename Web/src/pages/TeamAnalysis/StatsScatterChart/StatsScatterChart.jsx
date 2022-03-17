@@ -10,10 +10,11 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { Flag, Header } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { Loader } from "components";
-import { IsNullOrUndefined } from "util/common";
+import { IsNullOrUndefined, generateSemanticUICountryId } from "util/common";
 
 const TooltipDiv = styled.div`
   background-color: #fff;
@@ -64,7 +65,17 @@ function StatsScatterChart(props) {
       const key = yKey.includes(".") ? yKey.split(".")[1] : yKey;
       return (
         <TooltipDiv>
-          <p>{data.fullName}</p>
+          <Header
+            as="h3"
+            content={data.fullName}
+            subheader={`#${data.primaryNumber}`}
+          />
+          <div>
+            <Flag name={generateSemanticUICountryId(data.nationality)} />
+            {data.nationality}
+          </div>
+          <div>{data.currentAge} years</div>
+          <div>{data.positionName}</div>
           <TooltipTextDiv $color={color}>
             <div>games: {data.stats.games}</div>
             <span>{yAxisName}: </span>

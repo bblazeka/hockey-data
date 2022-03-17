@@ -1,6 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import styled from "styled-components";
+
+const PieChartContainer = styled.div`
+  height: 40vh;
+  width: 20vw;
+`;
 
 export default function PieChartWithLegend(props) {
   const { values } = props;
@@ -32,7 +38,7 @@ export default function PieChartWithLegend(props) {
   };
 
   return (
-    <div style={{ height: "30vh", width: "20vw" }}>
+    <PieChartContainer>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie
@@ -52,7 +58,7 @@ export default function PieChartWithLegend(props) {
           <Legend verticalAlign="bottom" height={36} />
         </PieChart>
       </ResponsiveContainer>
-    </div>
+    </PieChartContainer>
   );
 }
 
