@@ -8,7 +8,11 @@ export const querySchema = gql`
     teamAnalysis(teamId: Int): TeamAnalysis
     player(id: Int): Player
     searchPlayerByName(name: String): [Player]
-    selectedPlayers(playerIds: String, seasonId: Int): SelectedPlayers
+    selectedPlayers(
+      playerIds: String
+      seasonId: Int
+      projectedStats: Boolean
+    ): SelectedPlayers
     team(id: Int): Team
     teams: [Team]
     teamLocations: TeamLocations

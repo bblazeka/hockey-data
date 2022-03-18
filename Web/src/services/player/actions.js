@@ -1,4 +1,4 @@
-import { axiosGraphQL } from "../../util/common";
+import { axiosGraphQL } from "util/common";
 import * as actionTypes from "./actionTypes";
 import * as querySchemas from "./querySchemas";
 
@@ -86,13 +86,20 @@ export const removePlayer = (id) => ({
 });
 
 export const getSelectedPlayers =
-  (selectedPlayerIds, seasonId) => (dispatch) => {
+  (selectedPlayerIds, seasonIdOption) => (dispatch) => {
     dispatch({
       type: actionTypes.GET_SELECTED_PLAYERS,
+      payload: seasonIdOption,
     });
+    const seasonId = seasonIdOption.split("proj")[0];
+    const projectedStats = seasonIdOption.includes("proj");
     axiosGraphQL
       .post("", {
-        query: querySchemas.getSelectedPlayers(selectedPlayerIds, seasonId),
+        query: querySchemas.getSelectedPlayers(
+          selectedPlayerIds,
+          seasonId,
+          projectedStats
+        ),
       })
       .then((response) => {
         dispatch({

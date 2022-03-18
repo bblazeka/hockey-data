@@ -108,14 +108,18 @@ async function getPlayers() {
   return items;
 }
 
-async function getSelectedPlayers({ playerIds, seasonId }) {
+async function getSelectedPlayers({ playerIds, seasonId, projectedStats }) {
+  const statsType = projectedStats
+    ? "onPaceRegularSeason"
+    : "statsSingleSeason";
+
   const selectedPlayerIds = playerIds.split(",");
   const skaters = [];
   const goalies = [];
   for (let playerId of selectedPlayerIds) {
     const playerStats = (
       await nhlApiRequest(
-        `/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${seasonId}`
+        `/api/v1/people/${playerId}/stats?stats=${statsType}&season=${seasonId}`
       )
     ).stats[0].splits[0].stat;
     const query = { id: parseInt(playerId) };

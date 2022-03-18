@@ -58,6 +58,7 @@ export const selectSelectedPlayers = createSelector(selectPlayer, (player) => {
     selectedPlayers: player.selectedPlayers,
     suggestions: player.suggestions,
     loadingSearchResults: player.loadingSearchResults,
+    selectedPlayersOption: player.selectedPlayersOption,
   };
 });
 

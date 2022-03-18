@@ -16,7 +16,10 @@ const MiniGameContainer = styled(Card)`
 
 const GameStatus = styled.span`
   text-align: center;
-  padding: 2px 5px;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 const GameScore = styled.div`
@@ -29,8 +32,8 @@ const GameInfo = styled.div`
 `;
 
 const GameTeamLogo = styled.img`
-  max-height: 40px;
-  max-width: 40px;
+  max-height: 6vh;
+  max-width: 6vw;
 `;
 
 export default function MiniGameCard(props) {

@@ -1,5 +1,6 @@
 import { getLogo } from "../../util/assets";
 import * as actionTypes from "./actionTypes";
+import config from "util/config.json";
 
 const defaultAppState = {
   loadingPlayer: false,
@@ -9,6 +10,7 @@ const defaultAppState = {
   loadingSearchResults: false,
   loadingSelectedPlayers: false,
   selectedPlayers: {},
+  selectedPlayersOption: config.currentSeason,
 };
 
 const playerReducer = (state = defaultAppState, action) => {
@@ -65,6 +67,7 @@ const playerReducer = (state = defaultAppState, action) => {
     case actionTypes.GET_SELECTED_PLAYERS:
       return {
         ...state,
+        selectedPlayersOption: action.payload,
         loadingSelectedPlayers: true,
       };
     case actionTypes.SELECTED_PLAYERS_LOADED:

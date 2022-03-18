@@ -13,14 +13,19 @@ import CompareGrid from "./CompareGrid/CompareGrid";
 
 export default function PlayerList() {
   const [statsMode, setStatsMode] = useState("stats");
-  const [seasonId, setSeasonId] = useState(config.currentSeason);
   const [value, setValue] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlayerIds, setSelectedPlayerIds] = useState([]);
   const { getSelectedPlayers, saveSelectedPlayers } = useConfigContext();
 
-  const { loading, selectedPlayers, suggestions, loadingSearchResults } =
-    usePlayerSelection();
+  const {
+    loading,
+    selectedPlayers,
+    suggestions,
+    loadingSearchResults,
+    selectedPlayersOption,
+  } = usePlayerSelection();
+  const [seasonId, setSeasonId] = useState(selectedPlayersOption);
   const { skaters, goalies } = selectedPlayers;
 
   const dispatch = useDispatch();
@@ -114,7 +119,7 @@ export default function PlayerList() {
           header="Season"
           selection
           onChange={(_event, data) => setSeasonId(data.value)}
-          defaultValue={config.currentSeason}
+          defaultValue={seasonId}
           options={config.seasons}
         />
         <Checkbox
