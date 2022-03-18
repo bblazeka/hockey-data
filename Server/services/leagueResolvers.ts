@@ -1,9 +1,10 @@
 import { sortBy, uniqBy } from "lodash";
 import { nhlApiRequest } from "../adapters/apihandler";
 
-import { Database, TDbTeam } from "../adapters/dbhandler";
+import { Database, TDbTeam } from "adapters/dbhandler";
 import * as team from "./teamResolvers";
 import { calculateGameScore, mapApiDivision } from "./leagueFunctions";
+import { EDatabaseCollection } from "utils/enums";
 
 let db = new Database();
 
@@ -30,7 +31,7 @@ async function getSchedule({ start, end }: TGetScheduleParams) {
   const sortedTeams = sortBy(teams, ["name"]);
 
   const games = await db
-    .getCollection("games")
+    .getCollection(EDatabaseCollection.games)
     .find({
       date: {
         $gte: `${start}`,

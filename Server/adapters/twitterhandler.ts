@@ -1,5 +1,5 @@
 import Twitter from "twitter";
-import twitterKeys from "../keys/twitter.json";
+import twitterKeys from "keys/twitter.json";
 
 const client = new Twitter({
   consumer_key: twitterKeys.consumer_key,

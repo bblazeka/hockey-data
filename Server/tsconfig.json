@@ -1,18 +1,17 @@
 {
   "ts-node": {
-    "files": true
+    "files": true,
+    "require": ["tsconfig-paths/register"]
   },
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": ".",
     "lib": ["es6"],
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "dist",
     "resolveJsonModule": true,
-    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
     "sourceMap": true,
     "typeRoots": ["node_modules/@types", "types", "types/api"]
   },

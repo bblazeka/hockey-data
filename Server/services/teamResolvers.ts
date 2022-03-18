@@ -1,24 +1,24 @@
 import { isNil, sortBy } from "lodash";
-
-import { wikiApiRequest, wikiApiAdvancedRequest } from "../adapters/apihandler";
-import { Database, TDbTeam } from "../adapters/dbhandler";
+import { wikiApiRequest, wikiApiAdvancedRequest } from "adapters/apihandler";
+import { Database, TDbTeam } from "adapters/dbhandler";
+import { EDatabaseCollection } from "utils/enums";
 
 let db = new Database();
 
-function init(database) {
+function init(database: Database) {
   db = database;
 }
 
 async function getPlayersFromTeam(teamId: number) {
   const items = await db
-    .getCollection("players")
+    .getCollection(EDatabaseCollection.players)
     .find({ "currentTeam.id": teamId })
     .toArray();
   return items;
 }
 
 async function getTeam({ id }) {
-  const collection = db.getCollection("teams");
+  const collection = db.getCollection(EDatabaseCollection.teams);
   const query = { id: id };
   const team = await collection.findOne(query);
   if (!isNil(team)) {
@@ -42,7 +42,7 @@ async function getTeam({ id }) {
 
 async function getActiveTeams(): Promise<TDbTeam[]> {
   const teams = (await db
-    .getCollection("teams")
+    .getCollection(EDatabaseCollection.teams)
     .find({})
     .toArray()) as TDbTeam[];
   return sortBy(
@@ -88,7 +88,7 @@ type TTeamScheduleParams = {
 
 async function getTeamSchedule({ id, start, end }: TTeamScheduleParams) {
   let games = await db
-    .getCollection("games")
+    .getCollection(EDatabaseCollection.games)
     .find({
       date: {
         $gte: `${start}`,

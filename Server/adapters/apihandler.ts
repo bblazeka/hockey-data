@@ -1,6 +1,6 @@
 import axios from "axios";
-import newsapi from "../keys/newsapi.json";
-import mapbox from "../keys/mapbox.json";
+import newsapi from "keys/newsapi.json";
+import mapbox from "keys/mapbox.json";
 
 async function nhlApiRequest(path: string) {
   const response = await axios.get(`http://statsapi.web.nhl.com${path}`);

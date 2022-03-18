@@ -1,14 +1,15 @@
 import { sortBy, isNil, toInteger } from "lodash";
 import { DateTime } from "luxon";
 
-import { Database, TDbTeam } from "../adapters/dbhandler";
-import { nhlApiRequest } from "../adapters/apihandler";
+import { Database } from "adapters/dbhandler";
+import { nhlApiRequest } from "adapters/apihandler";
 import { mapGoalie, mapSkater } from "./gameFunctions";
 import { getActiveTeams } from "./teamResolvers";
+import { EDatabaseCollection } from "utils/enums";
 
 let db = new Database();
 
-function init(database) {
+function init(database: Database) {
   db = database;
 }
 
@@ -24,7 +25,7 @@ async function gamesBetweenTeams({
   season,
 }: TGamesBetweenTeamsParams) {
   const dbGames = await db
-    .getCollection("games")
+    .getCollection(EDatabaseCollection.games)
     .find({
       $and: [
         {
@@ -125,7 +126,10 @@ async function getGame({ gameId }: TGetGameParams) {
   const linescore = await nhlApiRequest(`/api/v1/game/${gameId}/linescore`);
   const result = await nhlApiRequest(`/api/v1/game/${gameId}/boxscore`);
   const dbGame = (
-    await db.getCollection("games").find({ gamePk: gameId }).toArray()
+    await db
+      .getCollection(EDatabaseCollection.games)
+      .find({ gamePk: gameId })
+      .toArray()
   )[0];
   result.gameDate = dbGame.gameDate;
   result.gameType = dbGame.gameType;
@@ -181,7 +185,7 @@ type TGetDailyGamesParams = {
 
 async function getDailyGames({ dateISO }: TGetDailyGamesParams) {
   const games = await db
-    .getCollection("games")
+    .getCollection(EDatabaseCollection.games)
     .find({
       date: dateISO ?? DateTime.now().toISODate(),
     })

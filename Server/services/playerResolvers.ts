@@ -1,11 +1,12 @@
 import { round } from "lodash";
-import { nhlApiRequest, playerWikiRequest } from "../adapters/apihandler";
+import { nhlApiRequest, playerWikiRequest } from "adapters/apihandler";
 
-import { Database } from "../adapters/dbhandler";
+import { Database } from "adapters/dbhandler";
+import { EDatabaseCollection } from "utils/enums";
 
 let db = new Database();
 
-function init(database) {
+function init(database: Database) {
   db = database;
 }
 
@@ -35,7 +36,9 @@ function getGroup(array) {
 
 async function getPlayer({ id }) {
   const query = { id };
-  const player = await db.getCollection("players").findOne(query);
+  const player = await db
+    .getCollection(EDatabaseCollection.players)
+    .findOne(query);
 
   const result = await nhlApiRequest(
     `/api/v1/people/${id}/stats?stats=yearByYear`
@@ -80,13 +83,16 @@ async function getPlayer({ id }) {
 
 async function getPlayerByName({ name }) {
   const query = { fullName: new RegExp(name, "i") };
-  const players = await db.getCollection("players").find(query).toArray();
+  const players = await db
+    .getCollection(EDatabaseCollection.players)
+    .find(query)
+    .toArray();
   return players;
 }
 
 async function getPlayersFromTeam(teamId) {
   const items = await db
-    .getCollection("players")
+    .getCollection(EDatabaseCollection.players)
     .find({ "currentTeam.id": parseInt(teamId) })
     .toArray();
 
@@ -94,7 +100,10 @@ async function getPlayersFromTeam(teamId) {
 }
 
 async function getPlayers() {
-  const items = await db.getCollection("players").find({}).toArray();
+  const items = await db
+    .getCollection(EDatabaseCollection.players)
+    .find({})
+    .toArray();
 
   return items;
 }
@@ -110,7 +119,9 @@ async function getSelectedPlayers({ playerIds, seasonId }) {
       )
     ).stats[0].splits[0].stat;
     const query = { id: parseInt(playerId) };
-    const player = await db.getCollection("players").findOne(query);
+    const player = await db
+      .getCollection(EDatabaseCollection.players)
+      .findOne(query);
 
     if (player.primaryPosition.code !== "G") {
       player.stats = Object.assign(playerStats, {

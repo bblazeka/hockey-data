@@ -1,16 +1,20 @@
-import { round, sortBy } from "lodash";
+import { sortBy } from "lodash";
 
-import { Database } from "../adapters/dbhandler";
+import { Database } from "adapters/dbhandler";
 import { getActiveTeams } from "./teamResolvers";
+import { EDatabaseCollection } from "utils/enums";
 
 let db = new Database();
 
-function init(database) {
+function init(database: Database) {
   db = database;
 }
 
 async function getAnalysis() {
-  const teams = await db.getCollection("analysis").find({}).toArray();
+  const teams = await db
+    .getCollection(EDatabaseCollection.analysis)
+    .find({})
+    .toArray();
   return sortBy(teams, "leagueRank");
 }
 
@@ -21,7 +25,10 @@ type TGetTeamAnalysisParams = {
 async function getTeamAnalysis({ teamId }: TGetTeamAnalysisParams) {
   const activeTeams = await getActiveTeams();
   const team = (
-    await db.getCollection("analysis").find({ id: teamId }).toArray()
+    await db
+      .getCollection(EDatabaseCollection.analysis)
+      .find({ id: teamId })
+      .toArray()
   )[0];
 
   team.team = activeTeams.filter((t) => t.id === team.team.id)[0];

@@ -1,4 +1,4 @@
-import { mapboxApiRequest } from "../adapters/apihandler";
+import { mapboxApiRequest } from "adapters/apihandler";
 
 type TGeocodeParams = {
   query: string;

@@ -1,5 +1,5 @@
 import { Db, Document, MongoClient, WithId } from "mongodb";
-import dbkey from "../keys/db.json";
+import dbkey from "keys/db.json";
 
 export interface TDbTeam extends WithId<Document>, TTeam {}
 
