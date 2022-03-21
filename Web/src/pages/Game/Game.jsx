@@ -2,14 +2,18 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header, List, Progress, Segment } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
 
 import * as actions from "services/game";
 import { selectGameData } from "services/selectors";
 import { Loader } from "components";
 
 import GameTeamStats from "./GameTeamStats/GameTeamStats";
-import "./Game.scss";
 import GameHeader from "./GameHeader";
+
+const GameProgress = styled(Progress)`
+  margin-top: 10px !important;
+`;
 
 export default function Game() {
   const { game, loading } = useSelector(selectGameData);
@@ -29,14 +33,10 @@ export default function Game() {
       {game && (
         <Segment>
           <GameHeader game={game} />
-          <Progress
-            className="game-progress"
-            color="blue"
-            percent={game.percentage}
-          >
+          <GameProgress color="blue" percent={game.percentage}>
             {game.linescore.currentPeriodOrdinal}{" "}
             {game.linescore.currentPeriodTimeRemaining}
-          </Progress>
+          </GameProgress>
         </Segment>
       )}
       {game && (

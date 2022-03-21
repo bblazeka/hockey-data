@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Icon, Label } from "semantic-ui-react";
+import { Label } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 import styled from "styled-components";
 
@@ -22,16 +22,17 @@ const TagContainerStyled = styled.div`
 `;
 
 const FilterContainer = styled.div`
-  display: inline-flex;
+  display: flex;
+  align-items: center;
 `;
 
 const DatesFilterStyled = styled.div`
   display: flex;
-  max-width: 500px;
+  max-width: 400px;
 `;
 
-const RefreshButton = styled(Label)`
-  cursor: pointer;
+const DatePickerStyled = styled(DatePicker)`
+  margin: 0 1vw;
 `;
 
 const HomeGameTag = styled(Label)`
@@ -75,7 +76,7 @@ export default function Schedule() {
 
   useEffect(() => {
     getScheduleForTimePeriod();
-  }, []);
+  }, [start, end]);
 
   const dates = getDatesArray(start, end);
   if (!schedule) {
@@ -85,19 +86,16 @@ export default function Schedule() {
     <SchedulePageStyled>
       <FilterContainer>
         <DatesFilterStyled>
-          <DatePicker
+          <DatePickerStyled
             selected={start}
             onChange={(date) => setStartControl(date)}
             dateFormat="dd.MM.yyyy"
           />
-          <DatePicker
+          <DatePickerStyled
             selected={end}
             onChange={(date) => setEndControl(date)}
             dateFormat="dd.MM.yyyy"
           />
-          <RefreshButton onClick={() => getScheduleForTimePeriod()}>
-            <Icon name="refresh" /> Refresh
-          </RefreshButton>
         </DatesFilterStyled>
         <TagContainerStyled>
           <HomeGameTag tag>Home game</HomeGameTag>

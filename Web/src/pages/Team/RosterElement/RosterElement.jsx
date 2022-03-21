@@ -1,15 +1,23 @@
 import React from "react";
 import { Flag, Header, Table } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-import "./RosterElement.scss";
-import routes from "../../../routes";
+import routes from "routes";
 import {
   generateSemanticUICountryId,
   FormatNumberToCurrency,
-} from "../../../util/common";
-import { IsNullOrUndefined } from "../../../util/common";
-import { Loader } from "../../../components";
+  IsNullOrUndefined,
+} from "util/common";
+import { Loader } from "components";
+
+const RosterPartComponent = styled.div`
+  padding: 5px;
+
+  td > .fr {
+    float: unset !important;
+  }
+`;
 
 function RosterElement(props) {
   const { filterPlayers, players, title } = props;
@@ -17,7 +25,7 @@ function RosterElement(props) {
     return <Loader></Loader>;
   }
   return (
-    <div className="roster-part">
+    <RosterPartComponent>
       <Header as="h4">{title}</Header>
       <Table>
         <Table.Header>
@@ -70,7 +78,7 @@ function RosterElement(props) {
             })}
         </Table.Body>
       </Table>
-    </div>
+    </RosterPartComponent>
   );
 }
 

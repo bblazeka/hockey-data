@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Dropdown, Menu } from "semantic-ui-react";
 import { ErrorBoundary } from "react-error-boundary";
 
-import "./App.scss";
+import "./App.css";
 import routes from "./routes";
 import * as leagueActions from "./services/league/actions";
 import { getLogo } from "./util/assets";
@@ -17,6 +17,7 @@ import { selectApp } from "services/selectors";
 import Loader from "components/Loader/Loader";
 
 function App({ children, history }) {
+  console.log(window, window.process);
   const [activeItem, setActiveItem] = useState("home");
   const dispatch = useDispatch();
   const { divisionsWithTeams } = useSelector(selectApp);

@@ -9,13 +9,10 @@ let formatter = new Intl.NumberFormat("en-US", {
 
 export const axiosGraphQL = axios.create({
   // eslint-disable-next-line no-undef
-  baseURL: process?.env.REACT_APP_BACKEND_API,
+  baseURL: process.env.REACT_APP_BACKEND_API,
   headers: {
     Accept: "*/*",
     "Content-Type": "application/json",
-    /*Authorization: `bearer ${
-      process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
-    }`*/
   },
 });
 

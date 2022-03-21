@@ -2,13 +2,17 @@ import React from "react";
 import { Grid, Image, List, Statistic } from "semantic-ui-react";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import { Loader } from "components";
 import { DateToServerFormat, GetCompetitionStageFullName } from "util/common";
 import { getLogo } from "util/assets";
 import { IsNullOrUndefined } from "util/common";
 
-import "./Game.scss";
+const MainImage = styled(Image)`
+  max-width: 4rem !important;
+  max-height: 4rem !important;
+`;
 
 export default function GameHeader(props) {
   const { game } = props;
@@ -21,11 +25,7 @@ export default function GameHeader(props) {
         <Statistic.Group>
           <Statistic>
             <Statistic.Value>
-              <Image
-                avatar
-                className="main-img"
-                src={getLogo(game.teams.home.team.id)}
-              />
+              <MainImage avatar src={getLogo(game.teams.home.team.id)} />
             </Statistic.Value>
             <Statistic.Label>{game.teams.home.team.name}</Statistic.Label>
           </Statistic>
@@ -42,11 +42,7 @@ export default function GameHeader(props) {
 
           <Statistic>
             <Statistic.Value>
-              <Image
-                avatar
-                className="main-img"
-                src={getLogo(game.teams.away.team.id)}
-              />
+              <MainImage avatar src={getLogo(game.teams.away.team.id)} />
             </Statistic.Value>
             <Statistic.Label>{game.teams.away.team.name}</Statistic.Label>
           </Statistic>

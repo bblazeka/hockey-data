@@ -38,6 +38,10 @@ const GameTeamLogo = styled.img`
 
 export default function MiniGameCard(props) {
   const { game } = props;
+  console.log(
+    "🚀 ~ file: MiniGameCard.jsx ~ line 41 ~ MiniGameCard ~ game",
+    game
+  );
   if (IsNullOrUndefined(game)) {
     return <Loader></Loader>;
   }

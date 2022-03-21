@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.scss";
+import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "semantic-ui-css/semantic.min.css";
+import "mapbox-gl/dist/mapbox-gl.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
-import * as serviceWorker from "./serviceWorker";
 import {
   Schedule,
   Standings,
@@ -22,6 +21,9 @@ import {
 } from "./pages";
 import routes from "./routes";
 import configureStore from "./store";
+
+// TODO: until https://github.com/facebook/create-react-app/issues/11773 is resolved
+window.process = {};
 
 const client = new ApolloClient({
   // eslint-disable-next-line no-undef
@@ -57,8 +59,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();

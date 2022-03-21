@@ -1,15 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Button, Checkbox, Dropdown, Search } from "semantic-ui-react";
+import { Button, Checkbox, Dropdown } from "semantic-ui-react";
+import { PlayerSearchBox } from "components/collection";
+import styled from "styled-components";
 
 import { Loader, NotFound, QuestionModal } from "components";
 import * as actions from "services/player";
 import { usePlayerSelection } from "services/player/hooks";
 import { useConfigContext } from "util/indexedDB";
 
-import "./PlayerList.scss";
 import config from "util/config.json";
 import CompareGrid from "./CompareGrid/CompareGrid";
+
+const HeadOptionsContainer = styled.div`
+  display: flex;
+`;
+
+const PlayerListCheckbox = styled(Checkbox)`
+  width: 3.5rem !important;
+  top: 0.6em;
+  border-width: 0;
+  padding: 0;
+  margin-left: 1vw;
+
+  label {
+    white-space: nowrap;
+  }
+`;
 
 export default function PlayerList() {
   const [statsMode, setStatsMode] = useState("stats");
@@ -89,9 +106,8 @@ export default function PlayerList() {
   }
   return (
     <>
-      <div className="head-options-container">
-        <Search
-          className="search-box"
+      <HeadOptionsContainer>
+        <PlayerSearchBox
           loading={loadingSearchResults}
           onResultSelect={handleResultSelect}
           onSearchChange={handleSearchChange}
@@ -122,13 +138,12 @@ export default function PlayerList() {
           defaultValue={seasonId}
           options={config.seasons}
         />
-        <Checkbox
-          className="player-list-checkbox"
+        <PlayerListCheckbox
           toggle
           label="Average stats"
           onChange={checkedChanged}
         />
-      </div>
+      </HeadOptionsContainer>
       {skaters?.length === 0 && goalies?.length === 0 && (
         <NotFound text="Search for players to add them to the comparison" />
       )}

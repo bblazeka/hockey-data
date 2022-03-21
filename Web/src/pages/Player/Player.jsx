@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Grid, Search, Tab } from "semantic-ui-react";
+import { Grid, Tab } from "semantic-ui-react";
 
+import { PlayerSearchBox } from "components/collection";
 import { selectPlayerData } from "services/selectors";
 import { IsNullOrUndefined } from "util/common";
 import { getTweets, getNews } from "services/news";
 import { Loader, NewsFeed, SocialFeed } from "components";
 
 import * as actions from "../../services/player";
-import "./Player.scss";
 import PlayerStatsGrid from "./PlayerStatsGrid/PlayerStatsGrid";
 import PlayerHeader from "./PlayerHeader";
 
@@ -89,8 +89,7 @@ export default function Player() {
   ];
   return (
     <>
-      <Search
-        className="search-box"
+      <PlayerSearchBox
         loading={isLoading}
         onResultSelect={handleResultSelect}
         onSearchChange={handleSearchChange}

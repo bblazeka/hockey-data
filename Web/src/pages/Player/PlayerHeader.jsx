@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Flag, Grid, Header, Image, List, Segment } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
+import styled from "styled-components";
 
 import routes from "../../routes";
 import { getLogo } from "util/assets";
@@ -10,6 +11,14 @@ import {
   generateSemanticUICountryId,
   FormatNumberToCurrency,
 } from "util/common";
+
+const PlayerDescColumn = styled(Grid.Column)`
+  font-size: 1em;
+`;
+
+const InfoList = styled(List)`
+  display: inline-flex !important;
+`;
 
 export default function PlayerHeader({ player }) {
   return (
@@ -33,7 +42,7 @@ export default function PlayerHeader({ player }) {
                 </Header>
               </Grid.Column>
               <Grid.Column key="colInfo" floated="right" width={8}>
-                <List horizontal className="info-list">
+                <InfoList horizontal>
                   <List.Item>
                     <List.Icon name="map marker" />
                     <List.Header>Position</List.Header>
@@ -72,13 +81,11 @@ export default function PlayerHeader({ player }) {
                       {FormatNumberToCurrency(player.capHit)}
                     </List.Content>
                   </List.Item>
-                </List>
+                </InfoList>
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column className="player-desc">
-                {player.description}
-              </Grid.Column>
+              <PlayerDescColumn>{player.description}</PlayerDescColumn>
             </Grid.Row>
           </Grid>
         </Grid.Column>
