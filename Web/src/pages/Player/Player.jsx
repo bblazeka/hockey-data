@@ -65,7 +65,7 @@ export default function Player() {
         data={player.nhlStats}
         skater={player.primaryPosition.code !== "G"}
         detailed={true}
-      ></PlayerStatsGrid>
+      />
     </Tab.Pane>
   );
   const renderCareerStatsPane = () => (
@@ -74,7 +74,7 @@ export default function Player() {
         data={player.careerStats}
         skater={player.primaryPosition.code !== "G"}
         detailed={false}
-      ></PlayerStatsGrid>
+      />
     </Tab.Pane>
   );
   const panes = [

@@ -17,7 +17,6 @@ import { selectApp } from "services/selectors";
 import Loader from "components/Loader/Loader";
 
 function App({ children, history }) {
-  console.log(window, window.process);
   const [activeItem, setActiveItem] = useState("home");
   const dispatch = useDispatch();
   const { divisionsWithTeams } = useSelector(selectApp);

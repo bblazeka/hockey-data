@@ -7,59 +7,21 @@ export const getPlayer = (id) => async (dispatch) => {
     type: actionTypes.GET_PLAYER,
   });
   const player = (
-    await axiosGraphQL.post("", { query: querySchemas.getBasicPlayer(id) })
+    await axiosGraphQL.post("", {
+      query: querySchemas.getBasicPlayer,
+      variables: { id: parseInt(id) },
+    })
   ).data.data.player;
   const queryString =
     player.primaryPosition.code === "G"
-      ? querySchemas.getGoalie(id)
-      : querySchemas.getSkater(id);
-  axiosGraphQL.post("", { query: queryString }).then((response) => {
-    dispatch({
-      type: actionTypes.PLAYER_LOADED,
-      payload: response.data.data.player,
-    });
-  });
-};
-
-export const addPlayer = (id, seasonId) => (dispatch) => {
-  dispatch({
-    type: actionTypes.ADD_PLAYER,
-  });
-
+      ? querySchemas.getGoalie
+      : querySchemas.getSkater;
   axiosGraphQL
-    .post("", { query: querySchemas.addSelectedPlayer(id, seasonId) })
+    .post("", { query: queryString, variables: { id: parseInt(id) } })
     .then((response) => {
       dispatch({
-        type: actionTypes.SELECTED_PLAYERS_LOADED,
-        payload: response.data.data.addSelectedPlayer,
-      });
-    });
-};
-
-export const deletePlayer = (id, seasonId) => (dispatch) => {
-  dispatch({
-    type: actionTypes.REMOVE_PLAYER,
-  });
-  axiosGraphQL
-    .post("", { query: querySchemas.deleteSelectedPlayer(id, seasonId) })
-    .then((response) => {
-      dispatch({
-        type: actionTypes.SELECTED_PLAYERS_LOADED,
-        payload: response.data.data.deleteSelectedPlayer,
-      });
-    });
-};
-
-export const removeAllPlayers = (seasonId) => (dispatch) => {
-  dispatch({
-    type: actionTypes.REMOVE_ALL_PLAYERS,
-  });
-  axiosGraphQL
-    .post("", { query: querySchemas.removeAllPlayers(seasonId) })
-    .then((response) => {
-      dispatch({
-        type: actionTypes.SELECTED_PLAYERS_LOADED,
-        payload: response.data.data.clearSelectedPlayers,
+        type: actionTypes.PLAYER_LOADED,
+        payload: response.data.data.player,
       });
     });
 };
@@ -69,7 +31,7 @@ export const searchBasicPlayer = (name) => (dispatch) => {
     type: actionTypes.BASIC_SEARCH_PLAYER,
   });
   axiosGraphQL
-    .post("", { query: querySchemas.getBasicPlayerByName(name) })
+    .post("", { query: querySchemas.getBasicPlayerByName, variables: { name } })
     .then((response) => {
       dispatch({
         type: actionTypes.BASIC_PLAYER_LOADED,
@@ -91,15 +53,16 @@ export const getSelectedPlayers =
       type: actionTypes.GET_SELECTED_PLAYERS,
       payload: seasonIdOption,
     });
-    const seasonId = seasonIdOption.split("proj")[0];
+    const seasonId = parseInt(seasonIdOption.split("proj")[0]);
     const projectedStats = seasonIdOption.includes("proj");
     axiosGraphQL
       .post("", {
-        query: querySchemas.getSelectedPlayers(
-          selectedPlayerIds,
+        query: querySchemas.getSelectedPlayers,
+        variables: {
+          playerIds: selectedPlayerIds.join(","),
           seasonId,
-          projectedStats
-        ),
+          projectedStats,
+        },
       })
       .then((response) => {
         dispatch({

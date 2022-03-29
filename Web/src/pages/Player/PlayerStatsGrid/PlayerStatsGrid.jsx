@@ -111,7 +111,7 @@ function PlayerStatsGrid(props) {
       </Table>
       <StatBarStyled>
         {stats.length === 0 && <div>No stats to show.</div>}
-        {stats.length > 0 && (
+        {stats.length > 0 && detailed && (
           <ProductionGraphStyled>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
