@@ -1,3 +1,5 @@
+import { skaterStatsFragment } from "../fragments";
+
 export const getBasicPlayer = /* GraphQL */ `
   query player($id: Int) {
     player(id: $id) {
@@ -204,36 +206,6 @@ export const getGoalie = /* GraphQL */ `
   }
 `;
 
-export const skaterStatsFragment = /* GraphQL */ `
-  fragment SkaterStatsFragment on Player {
-    stats {
-      games
-      goals
-      assists
-      points
-      pim
-      plusMinus
-      faceOffPct
-      shots
-      hits
-      blocked
-      timeOnIce
-      evenTimeOnIce
-      evenTimeOnIceMinutes
-      powerPlayTimeOnIce
-      powerPlayTimeOnIceMinutes
-      shortHandedTimeOnIce
-      shortHandedTimeOnIceMinutes
-      shotPct
-      gameWinningGoals
-      powerPlayGoals
-      powerPlayPoints
-      shortHandedGoals
-      shortHandedPoints
-    }
-  }
-`;
-
 export const getSelectedPlayers = /* GraphQL */ `
   query player($playerIds: String, $seasonId: Int, $projectedStats: Boolean) {
     selectedPlayers(
@@ -251,7 +223,9 @@ export const getSelectedPlayers = /* GraphQL */ `
         primaryPosition {
           abbreviation
         }
-        ...SkaterStatsFragment
+        stats {
+          ...SkaterStatsFragment
+        }
         averageStats {
           goals
           assists

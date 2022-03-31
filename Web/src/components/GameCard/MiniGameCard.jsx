@@ -15,6 +15,9 @@ const MiniGameContainer = styled(Card)`
 `;
 
 const GameStatus = styled.span`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 
   @media (max-width: 1000px) {
@@ -38,14 +41,11 @@ const GameTeamLogo = styled.img`
 
 export default function MiniGameCard(props) {
   const { game } = props;
-  console.log(
-    "🚀 ~ file: MiniGameCard.jsx ~ line 41 ~ MiniGameCard ~ game",
-    game
-  );
   if (IsNullOrUndefined(game)) {
     return <Loader></Loader>;
   }
   const { home, away } = game.teams;
+  const gameScore = game.ongoingGame ? `${home.goals}:${away.goals}` : "-:-";
   const generalGameInfo = game.ongoingGame
     ? `${game.currentPeriodOrdinal} ${game.currentPeriodTimeRemaining}`
     : game.gameTime;
@@ -61,9 +61,7 @@ export default function MiniGameCard(props) {
         alt={`game-img${home.team.id}`}
       />
       <GameStatus>
-        <GameScore>
-          {home.goals}:{away.goals}
-        </GameScore>
+        <GameScore>{gameScore}</GameScore>
         <GameInfo>{generalGameInfo}</GameInfo>
       </GameStatus>
       <GameTeamLogo

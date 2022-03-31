@@ -11,11 +11,9 @@ async function getArticles({ query }: TGetContentParams) {
   const pastDate = DateTime.now().minus({ weeks: 1 }).endOf("day").toISODate();
 
   const newsResponse = await newsApiRequest(
-    `/v2/everything?q=${query}&from=${pastDate}&language=en&sortBy=relevancy&pageSize=10&language=en`
+    `/v2/everything?q=${query}&from=${pastDate}&language=en&sortBy=relevancy&pageSize=10&language=en&excludeDomains=youtube.com`
   );
-  return sortBy(newsResponse.articles, function (obj) {
-    return new Date(obj.publishedAt);
-  });
+  return sortBy(newsResponse.articles, (obj) => new Date(obj.publishedAt));
 }
 
 async function getTweets({ query }: TGetContentParams) {

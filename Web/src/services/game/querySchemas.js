@@ -1,5 +1,7 @@
 import gql from "graphql-tag";
 
+import { skaterStatsFragment } from "../fragments";
+
 export const getGamesBetweenTeams = /* GraphQL */ `
   query gamesBetweenTeams($teamId: Int, $opponentId: Int, $season: String) {
     gamesBetweenTeams(
@@ -95,23 +97,7 @@ export const getGame = /* GraphQL */ `
               name
             }
             stats {
-              timeOnIce
-              assists
-              goals
-              shots
-              hits
-              blocked
-              plusMinus
-              penaltyMinutes
-              faceOffWins
-              faceoffTaken
-              faceOffPct
-              powerPlayGoals
-              powerPlayAssists
-              shortHandedGoals
-              shortHandedAssists
-              shortHandedTimeOnIce
-              powerPlayTimeOnIce
+              ...SkaterStatsFragment
             }
           }
           goalies {
@@ -167,23 +153,7 @@ export const getGame = /* GraphQL */ `
               name
             }
             stats {
-              timeOnIce
-              assists
-              goals
-              shots
-              hits
-              blocked
-              plusMinus
-              penaltyMinutes
-              faceOffWins
-              faceoffTaken
-              faceOffPct
-              powerPlayGoals
-              powerPlayAssists
-              shortHandedGoals
-              shortHandedAssists
-              shortHandedTimeOnIce
-              powerPlayTimeOnIce
+              ...SkaterStatsFragment
             }
           }
           goalies {
@@ -262,6 +232,7 @@ export const getGame = /* GraphQL */ `
       }
     }
   }
+  ${skaterStatsFragment}
 `;
 
 export const dailyGames = gql`
