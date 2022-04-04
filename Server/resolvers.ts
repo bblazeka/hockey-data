@@ -19,6 +19,7 @@ export function getResolvers() {
       teamAnalysis: funcWrapper(analysisResolvers.getTeamAnalysis),
       game: funcWrapper(gameResolvers.getGame),
       gamesBetweenTeams: funcWrapper(gameResolvers.gamesBetweenTeams),
+      playerDetailedStats: funcWrapper(playerResolvers.getPlayerDetailedStats),
       dailyGames: funcWrapper(gameResolvers.getDailyGames),
       team: funcWrapper(teamResolvers.getTeam),
       teams: funcWrapper(teamResolvers.getActiveTeams),

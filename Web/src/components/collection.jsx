@@ -1,6 +1,11 @@
 import { Search } from "semantic-ui-react";
 import styled from "styled-components";
 
+export const SmallLogo = styled.img`
+  max-height: 3vh;
+  max-width: 3vw;
+`;
+
 export const LogoStyled = styled.img`
   max-height: 50px;
   max-width: 50px;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Grid, Tab } from "semantic-ui-react";
 
 import { PlayerSearchBox } from "components/collection";
@@ -12,11 +12,14 @@ import { Loader, NewsFeed, SocialFeed } from "components";
 import * as actions from "../../services/player";
 import PlayerStatsGrid from "./PlayerStatsGrid/PlayerStatsGrid";
 import PlayerHeader from "./PlayerHeader";
+import MonthlyStatsGrid from "./PlayerStatsGrid/MonthlyStatsGrid";
+import GameLogGrid from "./PlayerStatsGrid/GameLogStatsGrid";
 
 export default function Player() {
   const [isLoading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { player, suggestions, tweets, news } = useSelector(selectPlayerData);
+  const history = useHistory();
 
   let { id } = useParams();
   const dispatch = useDispatch();
@@ -39,6 +42,8 @@ export default function Player() {
     );
   }
 
+  const isSkater = player.primaryPosition.code !== "G";
+
   function handleSearchChange(e, { value }) {
     setLoading(true);
     setSearchQuery(value);
@@ -54,25 +59,35 @@ export default function Player() {
     }
   }
 
-  function handleResultSelect(e, { result }) {
+  function handleResultSelect(_, { result }) {
     setSearchQuery("");
     setLoading(false);
-    dispatch(actions.getPlayer(result.id));
+    history.push(`${result.id}`);
   }
   const renderNHLStatsPane = () => (
     <Tab.Pane>
       <PlayerStatsGrid
         data={player.nhlStats}
-        skater={player.primaryPosition.code !== "G"}
+        skater={isSkater}
         detailed={true}
       />
+    </Tab.Pane>
+  );
+  const renderMonthlyStatsPane = () => (
+    <Tab.Pane>
+      <MonthlyStatsGrid skater={isSkater} />
+    </Tab.Pane>
+  );
+  const renderGameLogPane = () => (
+    <Tab.Pane>
+      <GameLogGrid skater={isSkater} />
     </Tab.Pane>
   );
   const renderCareerStatsPane = () => (
     <Tab.Pane>
       <PlayerStatsGrid
         data={player.careerStats}
-        skater={player.primaryPosition.code !== "G"}
+        skater={isSkater}
         detailed={false}
       />
     </Tab.Pane>
@@ -81,6 +96,14 @@ export default function Player() {
     {
       menuItem: "NHL stats",
       render: renderNHLStatsPane,
+    },
+    {
+      menuItem: "Monthly stats",
+      render: renderMonthlyStatsPane,
+    },
+    {
+      menuItem: "Game log",
+      render: renderGameLogPane,
     },
     {
       menuItem: "Career stats",

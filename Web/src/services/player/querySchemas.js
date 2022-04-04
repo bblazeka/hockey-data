@@ -1,4 +1,6 @@
-import { skaterStatsFragment } from "../fragments";
+import gql from "graphql-tag";
+
+import { goalieStatsFragment, skaterStatsFragment } from "../fragments";
 
 export const getBasicPlayer = /* GraphQL */ `
   query player($id: Int) {
@@ -251,26 +253,7 @@ export const getSelectedPlayers = /* GraphQL */ `
           abbreviation
         }
         stats {
-          games
-          gamesStarted
-          goalAgainstAverage
-          savePercentage
-          wins
-          losses
-          ot
-          saves
-          evenSaves
-          powerPlaySaves
-          shortHandedSaves
-          shotsAgainst
-          evenShots
-          powerPlayShots
-          shortHandedShots
-          evenStrengthSavePercentage
-          powerPlaySavePercentage
-          shortHandedSavePercentage
-          shutouts
-          timeOnIce
+          ...GoalieStatsFragment
         }
         averageStats {
           saves
@@ -279,4 +262,77 @@ export const getSelectedPlayers = /* GraphQL */ `
     }
   }
   ${skaterStatsFragment}
+  ${goalieStatsFragment}
+`;
+
+export const getSkaterDetailedStats = gql`
+  query playerDetailedStats($id: Int, $seasonId: String) {
+    playerDetailedStats(id: $id, seasonId: $seasonId) {
+      byMonth {
+        season
+        stat {
+          ...SkaterStatsFragment
+        }
+        month
+      }
+      gameLog {
+        season
+        stat {
+          ...SkaterStatsFragment
+        }
+        team {
+          id
+          name
+        }
+        opponent {
+          id
+          name
+        }
+        isHome
+        isOT
+        isWin
+        date
+        game {
+          gamePk
+        }
+      }
+    }
+  }
+  ${skaterStatsFragment}
+`;
+
+export const getGoalieDetailedStats = gql`
+  query playerDetailedStats($id: Int, $seasonId: String) {
+    playerDetailedStats(id: $id, seasonId: $seasonId) {
+      byMonth {
+        season
+        stat {
+          ...GoalieStatsFragment
+        }
+        month
+      }
+      gameLog {
+        season
+        stat {
+          ...GoalieStatsFragment
+        }
+        team {
+          id
+          name
+        }
+        opponent {
+          id
+          name
+        }
+        isHome
+        isOT
+        isWin
+        date
+        game {
+          gamePk
+        }
+      }
+    }
+  }
+  ${goalieStatsFragment}
 `;

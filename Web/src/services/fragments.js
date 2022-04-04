@@ -27,3 +27,27 @@ export const skaterStatsFragment = /* GraphQL */ `
     shortHandedPoints
   }
 `;
+
+export const goalieStatsFragment = /* GraphQL */ `
+  fragment GoalieStatsFragment on Stats {
+    games
+    gamesStarted
+    goalAgainstAverage
+    savePercentage
+    wins
+    losses
+    ot
+    evenSaves
+    powerPlaySaves
+    shortHandedSaves
+    shotsAgainst
+    evenShots
+    powerPlayShots
+    shortHandedShots
+    evenStrengthSavePercentage
+    powerPlaySavePercentage
+    shortHandedSavePercentage
+    shutouts
+    timeOnIce
+  }
+`;

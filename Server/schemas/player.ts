@@ -51,6 +51,29 @@ export const playerSchema = gql`
     stat: Stats
   }
 
+  type DetailedStats {
+    byMonth: [MonthlyStats]
+    gameLog: [GameLogStats]
+  }
+
+  type MonthlyStats {
+    season: String
+    stat: Stats
+    month: Int
+  }
+
+  type GameLogStats {
+    season: String
+    stat: Stats
+    team: Team
+    opponent: Team
+    date: String
+    isHome: Boolean
+    isWin: Boolean
+    isOT: Boolean
+    game: Game
+  }
+
   type Stats {
     games: Int
     timeOnIce: String

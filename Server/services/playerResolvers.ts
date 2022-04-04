@@ -3,10 +3,11 @@ import { nhlApiRequest, playerWikiRequest } from "adapters/apihandler";
 
 import { Database } from "adapters/dbhandler";
 import { EDatabaseCollection } from "utils/enums";
+import { NHL_API_NHL_LEAGUE_ID } from "utils/constants";
 
 let db = new Database();
 
-function init(database: Database) {
+export function init(database: Database) {
   db = database;
 }
 
@@ -34,7 +35,7 @@ function getGroup(array) {
   return result;
 }
 
-async function getPlayer({ id }) {
+export async function getPlayer({ id }) {
   const query = { id };
   const player = await db
     .getCollection(EDatabaseCollection.players)
@@ -44,7 +45,7 @@ async function getPlayer({ id }) {
     `/api/v1/people/${id}/stats?stats=yearByYear`
   );
   const nhlStatsOnly = result.stats[0].splits.filter(
-    (el) => el.league.id === 133
+    (el) => el.league.id === NHL_API_NHL_LEAGUE_ID
   );
   player.nhlStats = {
     totalGames: nhlStatsOnly.reduce(
@@ -81,7 +82,30 @@ async function getPlayer({ id }) {
   return player;
 }
 
-async function getPlayerByName({ name }) {
+export async function getPlayerDetailedStats({ id, seasonId }) {
+  const playerGameLogResponse = await nhlApiRequest(
+    `/api/v1/people/${id}/stats?stats=gameLog&season=${seasonId}`
+  );
+  const playerByMonthResponse = await nhlApiRequest(
+    `/api/v1/people/${id}/stats?stats=byMonth&season=${seasonId}`
+  );
+
+  const detailedStats = {
+    gameLog: playerGameLogResponse.stats[0].splits,
+    byMonth: playerByMonthResponse.stats[0].splits.sort((a, b) => {
+      if (a.month > 8 && b.month < 8) {
+        return -1;
+      } else if (b.month > 8 && a.month < 8) {
+        return 1;
+      } else {
+        return a.month > b.month ? 1 : -1;
+      }
+    }),
+  };
+  return detailedStats;
+}
+
+export async function getPlayerByName({ name }) {
   const query = { fullName: new RegExp(name, "i") };
   const players = await db
     .getCollection(EDatabaseCollection.players)
@@ -90,7 +114,7 @@ async function getPlayerByName({ name }) {
   return players;
 }
 
-async function getPlayersFromTeam(teamId) {
+export async function getPlayersFromTeam(teamId) {
   const items = await db
     .getCollection(EDatabaseCollection.players)
     .find({ "currentTeam.id": parseInt(teamId) })
@@ -99,7 +123,7 @@ async function getPlayersFromTeam(teamId) {
   return items;
 }
 
-async function getPlayers() {
+export async function getPlayers() {
   const items = await db
     .getCollection(EDatabaseCollection.players)
     .find({})
@@ -108,7 +132,11 @@ async function getPlayers() {
   return items;
 }
 
-async function getSelectedPlayers({ playerIds, seasonId, projectedStats }) {
+export async function getSelectedPlayers({
+  playerIds,
+  seasonId,
+  projectedStats,
+}) {
   const statsType = projectedStats
     ? "onPaceRegularSeason"
     : "statsSingleSeason";
@@ -176,12 +204,3 @@ async function getSelectedPlayers({ playerIds, seasonId, projectedStats }) {
     goalies: goalies,
   };
 }
-
-export {
-  init,
-  getPlayer,
-  getPlayers,
-  getPlayersFromTeam,
-  getPlayerByName,
-  getSelectedPlayers,
-};
