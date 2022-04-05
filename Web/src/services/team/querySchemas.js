@@ -38,80 +38,40 @@ export const getTeam = /* GraphQL */ `
         description
       }
       goalies {
-        id
-        fullName
-        currentAge
-        jerseyNumber
-        active
-        alternateCaptain
-        birthCity
-        birthDate
-        captain
-        firstName
-        lastName
-        height
-        primaryNumber
-        primaryPosition {
-          code
-          name
-        }
-        rookie
-        rosterStatus
-        shootsCatches
-        weight
-        nationality
-        capHit
+        ...PlayerDataFragment
       }
       defenders {
-        id
-        fullName
-        currentAge
-        jerseyNumber
-        active
-        alternateCaptain
-        birthCity
-        birthDate
-        captain
-        firstName
-        lastName
-        height
-        primaryNumber
-        primaryPosition {
-          code
-          name
-        }
-        rookie
-        rosterStatus
-        shootsCatches
-        weight
-        nationality
-        capHit
+        ...PlayerDataFragment
       }
       forwards {
-        id
-        fullName
-        currentAge
-        jerseyNumber
-        active
-        alternateCaptain
-        birthCity
-        birthDate
-        captain
-        firstName
-        lastName
-        height
-        primaryNumber
-        primaryPosition {
-          code
-          name
-        }
-        rookie
-        rosterStatus
-        shootsCatches
-        weight
-        nationality
-        capHit
+        ...PlayerDataFragment
       }
     }
+  }
+
+  fragment PlayerDataFragment on Player {
+    id
+    fullName
+    currentAge
+    jerseyNumber
+    active
+    alternateCaptain
+    birthCity
+    birthDate
+    captain
+    firstName
+    lastName
+    height
+    primaryNumber
+    primaryPosition {
+      code
+      name
+    }
+    rookie
+    rosterStatus
+    shootsCatches
+    weight
+    nationality
+    capHit
   }
 `;

@@ -12,7 +12,9 @@ Environment currently consists of three key segments:
 - Server (Apollo GraphQL - written in typescript)
 - Web interface (Javascript React)
 
-On front-end side, [Semantic UI React](https://www.npmjs.com/package/semantic-ui-react) was used extensively since it does supply web components developers would have to build themselves. On such small project with only one developer, it did help a lot to make the process shorter and warrant at least some basic level of design consistency. Library [Mapbox GL JS](https://www.npmjs.com/package/mapbox-gl) was used for making interactive maps. Since this is primarily a demo project, multiple state management libraries such as Redux or Apollo Client in parallel to try them out. Redux is the one that was a legacy solution with Apollo Client stepping in for requests that change rarely and deliver more data.
+![Architecture](architecture.jpg)
+
+On front-end side, [Semantic UI React](https://www.npmjs.com/package/semantic-ui-react) was used to supply web components. On such small project with only one developer, it did help a lot to make the process shorter and warrant at least some basic level of design consistency. Library [Mapbox GL JS](https://www.npmjs.com/package/mapbox-gl) was used for making interactive maps. Since this is primarily a demo project, multiple state management libraries such as Redux or Apollo Client in parallel to try them out. Redux is the one that was a legacy solution with Apollo Client stepping in for requests that change rarely and deliver more data.
 
 ## Data
 

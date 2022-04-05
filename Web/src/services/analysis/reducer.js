@@ -9,7 +9,7 @@ const analysisReducer = (state = defaultAppState, action) => {
     case actionTypes.GET_ANALYSIS:
       return {
         ...state,
-        analysis: null,
+        analysis: undefined,
       };
     case actionTypes.ANALYSIS_LOADED:
       return {
