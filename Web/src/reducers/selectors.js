@@ -6,27 +6,24 @@ const selectGame = (state) => state.game;
 
 const selectLeague = (state) => state.league;
 
-const selectNews = (state) => state.news;
+const selectMisc = (state) => state.misc;
 
 const selectPlayer = (state) => state.player;
 
 const selectTeam = (state) => state.team;
 
-const selectUtil = (state) => state.util;
-
 export const selectTeamObject = createSelector(
   selectTeam,
-  selectNews,
+  selectMisc,
   selectLeague,
-  selectUtil,
-  (team, news, league, util) => {
+  (team, misc, league) => {
     return {
       team: team.team,
-      tweets: news.tweets,
+      tweets: misc.tweets,
       teams: team.teams,
-      news: news.news,
+      news: misc.news,
       teamGames: league.teamGames,
-      location: util.location,
+      location: misc.location,
     };
   }
 );
@@ -81,7 +78,7 @@ export const selectApp = createSelector(
 
 export const selectHome = createSelector(
   selectGame,
-  selectNews,
+  selectMisc,
   (game, news) => {
     return {
       homeNews: news.news,
@@ -111,12 +108,12 @@ export const selectGameList = createSelector(
 
 export const selectPlayerData = createSelector(
   selectPlayer,
-  selectNews,
-  (player, news) => ({
+  selectMisc,
+  (player, misc) => ({
     player: player.player,
     suggestions: player.suggestions,
-    tweets: news.tweets,
-    news: news.news,
-    loadingTweets: news.loadingTweets,
+    tweets: misc.tweets,
+    news: misc.news,
+    loadingTweets: misc.loadingTweets,
   })
 );

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { GameCard, Loader, NotFound } from "components";
 import { IsNullOrUndefined } from "util/common";
-import { selectGameList } from "services/selectors";
+import { selectGameList } from "reducers/selectors";
 
 export default function GameList() {
   const { gamesBetweenTeams, loading, loadingTeams } =

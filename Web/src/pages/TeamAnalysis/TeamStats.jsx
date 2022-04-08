@@ -18,7 +18,7 @@ import { getColorScheme } from "util/shared";
 import {
   createSortedList,
   separateGoaliesAndSkaters,
-} from "services/analysis/hooks";
+} from "services/hooks/analysis";
 import categories from "util/categories.json";
 
 import StatsPieChart from "./StatsPieChart/StatsPieChart";

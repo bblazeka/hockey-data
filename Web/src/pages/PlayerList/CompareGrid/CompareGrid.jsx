@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Segment, Header, Table } from "semantic-ui-react";
 
-import { selectSelectedPlayers } from "services/selectors";
+import { selectSelectedPlayers } from "reducers/selectors";
 
 import routes from "../../../routes";
 import { IsNullOrUndefined } from "../../../util/common";

@@ -5,8 +5,8 @@ import { PlayerSearchBox } from "components/collection";
 import styled from "styled-components";
 
 import { Loader, NotFound, QuestionModal } from "components";
-import * as actions from "services/player";
-import { usePlayerSelection } from "services/player/hooks";
+import {searchBasicPlayer, getSelectedPlayers as getSelectedPlayersAction} from "reducers/playerActions";
+import { usePlayerSelection } from "services/hooks/player";
 import { useConfigContext } from "util/indexedDB";
 
 import config from "util/config.json";
@@ -62,7 +62,7 @@ export default function PlayerList() {
 
   useEffect(() => {
     if (selectedPlayerIds && selectedPlayerIds.length > 0) {
-      dispatch(actions.getSelectedPlayers(selectedPlayerIds, seasonId));
+      dispatch(getSelectedPlayersAction(selectedPlayerIds, seasonId));
     }
   }, [selectedPlayerIds, seasonId]);
 
@@ -88,7 +88,7 @@ export default function PlayerList() {
     }
 
     if (value.length > 2) {
-      dispatch(actions.searchBasicPlayer(value));
+      dispatch(searchBasicPlayer(value));
     }
   };
 

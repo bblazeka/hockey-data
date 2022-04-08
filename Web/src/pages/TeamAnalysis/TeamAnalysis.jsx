@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@apollo/client";
 import styled from "styled-components";
 
-import { getTeams } from "services/team";
+import { getTeams } from "reducers/teamActions";
 import { getLogo } from "util/assets";
 import { Loader } from "components";
-import { selectTeamObject } from "services/selectors";
-import { getTeamAnalysis } from "services/analysis/querySchemas";
+import { selectTeamObject } from "reducers/selectors";
+import { getTeamAnalysis } from "services/querySchemas/analysis";
 import routes from "routes";
 
 import TeamStats from "./TeamStats";

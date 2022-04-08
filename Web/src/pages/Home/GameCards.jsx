@@ -7,7 +7,7 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 
 import { Loader, NotFound, MiniGameCard } from "components";
 import { IsNullOrUndefined } from "util/common";
-import { dailyGames as dailyGamesQuery } from "services/game/querySchemas";
+import { dailyGames as dailyGamesQuery } from "services/querySchemas/game";
 
 const HeaderStyled = styled(Header)`
   display: flex;

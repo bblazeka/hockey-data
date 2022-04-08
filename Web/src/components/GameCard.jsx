@@ -31,8 +31,7 @@ const GameTeamStyled = styled.div`
   display: inline-flex !important;
 `;
 
-export default function GameCard(props) {
-  const { game } = props;
+export default function GameCard({ game }) {
   if (IsNullOrUndefined(game)) {
     return <Loader></Loader>;
   }

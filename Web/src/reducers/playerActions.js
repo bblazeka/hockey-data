@@ -1,26 +1,26 @@
 import { axiosGraphQL } from "util/common";
-import * as actionTypes from "./actionTypes";
-import * as querySchemas from "./querySchemas";
+import {PlayerActionTypes} from "./actionTypes";
+import {getBasicPlayer, getSkater, getGoalie, getBasicPlayerByName, getSelectedPlayers as getSelectedPlayersQuery} from "services/querySchemas/player";
 
 export const getPlayer = (id) => async (dispatch) => {
   dispatch({
-    type: actionTypes.GET_PLAYER,
+    type: PlayerActionTypes.GET_PLAYER,
   });
   const player = (
     await axiosGraphQL.post("", {
-      query: querySchemas.getBasicPlayer,
+      query: getBasicPlayer,
       variables: { id: parseInt(id) },
     })
   ).data.data.player;
   const queryString =
     player.primaryPosition.code === "G"
-      ? querySchemas.getGoalie
-      : querySchemas.getSkater;
+      ? getGoalie
+      : getSkater;
   axiosGraphQL
     .post("", { query: queryString, variables: { id: parseInt(id) } })
     .then((response) => {
       dispatch({
-        type: actionTypes.PLAYER_LOADED,
+        type: PlayerActionTypes.PLAYER_LOADED,
         payload: response.data.data.player,
       });
     });
@@ -28,20 +28,20 @@ export const getPlayer = (id) => async (dispatch) => {
 
 export const searchBasicPlayer = (name) => (dispatch) => {
   dispatch({
-    type: actionTypes.BASIC_SEARCH_PLAYER,
+    type: PlayerActionTypes.BASIC_SEARCH_PLAYER,
   });
   axiosGraphQL
-    .post("", { query: querySchemas.getBasicPlayerByName, variables: { name } })
+    .post("", { query: getBasicPlayerByName, variables: { name } })
     .then((response) => {
       dispatch({
-        type: actionTypes.BASIC_PLAYER_LOADED,
+        type: PlayerActionTypes.BASIC_PLAYER_LOADED,
         payload: response.data.data.searchPlayerByName,
       });
     });
 };
 
 export const removePlayer = (id) => ({
-  type: actionTypes.REMOVE_PLAYER,
+  type: PlayerActionTypes.REMOVE_PLAYER,
   payload: {
     id,
   },
@@ -50,14 +50,14 @@ export const removePlayer = (id) => ({
 export const getSelectedPlayers =
   (selectedPlayerIds, seasonIdOption) => (dispatch) => {
     dispatch({
-      type: actionTypes.GET_SELECTED_PLAYERS,
+      type: PlayerActionTypes.GET_SELECTED_PLAYERS,
       payload: seasonIdOption,
     });
     const seasonId = parseInt(seasonIdOption.split("proj")[0]);
     const projectedStats = seasonIdOption.includes("proj");
     axiosGraphQL
       .post("", {
-        query: querySchemas.getSelectedPlayers,
+        query: getSelectedPlayersQuery,
         variables: {
           playerIds: selectedPlayerIds.join(","),
           seasonId,
@@ -66,7 +66,7 @@ export const getSelectedPlayers =
       })
       .then((response) => {
         dispatch({
-          type: actionTypes.SELECTED_PLAYERS_LOADED,
+          type: PlayerActionTypes.SELECTED_PLAYERS_LOADED,
           payload: response.data.data.selectedPlayers,
         });
       });

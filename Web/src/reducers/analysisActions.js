@@ -1,4 +1,4 @@
-import { axiosGraphQL } from '../../util/common';
+import { axiosGraphQL } from 'util/common';
 import * as actionTypes from './actionTypes';
 import * as querySchemas from './querySchemas';
 

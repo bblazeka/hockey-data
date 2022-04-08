@@ -1,4 +1,4 @@
-import * as actionTypes from "./actionTypes";
+import {AnalysisActionTypes} from "./actionTypes";
 
 const defaultAppState = {
   loading: false,
@@ -6,12 +6,12 @@ const defaultAppState = {
 
 const analysisReducer = (state = defaultAppState, action) => {
   switch (action.type) {
-    case actionTypes.GET_ANALYSIS:
+    case AnalysisActionTypes.GET_ANALYSIS:
       return {
         ...state,
         analysis: undefined,
       };
-    case actionTypes.ANALYSIS_LOADED:
+    case AnalysisActionTypes.ANALYSIS_LOADED:
       return {
         ...state,
         analysis: action.payload,

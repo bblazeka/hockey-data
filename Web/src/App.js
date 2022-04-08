@@ -7,13 +7,13 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import "./App.css";
 import routes from "./routes";
-import * as leagueActions from "./services/league/actions";
 import { getLogo } from "./util/assets";
 import { ErrorFallback, Loader } from "components";
 import AppFooter from "AppFooter";
 
 import { useInitIDB, ConfigurationContext } from "util/indexedDB";
-import { selectApp } from "services/selectors";
+import { selectApp } from "reducers/selectors";
+import { getDivisionsWithTeams } from "reducers/leagueActions";
 
 function App({ children, history }) {
   const [activeItem, setActiveItem] = useState("home");
@@ -21,7 +21,7 @@ function App({ children, history }) {
   const { divisionsWithTeams } = useSelector(selectApp);
 
   useEffect(() => {
-    dispatch(leagueActions.getDivisionsWithTeams());
+    dispatch(getDivisionsWithTeams());
   }, []);
   const {
     database,

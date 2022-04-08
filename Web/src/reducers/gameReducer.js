@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes';
+import {GameActionTypes} from './actionTypes';
 
 const defaultAppState = {
   loading: false,
@@ -7,37 +7,37 @@ const defaultAppState = {
 
 const gameReducer = (state = defaultAppState, action) => {
   switch (action.type) {
-    case actionTypes.GET_GAME:
+    case GameActionTypes.GET_GAME:
       return {
         ...state,
         loading: true,
         game: null
       };
-    case actionTypes.GET_GAMES:
+    case GameActionTypes.GET_GAMES:
       return {
         ...state,
         loading: true,
         game: null
       };
-    case actionTypes.GAME_LOADED:
+    case GameActionTypes.GAME_LOADED:
       return {
         ...state,
         loading: false,
         game: action.payload,
         gamesBetweenTeams: null
       };
-    case actionTypes.GAMES_FOUND:
+    case GameActionTypes.GAMES_FOUND:
       return {
         ...state,
         gamesBetweenTeams: action.payload,
         loading: false
       };
-    case actionTypes.GAMES_NOT_FOUND:
+    case GameActionTypes.GAMES_NOT_FOUND:
       return {
         ...state,
         loading: false
       };
-    case actionTypes.GAMES_TODAY_LOADED:
+    case GameActionTypes.GAMES_TODAY_LOADED:
       return {
         ...state,
         loading: false,

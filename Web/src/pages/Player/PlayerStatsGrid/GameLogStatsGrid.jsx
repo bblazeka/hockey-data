@@ -12,7 +12,7 @@ import { Loader } from "components";
 import {
   getSkaterDetailedStats,
   getGoalieDetailedStats,
-} from "services/player/querySchemas";
+} from "services/querySchemas/player";
 import { getLogo } from "util/assets";
 import routes from "routes";
 import config from "util/config.json";

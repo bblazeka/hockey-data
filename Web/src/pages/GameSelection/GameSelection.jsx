@@ -3,11 +3,11 @@ import { Button, Dropdown, Segment } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import * as actions from "services/game";
-import * as teamActions from "services/team";
+import { findGames } from "reducers/gameActions";
 import { getLogo } from "util/assets";
 import config from "util/config.json";
-import { selectGameList } from "services/selectors";
+import { selectGameList } from "reducers/selectors";
+import { getDropdownTeams } from "reducers/teamActions";
 
 import GameList from "./GameList";
 import GameListStatistics from "./GameListStatistics";
@@ -29,7 +29,7 @@ export default function GameSelection() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(teamActions.getDropdownTeams());
+    dispatch(getDropdownTeams());
   }, []);
 
   const { gamesBetweenTeams, dropdownTeams } = useSelector(selectGameList);
@@ -80,7 +80,7 @@ export default function GameSelection() {
           })}
         />
         <Button
-          onClick={() => dispatch(actions.findGames(team, opponent, season))}
+          onClick={() => dispatch(findGames(team, opponent, season))}
         >
           Search
         </Button>

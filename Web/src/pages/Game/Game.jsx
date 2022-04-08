@@ -4,8 +4,8 @@ import { Header, List, Progress, Segment } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import * as actions from "services/game";
-import { selectGameData } from "services/selectors";
+import { getGame } from "reducers/gameActions";
+import { selectGameData } from "reducers/selectors";
 import { Loader } from "components";
 
 import GameTeamStats from "./GameTeamStats/GameTeamStats";
@@ -22,7 +22,7 @@ export default function Game() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.getGame(id));
+    dispatch(getGame(id));
   }, [id]);
 
   if (loading) {

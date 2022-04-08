@@ -2,11 +2,11 @@ import React from "react";
 import { Header, Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
-export default function NotFound(props) {
+export default function NotFound({text}) {
   return (
     <Header textAlign="center">
       <Icon name="search" />
-      {props.text ? props.text : "Not found."}
+      {text ?? "Not found."}
     </Header>
   );
 }

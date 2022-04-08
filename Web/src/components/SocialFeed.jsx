@@ -9,8 +9,7 @@ const NewsContainerStyled = styled.div`
   padding: 20px;
 `;
 
-function SocialFeed(props) {
-  const { tweets } = props;
+function SocialFeed({ tweets }) {
   if (IsNullOrUndefined(tweets)) {
     return <Loader text="Loading social feed..."></Loader>;
   }

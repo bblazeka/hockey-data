@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import { skaterStatsFragment } from "../fragments";
+import { skaterStatsFragment } from "./fragments";
 
 export const getGamesBetweenTeams = /* GraphQL */ `
   query gamesBetweenTeams($teamId: Int, $opponentId: Int, $season: String) {

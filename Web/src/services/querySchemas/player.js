@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import { goalieStatsFragment, skaterStatsFragment } from "../fragments";
+import { goalieStatsFragment, skaterStatsFragment } from "./fragments";
 
 export const getBasicPlayer = /* GraphQL */ `
   query player($id: Int) {

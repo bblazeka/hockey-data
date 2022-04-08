@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes';
+import {LeagueActionTypes} from './actionTypes';
 
 const defaultAppState = {
   loading: false,
@@ -9,32 +9,32 @@ const defaultAppState = {
 
 const leagueReducer = (state = defaultAppState, action) => {
   switch (action.type) {
-    case actionTypes.GET_SCHEDULE:
+    case LeagueActionTypes.GET_SCHEDULE:
       return {
         ...state,
         schedule: null
       };
-    case actionTypes.SCHEDULE_LOADED:
+    case LeagueActionTypes.SCHEDULE_LOADED:
       return {
         ...state,
         schedule: action.payload
       };
-    case actionTypes.STANDINGS_LOADED:
+    case LeagueActionTypes.STANDINGS_LOADED:
       return {
         ...state,
         standings: action.payload
       };
-    case actionTypes.TEAM_SCHEDULE_LOADED:
+    case LeagueActionTypes.TEAM_SCHEDULE_LOADED:
       return {
         ...state,
         teamGames: action.payload
       };
-    case actionTypes.GET_DIVISIONS:
+    case LeagueActionTypes.GET_DIVISIONS:
       return {
         ...state,
         divisionsWithTeams: action.payload
       };
-    case actionTypes.DIVISIONS_LOADED:
+    case LeagueActionTypes.DIVISIONS_LOADED:
       return {
         ...state,
         divisionsWithTeams: action.payload

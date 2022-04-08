@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectSelectedPlayers } from "services/selectors";
+import { selectSelectedPlayers } from "reducers/selectors";
 
 export function usePlayerSelection() {
   const {

@@ -1,16 +1,16 @@
-import { axiosGraphQL } from "../../util/common";
-import * as actionTypes from "./actionTypes";
-import * as querySchemas from "./querySchemas";
+import { axiosGraphQL } from "util/common";
+import { LeagueActionTypes } from "./actionTypes";
+import { getSchedule as getScheduleQuery, getStandings as getStandingsQuery, getTeamSchedule as getTeamScheduleQuery, getDivisionsWithTeams as getDivisionsWithTeamsQuery } from "services/querySchemas/league";
 
 export const getSchedule = (start, end) => (dispatch) => {
   dispatch({
-    type: actionTypes.GET_SCHEDULE,
+    type: LeagueActionTypes.GET_SCHEDULE,
   });
   axiosGraphQL
-    .post("", { query: querySchemas.getSchedule, variables: { start, end } })
+    .post("", { query: getScheduleQuery, variables: { start, end } })
     .then((response) => {
       dispatch({
-        type: actionTypes.SCHEDULE_LOADED,
+        type: LeagueActionTypes.SCHEDULE_LOADED,
         payload: response.data.data.schedule,
       });
     });
@@ -18,16 +18,16 @@ export const getSchedule = (start, end) => (dispatch) => {
 
 export const getStandings = () => (dispatch) => {
   dispatch({
-    type: actionTypes.GET_STANDINGS,
+    type: LeagueActionTypes.GET_STANDINGS,
   });
   axiosGraphQL
     .post("", {
-      query: querySchemas.getStandings,
+      query: getStandingsQuery,
       variables: { season: "20212022" },
     })
     .then((response) => {
       dispatch({
-        type: actionTypes.STANDINGS_LOADED,
+        type: LeagueActionTypes.STANDINGS_LOADED,
         payload: response.data.data.standings,
       });
     });
@@ -35,16 +35,16 @@ export const getStandings = () => (dispatch) => {
 
 export const getTeamSchedule = (id, start, end) => (dispatch) => {
   dispatch({
-    type: actionTypes.GET_TEAM_SCHEDULE,
+    type: LeagueActionTypes.GET_TEAM_SCHEDULE,
   });
   axiosGraphQL
     .post("", {
-      query: querySchemas.getTeamSchedule,
+      query: getTeamScheduleQuery,
       variables: { id: parseInt(id), start, end },
     })
     .then((response) => {
       dispatch({
-        type: actionTypes.TEAM_SCHEDULE_LOADED,
+        type: LeagueActionTypes.TEAM_SCHEDULE_LOADED,
         payload: response.data.data.scheduleByTeam,
       });
     });
@@ -52,13 +52,13 @@ export const getTeamSchedule = (id, start, end) => (dispatch) => {
 
 export const getDivisionsWithTeams = () => (dispatch) => {
   dispatch({
-    type: actionTypes.GET_DIVISIONS,
+    type: LeagueActionTypes.GET_DIVISIONS,
   });
   axiosGraphQL
-    .post("", { query: querySchemas.getDivisionsWithTeams })
+    .post("", { query: getDivisionsWithTeamsQuery })
     .then((response) => {
       dispatch({
-        type: actionTypes.DIVISIONS_LOADED,
+        type: LeagueActionTypes.DIVISIONS_LOADED,
         payload: response.data.data.divisionsWithTeams,
       });
     });

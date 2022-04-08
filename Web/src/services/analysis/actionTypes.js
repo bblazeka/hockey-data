@@ -1,2 +1,0 @@
-export const GET_ANALYSIS = 'GET_ANALYSIS';
-export const ANALYSIS_LOADED = 'ANALYSIS_LOADED';

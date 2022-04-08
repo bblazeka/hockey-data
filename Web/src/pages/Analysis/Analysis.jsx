@@ -6,7 +6,7 @@ import { getLogo } from "util/assets";
 import { GetNumberWithOrdinal } from "util/common";
 import routes from "routes";
 import { Loader } from "components";
-import { getAnalysis } from "services/analysis/querySchemas";
+import { getAnalysis } from "services/querySchemas/analysis";
 
 import {
   getLeagueRank,

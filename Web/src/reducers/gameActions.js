@@ -1,24 +1,24 @@
-import { axiosGraphQL, IsNullOrUndefined } from "../../util/common";
-import * as actionTypes from "./actionTypes";
-import * as querySchemas from "./querySchemas";
+import { axiosGraphQL, IsNullOrUndefined } from "util/common";
+import { GameActionTypes } from "./actionTypes";
+import { getGamesBetweenTeams, getGame as getGameQuery } from "services/querySchemas/game";
 
 export const findGames = (teamId, opponentId, season) => (dispatch) => {
   dispatch({
-    type: actionTypes.GET_GAMES,
+    type: GameActionTypes.GET_GAMES,
   });
   axiosGraphQL
     .post("", {
-      query: querySchemas.getGamesBetweenTeams,
+      query: getGamesBetweenTeams,
       variables: { teamId, opponentId, season },
     })
     .then((response) => {
       if (IsNullOrUndefined(response.data.data.gamesBetweenTeams.games[0])) {
         dispatch({
-          type: actionTypes.GAMES_NOT_FOUND,
+          type: GameActionTypes.GAMES_NOT_FOUND,
         });
       } else {
         dispatch({
-          type: actionTypes.GAMES_FOUND,
+          type: GameActionTypes.GAMES_FOUND,
           payload: response.data.data.gamesBetweenTeams,
         });
       }
@@ -27,16 +27,16 @@ export const findGames = (teamId, opponentId, season) => (dispatch) => {
 
 export const getGame = (gameId) => (dispatch) => {
   dispatch({
-    type: actionTypes.GET_GAME,
+    type: GameActionTypes.GET_GAME,
   });
   axiosGraphQL
     .post("", {
-      query: querySchemas.getGame,
+      query: getGameQuery,
       variables: { gameId: parseInt(gameId) },
     })
     .then((response) => {
       dispatch({
-        type: actionTypes.GAME_LOADED,
+        type: GameActionTypes.GAME_LOADED,
         payload: response.data.data.game,
       });
     });

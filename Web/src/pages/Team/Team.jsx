@@ -4,14 +4,13 @@ import { Checkbox, Grid, Header, Image, Segment } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { getTeam } from "services/team";
+import { getTeam } from "reducers/teamActions";
 import { Loader, Map, NewsFeed, SocialFeed } from "components";
 import { getLogo } from "util/assets";
-import { getNews, getTweets } from "services/news";
-import { geocode } from "services/util";
-import { getTeamSchedule } from "services/league";
+import { getNews, getTweets, geocode } from "reducers/miscActions";
+import { getTeamSchedule } from "reducers/leagueActions";
 import { DateToServerFormat, IsNullOrUndefined } from "util/common";
-import { selectTeamObject } from "services/selectors";
+import { selectTeamObject } from "reducers/selectors";
 
 import TeamSchedule from "./TeamSchedule/TeamSchedule";
 import RosterGrid from "./RosterGrid/RosterGrid.jsx";

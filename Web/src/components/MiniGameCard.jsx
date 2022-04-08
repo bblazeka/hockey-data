@@ -39,8 +39,7 @@ const GameTeamLogo = styled.img`
   max-width: 6vw;
 `;
 
-export default function MiniGameCard(props) {
-  const { game } = props;
+export default function MiniGameCard({ game }) {
   if (IsNullOrUndefined(game)) {
     return <Loader></Loader>;
   }

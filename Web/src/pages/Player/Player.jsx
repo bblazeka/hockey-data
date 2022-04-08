@@ -4,12 +4,12 @@ import { useParams, useHistory } from "react-router-dom";
 import { Grid, Tab } from "semantic-ui-react";
 
 import { PlayerSearchBox } from "components/collection";
-import { selectPlayerData } from "services/selectors";
+import { selectPlayerData } from "reducers/selectors";
 import { IsNullOrUndefined } from "util/common";
-import { getTweets, getNews } from "services/news";
+import { getTweets, getNews } from "reducers/miscActions";
 import { Loader, NewsFeed, SocialFeed } from "components";
 
-import * as actions from "../../services/player";
+import {getPlayer, searchBasicPlayer} from "reducers/playerActions";
 import PlayerStatsGrid from "./PlayerStatsGrid/PlayerStatsGrid";
 import PlayerHeader from "./PlayerHeader";
 import MonthlyStatsGrid from "./PlayerStatsGrid/MonthlyStatsGrid";
@@ -24,7 +24,7 @@ export default function Player() {
   let { id } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.getPlayer(id));
+    dispatch(getPlayer(id));
   }, [id]);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function Player() {
     }
 
     if (value.length > 2) {
-      dispatch(actions.searchBasicPlayer(value));
+      dispatch(searchBasicPlayer(value));
     } else {
       setLoading(false);
     }

@@ -6,11 +6,11 @@ import styled from "styled-components";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-import { getSchedule } from "services/league";
+import { getSchedule } from "reducers/leagueActions";
 import { Loader } from "components";
 import { DateToServerFormat, getDatesArray } from "util/common";
 import ScheduleTable from "./ScheduleTable";
-import { selectSchedule } from "services/selectors";
+import { selectSchedule } from "reducers/selectors";
 
 const SchedulePageStyled = styled.div`
   overflow-x: auto;

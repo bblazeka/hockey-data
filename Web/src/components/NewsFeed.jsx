@@ -5,8 +5,7 @@ import dayjs from "dayjs";
 import { Loader, NotFound } from "components";
 import { IsNullOrUndefined } from "util/common";
 
-function NewsFeed(props) {
-  const { news } = props;
+function NewsFeed({ news }) {
   if (IsNullOrUndefined(news)) {
     return <Loader text="Loading news feed..."></Loader>;
   }

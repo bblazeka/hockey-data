@@ -20,7 +20,7 @@ import { Loader } from "components";
 import {
   getSkaterDetailedStats,
   getGoalieDetailedStats,
-} from "services/player/querySchemas";
+} from "services/querySchemas/player";
 
 const PlayerStatsGridStyled = styled.div`
   padding: 8px;

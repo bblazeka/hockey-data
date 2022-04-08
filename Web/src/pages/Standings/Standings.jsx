@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Grid, Header, Table } from "semantic-ui-react";
 import styled from "styled-components";
 
-import * as actions from "services/league";
-import * as teamActions from "services/team";
+import { getStandings } from "reducers/leagueActions";
+import {getTeamLocations} from "reducers/teamActions";
 import { Loader } from "components";
 import { LogoStyled } from "components/collection";
 import routes from "routes";
 import { getLogo } from "util/assets";
-import { selectLocations, selectStandings } from "services/selectors";
+import { selectLocations, selectStandings } from "reducers/selectors";
 
 import LocationsDisplay from "./LocationsDisplay";
 
@@ -40,8 +40,8 @@ export default function Standings() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actions.getStandings());
-    dispatch(teamActions.getTeamLocations());
+    dispatch(getStandings());
+    dispatch(getTeamLocations());
   }, []);
 
   if (!standings) {
