@@ -1,36 +1,18 @@
-import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { act } from 'react-dom/test-utils';
+import { render } from "@testing-library/react";
+import React from "react";
+import Loader from "./Loader";
 
-import Loader from './Loader';
+describe("Loader component", () => {
+  it("renders loading without parameters", () => {
+    const { container } = render(<Loader />);
 
-describe('Loader component', () => {
-  let container = null;
-  beforeEach(() => {
-    // setup a DOM element as a render target
-    container = document.createElement('div');
-    document.body.appendChild(container);
+    expect(container.textContent).toBe("Loading...");
   });
 
-  afterEach(() => {
-    // cleanup on exiting
-    unmountComponentAtNode(container);
-    container.remove();
-    container = null;
-  });
+  it("renders text given as parameter", () => {
+    const testingText = "Testing text";
 
-  it('renders loading without parameters', () => {
-    act(() => { render(<Loader />, container); });
-
-    expect(container.textContent).toBe('Loading...');
-  });
-
-  it('renders text given as parameter', () => {
-    const testingText = 'Testing text';
-
-    act(() => {
-      render(<Loader text={testingText} />, container);
-    });
+    const { container } = render(<Loader text={testingText} />);
 
     expect(container.textContent).toBe(testingText);
   });

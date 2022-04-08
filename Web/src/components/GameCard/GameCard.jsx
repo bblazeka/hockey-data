@@ -37,7 +37,7 @@ export default function GameCard(props) {
     return <Loader></Loader>;
   }
   const { home, away, season, status } = game;
-  const finished = status.statusCode === "7";
+  const finished = status?.statusCode === "7";
 
   return (
     <Card

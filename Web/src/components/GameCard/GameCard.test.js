@@ -1,94 +1,63 @@
-import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { act } from 'react-dom/test-utils';
+import { render } from "@testing-library/react";
+import React from "react";
+import GameCard from "./GameCard";
 
-import GameCard from './GameCard';
-
-describe('GameCard component', () => {
-  let container = null;
+describe("GameCard component", () => {
   let baseGame = {
-    teams: {
-      home: {
-        team: { id: 1, name: 'Test 1' },
-        shotsOnGoal: 1,
-        goals: 1
-      },
-      away: {
-        team: { id: 2, name: 'Test 2' },
-        shotsOnGoal: 2,
-        goals: 2
-      }
-    }
+    home: {
+      team: { id: 1, name: "Test 1" },
+      leagueRecord: { wins: 0, losses: 0, ot: 0 },
+      shotsOnGoal: 1,
+      goals: 1,
+    },
+    away: {
+      team: { id: 2, name: "Test 2" },
+      leagueRecord: { wins: 0, losses: 0, ot: 0 },
+      shotsOnGoal: 2,
+      goals: 2,
+    },
   };
-  beforeEach(() => {
-    // setup a DOM element as a render target
-    container = document.createElement('div');
-    document.body.appendChild(container);
+
+  it("renders loading when no parameter", () => {
+    const { container } = render(<GameCard />);
+
+    expect(container.textContent).toBe("Loading...");
   });
 
-  afterEach(() => {
-    // cleanup on exiting
-    unmountComponentAtNode(container);
-    container.remove();
-    container = null;
-  });
-
-  it('renders loading when no parameter', () => {
-
-    act(() => {
-      render(<GameCard />, container);
-    });
-
-    expect(container.textContent).toBe('Loading...');
-  });
-
-  it('renders ongoing game', () => {
-    const currentTime = '10:00';
-    const currentPeriod = '3rd';
-
-    const game = Object.assign(baseGame, {
+  it("renders scheduled game", () => {
+    const scheduledLabel = "Scheduled";
+    const game = {
+      ...baseGame,
       ongoingGame: true,
+      status: {
+        abstractGameState: "Preview",
+        detailedState: "Scheduled",
+        statusCode: "1",
+      },
       finished: false,
-      currentPeriodOrdinal: currentPeriod,
-      currentPeriodTimeRemaining: currentTime
-    });
+    };
 
-    act(() => {
-      render(<GameCard game={game} />, container);
-    });
+    const { container } = render(<GameCard game={game} />);
 
-    expect(container.textContent).toContain(currentTime);
-    expect(container.textContent).toContain(currentPeriod);
+    expect(container.textContent).toContain(scheduledLabel);
   });
 
-  it('renders planned game', () => {
-    const gameTime = '10:00';
-    const game = Object.assign(baseGame, {
-      ongoingGame: false,
-      finished: false,
-      gameTime
-    });
-    
-    act(() => {
-      render(<GameCard game={game} />, container);
-    });
+  it("renders finished game", () => {
+    const finalLabel = "Final";
 
-    expect(container.textContent).toContain(gameTime);
-  });
-
-  it('renders finished game', () => {
-    const finalLabel = 'Final';
-
-    const game = Object.assign(baseGame, {
+    const game = {
+      ...baseGame,
       ongoingGame: true,
-      currentPeriodOrdinal: '3rd',
+      status: {
+        abstractGameState: "Final",
+        detailedState: "Final",
+        statusCode: "7",
+      },
       currentPeriodTimeRemaining: finalLabel,
-      finished: true
-    });
-    
-    act(() => {
-      render(<GameCard game={game} />, container);
-    });
+      finished: true,
+    };
+
+    const { container } = render(<GameCard game={game} />);
 
     expect(container.textContent).toContain(finalLabel);
   });

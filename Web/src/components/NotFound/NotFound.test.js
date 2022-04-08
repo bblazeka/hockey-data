@@ -1,36 +1,18 @@
-import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { act } from 'react-dom/test-utils';
+import { render } from "@testing-library/react";
+import React from "react";
+import NotFound from "./NotFound";
 
-import NotFound from './NotFound';
+describe("NotFound component", () => {
+  it("renders not found without text parameter", () => {
+    const { container } = render(<NotFound />);
 
-describe('NotFound component', () => {
-  let container = null;
-  beforeEach(() => {
-    // setup a DOM element as a render target
-    container = document.createElement('div');
-    document.body.appendChild(container);
+    expect(container.textContent).toBe("Not found.");
   });
 
-  afterEach(() => {
-    // cleanup on exiting
-    unmountComponentAtNode(container);
-    container.remove();
-    container = null;
-  });
+  it("renders text given as parameter", () => {
+    const testingText = "Testing text";
 
-  it('renders not found without text parameter', () => {
-    act(() => { render(<NotFound />, container); });
-
-    expect(container.textContent).toBe('Not found.');
-  });
-
-  it('renders text given as parameter', () => {
-    const testingText = 'Testing text';
-
-    act(() => {
-      render(<NotFound text={testingText} />, container);
-    });
+    const { container } = render(<NotFound text={testingText} />);
 
     expect(container.textContent).toBe(testingText);
   });
