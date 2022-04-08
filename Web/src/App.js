@@ -9,12 +9,11 @@ import "./App.css";
 import routes from "./routes";
 import * as leagueActions from "./services/league/actions";
 import { getLogo } from "./util/assets";
-import { ErrorFallback } from "./components";
+import { ErrorFallback, Loader } from "components";
 import AppFooter from "AppFooter";
 
 import { useInitIDB, ConfigurationContext } from "util/indexedDB";
 import { selectApp } from "services/selectors";
-import Loader from "components/Loader/Loader";
 
 function App({ children, history }) {
   const [activeItem, setActiveItem] = useState("home");

@@ -5,10 +5,9 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 
-import { Loader, NotFound } from "components";
+import { Loader, NotFound, MiniGameCard } from "components";
 import { IsNullOrUndefined } from "util/common";
 import { dailyGames as dailyGamesQuery } from "services/game/querySchemas";
-import MiniGameCard from "components/GameCard/MiniGameCard";
 
 const HeaderStyled = styled(Header)`
   display: flex;
