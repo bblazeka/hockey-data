@@ -2,10 +2,9 @@ import {
   analysisResolvers,
   gameResolvers,
   leagueResolvers,
-  newsResolvers,
+  miscResolvers,
   playerResolvers,
   teamResolvers,
-  utilResolvers,
 } from "./services";
 
 const funcWrapper = (functionName) => (parent, args, context, info) => {
@@ -27,14 +26,14 @@ export function getResolvers() {
       player: funcWrapper(playerResolvers.getPlayer),
       searchPlayerByName: funcWrapper(playerResolvers.getPlayerByName),
       selectedPlayers: funcWrapper(playerResolvers.getSelectedPlayers),
-      articles: funcWrapper(newsResolvers.getArticles),
-      tweets: funcWrapper(newsResolvers.getTweets),
-      twitterApiStatus: funcWrapper(newsResolvers.getTwitterApiStatus),
+      articles: funcWrapper(miscResolvers.getArticles),
+      tweets: funcWrapper(miscResolvers.getTweets),
+      twitterApiStatus: funcWrapper(miscResolvers.getTwitterApiStatus),
       schedule: funcWrapper(leagueResolvers.getSchedule),
       scheduleByTeam: funcWrapper(teamResolvers.getTeamSchedule),
       standings: funcWrapper(leagueResolvers.getStandings),
       divisionsWithTeams: funcWrapper(leagueResolvers.divisionsWithTeams),
-      geocode: funcWrapper(utilResolvers.geocode),
+      geocode: funcWrapper(miscResolvers.geocode),
     },
     /*Mutation: {
       addSelectedPlayer: funcWrapper(playerResolvers.addSelectedPlayer),

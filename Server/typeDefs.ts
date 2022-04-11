@@ -2,10 +2,9 @@ import { analysisSchema } from "./schemas/analysis";
 import { querySchema } from "./schemas/query";
 import { gameSchema } from "./schemas/game";
 import { leagueSchema } from "./schemas/league";
-import { newsSchema } from "./schemas/news";
+import { miscSchema } from "./schemas/misc";
 import { playerSchema } from "./schemas/player";
 import { teamSchema } from "./schemas/team";
-import { utilSchema } from "./schemas/util";
 
 export function getTypeDefs() {
   return [
@@ -13,9 +12,8 @@ export function getTypeDefs() {
     querySchema,
     gameSchema,
     leagueSchema,
-    newsSchema,
+    miscSchema,
     playerSchema,
     teamSchema,
-    utilSchema,
   ];
 }
