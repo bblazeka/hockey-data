@@ -84,7 +84,7 @@ async function run(season = "20212022") {
             };
           });
 
-        const lines = await scrapping.scrapLines(teamRecord.team.name);
+        const lines = await scrapping.scrapLines(teamRecord.team.name, playersRoster);
 
         const teamStats = await apicomm.nhlApiRequest(
           `/api/v1/teams/${teamRecord.team.id}/stats`

@@ -12,6 +12,7 @@
     "luxon": "^1.26.0",
     "mongodb": "^3.6.2",
     "node-fetch": "^2.6.7",
+    "string-similarity": "^4.0.4",
     "twitter": "^1.7.1"
   },
   "license": "MIT"

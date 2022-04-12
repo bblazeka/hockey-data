@@ -82,22 +82,22 @@ export const getTeamAnalysis = gql`
       }
       lines {
         goalies {
-          starter
-          backup
+          starter { id, number, name }
+          backup { id, number, name }
         }
         lines {
-          leftDefender
-          rightDefender
-          leftWing
-          center
-          rightWing
+          leftDefender { id, number, name }
+          rightDefender { id, number, name }
+          leftWing { id, number, name }
+          center { id, number, name }
+          rightWing { id, number, name }
         }
         ppLines {
-          leftDefender
-          rightDefender
-          leftWing
-          center
-          rightWing
+          leftDefender { id, number, name }
+          rightDefender { id, number, name }
+          leftWing { id, number, name }
+          center { id, number, name }
+          rightWing { id, number, name }
         }
       }
       rosterStats {

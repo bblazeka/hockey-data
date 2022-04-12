@@ -4,19 +4,38 @@ import { Grid, Header } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { NotFound, Loader } from "components";
-import { IsNullOrUndefined } from "util/common";
+import routes from "routes";
 
 const PlayerNameStyled = styled.div`
   text-align: center;
 `;
 
+function renderPlayerNameComponent(linePlayer, key) {
+  if (!linePlayer) {
+    return <></>;
+  }
+  const { id, name, number } = linePlayer;
+  return (<PlayerNameStyled key={key}>
+    <a href={`${routes.player}/${id}`}>#{number} {name}</a>
+  </PlayerNameStyled>);
+}
+
 function Lineup({ lines }) {
-  if (IsNullOrUndefined(lines)) {
+  if (!lines) {
     return <Loader text="Loading lines..."></Loader>;
   }
-  if (IsNullOrUndefined(lines.lines)) {
+  if (!lines.lines) {
     return <NotFound text="Lines not found."></NotFound>;
   }
+  const [leftDefenders, rightDefenders, leftWings, centers, rightWings] = [[],[],[],[],[]];
+  
+  lines.lines.map((line, index) => {
+    leftWings.push(renderPlayerNameComponent(line.leftWing, `lw${index}`));
+    centers.push(renderPlayerNameComponent(line.center, `c${index}`));
+    rightWings.push(renderPlayerNameComponent(line.rightWing, `rw${index}`));
+    leftDefenders.push(renderPlayerNameComponent(line.leftDefender, `ld${index}`));
+    rightDefenders.push(renderPlayerNameComponent(line.rightDefender, `rd${index}`));
+  });
   return (
     <>
       <Header as="h3">
@@ -25,60 +44,30 @@ function Lineup({ lines }) {
           Fetched from <a href="https://www.dailyfaceoff.com/">DailyFaceoff</a>.
         </Header.Subheader>
       </Header>
-      <Grid>
+      <Grid verticalAlign='middle' centered>
         <Grid.Row columns={3}>
           <Grid.Column>
-            {lines.lines.map((line, index) => {
-              return (
-                <PlayerNameStyled key={`lw${index}`}>
-                  {line.leftWing}
-                </PlayerNameStyled>
-              );
-            })}
+            {leftWings}
           </Grid.Column>
           <Grid.Column>
-            {lines.lines.map((line, index) => {
-              return (
-                <PlayerNameStyled key={`c${index}`}>
-                  {line.center}
-                </PlayerNameStyled>
-              );
-            })}
+            {centers}
           </Grid.Column>
           <Grid.Column>
-            {lines.lines.map((line, index) => {
-              return (
-                <PlayerNameStyled key={`rw${index}`}>
-                  {line.rightWing}
-                </PlayerNameStyled>
-              );
-            })}
+            {rightWings}
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={2}>
           <Grid.Column>
-            {lines.lines.map((line, index) => {
-              return (
-                <PlayerNameStyled key={`ld${index}`}>
-                  {line.leftDefender}
-                </PlayerNameStyled>
-              );
-            })}
+            {leftDefenders}
           </Grid.Column>
           <Grid.Column>
-            {lines.lines.map((line, index) => {
-              return (
-                <PlayerNameStyled key={`rd${index}`}>
-                  {line.rightDefender}
-                </PlayerNameStyled>
-              );
-            })}
+            {rightDefenders}
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row>
+        <Grid.Row centered>
           <Grid.Column>
-            <PlayerNameStyled>{lines.goalies.starter}</PlayerNameStyled>
-            <PlayerNameStyled>{lines.goalies.backup}</PlayerNameStyled>
+            <PlayerNameStyled>{renderPlayerNameComponent(lines.goalies.starter, "g1")}</PlayerNameStyled>
+            <PlayerNameStyled>{renderPlayerNameComponent(lines.goalies.backup, "g2")}</PlayerNameStyled>
           </Grid.Column>
         </Grid.Row>
       </Grid>

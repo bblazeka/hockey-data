@@ -46,7 +46,7 @@ async function run() {
             altName: playerTemp.altName,
             firstName: player.firstName,
             lastName: player.lastName,
-            primaryNumber: parseInt(player.primaryNumber),
+            primaryNumber: parseInt(player.primaryNumber ?? 0),
             currentAge: player.currentAge,
             birthDate: player.birthDate,
             height: Math.ceil(
