@@ -1,5 +1,3 @@
-import { sortBy } from "lodash";
-
 import { Database } from "adapters/dbhandler";
 import { getActiveTeams } from "./teamResolvers";
 import { EDatabaseCollection } from "utils/enums";
@@ -14,8 +12,9 @@ async function getAnalysis() {
   const teams = await db
     .getCollection(EDatabaseCollection.analysis)
     .find({})
+    .sort({ leagueRank: 1})
     .toArray();
-  return sortBy(teams, "leagueRank");
+  return teams;
 }
 
 type TGetTeamAnalysisParams = {

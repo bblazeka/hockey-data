@@ -1,4 +1,4 @@
-import { sortBy, isNil, toInteger } from "lodash";
+import { isNil, toInteger } from "lodash";
 import { DateTime } from "luxon";
 
 import { Database } from "adapters/dbhandler";
@@ -24,7 +24,7 @@ async function gamesBetweenTeams({
   opponentId,
   season,
 }: TGamesBetweenTeamsParams) {
-  const dbGames = await db
+  const games = await db
     .getCollection(EDatabaseCollection.games)
     .find({
       $and: [
@@ -47,13 +47,13 @@ async function gamesBetweenTeams({
         },
       ],
     })
+    .sort({
+      gameDate: 1
+    })
     .toArray();
   const activeTeams = await getActiveTeams();
   const team = activeTeams.find((team) => team.id === teamId);
   const opponent = activeTeams.find((team) => team.id === opponentId);
-  const games = sortBy(dbGames, function (game) {
-    return new Date(game.gameDate);
-  });
 
   let teamGoals = 0;
   let opponentGoals = 0;
@@ -189,10 +189,10 @@ async function getDailyGames({ dateISO }: TGetDailyGamesParams) {
     .find({
       date: dateISO ?? DateTime.now().toISODate(),
     })
+    .sort({
+      gameDate: 1
+    })
     .toArray();
-  sortBy(games, function (game) {
-    return new Date(game.gameDate);
-  });
   return games.map(async (game) => {
     const result = await nhlApiRequest(`/api/v1/game/${game.gamePk}/linescore`);
     const isOngoingGame =

@@ -4,7 +4,7 @@ type TTeam = {
   name: string;
   description: string;
   active: boolean;
-  venue: TApiVenue;
+  venue: TVenue;
   colorScheme: string;
   rosterResponse: TPlayer[];
   goalies: TPlayer[];

@@ -44,7 +44,6 @@ function findPlayerProfile(roster, name) {
     }
   } else {
     const bestMatch = stringSimilarity.findBestMatch(name, roster.map(player => player.person.fullName)); 
-    console.log(name, bestMatch.bestMatch.target, bestMatch.bestMatch.rating);
     if (bestMatch.bestMatch.rating > 0.3) {
       const bestMatchPlayer = roster[bestMatch.bestMatchIndex];
       result = {
