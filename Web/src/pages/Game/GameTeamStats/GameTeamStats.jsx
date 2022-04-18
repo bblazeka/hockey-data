@@ -22,7 +22,7 @@ function GameTeamStats(props) {
   const skaterStats = team.skaters.map((skater) => ({
     ...skater.stats,
     customName: (
-      <Table.Cell>
+      <Table.Cell key={`customName${skater.person.id}`}>
         <Link to={`${routes.player}/${skater.person.id}`}>
           <Header as="h4">
             {skater.person.fullName}
@@ -38,7 +38,7 @@ function GameTeamStats(props) {
   const goalieStats = team.goalies.map((goalie) => ({
     ...goalie.stats,
     customName: (
-      <Table.Cell>
+      <Table.Cell key={`customName${goalie.person.id}`}>
         <Link to={`${routes.player}/${goalie.person.id}`}>
           <Header as="h4">
             {goalie.person.fullName}

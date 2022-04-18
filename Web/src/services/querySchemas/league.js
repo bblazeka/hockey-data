@@ -1,3 +1,5 @@
+import gql from "graphql-tag";
+
 export const getSchedule = /* GraphQL */`
   query game($start: String, $end: String){
     schedule(start: $start, end: $end) {
@@ -89,7 +91,7 @@ export const getTeamSchedule = /* GraphQL */`
     }
   }`;
 
-export const getStandings = /* GraphQL */`
+export const getStandings = gql`
 query standings($season: String)
   {
     standings(season: $season) { 
@@ -116,7 +118,7 @@ query standings($season: String)
     }
   }`;
 
-export const getDivisionsWithTeams = /* GraphQL */`
+export const getDivisionsWithTeams = gql`
 query divisionsWithTeams
 {
     divisionsWithTeams { 

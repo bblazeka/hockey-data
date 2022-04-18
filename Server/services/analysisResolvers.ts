@@ -12,6 +12,7 @@ async function getAnalysis() {
   const teams = await db
     .getCollection(EDatabaseCollection.analysis)
     .find({})
+    .project({ rosterStats: 0, lines: 0})
     .sort({ leagueRank: 1})
     .toArray();
   return teams;

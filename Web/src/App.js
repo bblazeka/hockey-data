@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { withRouter, NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { Dropdown, Menu } from "semantic-ui-react";
 import { ErrorBoundary } from "react-error-boundary";
+import { useQuery } from "@apollo/client";
 
 import "./App.css";
 import routes from "./routes";
@@ -12,17 +11,12 @@ import { ErrorFallback, Loader } from "components";
 import AppFooter from "AppFooter";
 
 import { useInitIDB, ConfigurationContext } from "util/indexedDB";
-import { selectApp } from "reducers/selectors";
-import { getDivisionsWithTeams } from "reducers/leagueActions";
+import { getDivisionsWithTeams } from "services/querySchemas/league";
 
 function App({ children, history }) {
   const [activeItem, setActiveItem] = useState("home");
-  const dispatch = useDispatch();
-  const { divisionsWithTeams } = useSelector(selectApp);
+  const { loading, data } = useQuery(getDivisionsWithTeams);
 
-  useEffect(() => {
-    dispatch(getDivisionsWithTeams());
-  }, []);
   const {
     database,
     getSelectedPlayers,
@@ -56,9 +50,10 @@ function App({ children, history }) {
     window.location = "/";
   }
 
-  if (!database) {
+  if (!database || loading) {
     return <Loader />;
   }
+  const { divisionsWithTeams } = data;
 
   return (
     <div className="App">

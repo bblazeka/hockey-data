@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Checkbox, Grid, Header, Image, Segment } from "semantic-ui-react";
+import { Button, Grid, Header, Icon, Image, Segment } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { Loader, Map, NewsFeed, SocialFeed } from "components";
 import { getLogo } from "util/assets";
+import routes from "routes";
 import { selectTeamObject } from "reducers/selectors";
 import {getTeam as getTeamQuery} from "services/querySchemas/team";
 
@@ -37,10 +38,10 @@ export default function Team() {
   const { tweets, news, teamGames, location } =
     useSelector(selectTeamObject);
   let { id } = useParams();
-  const { data } = useQuery(getTeamQuery, {variables: { id: parseInt(id) }});
+  const { loading, data } = useQuery(getTeamQuery, {variables: { id: parseInt(id) }});
 
   useEffect(() => fetchTeamData(dispatch, data?.team), [data]);
-  if (!data) {
+  if (loading) {
     return <Loader />;
   }
   const { team } = data;
@@ -58,13 +59,14 @@ export default function Team() {
       <DescriptionContainer>{team.description}</DescriptionContainer>
       <RosterGrid team={team} filterPlayers={filterActive} />
       <Segment>
-        <Checkbox
-          checked={filterActive}
-          label="Show active players only"
-          onChange={(_, data) => {
-            setFilterActive(data.checked);
-          }}
-        />
+        <Button as="a" href={`${routes.analysis}/${team.id}`} icon labelPosition='left'>
+          <Icon name='line graph' /> Analysis
+        </Button>
+        <Button
+          active={filterActive}
+          onClick={() => setFilterActive(!filterActive)}
+        >{filterActive ? "Show all players" : "Hide inactive players"}
+          </Button>
       </Segment>
       <TeamSchedule games={teamGames} />
       <Grid columns={2}>
