@@ -2,6 +2,7 @@ import { Db, Document, MongoClient, WithId } from "mongodb";
 import dbkey from "keys/db.json";
 
 export interface TDbTeam extends WithId<Document>, TTeam {}
+export interface TDbPlayer extends WithId<Document>, TPlayer {}
 
 export class Database {
   client: MongoClient | undefined;

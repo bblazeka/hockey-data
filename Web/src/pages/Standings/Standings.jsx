@@ -3,16 +3,18 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Header, Table } from "semantic-ui-react";
 import styled from "styled-components";
+import { useQuery } from "@apollo/client";
 
-import { getStandings } from "reducers/leagueActions";
 import {getTeamLocations} from "reducers/teamActions";
 import { Loader } from "components";
 import { LogoStyled } from "components/collection";
 import routes from "routes";
 import { getLogo } from "util/assets";
-import { selectLocations, selectStandings } from "reducers/selectors";
+import { selectLocations } from "reducers/selectors";
+import config from "util/config.json";
 
 import LocationsDisplay from "./LocationsDisplay";
+import { getStandings } from "services/querySchemas/league";
 
 const StandingsContainer = styled(Grid.Column)`
   display: flex;
@@ -34,19 +36,19 @@ const PointsCell = styled(Table.Cell)`
 `;
 
 export default function Standings() {
-  const { standings } = useSelector(selectStandings);
+  const { loading, data } = useQuery(getStandings, {variables: { season: config.currentSeason }});
   const { locations } = useSelector(selectLocations);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getStandings());
     dispatch(getTeamLocations());
   }, []);
 
-  if (!standings) {
+  if (loading) {
     return <Loader text="Loading standings..."></Loader>;
   }
+  const { standings } = data;
 
   return (
     <>

@@ -99,7 +99,7 @@ function RosterStatsGrid({ skaterStats, goalieStats }) {
   );
 }
 
-RosterStatsGrid.PropTypes = {
+RosterStatsGrid.propTypes = {
   skaterStats: PropTypes.arrayOf(PropTypes.object),
   goalieStats: PropTypes.arrayOf(PropTypes.object),
 };

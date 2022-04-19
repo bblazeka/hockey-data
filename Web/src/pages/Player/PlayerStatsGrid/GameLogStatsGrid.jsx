@@ -26,6 +26,10 @@ const TeamLogosContainer = styled.div`
   align-items: center;
 `;
 
+const LoaderContainer = styled.div`
+  min-height: 6vh;
+`;
+
 function GameLogGrid(props) {
   const { skater } = props;
   let { id } = useParams();
@@ -36,7 +40,7 @@ function GameLogGrid(props) {
     variables: { id: parseInt(id), seasonId },
   });
   if (loading) {
-    return <Loader></Loader>;
+    return <LoaderContainer><Loader/></LoaderContainer>;
   }
   const { gameLog } = dataRaw.playerDetailedStats;
 

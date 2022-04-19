@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@apollo/client";
 import styled from "styled-components";
+import dayjs from "dayjs";
 
 import { getTeams } from "reducers/teamActions";
 import { getLogo } from "util/assets";
@@ -82,7 +83,7 @@ export default function TeamAnalysis() {
     <Tab.Pane>
       <div>
         <Lineup lines={teamAnalysis.lines}></Lineup>
-        <span>Last update: {teamAnalysis.lastUpdated}</span>
+        <span>Last update: {dayjs(teamAnalysis.lastUpdated).format("DD.MM.YYYY HH:mm")}</span>
       </div>
     </Tab.Pane>
   );

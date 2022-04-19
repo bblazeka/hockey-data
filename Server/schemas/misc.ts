@@ -1,6 +1,6 @@
 import { gql } from "apollo-server-lambda";
 
-export const newsSchema = gql`
+export const miscSchema = gql`
   type TwitterStats {
     requests: Int
   }
@@ -42,5 +42,24 @@ export const newsSchema = gql`
 
   type Entity {
     text: String
+  }
+
+  type TeamLocations {
+    teamLocations: [Location]
+    seasonDescription: String
+    divisions: [KeyValue]
+  }
+
+  type Location {
+    id: Int
+    text: String
+    placeName: String
+    color: String
+    center: [Float]
+  }
+
+  type KeyValue {
+    key: String
+    value: String
   }
 `;

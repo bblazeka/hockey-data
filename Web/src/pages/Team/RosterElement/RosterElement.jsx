@@ -7,7 +7,6 @@ import routes from "routes";
 import {
   generateSemanticUICountryId,
   FormatNumberToCurrency,
-  IsNullOrUndefined,
 } from "util/common";
 import { Loader } from "components";
 
@@ -21,13 +20,13 @@ const RosterPartComponent = styled.div`
 
 function RosterElement(props) {
   const { filterPlayers, players, title } = props;
-  if (IsNullOrUndefined(players)) {
-    return <Loader></Loader>;
+  if (!players) {
+    return <Loader />;
   }
   return (
     <RosterPartComponent>
       <Header as="h4">{title}</Header>
-      <Table>
+      <Table compact>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Num</Table.HeaderCell>

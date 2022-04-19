@@ -1,6 +1,6 @@
 import { isNil, sortBy } from "lodash";
-import { wikiApiRequest, wikiApiAdvancedRequest } from "adapters/apihandler";
-import { Database, TDbTeam } from "adapters/dbhandler";
+import { wikiApiRequest } from "adapters/apihandler";
+import { Database, TDbPlayer, TDbTeam } from "adapters/dbhandler";
 import { EDatabaseCollection } from "utils/enums";
 
 let db = new Database();
@@ -9,18 +9,21 @@ function init(database: Database) {
   db = database;
 }
 
-async function getPlayersFromTeam(teamId: number) {
+async function getPlayersFromTeam(teamId: number): Promise<TDbPlayer[]> {
   const items = await db
     .getCollection(EDatabaseCollection.players)
     .find({ "currentTeam.id": teamId })
-    .toArray();
+    .toArray() as TDbPlayer[];
   return items;
 }
 
-async function getTeam({ id }) {
+type TGetTeamParams = {
+  id: number;
+}
+
+async function getTeam({ id }: TGetTeamParams): Promise<TDbTeam> {
   const collection = db.getCollection(EDatabaseCollection.teams);
-  const query = { id: id };
-  const team = await collection.findOne(query);
+  const team = (await collection.findOne({ id })) as TDbTeam;
   if (!isNil(team)) {
     const rosterResponse = await getPlayersFromTeam(id);
     team.goalies = rosterResponse.filter(
@@ -32,10 +35,6 @@ async function getTeam({ id }) {
     team.forwards = rosterResponse.filter(
       (p) => p.primaryPosition.type == "Forward"
     );
-    team.description = (await wikiApiRequest(team.name)).extract;
-    team.venue.description = (
-      await wikiApiAdvancedRequest(team.venue.name, team.venue.city)
-    ).extract;
   }
   return team;
 }

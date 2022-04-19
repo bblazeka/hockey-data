@@ -22,15 +22,21 @@ export const teamSchema = gql`
   }
 
   type Goalies {
-    starter: String
-    backup: String
+    starter: LinePlayer
+    backup: LinePlayer
   }
 
   type Line {
-    leftDefender: String
-    rightDefender: String
-    leftWing: String
-    center: String
-    rightWing: String
+    leftDefender: LinePlayer
+    rightDefender: LinePlayer
+    leftWing: LinePlayer
+    center: LinePlayer
+    rightWing: LinePlayer
+  }
+
+  type LinePlayer {
+    id: Int
+    number: String
+    name: String
   }
 `;

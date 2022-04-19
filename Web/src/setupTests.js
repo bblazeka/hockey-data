@@ -5,4 +5,4 @@
 import '@testing-library/jest-dom';
 
 // eslint-disable-next-line react/react-in-jsx-scope, no-undef
-jest.mock('./components/Map/Map.jsx', () => { return function DummyMap(props) { return (<div data-testid="map">{props.center.lat}:{props.center.long}</div>); }; });
+jest.mock('./components/Map.jsx', () => { return function DummyMap(props) { return (<div data-testid="map">{props.center.lat}:{props.center.long}</div>); }; });

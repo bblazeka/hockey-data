@@ -27,11 +27,14 @@ async function run() {
           active: team.active,
           abbreviation: team.abbreviation,
           locationName: team.locationName,
+          description: (await apicomm.wikiApiRequest(team.name)).extract,
           firstYearOfPlay: parseInt(team.firstYearOfPlay),
           franchiseId: team.franchiseId,
           division: team.division,
           conference: team.conference,
-          venue: team.venue,
+          venue: team.venue ? {...team.venue, description: (
+            await apicomm.wikiApiAdvancedRequest(team.venue.name, team.venue.city)
+          ).extract }: undefined,
           location: location.features.map((el) => {
             return {
               text: el.text,

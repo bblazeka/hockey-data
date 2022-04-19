@@ -76,7 +76,7 @@ export async function getPlayer({ id }) {
   player.description = (
     await playerWikiRequest(
       player.fullName,
-      `(ice hockey, born ${player.birthDate.split("-")[0]})`
+      `(ice hockey, born ${player.birthDate?.split("-")[0]})`
     )
   ).extract;
   return player;
