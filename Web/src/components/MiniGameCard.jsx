@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 import { Loader } from "components";
 import { getLogo } from "util/assets";
-import { IsNullOrUndefined } from "util/common";
 import routes from "routes";
 
 const MiniGameContainer = styled(Card)`
@@ -40,8 +39,8 @@ const GameTeamLogo = styled.img`
 `;
 
 export default function MiniGameCard({ game }) {
-  if (IsNullOrUndefined(game)) {
-    return <Loader></Loader>;
+  if (!game) {
+    return <Loader />;
   }
   const { home, away } = game.teams;
   const gameScore = game.ongoingGame ? `${home.goals}:${away.goals}` : "-:-";

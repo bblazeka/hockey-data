@@ -1,37 +1,23 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import React from "react";
-
 import { DEFAULT_LOADING_TEXT } from "util/common";
+import { mockGame } from "util/mocks";
 
-import GameCard from "./GameCard";
+import MiniGameCard from "./MiniGameCard";
 
-describe("GameCard component", () => {
-  let baseGame = {
-    home: {
-      team: { id: 1, name: "Test 1" },
-      leagueRecord: { wins: 0, losses: 0, ot: 0 },
-      shotsOnGoal: 1,
-      goals: 1,
-    },
-    away: {
-      team: { id: 2, name: "Test 2" },
-      leagueRecord: { wins: 0, losses: 0, ot: 0 },
-      shotsOnGoal: 2,
-      goals: 2,
-    },
-  };
+describe("MiniGameCard component", () => {
+  let baseGame = mockGame();
 
   it("renders loading when no parameter", () => {
-    const { container } = render(<GameCard />);
+    const { container } = render(<MiniGameCard />);
 
     expect(container.textContent).toBe(DEFAULT_LOADING_TEXT);
   });
 
   it("renders scheduled game", () => {
-    const scheduledLabel = "Scheduled";
     const game = {
       ...baseGame,
-      ongoingGame: true,
+      ongoingGame: false,
       status: {
         abstractGameState: "Preview",
         detailedState: "Scheduled",
@@ -40,9 +26,10 @@ describe("GameCard component", () => {
       finished: false,
     };
 
-    const { container } = render(<GameCard game={game} />);
+    render(<MiniGameCard game={game} />);
 
-    expect(container.textContent).toContain(scheduledLabel);
+    const resultContainer = screen.getByText("-:-");
+    expect(resultContainer).toBeInTheDocument();
   });
 
   it("renders finished game", () => {
@@ -60,7 +47,7 @@ describe("GameCard component", () => {
       finished: true,
     };
 
-    const { container } = render(<GameCard game={game} />);
+    const { container } = render(<MiniGameCard game={game} />);
 
     expect(container.textContent).toContain(finalLabel);
   });

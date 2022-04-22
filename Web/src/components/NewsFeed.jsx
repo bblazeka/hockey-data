@@ -1,16 +1,16 @@
 import React from "react";
 import { Header, Item } from "semantic-ui-react";
 import dayjs from "dayjs";
+import PropTypes from "prop-types";
 
 import { Loader, NotFound } from "components";
-import { IsNullOrUndefined } from "util/common";
 
 function NewsFeed({ news }) {
-  if (IsNullOrUndefined(news)) {
-    return <Loader text="Loading news feed..."></Loader>;
+  if (!news) {
+    return <Loader />;
   }
   return (
-    <div className="news-container">
+    <div>
       <Header as="h3">News</Header>
       {news.length === 0 && <NotFound />}
       <Item.Group>
@@ -27,7 +27,7 @@ function NewsFeed({ news }) {
                   {article.title}
                 </Item.Header>
                 <Item.Meta>
-                  {article.author} ({article.source.name})
+                  {article.author} ({article?.source?.name})
                 </Item.Meta>
                 <Item.Description>{article.content}</Item.Description>
                 <Item.Extra>{dayjs(article.publishedAt).toString()}</Item.Extra>
@@ -39,5 +39,9 @@ function NewsFeed({ news }) {
     </div>
   );
 }
+
+NewsFeed.propTypes = {
+  news: PropTypes.arrayOf(PropTypes.object)
+};
 
 export default React.memo(NewsFeed);

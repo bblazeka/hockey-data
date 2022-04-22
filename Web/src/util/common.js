@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const DEFAULT_LOADING_TEXT = "Loading...";
+export const DEFAULT_NOT_FOUND_TEXT = "Not found.";
 
 let formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
