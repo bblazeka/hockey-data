@@ -1,5 +1,7 @@
 import axios from "axios";
 
+export const DEFAULT_LOADING_TEXT = "Loading...";
+
 let formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",

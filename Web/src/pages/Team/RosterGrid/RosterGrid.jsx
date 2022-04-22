@@ -1,19 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import { Loader } from "components";
 
 import RosterElement from "../RosterElement/RosterElement";
-import { IsNullOrUndefined } from "../../../util/common";
 
 const RosterDisplayStyled = styled.div`
   display: block;
 `;
 
-function RosterGrid(props) {
-  const { filterPlayers, team } = props;
-  if (IsNullOrUndefined(team)) {
-    return <Loader></Loader>;
+function RosterGrid({ filterPlayers, team }) {
+  if (!team) {
+    return <Loader/>;
   }
   return (
     <>
@@ -37,5 +36,10 @@ function RosterGrid(props) {
     </>
   );
 }
+
+RosterGrid.propTypes = {
+  filterPlayers: PropTypes.bool,
+  team: PropTypes.object,
+};
 
 export default RosterGrid;

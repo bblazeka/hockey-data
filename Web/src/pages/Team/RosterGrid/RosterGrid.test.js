@@ -1,27 +1,34 @@
-import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { act } from 'react-dom/test-utils';
+import React from "react";
+import { render, screen } from "@testing-library/react";
 
-import RosterGrid from './RosterGrid';
+import { mockPlayers } from "util/mocks";
+import { renderWithState } from "util/tests";
+import { DEFAULT_LOADING_TEXT } from "util/common";
 
-describe('RosterGrid component', () => {
-let container = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement('div');
-  document.body.appendChild(container);
-});
+import RosterGrid from "./RosterGrid";
 
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
+describe("RosterGrid component", () => {
+  it('renders loading without parameters', () => {
+    const { container } = render(<RosterGrid />);
+  
+    expect(container.textContent).toBe(DEFAULT_LOADING_TEXT);
+  });
+  it("renders a roster", () => {
+    const team = {
+      goalies: mockPlayers(4),
+      defenders: mockPlayers(4),
+      forwards: mockPlayers(4)
+    };
+    
+    renderWithState(
+      <RosterGrid team={team} filterPlayers={false} />
+    );
 
-it('renders loading without parameters', () => {
-  act(() => { render(<RosterGrid />, container); });
-
-  expect(container.textContent).toBe('Loading...');
-});
+    const goaliesText = screen.getByText("Goalies");
+    const defendersText = screen.getByText("Defenders");
+    const forwardsText = screen.getByText("Forwards");
+    expect(goaliesText).toBeInTheDocument();
+    expect(defendersText).toBeInTheDocument();
+    expect(forwardsText).toBeInTheDocument();
+  });
 });

@@ -2,6 +2,7 @@ import React from "react";
 import { Flag, Header, Table } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import routes from "routes";
 import {
@@ -18,8 +19,7 @@ const RosterPartComponent = styled.div`
   }
 `;
 
-function RosterElement(props) {
-  const { filterPlayers, players, title } = props;
+function RosterElement({ filterPlayers, players, title }) {
   if (!players) {
     return <Loader />;
   }
@@ -80,5 +80,10 @@ function RosterElement(props) {
     </RosterPartComponent>
   );
 }
+RosterElement.propTypes = {
+  filterPlayers: PropTypes.bool,
+  players: PropTypes.arrayOf(PropTypes.object),
+  title: PropTypes.string
+};
 
 export default RosterElement;
