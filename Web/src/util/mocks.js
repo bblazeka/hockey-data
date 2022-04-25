@@ -39,3 +39,23 @@ export const mockGame = () => {
   };
   return baseGame;
 };
+
+export const mockTeamGame = () => {
+  let baseGame = {
+    gamePk: faker.datatype.number(),
+    team: {
+      team: { id: 1, name: "Test 1" },
+      leagueRecord: { wins: 0, losses: 0, ot: 0 },
+      shotsOnGoal: 1,
+      goals: 1,
+    },
+    opponent: {
+      team: { id: 2, name: "Test 2" },
+      leagueRecord: { wins: 0, losses: 0, ot: 0 },
+      shotsOnGoal: 2,
+      goals: 2,
+    },
+    date: faker.datatype.datetime().toDateString()
+  };
+  return baseGame;
+};

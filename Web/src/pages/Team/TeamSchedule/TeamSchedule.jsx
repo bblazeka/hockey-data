@@ -1,10 +1,10 @@
 import React from "react";
 import { Header, List, Image, Segment } from "semantic-ui-react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import { NotFound, Loader } from "components";
 import { getLogo } from "util/assets";
-import { IsNullOrUndefined } from "util/common";
 
 const TeamGameDateStyled = styled.div`
   font-size: 10px;
@@ -12,10 +12,9 @@ const TeamGameDateStyled = styled.div`
   color: gray;
 `;
 
-function TeamSchedule(props) {
-  const { games } = props;
-  if (IsNullOrUndefined(games)) {
-    return <Loader text="Loading team schedule..."></Loader>;
+function TeamSchedule({ games }) {
+  if (!games) {
+    return <Loader />;
   }
   return (
     <>
@@ -44,5 +43,9 @@ function TeamSchedule(props) {
     </>
   );
 }
+
+TeamSchedule.propTypes = {
+  games: PropTypes.arrayOf(PropTypes.object)
+}; 
 
 export default React.memo(TeamSchedule);
