@@ -62,6 +62,7 @@ export const selectSelectedPlayers = createSelector(selectPlayer, (player) => {
 export const selectSchedule = createSelector(selectLeague, (league) => {
   return {
     schedule: league.schedule,
+    scheduleSortOrder: league.scheduleSortOrder
   };
 });
 

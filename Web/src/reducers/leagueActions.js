@@ -32,3 +32,10 @@ export const getTeamSchedule = (id, start, end) => (dispatch) => {
       });
     });
 };
+
+export const setSortOrder = (sortOrder) => (dispatch) => {
+  dispatch({
+    type: LeagueActionTypes.SET_SCHEDULE_SORT_ORDER,
+    payload: sortOrder
+  });
+};

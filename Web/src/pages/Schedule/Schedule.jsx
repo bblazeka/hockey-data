@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Label } from "semantic-ui-react";
+import { Dropdown, Label } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 import styled from "styled-components";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-import { getSchedule } from "reducers/leagueActions";
+import { getSchedule, setSortOrder } from "reducers/leagueActions";
 import { Loader } from "components";
 import { DateToServerFormat, getDatesArray } from "util/common";
 import ScheduleTable from "./ScheduleTable";
 import { selectSchedule } from "reducers/selectors";
+import { useSchedule } from "services/hooks/schedule";
+import { EScheduleSortOrder } from "reducers/leagueReducer";
 
 const SchedulePageStyled = styled.div`
   overflow-x: auto;
@@ -19,6 +21,7 @@ const SchedulePageStyled = styled.div`
 const TagContainerStyled = styled.div`
   display: flex;
   max-width: 400px;
+  padding-left: 1vw;
 `;
 
 const FilterContainer = styled.div`
@@ -43,31 +46,21 @@ const AwayGameTag = styled(Label)`
   background-color: lightblue !important;
 `;
 
-const defaultStart = new Date();
-const defaultEnd = new Date(defaultStart);
-defaultEnd.setDate(defaultStart.getDate() + 7);
+const sortOptions = [{
+  key: 1,
+  text: "Sort by team",
+  value: EScheduleSortOrder.team,
+},
+{
+  key: 2,
+  text: "Sort by score",
+  value: EScheduleSortOrder.score
+}];
 
 export default function Schedule() {
-  const { schedule } = useSelector(selectSchedule);
-  const [start, setStart] = useState(defaultStart);
-  const [end, setEnd] = useState(defaultEnd);
+  const { schedule, scheduleSortOrder } = useSelector(selectSchedule);
   const dispatch = useDispatch();
-  const setStartControl = (date) => {
-    if (date.getTime() > end.getTime()) {
-      const newEndDate = new Date(date);
-      newEndDate.setDate(date.getDate() + 1);
-      setEnd(newEndDate);
-    }
-    setStart(date);
-  };
-  const setEndControl = (date) => {
-    if (date.getTime() < start.getTime()) {
-      const newStartDate = new Date(date);
-      newStartDate.setDate(date.getDate() - 1);
-      setStart(newStartDate);
-    }
-    setEnd(date);
-  };
+  const { start, end, setStartControl, setEndControl } = useSchedule();
   const getScheduleForTimePeriod = () => {
     const startDate = DateToServerFormat(start);
     const endDate = DateToServerFormat(end);
@@ -82,6 +75,12 @@ export default function Schedule() {
   if (!schedule) {
     return <Loader></Loader>;
   }
+
+  const changeSort = (value) => 
+  {
+    dispatch(setSortOrder(value));
+    getScheduleForTimePeriod();
+  };
   return (
     <SchedulePageStyled>
       <FilterContainer>
@@ -97,6 +96,8 @@ export default function Schedule() {
             dateFormat="dd.MM.yyyy"
           />
         </DatesFilterStyled>
+        <Dropdown search selection defaultValue={scheduleSortOrder}
+              onChange={(_event, data) => changeSort(data.value)} options={sortOptions} />
         <TagContainerStyled>
           <HomeGameTag tag>Home game</HomeGameTag>
           <AwayGameTag tag>Away game</AwayGameTag>
