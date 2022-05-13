@@ -35,8 +35,7 @@ const StatBarStyled = styled.div`
   display: flex;
 `;
 
-function MonthlyStatsGrid(props) {
-  const { skater } = props;
+function MonthlyStatsGrid({ skater }) {
   let { id } = useParams();
   const seasonId = "20212022";
   const query = skater ? getSkaterDetailedStats : getGoalieDetailedStats;

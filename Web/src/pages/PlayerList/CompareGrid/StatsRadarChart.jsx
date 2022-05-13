@@ -17,8 +17,7 @@ const StatsRadarChartContainer = styled.div`
   margin-bottom: 5vh;
 `;
 
-function StatsRadarChart(props) {
-  const { players, displayedCategories, playerNames, statsMode } = props;
+function StatsRadarChart( { players, displayedCategories, playerNames, statsMode }) {
   const categories = displayedCategories.filter((cat) => cat.compare);
 
   const chartData = categories.map((cat) => {

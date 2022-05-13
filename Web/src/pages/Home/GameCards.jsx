@@ -6,7 +6,6 @@ import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 
 import { Loader, NotFound, MiniGameCard } from "components";
-import { IsNullOrUndefined } from "util/common";
 import { dailyGames as dailyGamesQuery } from "services/querySchemas/game";
 
 const HeaderStyled = styled(Header)`
@@ -47,7 +46,7 @@ export default function GameCards() {
         </Button>
       </HeaderStyled>
 
-      {(IsNullOrUndefined(dailyGames) || dailyGames.length === 0) && (
+      {(!dailyGames || dailyGames.length === 0) && (
         <NotFound text="No games found." />
       )}
       <Card.Group centered>

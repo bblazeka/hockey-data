@@ -1,8 +1,7 @@
 import React from "react";
 import { Statistic } from "semantic-ui-react";
 
-function PlayerStatsSummary(props) {
-  const { data } = props;
+function PlayerStatsSummary({ data }) {
   const {
     totalGames,
     totalGoals,

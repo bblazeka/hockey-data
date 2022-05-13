@@ -1,4 +1,4 @@
-import { axiosGraphQL, IsNullOrUndefined } from "util/common";
+import { axiosGraphQL } from "util/common";
 import { GameActionTypes } from "./actionTypes";
 import { getGamesBetweenTeams, getGame as getGameQuery } from "services/querySchemas/game";
 
@@ -12,7 +12,7 @@ export const findGames = (teamId, opponentId, season) => (dispatch) => {
       variables: { teamId, opponentId, season },
     })
     .then((response) => {
-      if (IsNullOrUndefined(response.data.data.gamesBetweenTeams.games[0])) {
+      if (!response.data.data.gamesBetweenTeams.games[0]) {
         dispatch({
           type: GameActionTypes.GAMES_NOT_FOUND,
         });

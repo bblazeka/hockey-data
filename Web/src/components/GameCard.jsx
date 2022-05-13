@@ -6,7 +6,6 @@ import dayjs from "dayjs";
 
 import { Loader } from "components";
 import { getLogo } from "util/assets";
-import { IsNullOrUndefined } from "util/common";
 import routes from "routes";
 
 const GameTeamLogo = styled.img`
@@ -32,8 +31,8 @@ const GameTeamStyled = styled.div`
 `;
 
 export default function GameCard({ game }) {
-  if (IsNullOrUndefined(game)) {
-    return <Loader></Loader>;
+  if (!game) {
+    return <Loader />;
   }
   const { home, away, season, status } = game;
   const finished = status?.statusCode === "7";

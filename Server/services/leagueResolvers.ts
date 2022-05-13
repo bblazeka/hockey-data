@@ -8,7 +8,7 @@ import { EDatabaseCollection } from "utils/enums";
 
 let db = new Database();
 
-function init(database) {
+function init(database: Database) {
   db = database;
 }
 

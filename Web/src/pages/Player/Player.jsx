@@ -5,7 +5,6 @@ import { Grid, Tab } from "semantic-ui-react";
 
 import { PlayerSearchBox } from "components/collection";
 import { selectPlayerData } from "reducers/selectors";
-import { IsNullOrUndefined } from "util/common";
 import { getTweets, getNews } from "reducers/miscActions";
 import { Loader, NewsFeed, SocialFeed } from "components";
 
@@ -28,7 +27,7 @@ export default function Player() {
   }, [id]);
 
   useEffect(() => {
-    if (!IsNullOrUndefined(player)) {
+    if (player) {
       dispatch(getNews(player.fullName));
       dispatch(getTweets(player.fullName));
     }

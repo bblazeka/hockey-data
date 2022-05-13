@@ -6,17 +6,15 @@ import styled from "styled-components";
 import { Loader, SortableTable } from "components";
 import routes from "routes";
 import { getLogo } from "util/assets";
-import { IsNullOrUndefined } from "util/common";
 import categories from "util/categories.json";
 
 const TeamTableStyled = styled.div`
   overflow-x: auto;
 `;
 
-function GameTeamStats(props) {
-  const { team } = props;
-  if (IsNullOrUndefined(team)) {
-    return <Loader></Loader>;
+function GameTeamStats({ team }) {
+  if (!team) {
+    return <Loader/>;
   }
 
   const skaterStats = team.skaters.map((skater) => ({

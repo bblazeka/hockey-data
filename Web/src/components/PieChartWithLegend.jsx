@@ -8,8 +8,7 @@ const PieChartContainer = styled.div`
   width: 20vw;
 `;
 
-export default function PieChartWithLegend(props) {
-  const { values } = props;
+export default function PieChartWithLegend({ animate, values, width, height }) {
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
@@ -39,7 +38,7 @@ export default function PieChartWithLegend(props) {
 
   return (
     <PieChartContainer>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width={width ?? "100%"} height={height ?? "100%"}>
         <PieChart>
           <Pie
             data={values}
@@ -47,6 +46,7 @@ export default function PieChartWithLegend(props) {
             cx="50%"
             cy="50%"
             labelLine={false}
+            isAnimationActive={animate}
             label={renderCustomizedLabel}
             outerRadius={100}
             fill="#8884d8"
@@ -64,4 +64,11 @@ export default function PieChartWithLegend(props) {
 
 PieChartWithLegend.propTypes = {
   values: PropTypes.arrayOf(PropTypes.object),
+  width: PropTypes.any,
+  height: PropTypes.any,
+  animate: PropTypes.bool
+};
+
+PieChartWithLegend.defaultProps = {
+  animate: false
 };

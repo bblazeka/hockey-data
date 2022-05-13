@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 import styled from "styled-components";
 
 import { getLogo } from "util/assets";
-import { IsNullOrUndefined, GetMapboxApi } from "util/common";
+import { GetMapboxApi } from "util/common";
 
 mapboxgl.accessToken = GetMapboxApi();
 
@@ -32,7 +32,7 @@ const Map = (props) => {
     map.addControl(new mapboxgl.NavigationControl(), "top-right");
 
     props.points.forEach((point) => {
-      if (IsNullOrUndefined(point)) {
+      if (!point) {
         return;
       }
       new mapboxgl.Marker({

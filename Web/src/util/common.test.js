@@ -1,4 +1,4 @@
-import { GetNumberWithOrdinal, IsNullOrUndefined, generateSemanticUICountryId, FormatNumberToCurrency, FormatDecimals, DateToServerFormat, getDatesArray } from './common';
+import { GetNumberWithOrdinal, generateSemanticUICountryId, FormatNumberToCurrency, FormatDecimals, DateToServerFormat, getDatesArray, numberToMonthName } from './common';
 
 describe('Common methods', () => {
 it('generates semantic ui country identifier', () => {
@@ -12,21 +12,6 @@ it('generates semantic ui country identifier', () => {
 
   const result = mockGenerateSemanticUICountryId.mock.results.map(r => r.value);
   expect(result).toEqual(['ca', 'si', 'dk']);
-});
-
-it('checks if param is null or undefined', () => {
-  let mockIsNullOrUndefined = jest.fn().mockImplementation(IsNullOrUndefined);
-  mockIsNullOrUndefined(null);
-  expect(mockIsNullOrUndefined).toHaveBeenCalled();
-
-  mockIsNullOrUndefined(undefined);
-  expect(mockIsNullOrUndefined).toHaveBeenCalled();
-
-
-  mockIsNullOrUndefined({});
-  expect(mockIsNullOrUndefined).toHaveBeenCalled();
-  const result = mockIsNullOrUndefined.mock.results.map(r => r.value);
-  expect(result).toEqual([true, true, false]);
 });
 
 it('returns number with ordinal', () => {
@@ -82,5 +67,14 @@ it('generates the array of dates between dates', () => {
 
   const result = mockDatesArrayGenerator.mock.results.map(r => r.value);
   expect(result).toEqual([expectedOutput]);
+});
+
+it("converts a number to month name", () => {
+  let numberToMonthNameGenerator = jest.fn().mockImplementation(numberToMonthName);
+  const monthNumber = 12;
+  const expectedMonthName = "December";
+
+  const result = numberToMonthNameGenerator(monthNumber);
+  expect(result).toEqual(expectedMonthName);
 });
 });

@@ -7,17 +7,15 @@ import styled from "styled-components";
 import { Loader } from "components";
 import { DateToServerFormat, GetCompetitionStageFullName } from "util/common";
 import { getLogo } from "util/assets";
-import { IsNullOrUndefined } from "util/common";
 
 const MainImage = styled(Image)`
   max-width: 4rem !important;
   max-height: 4rem !important;
 `;
 
-export default function GameHeader(props) {
-  const { game } = props;
-  if (IsNullOrUndefined(game)) {
-    return <Loader></Loader>;
+export default function GameHeader({ game }) {
+  if (!game) {
+    return <Loader />;
   }
   return (
     <Grid stackable>

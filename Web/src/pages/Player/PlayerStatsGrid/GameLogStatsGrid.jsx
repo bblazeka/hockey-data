@@ -30,8 +30,7 @@ const LoaderContainer = styled.div`
   min-height: 6vh;
 `;
 
-function GameLogGrid(props) {
-  const { skater } = props;
+function GameLogGrid({ skater }) {
   let { id } = useParams();
   const seasonId = config.currentSeason;
   const query = skater ? getSkaterDetailedStats : getGoalieDetailedStats;

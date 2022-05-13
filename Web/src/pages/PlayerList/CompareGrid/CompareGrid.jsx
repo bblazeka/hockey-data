@@ -7,7 +7,6 @@ import { Button, Segment, Header, Table } from "semantic-ui-react";
 import { selectSelectedPlayers } from "reducers/selectors";
 
 import routes from "../../../routes";
-import { IsNullOrUndefined } from "../../../util/common";
 import { NotFound } from "components";
 import config from "util/categories.json";
 import StatsRadarChart from "./StatsRadarChart";
@@ -38,9 +37,8 @@ function displayedProperties(players, exampleObject, statsMode, skater) {
   return displayedCategories;
 }
 
-function CompareGrid(props) {
-  const { players, skater, statsSelector, onDelete } = props;
-  if (IsNullOrUndefined(players)) {
+function CompareGrid({ players, skater, statsSelector, onDelete }) {
+  if (!players) {
     return <NotFound />;
   }
 

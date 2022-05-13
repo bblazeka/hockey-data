@@ -14,7 +14,7 @@ import { Flag, Header } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { Loader } from "components";
-import { IsNullOrUndefined, generateSemanticUICountryId } from "util/common";
+import {  generateSemanticUICountryId } from "util/common";
 
 const TooltipDiv = styled.div`
   background-color: #fff;
@@ -27,21 +27,19 @@ const TooltipTextDiv = styled.div`
   color: ${({ $color }) => $color};
 `;
 
-function StatsScatterChart(props) {
-  const {
-    color,
-    values,
-    xAxisName,
-    yAxisName,
-    xKey,
-    yKey,
-    height,
-    width,
-    maxDomain,
-  } = props;
+function StatsScatterChart({
+  color,
+  values,
+  xAxisName,
+  yAxisName,
+  xKey,
+  yKey,
+  height,
+  width,
+  maxDomain,
+}) {
 
-  const renderCustomizedLabel = (props) => {
-    const { x, y, width, value } = props;
+  const renderCustomizedLabel = ({ x, y, width, value }) => {
     const radius = 10;
 
     return (
@@ -58,8 +56,7 @@ function StatsScatterChart(props) {
     );
   };
 
-  const renderTooltip = (props) => {
-    const { active, payload } = props;
+  const renderTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const data = payload[0] && payload[0].payload;
       const key = yKey.includes(".") ? yKey.split(".")[1] : yKey;
@@ -88,8 +85,8 @@ function StatsScatterChart(props) {
     return null;
   };
 
-  if (IsNullOrUndefined(values)) {
-    return <Loader></Loader>;
+  if (!values) {
+    return <Loader />;
   }
   return (
     <ResponsiveContainer width="100%" height="100%">

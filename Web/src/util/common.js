@@ -60,12 +60,8 @@ export function FormatNumberToCurrency(number) {
   return formatter.format(number);
 }
 
-export function IsNullOrUndefined(obj) {
-  return obj === null || obj === undefined;
-}
-
 export function FormatDecimals(number, decimalPlaces) {
-  if (!IsNullOrUndefined(number) && !isNaN(number)) {
+  if (number && !isNaN(number)) {
     return number.toFixed(decimalPlaces);
   }
   return null;

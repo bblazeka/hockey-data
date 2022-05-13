@@ -2,15 +2,13 @@ import React from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 import { Loader } from "components";
-import { IsNullOrUndefined } from "util/common";
 import { getColorScheme } from "util/shared";
 
-function StatsPieChart(props) {
-  const { colorScheme, values, radius } = props;
+function StatsPieChart({ colorScheme, values, radius }) {
   const colors = colorScheme || getColorScheme("blue");
 
-  if (IsNullOrUndefined(values)) {
-    return <Loader></Loader>;
+  if (!values) {
+    return <Loader />;
   }
   return (
     <ResponsiveContainer width="100%" height="100%">

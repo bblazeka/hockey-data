@@ -3,14 +3,13 @@ import { Feed, Header, Icon, Label } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { Loader, NotFound } from "components";
-import { IsNullOrUndefined } from "util/common";
 
 const NewsContainerStyled = styled.div`
   padding: 20px;
 `;
 
 function SocialFeed({ tweets }) {
-  if (IsNullOrUndefined(tweets)) {
+  if (!tweets) {
     return <Loader text="Loading social feed..."></Loader>;
   }
   return (

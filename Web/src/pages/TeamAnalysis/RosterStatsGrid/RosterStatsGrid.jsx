@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import { Loader, NotFound, SortableTable } from "components";
-import { IsNullOrUndefined } from "util/common";
 import categories from "util/categories.json";
 import routes from "routes";
 
@@ -14,7 +13,7 @@ const RosterStatsStyled = styled.div`
 `;
 
 function RosterStatsGrid({ skaterStats, goalieStats }) {
-  if (IsNullOrUndefined(skaterStats) && IsNullOrUndefined(goalieStats)) {
+  if (!skaterStats && !goalieStats) {
     return <Loader text="Loading stats..."></Loader>;
   }
   if (skaterStats.length === 0 && goalieStats.length === 0) {

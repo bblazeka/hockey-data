@@ -14,7 +14,7 @@ import styled from "styled-components";
 
 import categories from "util/categories.json";
 import { getLogo } from "util/assets";
-import { FormatDecimals, IsNullOrUndefined } from "util/common";
+import { FormatDecimals } from "util/common";
 import { Loader } from "components";
 import PlayerStatsSummary from "./PlayerStatsSummary";
 
@@ -31,10 +31,9 @@ const StatBarStyled = styled.div`
   display: flex;
 `;
 
-function PlayerStatsGrid(props) {
-  const { data, skater, detailed } = props;
-  if (IsNullOrUndefined(data)) {
-    return <Loader></Loader>;
+function PlayerStatsGrid({ data, skater, detailed }) {
+  if (!data) {
+    return <Loader />;
   }
   const { stats, seasonSums } = data;
 

@@ -60,10 +60,10 @@ export default function GameListStatistics({ gamesBetweenTeams }) {
   }));
   return (
     <StatisticsContainer>
-      <PieChartWithLegend values={winsPerTeam} />
-      <PieChartWithLegend values={values} />
-      <PieChartWithLegend values={homeAwayWinsDistribution} />
-      <PieChartWithLegend values={goalCountDistribution} />
+      <PieChartWithLegend animate values={winsPerTeam} />
+      <PieChartWithLegend animate values={values} />
+      <PieChartWithLegend animate values={homeAwayWinsDistribution} />
+      <PieChartWithLegend animate values={goalCountDistribution} />
     </StatisticsContainer>
   );
 }
