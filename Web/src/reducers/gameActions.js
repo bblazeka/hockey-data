@@ -5,6 +5,11 @@ import { getGamesBetweenTeams, getGame as getGameQuery } from "services/querySch
 export const findGames = (teamId, opponentId, season) => (dispatch) => {
   dispatch({
     type: GameActionTypes.GET_GAMES,
+    payload: {
+      teamId,
+      opponentId,
+      season
+    }
   });
   axiosGraphQL
     .post("", {

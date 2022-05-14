@@ -100,6 +100,9 @@ export const selectGameList = createSelector(
   selectGame,
   selectTeam,
   (game, team) => ({
+    teamId: game.teamId,
+    opponentId: game.opponentId,
+    season: game.season,
     gamesBetweenTeams: game.gamesBetweenTeams,
     dropdownTeams: team.dropdownTeams,
     loading: game.loading,

@@ -23,16 +23,16 @@ const DropdownStyled = styled(Dropdown)`
 `;
 
 export default function GameSelection() {
-  const [team, setTeam] = useState(-1);
-  const [opponent, setOpponent] = useState(-1);
-  const [season, setSeasonId] = useState();
+  const { gamesBetweenTeams, dropdownTeams, teamId, opponentId, season: stateSeason } = useSelector(selectGameList);
+  const [team, setTeam] = useState(teamId);
+  const [opponent, setOpponent] = useState(opponentId);
+  const [season, setSeasonId] = useState(stateSeason);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getDropdownTeams());
   }, []);
 
-  const { gamesBetweenTeams, dropdownTeams } = useSelector(selectGameList);
 
   return (
     <>
@@ -43,6 +43,7 @@ export default function GameSelection() {
               placeholder="Team"
               selection
               search
+              defaultValue={team}
               onChange={(_event, data) => setTeam(data.value)}
               options={dropdownTeams.map((el) => {
                 return {
@@ -57,6 +58,7 @@ export default function GameSelection() {
               placeholder="Opponent"
               selection
               search
+              defaultValue={opponent}
               onChange={(_event, data) => setOpponent(data.value)}
               options={dropdownTeams.map((el) => {
                 return {
@@ -72,8 +74,9 @@ export default function GameSelection() {
         <DropdownStyled
           placeholder="Season"
           selection
+          defaultValue={season}
           onChange={(_event, data) => setSeasonId(data.value)}
-          options={config.seasons.concat({
+          options={config.gameSeasons.concat({
             value: undefined,
             key: "all",
             text: "All seasons",

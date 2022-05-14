@@ -2,6 +2,9 @@ import {GameActionTypes} from './actionTypes';
 
 const defaultAppState = {
   loading: false,
+  teamId: undefined,
+  opponentId: undefined,
+  season: undefined,
   gamesToday: []
 };
 
@@ -16,6 +19,7 @@ const gameReducer = (state = defaultAppState, action) => {
     case GameActionTypes.GET_GAMES:
       return {
         ...state,
+        ...action.payload,
         loading: true,
         game: null
       };
@@ -24,7 +28,7 @@ const gameReducer = (state = defaultAppState, action) => {
         ...state,
         loading: false,
         game: action.payload,
-        gamesBetweenTeams: null
+        gamesBetweenTeams: undefined
       };
     case GameActionTypes.GAMES_FOUND:
       return {
