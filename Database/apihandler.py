@@ -4,6 +4,7 @@ from urllib.parse import quote
 import wikipediaapi
 import json
 
+wiki_wiki = wikipediaapi.Wikipedia('en')
 
 keys_file = open("keys/mapbox.json")
 keys = json.load(keys_file)
@@ -33,14 +34,12 @@ def mapbox_api_request(query):
   return data
 
 def wiki_api_request(query):
-  queryParam = quote(query.encode("utf-8"))
-  wiki_wiki = wikipediaapi.Wikipedia('en')
+  queryParam = query.replace(" ", "_") #quote(query.encode("utf-8"))
   page_py = wiki_wiki.page(queryParam)
-  print(page_py)
   return page_py
 
 def wiki_api_advanced_request(mainQuery, subQuery):
   response = wiki_api_request("{0} {1}".format(mainQuery, subQuery))
-  if(response == None or response.ns == 0):
+  if(response.exists() == False):
     response = wiki_api_request(mainQuery)
   return response
