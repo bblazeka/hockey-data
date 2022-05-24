@@ -81,7 +81,7 @@ export default function Team() {
       </Grid>
       {location && (
         <MapComponent>
-          <MapControl points={[location]} center={location} zoom={8} />
+          <MapControl points={[location]} center={location} zoom={8} zoomable={true} />
           <LocationText>
             <Header as="h4">
               {team.venue.name}

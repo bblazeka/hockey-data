@@ -8,7 +8,7 @@ import { getGame } from "reducers/gameActions";
 import { selectGameData } from "reducers/selectors";
 import { Loader } from "components";
 
-import GameTeamStats from "./GameTeamStats/GameTeamStats";
+import GameTeamStats from "./GameTeamStats";
 import GameHeader from "./GameHeader";
 
 const GameProgress = styled(Progress)`

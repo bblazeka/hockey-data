@@ -21,6 +21,7 @@ export default function LocationsDisplay({ locations }) {
                 center={{ center: [-97.131087, 42.509726] }}
                 points={locations.teamLocations}
                 zoom={2.5}
+                zoomable={false}
               />
             </Grid.Column>
             <Grid.Column>

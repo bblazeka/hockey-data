@@ -20,12 +20,12 @@ export default function Home() {
   }, [dispatch]);
 
   if (loadingNews && loadingTweets) {
-    return <Loader></Loader>;
+    return <Loader />;
   }
   return (
     <>
       <GameCards />
-      <div className="news-container">
+      <>
         <Grid columns={2} stackable>
           <Grid.Row>
             <Grid.Column>
@@ -36,7 +36,7 @@ export default function Home() {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </div>
+      </>
     </>
   );
 }

@@ -28,6 +28,10 @@ const Map = (props) => {
       zoom: zoom,
     });
 
+    if (!props.zoomable) {
+      map.scrollZoom.disable();
+    }
+
     // Add navigation control (the +/- zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), "top-right");
 
