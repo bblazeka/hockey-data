@@ -29,6 +29,22 @@ export const mockNews = (newsCount) => {
   }));
 };
 
+export const mockSocial = (socialCount) => {
+  return Array.from({length: socialCount}, () => ({
+    id: faker.datatype.number(10000),
+    url: `${faker.lorem.words(1)}.com`,
+    title: faker.lorem.words(4),
+    text:faker.lorem.paragraph(),
+    user: {
+      name: faker.name.findName(),
+      screenName: faker.name.firstName()
+    },
+    entities: Array.from({length: faker.datatype.number(4)}, () => ({
+      text: faker.lorem.words(3)
+    }))
+  }));
+};
+
 export const mockGame = () => {
   let baseGame = {
     teams: {

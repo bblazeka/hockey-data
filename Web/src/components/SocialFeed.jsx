@@ -1,6 +1,7 @@
 import React from "react";
 import { Feed, Header, Icon, Label } from "semantic-ui-react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import { Loader, NotFound } from "components";
 
@@ -26,13 +27,13 @@ function SocialFeed({ tweets }) {
               <Feed.Content>
                 <Feed.Summary>
                   <Feed.User href={tweet.url} target="_blank">
-                    {tweet.user.name} (@{tweet.user.screenName})
+                    {tweet.user?.name} (@{tweet.user?.screenName})
                   </Feed.User>
                   <Feed.Date>{tweet.createdAt}</Feed.Date>
                 </Feed.Summary>
                 <Feed.Extra>{tweet.text}</Feed.Extra>
                 <Feed.Meta>
-                  {tweet.entities.map((hashtag, index) => {
+                  {tweet.entities?.map((hashtag, index) => {
                     return (
                       <Label
                         key={`${index}${tweet.id}${tweet.user.id}${hashtag.text}`}
@@ -50,5 +51,9 @@ function SocialFeed({ tweets }) {
     </NewsContainerStyled>
   );
 }
+
+SocialFeed.propTypes = {
+  tweets: PropTypes.arrayOf(PropTypes.object)
+};
 
 export default React.memo(SocialFeed);
