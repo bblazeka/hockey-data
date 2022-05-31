@@ -84,3 +84,32 @@ export const mockTeamGame = () => {
   };
   return baseGame;
 };
+
+export const mockColumnsAndData = () => {
+  const columnNames = [{
+    title: "Col1",
+    property: "val1",
+    link: true,
+  }, {
+    title: "Col2",
+    property: "val2",
+  }, {
+    title: "Col3",
+    property: "val3",
+    percent: true
+  }];
+  const dataSource = [{
+    val1: "hey",
+    val2: 1,
+    val3: 0.6123,
+  },
+  {
+  val1: "ey",
+  val2: 2,
+  val3: 0.98345
+  }];
+  return {
+    columnNames,
+    dataSource
+  };
+};
