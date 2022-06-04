@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-export const getSchedule = /* GraphQL */`
+export const getScheduleQuery = /* GraphQL */`
   query game($start: String, $end: String){
     schedule(start: $start, end: $end) {
     id,
@@ -49,7 +49,7 @@ export const getSchedule = /* GraphQL */`
   }
   }`;
 
-export const getTeamSchedule = /* GraphQL */`
+export const getTeamScheduleQuery = /* GraphQL */`
   query scheduleByTeam($id: Int, $start: String, $end: String){
     scheduleByTeam(id: $id, start: $start, end: $end) {
       gamePk,

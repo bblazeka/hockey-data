@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 import routes from "routes";
 import { LogoStyled } from "components/collection";
+import { Loader } from "components";
 import { DateToServerFormat } from "util/common";
 import { getLogo } from "util/assets";
 
@@ -29,6 +30,9 @@ const GameCountCell = styled.td`
 `;
 
 export default function ScheduleTable({ schedule, dates }) {
+  if (!schedule) {
+    return <Loader />;
+  }
   return (
     <Table>
       <Table.Header>

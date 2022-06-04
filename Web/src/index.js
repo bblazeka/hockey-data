@@ -6,6 +6,12 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { createStore, applyMiddleware } from "redux";
+import createSagaMiddleware from "redux-saga";
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "@redux-devtools/extension";
+
+import saga from "reducers/sagas";
 
 import {
   Schedule,
@@ -20,7 +26,7 @@ import {
   GameSelection,
 } from "./pages";
 import routes from "./routes";
-import configureStore from "./store";
+import rootReducer from "./reducers/rootReducer";
 
 // TODO: until https://github.com/facebook/create-react-app/issues/11773 is resolved
 window.process = {};
@@ -31,7 +37,10 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const store = configureStore();
+const sagaMiddleware = createSagaMiddleware();
+const middleWares = [sagaMiddleware, thunk];
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...middleWares)));
+sagaMiddleware.run(saga);
 ReactDOM.render(
   <Provider store={store}>
     <ApolloProvider client={client}>
