@@ -1,8 +1,8 @@
 import { DateTime } from "luxon";
 import { sortBy, uniqBy } from "lodash";
-import { newsApiRequest } from "../adapters/apihandler";
-import { getLimitStatus, searchTweets } from "../adapters/twitterhandler";
-import { mapboxApiRequest } from "adapters/apihandler";
+
+import { getLimitStatus, searchTweets } from "adapters/twitterhandler";
+import { mapboxApiRequest, newsApiRequest } from "adapters/apihandler";
 
 type TGeocodeParams = {
   query: string;
@@ -33,8 +33,8 @@ async function getTweets({ query }: TGetContentParams) {
   const tweetsResponse = await searchTweets(query, 10, "en", "popular");
   const tweets = [];
   for (let status of tweetsResponse.statuses) {
-    const users = status.entities.user_mentions.map((u) => ({ text: u.name }));
-    const hashtags = status.entities.hashtags.map((h) => ({ text: h.text }));
+    const users = status.entities.user_mentions.map((user) => ({ text: user.name }));
+    const hashtags = status.entities.hashtags.map((hashtag) => ({ text: hashtag.text }));
     tweets.push({
       id: status.id_str,
       createdAt: status.created_at,

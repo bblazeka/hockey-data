@@ -1,21 +1,25 @@
-import React, { useState } from "react";
-import { withRouter, NavLink } from "react-router-dom";
-import { Dropdown, Menu } from "semantic-ui-react";
+import React from "react";
+import { withRouter } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-import { useQuery } from "@apollo/client";
-
-import "./App.css";
-import routes from "./routes";
-import { getLogo } from "./util/assets";
-import { ErrorFallback, Loader } from "components";
-import AppFooter from "AppFooter";
+import styled from "styled-components";
 
 import { useInitIDB, ConfigurationContext } from "util/indexedDB";
-import { getDivisionsWithTeams } from "services/querySchemas/league";
+import { ErrorFallback } from "components";
+import AppFooter from "AppFooter";
+
+import routes from "./routes";
+import AppHeader from "AppHeader";
+
+const AppDiv = styled.div`
+margin: 1px;
+`;
+
+const AppContainer = styled.div`
+margin: 1em 5em 1em 5em;
+min-height: 80vh;
+`;
 
 function App({ children, history }) {
-  const [activeItem, setActiveItem] = useState("home");
-  const { loading, data } = useQuery(getDivisionsWithTeams);
 
   const {
     database,
@@ -32,87 +36,24 @@ function App({ children, history }) {
     removePlayer,
   };
 
-  function handleItemClick(e, { name }) {
-    setActiveItem(name);
+  function setActiveRoute(name) {
     history.push(routes[name]);
   }
-
-  const headerButtons = [
-    "home",
-    "analysis",
-    "games",
-    "standings",
-    "schedule",
-    "players",
-  ];
 
   function goHome() {
     window.location = "/";
   }
 
-  if (!database || loading) {
-    return <Loader />;
-  }
-  const { divisionsWithTeams } = data;
-
   return (
-    <div className="App">
+    <AppDiv>
       <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => goHome()}>
-        <header>
-          <Menu inverted stackable>
-            {headerButtons.map((button) => {
-              return (
-                <Menu.Item
-                  key={button}
-                  name={button}
-                  active={activeItem === button}
-                  onClick={handleItemClick}
-                />
-              );
-            })}
-            ;
-            <Dropdown pointing text="Teams" className="link item">
-              <Dropdown.Menu>
-                {divisionsWithTeams &&
-                  divisionsWithTeams.map((division) => {
-                    return [
-                      <Dropdown.Header
-                        key={`divheader${division.id}`}
-                        className="dropdown-division-name"
-                      >
-                        {division.name}
-                      </Dropdown.Header>,
-                      <Dropdown.Item key={`divitems${division.id}`}>
-                        {division.teams.map((team) => {
-                          return (
-                            <NavLink
-                              className="App-link"
-                              to={`${routes.teams}/${team.id}`}
-                              key={`link${team.id}`}
-                            >
-                              <img
-                                className="small-logo"
-                                src={getLogo(team.id)}
-                                alt={`img${team.id}`}
-                              />
-                            </NavLink>
-                          );
-                        })}
-                      </Dropdown.Item>,
-                    ];
-                  })}
-              </Dropdown.Menu>
-            </Dropdown>
-          </Menu>
-        </header>
+        <AppHeader setActiveRoute={setActiveRoute} />
         <ConfigurationContext.Provider value={context}>
-          <div className="App-container">{children}</div>
+          <AppContainer>{children}</AppContainer>
         </ConfigurationContext.Provider>
-        <footer className="footer">
           <AppFooter />
-        </footer>
       </ErrorBoundary>
-    </div>
+    </AppDiv>
   );
 }
 

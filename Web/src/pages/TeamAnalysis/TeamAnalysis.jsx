@@ -12,11 +12,13 @@ import { Loader } from "components";
 import { selectTeamObject } from "reducers/selectors";
 import { getTeamAnalysis } from "services/querySchemas/analysis";
 import routes from "routes";
+import { MidLogo } from "components/collection";
 
 import TeamStats from "./TeamStats";
 import EnhancedStatsTable from "./EnhancedStatsTable";
 import Lineup from "./Lineup/Lineup";
 import RosterStatsGrid from "./RosterStatsGrid/RosterStatsGrid";
+
 
 const QuickJumpContainer = styled.div`
   text-align: center;
@@ -108,9 +110,8 @@ export default function TeamAnalysis() {
           />
         ))}
       </QuickJumpContainer>
-      <Header as="h1" className="team-header">
-        <img
-          className="mid-logo"
+      <Header as="h1">
+        <MidLogo
           src={getLogo(teamAnalysis.id)}
           alt={`img${teamAnalysis.id}${teamAnalysis.team.name}`}
         />

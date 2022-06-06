@@ -19,7 +19,6 @@ function NewsFeed({ news }) {
             <Item key={index}>
               <Item.Image
                 src={article.urlToImage}
-                className="mid-logo"
                 alt={article.urlToImage}
               />
               <Item.Content>

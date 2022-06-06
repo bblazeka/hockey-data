@@ -7,6 +7,7 @@ import { Loader, SortableTable } from "components";
 import routes from "routes";
 import { getLogo } from "util/assets";
 import categories from "util/categories.json";
+import { MidLogo } from "components/collection";
 
 const TeamTableStyled = styled.div`
   overflow-x: auto;
@@ -51,8 +52,7 @@ function GameTeamStats({ team }) {
   return (
     <Segment>
       <Header as="h2">
-        <img
-          className="mid-logo"
+        <MidLogo
           src={getLogo(team.team.id)}
           alt={`img${team.team.id}${team.team.name}`}
         />{" "}

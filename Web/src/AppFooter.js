@@ -1,17 +1,26 @@
 import React from "react";
 import { Grid, Icon } from "semantic-ui-react";
+import styled from "styled-components";
+
+import { TinyLogo } from "components/collection";
+
+const FooterContainer = styled.footer`
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #282c34;
+  color: white;
+  text-align: center;
+  padding-top: 1em;
+`;
 
 export default function AppFooter() {
   return (
-    <>
+    <FooterContainer>
       <Grid columns="equal" stackable>
         <Grid.Row>
           <Grid.Column>
-            <img
-              className="tiny-logo"
-              src={"/favicon.ico"}
-              alt={"imgapplogo"}
-            />
+            <TinyLogo src={"/favicon.ico"} alt={"imgapplogo"} />
             <div>HOCKEY DATA ANALYSIS</div>
           </Grid.Column>
           <Grid.Column>
@@ -65,6 +74,6 @@ export default function AppFooter() {
       NHL and the NHL Shield are registered trademarks of the National Hockey
       League. NHL and NHL team marks are the property of the NHL and its teams.
       © NHL 2021. All Rights Reserved.
-    </>
+    </FooterContainer>
   );
 }

@@ -1,9 +1,24 @@
-import { Search } from "semantic-ui-react";
+import { Image, Search } from "semantic-ui-react";
 import styled from "styled-components";
 
+export const TinyLogo = styled.img`
+  max-height: 20px;
+  max-width: 20px;
+`;
+
 export const SmallLogo = styled.img`
-  max-height: 3vh;
-  max-width: 3vw;
+  max-height: 30px;
+  max-width: 30px;
+`;
+
+export const MidLogo = styled.img`
+max-height: 60px;
+max-width: 60px;
+`;
+
+export const MidLogoImage = styled(Image)`
+max-height: 60px;
+max-width: 60px;
 `;
 
 export const LogoStyled = styled.img`

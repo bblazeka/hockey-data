@@ -16,6 +16,8 @@ import categories from "util/categories.json";
 import { getLogo } from "util/assets";
 import { FormatDecimals } from "util/common";
 import { Loader } from "components";
+import { SmallLogo } from "components/collection";
+
 import PlayerStatsSummary from "./PlayerStatsSummary";
 
 const PlayerStatsGridStyled = styled.div`
@@ -76,11 +78,10 @@ function PlayerStatsGrid({ data, skater, detailed }) {
                 <Table.Cell>{stat.season}</Table.Cell>
                 <Table.Cell>
                   {logo && (
-                    <img
-                      className="small-logo"
+                    <SmallLogo
                       src={logo}
                       alt={`img${key}`}
-                    ></img>
+                    />
                   )}
                 </Table.Cell>
                 <Table.Cell>{stat.team.name}</Table.Cell>

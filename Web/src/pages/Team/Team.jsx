@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Grid, Header, Icon, Image, Segment } from "semantic-ui-react";
+import { Button, Grid, Header, Icon, Segment } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { useQuery } from "@apollo/client";
 
 import { Loader, Map, NewsFeed, SocialFeed } from "components";
 import { getLogo } from "util/assets";
 import routes from "routes";
 import { selectTeamObject } from "reducers/selectors";
 import {getTeam as getTeamQuery} from "services/querySchemas/team";
-
+import { fetchTeamData } from "services/teamFunctions";
+import { MidLogoImage } from "components/collection";
 
 import TeamSchedule from "./TeamSchedule/TeamSchedule";
 import RosterGrid from "./RosterGrid/RosterGrid.jsx";
-import { useQuery } from "@apollo/client";
-import { fetchTeamData } from "services/teamFunctions";
 
 const MapComponent = styled(Segment)`
   display: flex;
@@ -48,9 +48,8 @@ export default function Team() {
   return (
     <>
       <Header as="h1">
-        <Image
+        <MidLogoImage
           circular
-          className="mid-logo"
           src={getLogo(team.id)}
           alt={`img${team.id}${team.name}`}
         />
