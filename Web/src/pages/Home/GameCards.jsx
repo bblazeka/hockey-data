@@ -8,6 +8,10 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 import { Loader, NotFound, MiniGameCard } from "components";
 import { dailyGames as dailyGamesQuery } from "services/querySchemas/game";
 
+const GamesContainer = styled.div`
+  padding-bottom: 5vh;
+`;
+
 const HeaderStyled = styled(Header)`
   display: flex;
   justify-content: space-between;
@@ -35,7 +39,7 @@ export default function GameCards() {
   }
   const { dailyGames } = data;
   return (
-    <>
+    <GamesContainer>
       <HeaderStyled as="h2">
         <Button basic onClick={deduceDate}>
           Previous day
@@ -54,6 +58,6 @@ export default function GameCards() {
           return <MiniGameCard key={`gamecard${game.gamePk}`} game={game} />;
         })}
       </Card.Group>
-    </>
+    </GamesContainer>
   );
 }

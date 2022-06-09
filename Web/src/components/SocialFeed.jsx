@@ -1,35 +1,28 @@
 import React from "react";
 import { Feed, Header, Icon, Label } from "semantic-ui-react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import { Loader, NotFound } from "components";
-
-const NewsContainerStyled = styled.div`
-  padding: 20px;
-`;
 
 function SocialFeed({ tweets }) {
   if (!tweets) {
     return <Loader text="Loading social feed..."></Loader>;
   }
   return (
-    <NewsContainerStyled>
+    <>
       <Header as="h3">Feed</Header>
       <Feed>
         {tweets.length === 0 && <NotFound />}
         {tweets.map((tweet) => {
           return (
             <Feed.Event key={`socialFeed${tweet.id}`}>
-              <Feed.Label>
-                <Icon name="twitter"></Icon>
-              </Feed.Label>
+              <Feed.Label image={tweet.user?.profileImageUrl} />
               <Feed.Content>
                 <Feed.Summary>
                   <Feed.User href={tweet.url} target="_blank">
                     {tweet.user?.name} (@{tweet.user?.screenName})
                   </Feed.User>
-                  <Feed.Date>{tweet.createdAt}</Feed.Date>
+                  <Feed.Date><Icon name="twitter" />{tweet.createdAt}</Feed.Date>
                 </Feed.Summary>
                 <Feed.Extra>{tweet.text}</Feed.Extra>
                 <Feed.Meta>
@@ -48,7 +41,7 @@ function SocialFeed({ tweets }) {
           );
         })}
       </Feed>
-    </NewsContainerStyled>
+    </>
   );
 }
 
