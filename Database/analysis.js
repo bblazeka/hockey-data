@@ -1,6 +1,5 @@
 const apicomm = require("./adapters/apihandler");
 const dbhandler = require("./adapters/dbhandler.js");
-const scrapping = require("./adapters/scrapinghandler");
 
 function abbreviateName(name) {
   if (name.includes(".")) {
@@ -84,8 +83,6 @@ async function run(season = "20212022") {
             };
           });
 
-        const lines = await scrapping.scrapLines(teamRecord.team.name, playersRoster);
-
         const teamStats = await apicomm.nhlApiRequest(
           `/api/v1/teams/${teamRecord.team.id}/stats`
         );
@@ -122,7 +119,6 @@ async function run(season = "20212022") {
             statsSingleSeason: teamStats.stats[0].splits[0].stat,
             regularSeasonStatRankings: rankings,
             rosterStats: fmtRoster,
-            lines,
             lastUpdated: teamRecord.lastUpdated,
           },
         };
