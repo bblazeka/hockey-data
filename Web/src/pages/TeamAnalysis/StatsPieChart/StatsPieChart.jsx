@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 import { Loader } from "components";
@@ -55,5 +56,11 @@ function StatsPieChart({ colorScheme, values, radius }) {
     </ResponsiveContainer>
   );
 }
+
+StatsPieChart.propTypes = {
+  colorScheme: PropTypes.arrayOf(PropTypes.string),
+  values: PropTypes.arrayOf(PropTypes.object),
+  radius: PropTypes.number
+};
 
 export default StatsPieChart;
