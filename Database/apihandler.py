@@ -10,15 +10,15 @@ keys_file = open("keys/mapbox.json")
 keys = json.load(keys_file)
 
 def nhl_api_request(path, params):
-  urlPath = "http://statsapi.web.nhl.com{0}.".format(path)
+  urlPath = "http://statsapi.web.nhl.com{0}".format(path)
   r = requests.get(url = urlPath, params = params)
   
   data = r.json()
   return data
 
-def enhanced_nhl_api_request(path):
-  urlPath = "http://api.nhle.com{0}.".format(path)
-  r = requests.get(url = urlPath)
+def enhanced_nhl_api_request(path, params):
+  urlPath = "https://api.nhle.com{0}".format(path)
+  r = requests.get(url = urlPath, params = params)
   
   data = r.json()
   return data
