@@ -14,15 +14,6 @@ export const mockPlayers = (playersCount) => {
   }));
 }; 
 
-export const mockLineupPlayer = () => {
-  const player = mockPlayers(1)[0];
-  return {
-    id: player.id,
-    number: player.jerseyNumber,
-    name: player.fullName
-  };
-};
-
 export const mockNews = (newsCount) => {
   return Array.from({length: newsCount}, () => ({
     title: faker.lorem.words(4)

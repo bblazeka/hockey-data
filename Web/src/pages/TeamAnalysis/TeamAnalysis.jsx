@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@apollo/client";
 import styled from "styled-components";
-import dayjs from "dayjs";
 
 import { getTeams } from "reducers/teamActions";
 import { getLogo } from "util/assets";
@@ -16,7 +15,6 @@ import { MidLogo } from "components/collection";
 
 import TeamStats from "./TeamStats";
 import EnhancedStatsTable from "./EnhancedStatsTable";
-import Lineup from "./Lineup/Lineup";
 import RosterStatsGrid from "./RosterStatsGrid/RosterStatsGrid";
 
 
@@ -81,20 +79,10 @@ export default function TeamAnalysis() {
     </Tab.Pane>
   );
 
-  const renderInsights = () => (
-    <Tab.Pane>
-      <div>
-        <Lineup lines={teamAnalysis.lines}></Lineup>
-        <span>Last update: {dayjs(teamAnalysis.lastUpdated).format("DD.MM.YYYY HH:mm")}</span>
-      </div>
-    </Tab.Pane>
-  );
-
   const panes = [
     { menuItem: "Team overall", render: renderTeamPane },
     { menuItem: "Team stats", render: renderStatsPane },
     { menuItem: "Advanced stats", render: renderAdvancedStatsPane },
-    { menuItem: "Insights", render: renderInsights },
   ];
 
   return (

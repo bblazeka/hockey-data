@@ -3,7 +3,16 @@ from apihandler import nhl_api_request, enhanced_nhl_api_request
 from dbhandler import get_collection
 from collections import defaultdict
 from utils import get_prop
+import re
 
+def abbrev_name(first_name, last_name):
+  return "{0}. {1}".format(first_name[0], last_name) 
+
+def parse_ordinals(stats):
+  dictionary = {}
+  for prop, value in stats.items():
+    dictionary[prop] = int(re.sub("[^0-9]", "", value))
+  return dictionary
 
 collection = get_collection("analysis")
 
@@ -44,7 +53,7 @@ for record in records:
       person = playing_player["person"]
       players_playing_enhanced_stats.append({
         "id": person["id"],
-        "abbrName": person["lastName"],
+        "abbrName": abbrev_name(person["firstName"], person["lastName"]) ,
         "fullName": person["fullName"],
         "primaryNumber": get_prop(person,"primaryNumber"),
         "positionName":person["primaryPosition"]["name"],
@@ -82,13 +91,13 @@ for record in records:
           "ppConferenceRank": int(teamRecord["ppConferenceRank"]),
           "row": teamRecord["row"],
           "statsSingleSeason": team_stats["stats"][0]["splits"][0]["stat"],
-          "regularSeasonStatRankings": team_stats["stats"][1]["splits"][0]["stat"],
+          "regularSeasonStatRankings": parse_ordinals(team_stats["stats"][1]["splits"][0]["stat"]),
           "rosterStats": players_playing_enhanced_stats,
           "lastUpdate": datetime.now()
         }
       }
       result = collection.update_one(filter, update, True)
-      print(result)
+      print("updated analysis for: {0}".format(teamRecord["team"]["name"]))
     except Exception as e:
       print("exception occured")
       print(e)
