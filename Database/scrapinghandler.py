@@ -14,5 +14,3 @@ def scrapPlayerCapHit(name):
     return Decimal(0)
   cap_hit = Decimal(sub(r'[^\d.]', '', cap_hit_div.get_text()))
   return cap_hit
-
-scrapPlayerCapHit("Drew O'Connor")

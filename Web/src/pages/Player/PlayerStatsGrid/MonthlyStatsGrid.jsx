@@ -21,6 +21,7 @@ import {
   getSkaterDetailedStats,
   getGoalieDetailedStats,
 } from "services/querySchemas/player";
+import config from "util/config.json";
 
 const PlayerStatsGridStyled = styled.div`
   padding: 8px;
@@ -37,11 +38,10 @@ const StatBarStyled = styled.div`
 
 function MonthlyStatsGrid({ skater }) {
   let { id } = useParams();
-  const seasonId = "20212022";
   const query = skater ? getSkaterDetailedStats : getGoalieDetailedStats;
 
   const { loading, data: dataRaw } = useQuery(query, {
-    variables: { id: parseInt(id), seasonId },
+    variables: { id: parseInt(id), seasonId: config.currentSeason },
   });
   if (loading) {
     return <Loader></Loader>;

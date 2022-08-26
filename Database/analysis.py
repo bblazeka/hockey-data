@@ -3,6 +3,7 @@ from apihandler import nhl_api_request, enhanced_nhl_api_request
 from dbhandler import get_collection
 from collections import defaultdict
 from utils import get_prop
+from constants import DEFAULT_SEASON
 import re
 
 def abbrev_name(first_name, last_name):
@@ -16,7 +17,7 @@ def parse_ordinals(stats):
 
 collection = get_collection("analysis")
 
-season = "20212022"
+season = DEFAULT_SEASON
 standings = nhl_api_request("/api/v1/standings", {"season": season})
 records = standings["records"]
 

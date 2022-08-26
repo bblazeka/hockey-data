@@ -28,7 +28,7 @@ for player in players:
     player_height_temp = str(player_response["height"]).split(" ")
     feet_height = int(re.sub("[^0-9]", "", player_height_temp[0]))
     inches_height = int(re.sub("[^0-9]", "", player_height_temp[1]))
-    player_height = round(feet_height/ 3.2808 * 100) + inches_height / 0.3937
+    player_height = round(feet_height/ 3.2808 * 100 + inches_height / 0.3937)
   else:
     player_height = None
   if ("weight" in player_response):
