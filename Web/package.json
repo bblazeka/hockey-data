@@ -11,6 +11,7 @@
     "dayjs": "^1.11.3",
     "eslint-utils": "^1.4.3",
     "graphql": "^16.5.0",
+    "graphql.macro": "^1.4.2",
     "idb": "^7.0.0",
     "mapbox-gl": "^2.7.0",
     "prop-types": "^15.7.2",

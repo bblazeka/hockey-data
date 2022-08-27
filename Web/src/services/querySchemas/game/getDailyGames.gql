@@ -1,0 +1,29 @@
+query dailyGames($dateISO: String) {
+    dailyGames(dateISO: $dateISO) {
+      gamePk
+      gameTime
+      currentPeriod
+      currentPeriodOrdinal
+      currentPeriodTimeRemaining
+      ongoingGame
+      finished
+      teams {
+        home {
+          team {
+            id
+            name
+          }
+          goals
+          shotsOnGoal
+        }
+        away {
+          team {
+            id
+            name
+          }
+          goals
+          shotsOnGoal
+        }
+      }
+    }
+  }

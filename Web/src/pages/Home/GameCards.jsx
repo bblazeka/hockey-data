@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 
 import { Loader, NotFound, MiniGameCard } from "components";
-import { dailyGames as dailyGamesQuery } from "services/querySchemas/game";
+import { getDailyGames } from "services/querySchemas/game";
 
 const GamesContainer = styled.div`
   padding-bottom: 5vh;
@@ -22,7 +22,7 @@ const DATE_ISO_FORMAT = "YYYY-MM-DD";
 
 export default function GameCards() {
   const [date, setDate] = useState(dayjs().format(DATE_ISO_FORMAT));
-  const { loading: loadingGames, data } = useQuery(dailyGamesQuery, {
+  const { loading: loadingGames, data } = useQuery(getDailyGames, {
     variables: { dateISO: date },
   });
 

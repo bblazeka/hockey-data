@@ -1,34 +1,4 @@
-import { gql } from "@apollo/client";
-
-export const getTeams = /* GraphQL */ `
-  query teams {
-    teams {
-      id
-      name
-    }
-  }
-`;
-
-export const getTeamLocations = /* GraphQL */ `
-  query teamLocations {
-    teamLocations {
-      teamLocations {
-        id
-        text
-        center
-        color
-      }
-      seasonDescription
-      divisions {
-        key
-        value
-      }
-    }
-  }
-`;
-
-export const getTeam = gql`
-  query team($id: Int) {
+query team($id: Int) {
     team(id: $id) {
       id
       name
@@ -76,4 +46,3 @@ export const getTeam = gql`
     nationality
     capHit
   }
-`;

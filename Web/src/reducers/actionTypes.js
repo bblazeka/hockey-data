@@ -1,11 +1,8 @@
 export const GameActionTypes = {
-  GET_GAME : 'GET_GAME',
-  GAME_LOADED: 'GAME_LOADED',
   GET_GAMES : 'GET_GAMES',
   GAMES_FOUND: "GAMES_FOUND",
   GAMES_NOT_FOUND: "GAMES_NOT_FOUND",
   GET_GAMES_TODAY: "GET_GAMES_TODAY",
-  GAMES_TODAY_LOADED: "GAMES_TODAY_LOADED",
 };
 
 export const LeagueActionTypes = {

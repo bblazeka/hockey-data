@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import { loader } from "graphql.macro";
 
 export const getScheduleQuery = /* GraphQL */`
   query game($start: String, $end: String){
@@ -91,39 +91,6 @@ export const getTeamScheduleQuery = /* GraphQL */`
     }
   }`;
 
-export const getStandings = gql`
-query standings($season: String)
-  {
-    standings(season: $season) { 
-      division {
-        id,
-        name
-      }
-      teamRecords { 
-        divisionRank, 
-        team { 
-          id, 
-          name 
-        },
-        leagueRecord {
-          wins,
-          losses,
-          ot
-        },
-        gamesPlayed,
-        goalsScored,
-        goalsAgainst,
-        points
-      } 
-    }
-  }`;
+export const getStandings = loader("./getStandings.gql");
 
-export const getDivisionsWithTeams = gql`
-query divisionsWithTeams
-{
-    divisionsWithTeams { 
-      id, 
-      name,
-      teams { id, abbreviation, name }
-    }
-}`;
+export const getDivisionsWithTeams = loader("./getDivisionsWithTeams.gql");

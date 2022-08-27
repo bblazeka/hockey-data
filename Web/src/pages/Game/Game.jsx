@@ -1,33 +1,31 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { Header, List, Progress, Segment } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { getGame } from "reducers/gameActions";
-import { selectGameData } from "reducers/selectors";
 import { Loader } from "components";
 
 import GameTeamStats from "./GameTeamStats";
 import GameHeader from "./GameHeader";
+import { useQuery } from "@apollo/client";
+import { getGame } from "services/querySchemas/game";
 
 const GameProgress = styled(Progress)`
   margin-top: 10px !important;
 `;
 
 export default function Game() {
-  const { game, loading } = useSelector(selectGameData);
 
   const { id } = useParams();
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getGame(id));
-  }, [id]);
+  const { loading, data } = useQuery(getGame, {
+    variables: { gameId: parseInt(id) },
+  });
 
   if (loading) {
-    return <Loader></Loader>;
+    return <Loader />;
   }
+  const { game } = data;
   return (
     <>
       {game && (

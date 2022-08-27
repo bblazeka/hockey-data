@@ -1,6 +1,6 @@
 import { axiosGraphQL } from "util/common";
 import { GameActionTypes } from "./actionTypes";
-import { getGamesBetweenTeams, getGame as getGameQuery } from "services/querySchemas/game";
+import { getGamesBetweenTeams } from "services/querySchemas/game";
 
 export const findGames = (teamId, opponentId, season) => (dispatch) => {
   dispatch({
@@ -27,22 +27,5 @@ export const findGames = (teamId, opponentId, season) => (dispatch) => {
           payload: response.data.data.gamesBetweenTeams,
         });
       }
-    });
-};
-
-export const getGame = (gameId) => (dispatch) => {
-  dispatch({
-    type: GameActionTypes.GET_GAME,
-  });
-  axiosGraphQL
-    .post("", {
-      query: getGameQuery,
-      variables: { gameId: parseInt(gameId) },
-    })
-    .then((response) => {
-      dispatch({
-        type: GameActionTypes.GAME_LOADED,
-        payload: response.data.data.game,
-      });
     });
 };

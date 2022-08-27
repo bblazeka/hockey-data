@@ -47,7 +47,7 @@ for player in players:
       "fullName": player_response["fullName"],
       "firstName": player_response["firstName"],
       "lastName": player_response["lastName"],
-      "capHit": Decimal(player_cap_hit),
+      "capHit": int(str(player_cap_hit)),
       "primaryNumber": get_prop(player_response,"primaryNumber"),
       "currentAge": get_prop(player_response,"currentAge"),
       "birthDate": player_response["birthDate"],
