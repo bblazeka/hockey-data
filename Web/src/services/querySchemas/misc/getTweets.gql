@@ -1,0 +1,20 @@
+query tweets($query: String){
+    tweets(query: $query) { 
+      id,
+      createdAt,
+      text,
+      url,
+      favoriteCount,
+      retweetCount,
+      user {
+        id,
+        name,
+        screenName,
+        description,
+        profileImageUrl
+      },
+      entities {
+        text
+      }
+    }
+  }

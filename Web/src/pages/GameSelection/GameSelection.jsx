@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Dropdown, Segment } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { useQuery } from "@apollo/client";
 
 import { findGames } from "reducers/gameActions";
 import { getLogo } from "util/assets";
 import config from "util/config.json";
 import { selectGameList } from "reducers/selectors";
-import { getDropdownTeams } from "reducers/teamActions";
+import { getTeams } from "services/querySchemas/team";
 
 import GameList from "./GameList";
 import GameListStatistics from "./GameListStatistics";
@@ -23,15 +24,17 @@ const DropdownStyled = styled(Dropdown)`
 `;
 
 export default function GameSelection() {
-  const { gamesBetweenTeams, dropdownTeams, teamId, opponentId, season: stateSeason } = useSelector(selectGameList);
+  const { gamesBetweenTeams, teamId, opponentId, season: stateSeason } = useSelector(selectGameList);
   const [team, setTeam] = useState(teamId);
   const [opponent, setOpponent] = useState(opponentId);
   const [season, setSeasonId] = useState(stateSeason);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getDropdownTeams());
-  }, []);
+  const { loading, data } = useQuery(getTeams);
+  if (loading) {
+    return <></>;
+  }
+  const { teams: dropdownTeams} = data;
 
 
   return (

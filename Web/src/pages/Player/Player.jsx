@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { Grid, Tab } from "semantic-ui-react";
+import { Tab } from "semantic-ui-react";
 
 import { PlayerSearchBox } from "components/collection";
 import { selectPlayerData } from "reducers/selectors";
-import { getTweets, getNews } from "reducers/miscActions";
-import { Loader, NewsFeed, SocialFeed } from "components";
+import { Loader } from "components";
 
 import {getPlayer, searchBasicPlayer} from "reducers/playerActions";
 import PlayerStatsGrid from "./PlayerStatsGrid/PlayerStatsGrid";
 import PlayerHeader from "./PlayerHeader";
+import PlayerSocial from "./PlayerSocial";
 import MonthlyStatsGrid from "./PlayerStatsGrid/MonthlyStatsGrid";
 import GameLogGrid from "./PlayerStatsGrid/GameLogStatsGrid";
 
 export default function Player() {
   const [isLoading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const { player, suggestions, tweets, news } = useSelector(selectPlayerData);
+  const { player, suggestions } = useSelector(selectPlayerData);
   const history = useHistory();
 
   let { id } = useParams();
@@ -25,13 +25,6 @@ export default function Player() {
   useEffect(() => {
     dispatch(getPlayer(id));
   }, [id]);
-
-  useEffect(() => {
-    if (player) {
-      dispatch(getNews(player.fullName));
-      dispatch(getTweets(player.fullName));
-    }
-  }, [player]);
 
   if (!player) {
     return (
@@ -120,16 +113,7 @@ export default function Player() {
       />
       <PlayerHeader player={player} />
       <Tab panes={panes} />
-      <Grid columns={2}>
-        <Grid.Row>
-          <Grid.Column>
-            <NewsFeed news={news}></NewsFeed>
-          </Grid.Column>
-          <Grid.Column>
-            <SocialFeed tweets={tweets}></SocialFeed>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <PlayerSocial player={player}/>
     </>
   );
 }
