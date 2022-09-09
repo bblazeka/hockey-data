@@ -15,8 +15,6 @@ export default function Home() {
   if (loadingNews || loadingTweets) {
     return <Loader />;
   }
-  const { articles } = newsData;
-  const { tweets } = tweetsData;
   return (
     <>
       <GameCards />
@@ -24,10 +22,10 @@ export default function Home() {
         <Grid columns={2} stackable>
           <Grid.Row>
             <Grid.Column>
-              <NewsFeed news={articles}></NewsFeed>
+              <NewsFeed news={newsData?.articles}></NewsFeed>
             </Grid.Column>
             <Grid.Column>
-              <SocialFeed tweets={tweets}></SocialFeed>
+              <SocialFeed tweets={tweetsData?.tweets}></SocialFeed>
             </Grid.Column>
           </Grid.Row>
         </Grid>

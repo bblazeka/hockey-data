@@ -14,17 +14,14 @@ export default function PlayerHeader({ player }) {
   if (loadingNews || loadingTweets) {
     return <Loader />;
   }
-  const { articles } = newsData;
-  const { tweets } = tweetsData;
-
   return (
     <Grid columns={2}>
       <Grid.Row>
         <Grid.Column>
-          <NewsFeed news={articles}></NewsFeed>
+          <NewsFeed news={newsData?.articles}></NewsFeed>
         </Grid.Column>
         <Grid.Column>
-          <SocialFeed tweets={tweets}></SocialFeed>
+          <SocialFeed tweets={tweetsData?.tweets}></SocialFeed>
         </Grid.Column>
       </Grid.Row>
     </Grid>);
