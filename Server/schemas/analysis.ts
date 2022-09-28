@@ -129,6 +129,47 @@ export const analysisSchema = gql`
     ppTimeOnIce: Int
     ppTimeOnIcePctPerGame: Float
     ppTimeOnIcePerGame: Float
+    ppGoalsAgainstPer60: Float
+    shAssists: Int
+    shGoals: Int
+    shGoalsPer60: Float
+    shIndividualSatFor: Int
+    shIndividualSatForPer60: Float
+    shPoints: Int
+    shPointsPer60: Float
+    shPrimaryAssists: Int
+    shPrimaryAssistsPer60: Float
+    shSecondaryAssists: Int
+    shSecondaryAssistsPer60: Float
+    shShootingPct: Float
+    shShots: Int
+    shShotsPer60: Float
+    shTimeOnIce: Int
+    shTimeOnIcePctPerGame: Float
+    shTimeOnIcePerGame: Float
+    satAgainst: Int
+    satAhead: Int
+    satBehind: Int
+    satClose: Int
+    satFor: Int
+    satRelative: Float
+    satTied: Int
+    satTotal: Int
+    usatAgainst: Int
+    usatAhead: Int
+    usatBehind: Int
+    usatClose: Int
+    usatFor: Int
+    usatRelative: Float
+    usatTied: Int
+    usatTotal: Int
+    faceoffPct5v5: Float
+    goalsPct: Float
+    individualSatForPer60: Float
+    individualShotsForPer60: Float
+    onIceShootingPct: Float
+    usatPct: Float
+    zoneStartPct: Float
     # goalies
     completeGamePct: Float
     completeGames: Int

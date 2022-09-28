@@ -304,6 +304,211 @@
       "title": "PPTOIPG",
       "property": "ppTimeOnIcePerGame",
       "description": "Powerplay time on ice per game"
+    },
+    "ppGoalsAgainstPer60": {
+      "title": "PPGA/60",
+      "property": "ppGoalsAgainstPer60",
+      "description": "Powerplay goals against per 60 minutes"
+    },
+    "shAssists": {
+      "title": "SHA",
+      "property": "shAssists",
+      "description": "Shorthanded assists"
+    },
+    "shGoals": {
+      "title": "SHG",
+      "property": "shGoals",
+      "description": "Shorthanded goals"
+    },
+    "shGoalsPer60": {
+      "title": "SHG/60",
+      "property": "shGoalsPer60",
+      "description": "Shorthanded goals per 60 minutes"
+    },
+    "shIndividualSatFor": {
+      "title": "SH iSAT",
+      "property": "shIndividualSatFor",
+      "description": "Shorthanded individual SAT For"
+    },
+    "shIndividualSatForPer60": {
+      "title": "SH iSAT/60",
+      "property": "shIndividualSatForPer60",
+      "description": "Shorthanded individual SAT For per 60 minutes"
+    },
+    "shPoints": {
+      "title": "SHP",
+      "property": "shPoints",
+      "description": "Shorthanded points"
+    },
+    "shPointsPer60": {
+      "title": "SHP/60",
+      "property": "shPointsPer60",
+      "description": "Shorthanded points per 60 minutes"
+    },
+    "shPrimaryAssists": {
+      "title": "SHA1",
+      "property": "shPrimaryAssists",
+      "description": "Shorthanded primary assists"
+    },
+    "shPrimaryAssistsPer60": {
+      "title": "SHA1/60",
+      "property": "shPrimaryAssistsPer60",
+      "description": "Shorthanded primary assists per 60 minutes"
+    },
+    "shSecondaryAssists": {
+      "title": "SHA2",
+      "property": "shSecondaryAssists",
+      "description": "Shorthanded secondary assists"
+    },
+    "shSecondaryAssistsPer60": {
+      "title": "SHA2/60",
+      "property": "shSecondaryAssistsPer60",
+      "description": "Shorthanded secondary assists per 60 minutes"
+    },
+    "shShootingPct": {
+      "title": "SH S%",
+      "property": "shShootingPct",
+      "description": "Shorthanded shooting percentage"
+    },
+    "shShots": {
+      "title": "SHS",
+      "property": "shShots",
+      "description": "Shorthanded shots"
+    },
+    "shShotsPer60": {
+      "title": "SHS/60",
+      "property": "shShotsPer60",
+      "description": "Shorthanded shots per 60 minutes"
+    },
+    "shTimeOnIce": {
+      "title": "SH TOI",
+      "property": "shTimeOnIce",
+      "description": "Shorthanded time on ice"
+    },
+    "shTimeOnIcePctPerGame": {
+      "title": "SH TOI%",
+      "property": "shTimeOnIcePctPerGame",
+      "description": "Shorthanded time on ice percent per game"
+    },
+    "shTimeOnIcePerGame": {
+      "title": "SH TOI/GP",
+      "property": "shTimeOnIcePerGame",
+      "description": "Shorthanded time on ice per game"
+    },
+    "satAgainst": {
+      "title": "SAT Agn",
+      "property": "satAgainst",
+      "description": "Shot attempts against differential"
+    },
+    "satAhead": {
+      "title": "SAT Ahd",
+      "property": "satAhead",
+      "description": "Shot attempts ahead differential"
+    },
+    "satBehind": {
+      "title": "SAT Bhn",
+      "property": "satBehind",
+      "description": "Shot attempts behind diff"
+    },
+    "satClose": {
+      "title": "SAT Cls",
+      "property": "satClose",
+      "description": "Shot attempts close diff"
+    },
+    "satFor": {
+      "title": "SAT For",
+      "property": "satFor",
+      "description": "Shot attempts for"
+    },
+    "satRelative": {
+      "title": "SAT%",
+      "property": "satRelative",
+      "description": "Shot attempts relative"
+    },
+    "satTied": {
+      "title": "SAT Tie",
+      "property": "satTied",
+      "description": "Shot attempts tied diff"
+    },
+    "satTotal": {
+      "title": "SAT",
+      "property": "satTotal",
+      "description": "Shot attempts"
+    },
+    "usatAgainst": {
+      "title": "USAT Agn",
+      "property": "usatAgainst",
+      "description": "Unblocked shot attempts against"
+    },
+    "usatAhead": {
+      "title": "USAT Ahd",
+      "property": "usatAhead",
+      "description": "Unblocked shot attempts ahead"
+    },
+    "usatBehind": {
+      "title": "USAT Bhn",
+      "property": "usatBehind",
+      "description": "Unblocked shot attempts behind"
+    },
+    "usatClose": {
+      "title": "USAT Cls",
+      "property": "usatClose",
+      "description": "Unblocked shot attempts close"
+    },
+    "usatFor": {
+      "title": "USAT For",
+      "property": "usatFor",
+      "description": "Unblocked shot attempts for"
+    },
+    "usatRelative": {
+      "title": "USAT%",
+      "property": "usatRelative",
+      "description": "Unblocked shot attempts percentage"
+    },
+    "usatTied": {
+      "title": "USAT Tie",
+      "property": "usatTied",
+      "description": "Unblocked shot attempts tied"
+    },
+    "usatTotal": {
+      "title": "USAT",
+      "property": "usatTotal",
+      "description": "Unblocked shot attempts"
+    },
+    "faceoffPct5v5": {
+      "title": "FOW%",
+      "property": "faceoffPct5v5",
+      "description": "Faceoff win % 5v5"
+    },
+    "goalsPct": {
+      "title": "G%",
+      "property": "goalsPct",
+      "description": "goals percentage"
+    },
+    "individualSatForPer60": {
+      "title": "iSAT/60",
+      "property": "individualSatForPer60",
+      "description": "individual SAT for per 60"
+    },
+    "individualShotsForPer60": {
+      "title": "iS/60",
+      "property": "individualShotsForPer60",
+      "description": "Individual shots per 60"
+    },
+    "onIceShootingPct": {
+      "title": "OI S%",
+      "property": "onIceShootingPct",
+      "description": "On ice shooting percentage"
+    },
+    "usatPct": {
+      "title": "USAT%",
+      "property": "usatPct",
+      "description": "Unblocked shot attept percentage"
+    },
+    "zoneStartPct": {
+      "title": "OZS%",
+      "property": "zoneStartPct",
+      "description": "Offensive zone starts percentage"
     }
   },
   "goalieCategories": {

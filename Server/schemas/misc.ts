@@ -33,7 +33,7 @@ export const miscSchema = gql`
   }
 
   type User {
-    id: Int
+    id: String
     name: String
     screenName: String
     description: String

@@ -6,10 +6,14 @@ import styled from "styled-components";
 import routes from "routes";
 import SortableTable from "components/SortableTable";
 import categories from "util/categories.json";
+import config from "util/config.json";
 
 const dropdownOptions = [
   { key: "even", text: "Even strength", value: "even" },
   { key: "pp", text: "Powerplay", value: "pp" },
+  { key: "pk", text: "Penaltykill", value: "pk" },
+  { key: "shoot", text: "Summary shooting", value: "shoot" },
+  { key: "puck", text: "Puck possessions", value: "puck" },
 ];
 
 const StyledDropdown = styled(Dropdown)`
@@ -26,45 +30,7 @@ export default function EnhancedStatsTable({ skaterStats, goalieStats }) {
     return { ...p.advancedStats, link: `${routes.player}/${p.id}` };
   });
   const specificData = useMemo(() => {
-    return dataType === "even"
-      ? [
-          categories.skaterCategories["gamesPlayed"],
-          categories.skaterCategories["timeOnIcePerGame5v5"],
-          categories.skaterCategories["goals5v5"],
-          categories.skaterCategories["assists5v5"],
-          categories.skaterCategories["primaryAssists5v5"],
-          categories.skaterCategories["secondaryAssists5v5"],
-          categories.skaterCategories["points5v5"],
-          categories.skaterCategories["goalsPer605v5"],
-          categories.skaterCategories["assistsPer605v5"],
-          categories.skaterCategories["pointsPer605v5"],
-          categories.skaterCategories["offensiveZoneStartPct5v5"],
-          categories.skaterCategories["satPct"],
-          categories.skaterCategories["satRelative5v5"],
-          categories.skaterCategories["onIceShootingPct5v5"],
-          categories.skaterCategories["satRelative5v5"],
-          categories.skaterCategories["netMinorPenaltiesPer60"],
-        ]
-      : [
-          categories.skaterCategories["ppAssists"],
-          categories.skaterCategories["ppGoals"],
-          categories.skaterCategories["ppGoalsForPer60"],
-          categories.skaterCategories["ppGoalsPer60"],
-          categories.skaterCategories["ppIndividualSatFor"],
-          categories.skaterCategories["ppIndividualSatForPer60"],
-          categories.skaterCategories["ppPoints"],
-          categories.skaterCategories["ppPointsPer60"],
-          categories.skaterCategories["ppPrimaryAssists"],
-          categories.skaterCategories["ppPrimaryAssistsPer60"],
-          categories.skaterCategories["ppSecondaryAssists"],
-          categories.skaterCategories["ppSecondaryAssistsPer60"],
-          categories.skaterCategories["ppShootingPct"],
-          categories.skaterCategories["ppShots"],
-          categories.skaterCategories["ppShotsPer60"],
-          categories.skaterCategories["ppTimeOnIce"],
-          categories.skaterCategories["ppTimeOnIcePctPerGame"],
-          categories.skaterCategories["ppTimeOnIcePerGame"],
-        ];
+    return config.categoryGroups[dataType].map(category => categories.skaterCategories[category]);
   }, [dataType]);
   return (
     <>

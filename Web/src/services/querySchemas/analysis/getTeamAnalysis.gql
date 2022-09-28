@@ -1,4 +1,4 @@
-query teamAnalysis($teamId: Int) {
+query teamAnalysis($teamId) {
     teamAnalysis(teamId: $teamId) {
       id
       lastUpdated
@@ -76,26 +76,6 @@ query teamAnalysis($teamId: Int) {
       team {
         name
         colorScheme
-      }
-      lines {
-        goalies {
-          starter { id, number, name }
-          backup { id, number, name }
-        }
-        lines {
-          leftDefender { id, number, name }
-          rightDefender { id, number, name }
-          leftWing { id, number, name }
-          center { id, number, name }
-          rightWing { id, number, name }
-        }
-        ppLines {
-          leftDefender { id, number, name }
-          rightDefender { id, number, name }
-          leftWing { id, number, name }
-          center { id, number, name }
-          rightWing { id, number, name }
-        }
       }
       rosterStats {
         id
@@ -185,6 +165,49 @@ query teamAnalysis($teamId: Int) {
           ppTimeOnIce
           ppTimeOnIcePctPerGame
           ppTimeOnIcePerGame
+          ppGoalsAgainstPer60
+          shAssists
+          shGoals
+          shGoalsPer60
+          shIndividualSatFor
+          shIndividualSatForPer60
+          shPoints
+          shPointsPer60
+          shPrimaryAssists
+          shPrimaryAssistsPer60
+          shSecondaryAssists
+          shSecondaryAssistsPer60
+          shShootingPct
+          shShots
+          shShotsPer60
+          shTimeOnIce
+          shTimeOnIcePctPerGame
+          shTimeOnIcePerGame
+          satAgainst
+          satAhead
+          satBehind
+          satClose
+          satFor
+          satRelative
+          satTied
+          satTotal
+          timeOnIcePerGame5v5
+          usatAgainst
+          usatAhead
+          usatBehind
+          usatClose
+          usatFor
+          usatRelative
+          usatTied
+          usatTotal
+          faceoffPct5v5
+          goalsPct
+          individualSatForPer60
+          individualShotsForPer60
+          onIceShootingPct
+          satPct
+          usatPct
+          zoneStartPct
         }
       }
       goalieStats {
