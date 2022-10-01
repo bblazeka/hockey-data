@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { Loader } from "components";
 
-import RosterElement from "../RosterElement/RosterElement";
+import RosterElement from "./RosterElement";
 
 const RosterDisplayStyled = styled.div`
   display: block;

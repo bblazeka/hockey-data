@@ -6,6 +6,7 @@ import { Tab } from "semantic-ui-react";
 import { PlayerSearchBox } from "components/collection";
 import { selectPlayerData } from "reducers/selectors";
 import { Loader } from "components";
+import routes from "routes";
 
 import {getPlayer, searchBasicPlayer} from "reducers/playerActions";
 import PlayerStatsGrid from "./PlayerStatsGrid/PlayerStatsGrid";
@@ -25,7 +26,7 @@ export default function Player() {
   useEffect(() => {
     dispatch(getPlayer(id));
   }, [id]);
-
+  
   if (!player) {
     return (
       <div>
@@ -54,7 +55,7 @@ export default function Player() {
   function handleResultSelect(_, { result }) {
     setSearchQuery("");
     setLoading(false);
-    navigate(`${result.id}`);
+    navigate(`${routes.player}/${result.id}`);
   }
   const renderNHLStatsPane = () => (
     <Tab.Pane>

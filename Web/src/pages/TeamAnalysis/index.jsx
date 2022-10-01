@@ -13,7 +13,7 @@ import { getTeams } from "services/querySchemas/team";
 
 import TeamStats from "./TeamStats";
 import EnhancedStatsTable from "./EnhancedStatsTable";
-import RosterStatsGrid from "./RosterStatsGrid/RosterStatsGrid";
+import RosterStatsGrid from "./RosterStatsGrid";
 
 
 const QuickJumpContainer = styled.div`

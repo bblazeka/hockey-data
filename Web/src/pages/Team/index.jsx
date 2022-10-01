@@ -11,8 +11,8 @@ import { useTeamData } from "services/hooks/team";
 import {getTeam as getTeamQuery} from "services/querySchemas/team";
 import { MidLogoImage } from "components/collection";
 
-import TeamSchedule from "./TeamSchedule/TeamSchedule";
-import RosterGrid from "./RosterGrid/RosterGrid.jsx";
+import TeamSchedule from "./TeamSchedule";
+import RosterGrid from "./RosterGrid.jsx";
 
 const MapComponent = styled(Segment)`
   display: flex;
