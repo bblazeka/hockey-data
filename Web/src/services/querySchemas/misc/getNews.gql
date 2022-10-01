@@ -1,0 +1,14 @@
+query articles($query: String){
+    articles(query: $query) { 
+      title,
+      content,
+      description,
+      publishedAt,
+      url,
+      author,
+      urlToImage,
+      source { 
+        name 
+      }
+    }
+  }

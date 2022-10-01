@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Tab, Header, Image } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@apollo/client";
 import styled from "styled-components";
 
-import { getTeams } from "reducers/teamActions";
 import { getLogo } from "util/assets";
 import { Loader } from "components";
-import { selectTeamObject } from "reducers/selectors";
 import { getTeamAnalysis } from "services/querySchemas/analysis";
 import routes from "routes";
 import { MidLogo } from "components/collection";
+import { getTeams } from "services/querySchemas/team";
 
 import TeamStats from "./TeamStats";
 import EnhancedStatsTable from "./EnhancedStatsTable";
@@ -25,8 +23,8 @@ const QuickJumpContainer = styled.div`
 export default function TeamAnalysis() {
   const [category, setCategory] = useState("points");
   let { id } = useParams();
-  const dispatch = useDispatch();
-  const { teams } = useSelector(selectTeamObject);
+  const { data: getTeamsData } = useQuery(getTeams);
+  const { teams } = getTeamsData ?? { teams: []};
 
   const linkOptions = teams
     ? [
@@ -38,9 +36,6 @@ export default function TeamAnalysis() {
         })),
       ]
     : [];
-  useEffect(() => {
-    dispatch(getTeams());
-  }, []);
   const { loading: loadingAnalysis, data } = useQuery(getTeamAnalysis, {
     variables: { teamId: parseInt(id) },
   });

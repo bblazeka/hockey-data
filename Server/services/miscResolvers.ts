@@ -31,11 +31,10 @@ async function getArticles({ query }: TGetContentParams) {
 
 async function getTweets({ query }: TGetContentParams) {
   const tweetsResponse = await searchTweets(query, 10, "en", "popular");
-  const tweets = [];
-  for (let status of tweetsResponse.statuses) {
+  const tweets = tweetsResponse.statuses.map((status => {
     const users = status.entities.user_mentions.map((user) => ({ text: user.name }));
     const hashtags = status.entities.hashtags.map((hashtag) => ({ text: hashtag.text }));
-    tweets.push({
+    return({
       id: status.id_str,
       createdAt: status.created_at,
       text: status.full_text,
@@ -51,7 +50,7 @@ async function getTweets({ query }: TGetContentParams) {
       retweetCount: status.retweet_count,
       entities: uniqBy(users.concat(hashtags), "text"),
     });
-  }
+  }))
   return tweets;
 }
 

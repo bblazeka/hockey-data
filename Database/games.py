@@ -4,7 +4,7 @@ from dbhandler import get_collection
 
 collection = get_collection("games")
 
-all_games = nhl_api_request("/api/v1/schedule", {"startDate": "2021-10-01", "endDate": "2022-05-01"})
+all_games = nhl_api_request("/api/v1/schedule", {"startDate": "2022-10-01", "endDate": "2023-05-01"})
 dates = all_games["dates"]
 
 updated_games = 0

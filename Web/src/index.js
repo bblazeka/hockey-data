@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { createStore, applyMiddleware } from "redux";
@@ -44,26 +44,26 @@ sagaMiddleware.run(saga);
 ReactDOM.render(
   <Provider store={store}>
     <ApolloProvider client={client}>
-      <Router>
+      <BrowserRouter>
         <App>
-          <Switch>
-            <Route exact path={routes.schedule} component={Schedule} />
-            <Route exact path={`${routes.game}/:id`} component={Game} />
-            <Route exact path={routes.games} component={GameSelection} />
-            <Route exact path={routes.standings} component={Standings} />
-            <Route exact path={routes.analysis} component={Analysis} />
+          <Routes>
+            <Route exact path={routes.schedule} element={<Schedule />} />
+            <Route exact path={`${routes.game}/:id`} element={<Game />} />
+            <Route exact path={routes.games} element={<GameSelection />} />
+            <Route exact path={routes.standings} element={<Standings />} />
+            <Route exact path={routes.analysis} element={<Analysis />} />
             <Route
               exact
               path={`${routes.analysis}/:id`}
-              component={TeamAnalysis}
+              element={<TeamAnalysis />}
             />
-            <Route exact path={`${routes.teams}/:id`} component={Team} />
-            <Route exact path={routes.players} component={PlayerList} />
-            <Route exact path={`${routes.player}/:id`} component={Player} />
-            <Route component={Home} />
-          </Switch>
+            <Route exact path={`${routes.teams}/:id`} element={<Team />} />
+            <Route exact path={routes.players} element={<PlayerList />} />
+            <Route exact path={`${routes.player}/:id`} element={<Player />} />
+            <Route path="*" element={<Home />} />
+          </Routes>
         </App>
-      </Router>
+      </BrowserRouter>
     </ApolloProvider>
   </Provider>,
   document.getElementById("root")

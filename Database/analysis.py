@@ -30,26 +30,36 @@ for record in records:
     enhanced_query_options =  {"isAggregate": "false", "isGame": "false", "start": "0", "limit": "50", "factCayenneExp": "gamesPlayed>=1", "cayenneExp": "teamId={0} and gameTypeId=2 and seasonId <= {1} and seasonId >= {1}".format(teamRecord["team"]["id"], season)}
     skater_scoring_stats = enhanced_nhl_api_request("/stats/rest/en/skater/scoringRates", enhanced_query_options)["data"]
     skater_pp_stats =  enhanced_nhl_api_request("/stats/rest/en/skater/powerplay", enhanced_query_options)["data"]
-    enhanced_goalies =  enhanced_nhl_api_request("/stats/rest/en/goalie/advanced", enhanced_query_options)["data"]
-
+    skater_pk_stats = enhanced_nhl_api_request("/stats/rest/en/skater/penaltykill", enhanced_query_options)["data"]
+    skater_sat_stats = enhanced_nhl_api_request("/stats/rest/en/skater/summaryshooting", enhanced_query_options)["data"]
+    skater_puck_stats = enhanced_nhl_api_request("/stats/rest/en/skater/puckPossessions", enhanced_query_options)["data"]
+    enhanced_goalies_stats =  enhanced_nhl_api_request("/stats/rest/en/goalie/advanced", enhanced_query_options)["data"]
+    
     enhanced_skaters = defaultdict(list)
+    enhanced_goalies = defaultdict(list)
     for skater_scoring in skater_scoring_stats:
       pp_stats = next((x for x in skater_pp_stats if x["playerId"] == skater_scoring["playerId"]), None)
-      enhanced_skaters[skater_scoring["playerId"]] = skater_scoring | pp_stats
+      pk_stats = next((x for x in skater_pk_stats if x["playerId"] == skater_scoring["playerId"]), None)
+      sat_stats = next((x for x in skater_sat_stats if x["playerId"] == skater_scoring["playerId"]), None)
+      puck_stats = next((x for x in skater_puck_stats if x["playerId"] == skater_scoring["playerId"]), None)
+      enhanced_skaters[skater_scoring["playerId"]] = skater_scoring | pp_stats | pk_stats | sat_stats | puck_stats
+    for goalie_advanced in enhanced_goalies_stats:
+      enhanced_goalies[goalie_advanced["playerId"]] = goalie_advanced
     # filter players that didn't play at all
     players_roster = player_stats["teams"][0]["roster"]["roster"]
     players_playing = [a for a in players_roster if len(a["person"]["stats"][0]["splits"]) > 0]
     players_playing_enhanced_stats = []
     for playing_player in players_playing:
-      
-      for x, v in enhanced_skaters.items():
-        if x == playing_player["person"]["id"]:
-          pl = v
+      player_stats = None
+      playing_player_id = playing_player["person"]["id"]
+      for skater_id, skater_stats in enhanced_skaters.items():
+        if skater_id == playing_player_id:
+          player_stats = skater_stats
           break
-      if (pl is None):
-        for x, v in enhanced_goalies:
-          if x == playing_player["person"]["id"]:
-            pl = v
+      if (player_stats is None):
+        for goalie_id, goalie_stats in enhanced_goalies.items():
+          if goalie_id == playing_player_id:
+            player_stats = goalie_stats
             break
       person = playing_player["person"]
       players_playing_enhanced_stats.append({
@@ -61,7 +71,7 @@ for record in records:
         "nationality": person["nationality"],
         "currentAge": get_prop(person,"currentAge"),
         "stats": person["stats"][0]["splits"][0]["stat"],
-        "advancedStats": pl
+        "advancedStats": player_stats
       })
 
     team_stats = nhl_api_request("/api/v1/teams/{0}/stats".format(teamRecord["team"]["id"]), {})

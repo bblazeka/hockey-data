@@ -1,25 +1,18 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { Grid } from "semantic-ui-react";
+import { useQuery } from "@apollo/client";
 
 import { Loader, NewsFeed, SocialFeed } from "components";
-import { selectHome } from "reducers/selectors";
+import { getNews, getTweets } from "services/querySchemas/misc";
 
 import GameCards from "./GameCards";
-import { getNews, getTweets } from "reducers/miscActions";
 
 export default function Home() {
-  const { homeNews, loadingNews, tweets, loadingTweets } =
-    useSelector(selectHome);
 
-  const dispatch = useDispatch();
+  const {loading: loadingNews, data: newsData } = useQuery(getNews, { variables: { query: "NHL" }});
+  const {loading: loadingTweets, data: tweetsData} = useQuery(getTweets, { variables: { query: "NHL"}});
 
-  useEffect(() => {
-    dispatch(getNews("NHL"));
-    dispatch(getTweets("NHL"));
-  }, [dispatch]);
-
-  if (loadingNews && loadingTweets) {
+  if (loadingNews || loadingTweets) {
     return <Loader />;
   }
   return (
@@ -29,10 +22,10 @@ export default function Home() {
         <Grid columns={2} stackable>
           <Grid.Row>
             <Grid.Column>
-              <NewsFeed news={homeNews}></NewsFeed>
+              <NewsFeed news={newsData?.articles}></NewsFeed>
             </Grid.Column>
             <Grid.Column>
-              <SocialFeed tweets={tweets}></SocialFeed>
+              <SocialFeed tweets={tweetsData?.tweets}></SocialFeed>
             </Grid.Column>
           </Grid.Row>
         </Grid>

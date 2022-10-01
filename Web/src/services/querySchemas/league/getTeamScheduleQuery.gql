@@ -1,14 +1,5 @@
-import { loader } from "graphql.macro";
-
-export const getScheduleQuery = /* GraphQL */`
-  query game($start: String, $end: String){
-    schedule(start: $start, end: $end) {
-    id,
-    abbreviation,
-    avgScheduleScore,
-    scheduleScore,
-    name,
-    games {
+query scheduleByTeam($id: Int, $start: String, $end: String){
+    scheduleByTeam(id: $id, start: $start, end: $end) {
       gamePk,
       date,
       home { 
@@ -47,10 +38,3 @@ export const getScheduleQuery = /* GraphQL */`
       }
     }
   }
-  }`;
-
-export const getTeamScheduleQuery = loader("./getTeamScheduleQuery.gql");
-
-export const getStandings = loader("./getStandings.gql");
-
-export const getDivisionsWithTeams = loader("./getDivisionsWithTeams.gql");

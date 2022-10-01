@@ -11,5 +11,50 @@
       "text": "Current projected"
     },
     { "value": "20202021", "key": "20202021", "text": "Previous season" }
-  ]
+  ],
+  "categoryGroups": {
+    "even": ["gamesPlayed","timeOnIcePerGame5v5","goals5v5","assists5v5","primaryAssists5v5","secondaryAssists5v5","points5v5","goalsPer605v5","assistsPer605v5","pointsPer605v5","offensiveZoneStartPct5v5","satPct","satRelative5v5","onIceShootingPct5v5","satRelative5v5","netMinorPenaltiesPer60"],
+    "pp": ["ppAssists","ppGoals","ppGoalsForPer60","ppGoalsPer60","ppIndividualSatFor","ppIndividualSatForPer60","ppPoints","ppPointsPer60","ppPrimaryAssists","ppPrimaryAssistsPer60","ppSecondaryAssists","ppSecondaryAssistsPer60","ppShootingPct","ppShots","ppShotsPer60","ppTimeOnIce","ppTimeOnIcePctPerGame","ppTimeOnIcePerGame"],
+    "pk": ["ppGoalsAgainstPer60","shAssists","shGoals","shGoalsPer60","shIndividualSatFor","shIndividualSatForPer60",
+    "shPoints",
+    "shPointsPer60",
+    "shPrimaryAssists",
+    "shPrimaryAssistsPer60",
+    "shSecondaryAssists",
+    "shSecondaryAssistsPer60",
+    "shShootingPct",
+    "shShots",
+    "shShotsPer60",
+    "shTimeOnIce",
+    "shTimeOnIcePctPerGame",
+    "shTimeOnIcePerGame"],
+    "shoot": [
+      "satAgainst",
+      "satAhead",
+      "satBehind",
+      "satClose",
+      "satFor",
+      "satRelative",
+      "satTied",
+      "satTotal",
+      "timeOnIcePerGame5v5",
+      "usatAgainst",
+      "usatAhead",
+      "usatBehind",
+      "usatClose",
+      "usatFor",
+      "usatRelative",
+      "usatTied",
+      "usatTotal"],
+    "puck": [
+      "faceoffPct5v5",
+          "goalsPct",
+          "individualSatForPer60",
+          "individualShotsForPer60",
+          "onIceShootingPct",
+          "satPct",
+          "usatPct",
+          "zoneStartPct"
+    ]
+  }
 }

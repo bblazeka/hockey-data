@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import { Button, Grid, Header, Icon, Segment } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -8,9 +7,8 @@ import { useQuery } from "@apollo/client";
 import { Loader, Map, NewsFeed, SocialFeed } from "components";
 import { getLogo } from "util/assets";
 import routes from "routes";
-import { selectTeamObject } from "reducers/selectors";
+import { useTeamData } from "services/hooks/team";
 import {getTeam as getTeamQuery} from "services/querySchemas/team";
-import { fetchTeamData } from "services/teamFunctions";
 import { MidLogoImage } from "components/collection";
 
 import TeamSchedule from "./TeamSchedule/TeamSchedule";
@@ -33,15 +31,13 @@ const LocationText = styled.div`
 `;
 
 export default function Team() {
-  const dispatch = useDispatch();
   const [filterActive, setFilterActive] = useState(true);
-  const { tweets, news, teamGames, location } =
-    useSelector(selectTeamObject);
+  
   let { id } = useParams();
   const { loading, data } = useQuery(getTeamQuery, {variables: { id: parseInt(id) }});
 
-  useEffect(() => fetchTeamData(dispatch, data?.team), [data]);
-  if (loading) {
+  const { teamDataLoading, tweets, news, teamGames, location } = useTeamData(data?.team);
+  if (loading || teamDataLoading) {
     return <Loader />;
   }
   const { team } = data;

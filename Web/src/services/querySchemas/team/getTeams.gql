@@ -1,0 +1,6 @@
+  query teams {
+    teams {
+      id
+      name
+    }
+  }
