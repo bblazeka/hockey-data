@@ -29,7 +29,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: './Web/yarn.lock'
+        cache-dependency-path: './Web/package-lock.json'
     - run: npm install
     - run: yarn install --frozen-lockfile
     - run: npm run build --if-present
