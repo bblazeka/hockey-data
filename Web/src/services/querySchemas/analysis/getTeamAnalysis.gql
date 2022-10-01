@@ -1,4 +1,4 @@
-query teamAnalysis($teamId) {
+query teamAnalysis($teamId: Int) {
     teamAnalysis(teamId: $teamId) {
       id
       lastUpdated

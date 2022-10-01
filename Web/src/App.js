@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import styled from "styled-components";
 
@@ -19,8 +19,8 @@ margin: 1em 5em 1em 5em;
 min-height: 80vh;
 `;
 
-function App({ children, history }) {
-
+function App({ children }) {
+  const navigate = useNavigate();
   const {
     database,
     getSelectedPlayers,
@@ -37,11 +37,11 @@ function App({ children, history }) {
   };
 
   function setActiveRoute(name) {
-    history.push(routes[name]);
+    navigate(routes[name]);
   }
 
   function goHome() {
-    window.location = "/";
+    navigate("/");
   }
 
   return (
@@ -57,4 +57,4 @@ function App({ children, history }) {
   );
 }
 
-export default withRouter(App);
+export default App;

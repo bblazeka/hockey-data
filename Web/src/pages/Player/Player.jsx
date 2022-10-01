@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Tab } from "semantic-ui-react";
 
 import { PlayerSearchBox } from "components/collection";
@@ -18,7 +18,7 @@ export default function Player() {
   const [isLoading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { player, suggestions } = useSelector(selectPlayerData);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   let { id } = useParams();
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ export default function Player() {
   function handleResultSelect(_, { result }) {
     setSearchQuery("");
     setLoading(false);
-    history.push(`${result.id}`);
+    navigate(`${result.id}`);
   }
   const renderNHLStatsPane = () => (
     <Tab.Pane>
