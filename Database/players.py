@@ -54,7 +54,7 @@ for player in players:
       "height": player_height,
       "weight": player_weight,
       "birthCity": player_birth_city,
-      "nationality": player_response["nationality"],
+      "nationality": get_prop(player_response,"nationality"),
       "active": player_response["active"],
       "alternateCaptain": get_prop(player_response,"alternateCaptain"),
       "captain": get_prop(player_response,"captain"),
