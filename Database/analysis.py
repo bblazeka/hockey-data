@@ -5,6 +5,12 @@ from collections import defaultdict
 from utils import get_prop
 from constants import DEFAULT_SEASON
 import re
+import sys
+
+
+season = DEFAULT_SEASON
+if len(sys.argv) > 1:
+  season = sys.argv[1]
 
 def abbrev_name(first_name, last_name):
   return "{0}. {1}".format(first_name[0], last_name) 
@@ -17,7 +23,6 @@ def parse_ordinals(stats):
 
 collection = get_collection("analysis")
 
-season = DEFAULT_SEASON
 standings = nhl_api_request("/api/v1/standings", {"season": season})
 records = standings["records"]
 

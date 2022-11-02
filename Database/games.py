@@ -1,10 +1,17 @@
 from datetime import datetime
 from apihandler import nhl_api_request
 from dbhandler import get_collection
+import sys
+
+start_date = "2022-10-01"
+end_date = "2023-05-01"
+if len(sys.argv) > 2:
+  start_date = sys.argv[1]
+  end_date = sys.argv[2]
 
 collection = get_collection("games")
 
-all_games = nhl_api_request("/api/v1/schedule", {"startDate": "2022-10-01", "endDate": "2023-05-01"})
+all_games = nhl_api_request("/api/v1/schedule", {"startDate": start_date, "endDate": end_date})
 dates = all_games["dates"]
 
 updated_games = 0
