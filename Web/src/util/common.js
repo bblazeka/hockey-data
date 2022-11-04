@@ -80,11 +80,6 @@ export function DateToServerFormat(date) {
   }`;
 }
 
-export function GetMapboxApi() {
-  // eslint-disable-next-line no-undef
-  return process.env.REACT_APP_MAP_API;
-}
-
 export function numberToMonthName(monthNumber) {
   const months = [
     "January",

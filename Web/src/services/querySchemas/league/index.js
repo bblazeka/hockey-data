@@ -51,6 +51,4 @@ export const getScheduleQuery = /* GraphQL */`
 
 export const getTeamScheduleQuery = loader("./getTeamScheduleQuery.gql");
 
-export const getStandings = loader("./getStandings.gql");
-
 export const getDivisionsWithTeams = loader("./getDivisionsWithTeams.gql");

@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 import { Loader } from "components";
 import { getLogo } from "util/assets";
-import routes from "routes";
 
 const MiniGameContainer = styled(Card)`
   width: 10vw !important;
@@ -50,7 +49,8 @@ export default function MiniGameCard({ game }) {
   return (
     <MiniGameContainer
       key={game.gamePk}
-      href={`${routes.game}/${game.gamePk}`}
+      target="_blank" rel="noopener noreferrer"
+      href={`https://www.nhl.com/gamecenter/${game.gamePk}`}
       color={game.ongoingGame ? (game.finished ? "grey" : "orange") : null}
     >
       <GameTeamLogo

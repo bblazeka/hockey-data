@@ -14,7 +14,6 @@ import {
   getGoalieDetailedStats,
 } from "services/querySchemas/player";
 import { getLogo } from "util/assets";
-import routes from "routes";
 import config from "util/config.json";
 
 const PlayerStatsGridStyled = styled.div`
@@ -77,7 +76,7 @@ function GameLogGrid({ skater }) {
             return (
               <Table.Row key={`row${key}`}>
                 <Table.Cell>
-                  <a href={`${routes.game}/${stat.game.gamePk}`}>
+                  <a target="_blank" rel="noopener noreferrer" href={`https://www.nhl.com/gamecenter/${stat.game.gamePk}`}>
                     {dayjs(stat.date).format("MMMM Do YYYY")}
                   </a>
                 </Table.Cell>

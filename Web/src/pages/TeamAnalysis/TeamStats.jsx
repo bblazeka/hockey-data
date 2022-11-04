@@ -21,8 +21,8 @@ import {
 } from "services/hooks/analysis";
 import categories from "util/categories.json";
 
-import StatsPieChart from "./StatsPieChart/StatsPieChart";
-import StatsScatterChart from "./StatsScatterChart/StatsScatterChart";
+import StatsPieChart from "./StatsPieChart";
+import StatsScatterChart from "./StatsScatterChart";
 import TeamStatsHeader from "./TeamStatsHeader";
 
 const dropdownOptions = [

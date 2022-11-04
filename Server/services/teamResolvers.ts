@@ -50,35 +50,6 @@ async function getActiveTeams(): Promise<TDbTeam[]> {
   );
 }
 
-async function getTeamLocations() {
-  const teams = await getActiveTeams();
-  const season = await wikiApiRequest("2021–22 NHL season");
-  const divisions = [
-    { key: "Metropolitan", value: "red" },
-    { key: "Atlantic", value: "green" },
-    { key: "Central", value: "orange" },
-    { key: "Pacific", value: "blue" },
-  ];
-  const teamLocations = teams.map((team) => {
-    if (!isNil(team.division)) {
-      const division = divisions.find((el) => {
-        return el.key === team.division.name;
-      });
-      if (division != null) {
-        team.location.color = division.value;
-      }
-    }
-    team.location.text = team.name;
-    team.location.id = team.id;
-    return team.location;
-  });
-  return {
-    teamLocations,
-    seasonDescription: season.extract,
-    divisions,
-  };
-}
-
 type TTeamScheduleParams = {
   id: number;
   start: string;
@@ -104,4 +75,4 @@ async function getTeamSchedule({ id, start, end }: TTeamScheduleParams) {
   return games;
 }
 
-export { init, getTeam, getActiveTeams, getTeamLocations, getTeamSchedule };
+export { init, getTeam, getActiveTeams, getTeamSchedule };

@@ -33,4 +33,3 @@ jobs:
     - run: npm install
     - run: npm install --frozen-lockfile
     - run: npm run build --if-present
-    - run: npm test

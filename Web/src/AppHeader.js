@@ -30,7 +30,6 @@ function AppHeader({ setActiveRoute }) {
     "home",
     "analysis",
     "games",
-    "standings",
     "schedule",
     "players",
   ];
