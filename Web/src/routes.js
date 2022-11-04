@@ -4,10 +4,8 @@ const routes = {
   games: '/games',
   schedule: '/schedule',
   settings: '/settings',
-  standings: '/standings',
   teams: '/teams',
   player: '/player',
-  game: '/game',
   home: '/',
 };
 

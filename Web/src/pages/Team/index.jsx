@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "@apollo/client";
 
-import { Loader, Map, NewsFeed, SocialFeed } from "components";
+import { Loader, NewsFeed, SocialFeed } from "components";
 import { getLogo } from "util/assets";
 import routes from "routes";
 import { useTeamData } from "services/hooks/team";
@@ -14,20 +14,8 @@ import { MidLogoImage } from "components/collection";
 import TeamSchedule from "./TeamSchedule";
 import RosterGrid from "./RosterGrid.jsx";
 
-const MapComponent = styled(Segment)`
-  display: flex;
-`;
-
-const MapControl = styled(Map)`
-  width: 250vw;
-`;
-
 const DescriptionContainer = styled.p`
   font-size: 12px;
-`;
-
-const LocationText = styled.div`
-  padding: 15px;
 `;
 
 export default function Team() {
@@ -36,7 +24,7 @@ export default function Team() {
   let { id } = useParams();
   const { loading, data } = useQuery(getTeamQuery, {variables: { id: parseInt(id) }});
 
-  const { teamDataLoading, tweets, news, teamGames, location } = useTeamData(data?.team);
+  const { teamDataLoading, tweets, news, teamGames } = useTeamData(data?.team);
   if (loading || teamDataLoading) {
     return <Loader />;
   }
@@ -74,18 +62,6 @@ export default function Team() {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      {location && (
-        <MapComponent>
-          <MapControl points={[location]} center={location} zoom={8} zoomable={true} />
-          <LocationText>
-            <Header as="h4">
-              {team.venue.name}
-              <Header.Subheader>{team.venue.city}</Header.Subheader>
-            </Header>
-            <p>{team.venue.description}</p>
-          </LocationText>
-        </MapComponent>
-      )}
     </>
   );
 }

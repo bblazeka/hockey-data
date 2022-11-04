@@ -17,12 +17,6 @@ export const selectAnalysisObject = createSelector(
   }
 );
 
-export const selectStandings = createSelector(selectLeague, (league) => {
-  return {
-    standings: league.standings,
-  };
-});
-
 export const selectSelectedPlayers = createSelector(selectPlayer, (player) => {
   return {
     loading: player.loadingSelectedPlayers,

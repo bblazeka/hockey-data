@@ -6,7 +6,6 @@ import dayjs from "dayjs";
 
 import { Loader } from "components";
 import { getLogo } from "util/assets";
-import routes from "routes";
 
 const GameTeamLogo = styled.img`
   max-height: 40px;
@@ -40,7 +39,8 @@ export default function GameCard({ game }) {
   return (
     <Card
       key={game.gamePk}
-      href={`${routes.game}/${game.gamePk}`}
+      target="_blank" rel="noopener noreferrer"
+      href={`https://www.nhl.com/gamecenter/${game.gamePk}`}
       color={finished ? "grey" : null}
     >
       <Card.Content>

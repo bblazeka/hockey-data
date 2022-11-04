@@ -2,20 +2,8 @@ import { DateTime } from "luxon";
 import { sortBy, uniqBy } from "lodash";
 
 import { getLimitStatus, searchTweets } from "adapters/twitterhandler";
-import { mapboxApiRequest, newsApiRequest } from "adapters/apihandler";
+import { newsApiRequest } from "adapters/apihandler";
 
-type TGeocodeParams = {
-  query: string;
-};
-
-async function geocode({ query }: TGeocodeParams): Promise<TGeocodeLocation[]> {
-  const result = await mapboxApiRequest(query);
-  return result.features.map((el) => ({
-    text: el.text,
-    placeName: el.place_name,
-    center: el.center,
-  }));
-}
 type TGetContentParams = {
   query: string;
 };
@@ -64,4 +52,4 @@ async function getTwitterApiStatus() {
   return result;
 }
 
-export { geocode, getArticles, getUserTweets, getTweets, getTwitterApiStatus };
+export { getArticles, getUserTweets, getTweets, getTwitterApiStatus };

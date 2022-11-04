@@ -12,15 +12,6 @@ function init(database: Database) {
   db = database;
 }
 
-type TGetStandingsParams = {
-  season: string;
-};
-
-async function getStandings({ season }: TGetStandingsParams) {
-  const records = await nhlApiRequest(`/api/v1/standings?season=${season}`);
-  return records.records;
-}
-
 type TGetScheduleParams = {
   start: string;
   end: string;
@@ -82,4 +73,4 @@ async function divisionsWithTeams() {
   return divisionsWithTeams;
 }
 
-export { init, getSchedule, getStandings, divisionsWithTeams };
+export { init, getSchedule, divisionsWithTeams };

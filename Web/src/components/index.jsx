@@ -2,7 +2,6 @@ export { default as Loader } from "./Loader";
 export { default as SocialFeed } from "./SocialFeed";
 export { default as NewsFeed } from "./NewsFeed";
 export { default as NotFound } from "./NotFound";
-export { default as Map } from "./Map";
 export { default as GameCard } from "./GameCard";
 export { default as MiniGameCard } from "./MiniGameCard";
 export { default as ErrorFallback } from "./ErrorFallback";

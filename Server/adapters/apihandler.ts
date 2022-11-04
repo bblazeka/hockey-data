@@ -1,6 +1,5 @@
 import axios from "axios";
 import newsapi from "keys/newsapi.json";
-import mapbox from "keys/mapbox.json";
 
 async function nhlApiRequest(path: string) {
   const response = await axios.get(`http://statsapi.web.nhl.com${path}`);
@@ -15,15 +14,6 @@ async function enhancedNhlApiRequest(path: string) {
 async function newsApiRequest(path: string) {
   const response = await axios.get(
     `http://newsapi.org${path}&apiKey=${newsapi.key}`
-  );
-  return response.data;
-}
-
-async function mapboxApiRequest(query: string): Promise<TApiMapboxLocations> {
-  const response = await axios.get(
-    `https://api.tiles.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-      query
-    )}.json?access_token=${mapbox.key}`
   );
   return response.data;
 }
@@ -66,7 +56,6 @@ export {
   nhlApiRequest,
   enhancedNhlApiRequest,
   newsApiRequest,
-  mapboxApiRequest,
   wikiApiRequest,
   playerWikiRequest,
   wikiApiAdvancedRequest,

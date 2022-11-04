@@ -70,6 +70,4 @@ export const getGamesBetweenTeams = /* GraphQL */ `
   }
 `;
 
-export const getGame = loader('./getGame.gql');
-
 export const getDailyGames = loader('./getDailyGames.gql');

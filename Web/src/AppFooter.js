@@ -44,9 +44,6 @@ export default function AppFooter() {
           </Grid.Column>
           <Grid.Column>
             <div>
-              <a href="https://www.mapbox.com/Mapbox">Mapbox</a> for maps
-            </div>
-            <div>
               Made using <a href="https://semantic-ui.com/">Semantic UI</a>
             </div>
           </Grid.Column>

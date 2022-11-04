@@ -25,12 +25,6 @@ export const leagueSchema = gql`
     type: String
   }
 
-  type Record {
-    standingsType: String
-    division: Division
-    teamRecords: [TeamRecord]
-  }
-
   type Division {
     id: Int
     name: String

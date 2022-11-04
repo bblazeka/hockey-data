@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "mapbox-gl/dist/mapbox-gl.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
@@ -15,14 +14,12 @@ import saga from "reducers/sagas";
 
 import {
   Schedule,
-  Standings,
   Team,
   TeamAnalysis,
   Home,
   Player,
   PlayerList,
   Analysis,
-  Game,
   GameSelection,
 } from "./pages";
 import routes from "./routes";
@@ -48,9 +45,7 @@ ReactDOM.render(
         <App>
           <Routes>
             <Route exact path={routes.schedule} element={<Schedule />} />
-            <Route exact path={`${routes.game}/:id`} element={<Game />} />
             <Route exact path={routes.games} element={<GameSelection />} />
-            <Route exact path={routes.standings} element={<Standings />} />
             <Route exact path={routes.analysis} element={<Analysis />} />
             <Route
               exact
