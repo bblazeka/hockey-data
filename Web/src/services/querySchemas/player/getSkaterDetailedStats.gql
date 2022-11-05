@@ -1,0 +1,34 @@
+#import "../fragments.gql"
+
+query playerDetailedStats($id: Int, $seasonId: String) {
+    playerDetailedStats(id: $id, seasonId: $seasonId) {
+      byMonth {
+        season
+        stat {
+          ...SkaterStatsFragment
+        }
+        month
+      }
+      gameLog {
+        season
+        stat {
+          ...SkaterStatsFragment
+        }
+        team {
+          id
+          name
+        }
+        opponent {
+          id
+          name
+        }
+        isHome
+        isOT
+        isWin
+        date
+        game {
+          gamePk
+        }
+      }
+    }
+  }

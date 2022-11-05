@@ -1,0 +1,83 @@
+query player($id: Int) {
+    player(id: $id) {
+      id
+      jerseyNumber
+      fullName
+      currentAge
+      description
+      nationality
+      birthCity
+      birthDate
+      capHit
+      primaryPosition {
+        code
+        name
+        type
+      }
+      currentTeam {
+        id
+        name
+      }
+      careerStats {
+        stats {
+          season
+          team {
+            id
+            name
+          }
+          league {
+            id
+            name
+          }
+          stat {
+            games
+            goals
+            assists
+            points
+            penaltyMinutes
+            plusMinus
+          }
+        }
+      }
+      nhlStats {
+        totalGames
+        totalGoals
+        totalAssists
+        totalPoints
+        seasonSums {
+          season
+          goals
+          assists
+        }
+        stats {
+          season
+          team {
+            id
+            name
+          }
+          stat {
+            games
+            goals
+            assists
+            points
+            penaltyMinutes
+            plusMinus
+            timeOnIce
+            faceOffPct
+            shots
+            hits
+            blocked
+            evenTimeOnIce
+            powerPlayTimeOnIce
+            shortHandedTimeOnIce
+            shotPct
+            gameWinningGoals
+            powerPlayGoals
+            powerPlayPoints
+            shortHandedGoals
+            shortHandedPoints
+          }
+        }
+      }
+    }
+  }

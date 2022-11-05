@@ -1,0 +1,54 @@
+#import "../fragments.gql"
+
+query player($playerIds: String, $seasonId: Int, $projectedStats: Boolean) {
+    selectedPlayers(
+      playerIds: $playerIds
+      seasonId: $seasonId
+      projectedStats: $projectedStats
+    ) {
+      skaters {
+        id
+        fullName
+        currentTeam {
+          id
+          name
+        }
+        primaryPosition {
+          abbreviation
+        }
+        stats {
+          ...SkaterStatsFragment
+        }
+        averageStats {
+          goals
+          assists
+          points
+          shots
+          hits
+          blocked
+          powerPlayGoals
+          powerPlayPoints
+          shortHandedGoals
+          shortHandedPoints
+          gameWinningGoals
+        }
+      }
+      goalies {
+        id
+        fullName
+        currentTeam {
+          id
+          name
+        }
+        primaryPosition {
+          abbreviation
+        }
+        stats {
+          ...GoalieStatsFragment
+        }
+        averageStats {
+          saves
+        }
+      }
+    }
+  }

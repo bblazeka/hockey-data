@@ -1,3 +1,25 @@
+fragment GoalieStatsFragment on Stats {
+    games
+    gamesStarted
+    goalAgainstAverage
+    savePercentage
+    wins
+    losses
+    ot
+    evenSaves
+    powerPlaySaves
+    shortHandedSaves
+    shotsAgainst
+    evenShots
+    powerPlayShots
+    shortHandedShots
+    evenStrengthSavePercentage
+    powerPlaySavePercentage
+    shortHandedSavePercentage
+    shutouts
+    timeOnIce
+  }
+
 fragment SkaterStatsFragment on Stats {
     games
     goals

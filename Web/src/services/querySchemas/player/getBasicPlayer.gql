@@ -1,0 +1,15 @@
+query basicPlayer($id: Int) {
+    basicPlayer(id: $id) {
+      id
+      fullName
+      primaryPosition {
+        code
+        name
+        type
+      }
+      currentTeam {
+        id
+        name
+      }
+    }
+  }

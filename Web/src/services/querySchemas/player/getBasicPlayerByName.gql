@@ -1,0 +1,15 @@
+query searchPlayerByName($name: String) {
+    searchPlayerByName(name: $name) {
+      id
+      fullName
+      primaryPosition {
+        code
+        name
+        type
+      }
+      currentTeam {
+        id
+        name
+      }
+    }
+  }
