@@ -1,5 +1,4 @@
 import { sortBy, uniqBy } from "lodash";
-import { nhlApiRequest } from "../adapters/apihandler";
 
 import { Database, TDbTeam } from "adapters/dbhandler";
 import * as team from "./teamResolvers";
@@ -13,8 +12,8 @@ function init(database: Database) {
 }
 
 type TGetScheduleParams = {
-  start: string;
-  end: string;
+  readonly start: string;
+  readonly end: string;
 };
 
 async function getSchedule({ start, end }: TGetScheduleParams) {
@@ -28,7 +27,6 @@ async function getSchedule({ start, end }: TGetScheduleParams) {
         $gte: `${start}`,
         $lte: `${end}`,
       },
-      gameType: "R",
     })
     .toArray();
   for (let team of sortedTeams) {
@@ -51,9 +49,11 @@ async function getSchedule({ start, end }: TGetScheduleParams) {
     team.scheduleScore =
       Math.round((team.scheduleScore + Number.EPSILON) * 100) / 100;
     team.avgScheduleScore =
-      Math.round(
-        (team.scheduleScore / team.games.length + Number.EPSILON) * 100
-      ) / 100;
+      team.games.length > 0
+        ? Math.round(
+            (team.scheduleScore / team.games.length + Number.EPSILON) * 100
+          ) / 100
+        : 0;
   }
   return sortedTeams;
 }
